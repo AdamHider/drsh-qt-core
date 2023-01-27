@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'hostname' => '127.0.0.1:3306',
+        'hostname' => '127.0.0.1:3307',
         'username' => 'root',
         'password' => '',
         'database' => 'mektepium_db',
