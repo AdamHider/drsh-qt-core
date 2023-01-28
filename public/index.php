@@ -1,5 +1,24 @@
 <?php
-
+function handleCors(){
+    if( !function_exists('getallheaders') ){
+        return 'fromCli';
+    }
+    foreach (getallheaders() as $name => $value) {
+        if( strtolower($name)=='origin' && (str_contains($value, 'tezkel') || str_contains($value, 'localhost')) ){
+            header("Access-Control-Allow-Origin: $value");
+            break;
+        }
+    }
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, x-sid");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Expose-Headers: x-sid");
+    $method = isset($_SERVER['REQUEST_METHOD'])?$_SERVER['REQUEST_METHOD']:'';
+    if( $method == "OPTIONS" ) {
+        die();
+    }
+}
+handleCors();
 // Check PHP version.
 $minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {

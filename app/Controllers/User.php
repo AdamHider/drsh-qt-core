@@ -6,11 +6,30 @@ use CodeIgniter\API\ResponseTrait;
 class User extends BaseController
 {
     use ResponseTrait;
-
-    public function index()
+    public function getItem()
     {
-        echo "Lesson Introduction";
-        //return view('welcome_message');
+        
+        $UserModel = model('UserModel');
+
+        $user_id = $this->request->getVar('user_id');
+
+        if( !$user_id ){
+            $user_id = session()->get('user_id');
+        }
+
+        $result = $UserModel->getItem($user_id);
+
+        if ($result == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($result);
+    }
+    public function getList()
+    {
+        $UserModel = model('UserModel');
+        $result = $UserModel->getList();
+        return $this->respond($result, 200);
     }
     public function signUp()
     {
@@ -18,13 +37,9 @@ class User extends BaseController
 
         $username           = $this->request->getVar('username');
         $password           = $this->request->getVar('password');
-        $password_confirm   = $this->request->getVar('password_confirm');
+        $password_confirm   = $this->request->getVar('passwordConfirm');
         $email              = $this->request->getVar('email');
         $phone              = $this->request->getVar('phone');
-
-        $username = '1234';
-        $password = '1234';
-        $password_confirm = '1234';
 
         $data = [
             'username'          => $username,
@@ -35,13 +50,16 @@ class User extends BaseController
             'blocked'           => 0
         ];
 
+        $this->signOutUser();
+
         $user_id = $UserModel->itemCreate($data);
 
         if($UserModel->errors()){
             return $this->failValidationErrors(json_encode($UserModel->errors()));
         }
+        $user = $UserModel->getItem($user_id);
 
-        return $this->respondCreated($user_id);
+        return $this->respondCreated($user);
     }
 
     public function signIn()
@@ -51,8 +69,7 @@ class User extends BaseController
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
         
-        $username = '1234';
-        $password = '1234';
+        $this->signOutUser();
 
         $result = $UserModel->signIn($username, $password);
 
@@ -77,16 +94,37 @@ class User extends BaseController
         }
         return $this->fail($result);
     }
-    public function getItem()
+    public function signOut()
     {
-        $UserModel = model('UserModel');
-        $result = $UserModel->getItem(1);
-        return $this->respond($result, 200);
+        if (session_status() === PHP_SESSION_ACTIVE){
+            session_destroy();
+        }
+        return $this->respond('success');
     }
-    public function getList()
+    public function signOutUser()
+    {
+        session_unset();
+    }
+    
+    public function checkUsername()
     {
         $UserModel = model('UserModel');
-        $result = $UserModel->getList();
-        return $this->respond($result, 200);
+
+        $username = $this->request->getVar('username');
+        
+        if($UserModel->checkUsername($username)){
+            return $this->fail($UserModel->getUsernameSuggestions($username)); 
+        } 
+        return $this->respond(true);
+    }
+    public function checkEmail(){
+        $UserModel = model('UserModel');
+
+        $email = $this->request->getVar('email');
+
+        if($UserModel->checkEmail($email)  &&  $email !== session()->get('user_data')->email){
+            return $this->fail('email_in_use'); 
+        } 
+        return $this->respond(true);
     }
 }

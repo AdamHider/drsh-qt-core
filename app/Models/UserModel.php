@@ -71,11 +71,25 @@ class UserModel extends Model
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
 
+    private $usernameSamples = [
+        'misiq', 'arslan', 'qaplan'
+    ];
+    private $usernameAffixes = [
+        'qirim',
+        'qirimli',
+        'qirimtatar'
+    ];    
 
-    public function getItem ($id) 
+    public function getItem ($user_id) 
     {
-        $user = $this->where('id', $id)->get()->getRow();
+        if ($user_id == 0) {
+            return $this->getGuestItem();
+        }
+        $user = $this->where('id', $user_id)->get()->getRow();
         
+        if(!$user){
+            return 'not_found';
+        }
         unset($user->password);
         return $user;
     }
@@ -87,6 +101,9 @@ class UserModel extends Model
         
     public function itemCreate ($data)
     {
+        if (empty($data['username'])) {
+            $data['username'] = $this->generateUsername();
+        }
         $this->transBegin();
 
         $user_id = $this->insert($data, true);
@@ -129,10 +146,56 @@ class UserModel extends Model
         return 'success' ;
     }
     
+    private function generateUsername()
+    {
+        $usernamePrefix = $this->usernameSamples[array_rand($this->usernameSamples)];
+        $affix = $this->getUsernameAffix($usernamePrefix);
+        $result = $usernamePrefix.$affix;
+        return $result;
+        
+    }
+    public function checkUsername($username)
+    {
+        $user = $this->where('username', $username)->get()->getRow();
+        return $user && $user->username;
+    }
+    public function getUsernameSuggestions($username)
+    {
+        $result = [];
+        $result[] = $username.substr(time(), -3);
+        foreach($this->usernameAffixes as $affix){
+            if(!$this->checkUsername($username.'_'.$affix)){
+                $result[] = $username.'_'.$affix;
+            } else {
+                $result[] = $username.substr(time(), -3);
+            }
+        }
+        return $result;
+    }
+    private function getUsernameAffix($username)
+    {
+        $lastUsername = $this->like('username', $username, 'after')->selectMax('id')->get()->getRow();
+        if ($lastUsername->id > 0) {
+            return $lastUsername->id++;
+        }
+        return '';
+    }
+    public function checkEmail($email)
+    {
+        $user = $this->where('email', $email)->get()->getRow();
+        return $user->email;
+    }
+    
     public function getActiveItem(){
         return $this->getItem( session()->get('user_id') );
     }
     
+    private function getGuestItem(){
+        return (object)[
+            'id'=> 0,
+            'username'=>'Guest'
+        ];
+    }
     protected function hashPassword (array $data)
     {
         if ( isset($data['data']['password']) ){
