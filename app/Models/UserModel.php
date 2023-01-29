@@ -90,6 +90,10 @@ class UserModel extends Model
         if(!$user){
             return 'not_found';
         }
+        $UserProfileModel = model('UserProfileModel');
+
+        $user->profile = $UserProfileModel->getItem($user->id);
+
         unset($user->password);
         return $user;
     }
@@ -107,14 +111,11 @@ class UserModel extends Model
         $this->transBegin();
 
         $user_id = $this->insert($data, true);
-        /*
+        
         if( $user_id ){
-            $UserGroupMemberModel=model('UserGroupMemberModel');
-            $UserGroupMemberModel->tableSet('user_group_member_list');
-            $UserGroupMemberModel->joinGroupByType($user_id,'customer');
-            $this->allowedFields[]='owner_id';
-            $this->update($user_id,['owner_id'=>$user_id]);
-        }*/
+            $UserProfileModel = model('UserProfileModel');
+            $UserProfileModel->itemCreate($user_id);
+        }
 
         $this->transCommit();
 

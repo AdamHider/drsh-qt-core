@@ -17,13 +17,13 @@ class User extends BaseController
             $user_id = session()->get('user_id');
         }
 
-        $result = $UserModel->getItem($user_id);
+        $user = $UserModel->getItem($user_id);
 
-        if ($result == 'not_found') {
+        if ($user == 'not_found') {
             return $this->failNotFound('not_found');
         }
 
-        return $this->respond($result);
+        return $this->respond($user);
     }
     public function getList()
     {
