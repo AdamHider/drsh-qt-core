@@ -37,6 +37,9 @@ class UserProfileModel extends Model
         $profile->total_exercises   = $user_statistics->total_exercises;
         $profile->level             = $this->getItemLevel($user_statistics->total_points);
         $profile->total_classrooms  = count($UserClassroomModel->getList($user_id));
+
+        $CharacterModel = model('CharacterModel');
+        $profile->character  = $CharacterModel->getItem($profile->total_points);
         return $profile;
     }
         

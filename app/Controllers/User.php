@@ -84,13 +84,13 @@ class User extends BaseController
         }
 
         if($result == 'success'){
-            $user = $UserModel->getActiveItem();
+            $user_id = session()->get('user_id');
+            $user = $UserModel->getItem($user_id);
             if( !$user ){
                 return $this->fail('fetch_error');
             }
-            session()->set('user_id', $user->id);
             session()->set('user_data',$user);
-            return $this->respond($user->id);
+            return $this->respond($user_id);
         }
         return $this->fail($result);
     }

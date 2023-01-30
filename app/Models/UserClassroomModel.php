@@ -23,10 +23,7 @@ class UserClassroomModel extends Model
 
     public function getList ($user_id) 
     {
-        $classrooms = $this->where('user_id', $user_id)->get()->getRowArray();
-        if(empty($classrooms)){
-            $classrooms = [];
-        }
+        $classrooms = $this->where('user_id', $user_id)->get()->getResult();
         return $classrooms;
     }
         
