@@ -25,7 +25,7 @@ class CharacterModel extends Model
 
     public function getItem ($character_id) 
     {
-        $character = $this->join('descriptions', 'descriptions.item_id = characters.id AND descriptions.language_id = 1')
+        $character = $this->join('descriptions', 'descriptions.code = "character" AND descriptions.item_id = characters.id AND descriptions.language_id = 1')
         ->where('characters.id', $character_id)->get()->getRow();
         if ($character) {
             $character->image = base_url('image/' . $character->image);

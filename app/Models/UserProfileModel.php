@@ -39,11 +39,11 @@ class UserProfileModel extends Model
         $profile->total_classrooms  = count($UserClassroomModel->getList($user_id));
 
         $CharacterModel = model('CharacterModel');
-        $profile->character  = $CharacterModel->getItem($profile->total_points);
+        $profile->character  = $CharacterModel->getItem($profile->character_id);
         return $profile;
     }
         
-    public function itemCreate ($user_id)
+    public function createItem ($user_id)
     {
         $this->transBegin();
         $data = [

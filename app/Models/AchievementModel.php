@@ -34,16 +34,16 @@ class AchievementModel extends Model
 
     public function getList ($data) 
     {
-        $this->join('achievements_to_users', 'achievements_to_users.achievement_id = achievements.id', 'left')
-        ->join('descriptions', 'descriptions.item_id = achievements.id AND descriptions.language_id = 1', 'left');
+        $this->join('descriptions', 'descriptions.code = "achievement" AND descriptions.item_id = achievements.id AND descriptions.language_id = 1')
+        ->select('descriptions.title, descriptions.description, achievements.image, achievements.id, achievements.code, achievements.value');
         if($data['user_id']){
-            $this->where('achievements_to_users.user_id', $data['user_id']);
+            $this->join('achievements_to_users', 'achievements_to_users.achievement_id = achievements.id')
+            ->where('achievements_to_users.user_id', $data['user_id']);
         }
-        $achievements = $this->get()->getResultArray();
-        print_r($achievements);
-        die;
+        $achievements = $this->limit($data['limit'], $data['offset'])->get()->getResult();
         foreach($achievements as &$achievement){
-            $achievement->achievement_progress = $this->calculateProgress($achievement);
+            $achievement->image = base_url('image/' . $achievement->image);
+            $achievement->progress = $this->calculateProgress($achievement);
         }
         return $achievements;
     }
@@ -61,8 +61,8 @@ class AchievementModel extends Model
             $current_progress = 0;
         }
         return [
-            'current_progress' => $current_progress,
-            'target_progress' => $data->value,
+            'current' => $current_progress,
+            'target' => $data->value,
             'percentage' => ceil($current_progress * 100 / $data->value),
             'is_done' => $current_progress >=  $data->value
         ];

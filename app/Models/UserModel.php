@@ -25,7 +25,7 @@ class UserModel extends Model
     protected $validationRules    = [
         'username'     => [
             'label' =>'username',
-            'rules' =>'required|min_length[3]|is_unique[users.username]',
+            'rules' =>'required|min_length[3]|is_unique[users.username,id,{id}]',
             'errors'=>[
                 'required'=>'required',
                 'min_length'=>'short',
@@ -40,25 +40,15 @@ class UserModel extends Model
                 'min_length'=>'short'
             ]
         ],
-        'password_confirm'     => [
-            'label' =>'password',
-            'rules' =>'required_with[password]|matches[password]',
-            'errors'=>[
-                'required_with'=>'required',
-                'matches'=>'notmatches'
-            ]
-        ],
         'email'    => [
-            //'label' =>'user_email',
-            'rules' =>'permit_empty|valid_email|is_unique[users.email]',
+            'rules' =>'permit_empty|valid_email|is_unique[users.email,id,{id}]',
             'errors'=>[
                 'valid_email'=>'invalid',
                 'is_unique'=>'notunique'
             ]
         ],
         'phone'    => [
-            //'label' =>'user_phone',
-            'rules' =>'permit_empty|numeric|exact_length[11]|is_unique[users.phone]',
+            'rules' =>'permit_empty|numeric|exact_length[11]|is_unique[users.phone,id,{id}]',
             'errors'=>[
                 'numeric'=>'invalid',
                 'exact_length'=>'short',
@@ -106,7 +96,17 @@ class UserModel extends Model
         return $this->findAll();
     }
         
-    public function itemCreate ($data)
+    public function updateItem ($data)
+    {
+        $this->transBegin();
+        
+        $this->update(['id'=>$data['id']], $data);
+
+        $this->transCommit();
+
+        return true;        
+    }
+    public function createItem ($data)
     {
         if (empty($data['username'])) {
             $data['username'] = $this->generateUsername();
@@ -149,6 +149,27 @@ class UserModel extends Model
         session()->set('user_id', $user->id);
         return 'success' ;
     }
+    public function saveItemPassword($data, $user_id)
+    {
+
+        $user = $this->where('id', $user_id)->get()->getRow();
+
+        //CHECK OLD PASSWORD SECTION
+        if (!password_verify($data['old_password'], $user->password)) {
+            return 'wrong_password';
+        }
+        //CHECK PASSWORD SECTION
+        if (empty($data['password'])) {
+            return 'empty_password';
+        }
+        if ($data['password'] !== $data['password_confirm']) {
+            return 'different_password';
+        }
+        $this->set('password', $data['password']);
+        $this->where('id', $user_id);
+        return $this->update();
+    }
+
     
     private function generateUsername()
     {
@@ -187,7 +208,10 @@ class UserModel extends Model
     public function checkEmail($email)
     {
         $user = $this->where('email', $email)->get()->getRow();
-        return $user->email;
+        if(empty($user->email)){
+            return false;
+        }
+        return true;
     }
     
     public function getActiveItem(){
