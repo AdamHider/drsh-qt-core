@@ -34,14 +34,15 @@ class AchievementModel extends Model
 
     public function getList ($data) 
     {
-        $this->join('descriptions', 'descriptions.code = "achievement" AND descriptions.item_id = achievements.id AND descriptions.language_id = 1')
-        ->select('descriptions.title, descriptions.description, achievements.image, achievements.id, achievements.code, achievements.value');
+        $DescriptionModel = model('DescriptionModel');
+        
         if($data['user_id']){
             $this->join('achievements_to_users', 'achievements_to_users.achievement_id = achievements.id')
             ->where('achievements_to_users.user_id', $data['user_id']);
         }
-        $achievements = $this->limit($data['limit'], $data['offset'])->get()->getResult();
+        $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResult();
         foreach($achievements as &$achievement){
+            $achievement->description = $DescriptionModel->getItem('achievement', $achievement->id);
             $achievement->image = base_url('image/' . $achievement->image);
             $achievement->progress = $this->calculateProgress($achievement);
         }
@@ -67,20 +68,6 @@ class AchievementModel extends Model
             'is_done' => $current_progress >=  $data->value
         ];
         
-    }
-        
-    public function itemCreate ($user_id, $classroom_id)
-    {
-        $this->transBegin();
-        $data = [
-            'user_id'       => $user_id,
-            'classroom_id'  => $classroom_id
-            
-        ];
-        $user_profile_id = $this->insert($data, true);
-        $this->transCommit();
-
-        return $user_profile_id;        
     }
 
     private function total_points_Compose($value = false){

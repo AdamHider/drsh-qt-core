@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CharacterModel extends Model
+class CourseModel extends Model
 {
     protected $table      = 'characters';
     protected $primaryKey = 'id';
@@ -25,11 +25,10 @@ class CharacterModel extends Model
 
     public function getItem ($character_id) 
     {
-        $DescriptionModel = model('DescriptionModel');
-        $character = $this->where('characters.id', $character_id)->get()->getRow();
+        $character = $this->join('descriptions', 'descriptions.code = "character" AND descriptions.item_id = characters.id AND descriptions.language_id = 1')
+        ->where('characters.id', $character_id)->get()->getRow();
         if ($character) {
             $character->image = base_url('image/' . $character->image);
-            $character->description = $DescriptionModel->getItem('character', $character->id);
         }
         return $character;
     }

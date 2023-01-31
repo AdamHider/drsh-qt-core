@@ -18,7 +18,9 @@ class UserProfileModel extends Model
         'user_id', 
         'character_id', 
         'rocket_id', 
-        'fellow_id'
+        'fellow_id', 
+        'classroom_id', 
+        'course_id'
     ];
     
     protected $useTimestamps = false;
@@ -57,6 +59,16 @@ class UserProfileModel extends Model
         $this->transCommit();
 
         return $user_profile_id;        
+    }
+    public function updateItem ($data)
+    {
+        $this->transBegin();
+        
+        $this->update(['user_id'=>$data['user_id']], $data);
+
+        $this->transCommit();
+
+        return true;        
     }
     public function getItemLevel ($total_points) 
     {

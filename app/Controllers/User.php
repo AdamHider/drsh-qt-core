@@ -37,11 +37,13 @@ class User extends BaseController
     public function saveItem()
     {
         $UserModel = model('UserModel');
+        $UserProfileModel = model('UserProfileModel');
 
         $id = $this->request->getVar('user_id');
         $username = $this->request->getVar('username');
         $email    = $this->request->getVar('email');
         $phone    = $this->request->getVar('phone');
+        $profile  = $this->request->getVar('profile');
 
         if ($id !== session()->get('user_id')) {
             return $this->fail('forbidden', 403);
@@ -54,6 +56,9 @@ class User extends BaseController
         ];
 
         $result = $UserModel->updateItem($data);
+        if (!empty($profile)) {
+            $result = $UserProfileModel->updateItem($profile);
+        }
 
 
         if($UserModel->errors()){

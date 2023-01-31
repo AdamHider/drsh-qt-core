@@ -35,10 +35,10 @@ class UserClassroomModel extends Model
             'classroom_id'  => $classroom_id
             
         ];
-        $user_profile_id = $this->insert($data, true);
+        $result = $this->insert($data, true);
         $this->transCommit();
 
-        return $user_profile_id;        
+        return $result;        
     }
 
 

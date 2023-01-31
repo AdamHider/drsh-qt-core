@@ -34,6 +34,9 @@ $routes->get('/', 'Home::index');
 $routes->post('/Lesson/(:any)', 'Lesson::$1');
 $routes->post('/User/(:any)', 'User::$1');
 $routes->post('/Achievement/(:any)', 'Achievement::$1');
+$routes->post('/Classroom/(:any)', 'Classroom::$1');
+$routes->post('/Course/(:any)', 'Course::$1');
+$routes->post('/CourseSection/(:any)', 'CourseSection::$1');
 
 /*
  * --------------------------------------------------------------------
