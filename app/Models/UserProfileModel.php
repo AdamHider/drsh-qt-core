@@ -15,10 +15,7 @@ class UserProfileModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'user_id', 
         'character_id', 
-        'rocket_id', 
-        'fellow_id', 
         'classroom_id', 
         'course_id'
     ];
@@ -51,8 +48,8 @@ class UserProfileModel extends Model
         $data = [
             'user_id'       => $user_id,
             'character_id'  => getenv('user_profile.character_id'),
-            'rocket_id'     => getenv('user_profile.rocket_id'),
-            'fellow_id'     => getenv('user_profile.fellow_id')
+            'classroom_id'  => getenv('user_profile.classroom_id'),
+            'course_id'     => getenv('user_profile.course_id')
             
         ];
         $user_profile_id = $this->insert($data, true);
@@ -62,13 +59,13 @@ class UserProfileModel extends Model
     }
     public function updateItem ($data)
     {
-        $this->transBegin();
+        //$this->transBegin();
         
-        $this->update(['user_id'=>$data['user_id']], $data);
+        $result = $this->update(['user_id' => $data['user_id']], $data);
 
-        $this->transCommit();
+        //$this->transCommit();
 
-        return true;        
+        return $result;        
     }
     public function getItemLevel ($total_points) 
     {
