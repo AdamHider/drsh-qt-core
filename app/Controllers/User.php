@@ -37,32 +37,46 @@ class User extends BaseController
     public function saveItem()
     {
         $UserModel = model('UserModel');
-        $UserProfileModel = model('UserProfileModel');
 
-        $id = $this->request->getVar('user_id');
         $username = $this->request->getVar('username');
         $email    = $this->request->getVar('email');
         $phone    = $this->request->getVar('phone');
-        $profile  = $this->request->getVar('profile');
 
-        if ($id !== session()->get('user_id')) {
-            return $this->fail('forbidden', 403);
-        }
         $data = [
-            'id'        => $id,
+            'id'        => session()->get('user_id'),
             'username'  => $username,
             'email'     => $email,
             'phone'     => $phone
         ];
 
         $result = $UserModel->updateItem($data);
-        if (!empty($profile)) {
-            $result = $UserProfileModel->updateItem($profile);
-        }
 
 
         if($UserModel->errors()){
             return $this->failValidationErrors(json_encode($UserModel->errors()));
+        }
+
+        return $this->respond($result);
+    }
+    public function saveItemProfile()
+    {
+        $UserProfileModel = model('UserProfileModel');
+
+        $character_id = $this->request->getVar('character_id');
+        $classroom_id = $this->request->getVar('classroom_id');
+        $course_id    = $this->request->getVar('course_id');
+
+        $data = [
+            'user_id'       => session()->get('user_id'),
+            'character_id'  => $character_id,
+            'classroom_id'  => $classroom_id,
+            'course_id'     => $course_id
+        ];
+
+        $result = $UserProfileModel->updateItem($data);
+
+        if($UserProfileModel->errors()){
+            return $this->failValidationErrors(json_encode($UserProfileModel->errors()));
         }
 
         return $this->respond($result);
@@ -142,7 +156,7 @@ class User extends BaseController
         session_unset();
     }
     
-    public function savePassword()
+    public function saveItemPassword()
     {
         $UserModel = model('UserModel');
 
