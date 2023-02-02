@@ -117,7 +117,7 @@ class UserModel extends Model
         
         if( $user_id ){
             $UserProfileModel = model('UserProfileModel');
-            $UserProfileModel->itemCreate($user_id);
+            $UserProfileModel->createItem($user_id);
         }
 
         $this->transCommit();

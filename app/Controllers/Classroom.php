@@ -14,8 +14,9 @@ class Classroom extends BaseController
         $classroom_id = $this->request->getVar('classroom_id');
 
         if( !$classroom_id ){
-            $classroom_id = session()->get('activeClassroomId');
+            $classroom_id = session()->get('user_data')->profile->classroom_id;
         }
+        
         $result = $ClassroomModel->getItem($classroom_id);
 
         if ($result == 'not_found') {
@@ -64,14 +65,17 @@ class Classroom extends BaseController
         $user_id = session()->get('user_id');
 
         $classroom_id = $ClassroomModel->checkIfExists($code);
-
-        $result = $UserClassroomModel->itemCreate($user_id, $classroom_id);
+        if (!$classroom_id) {
+            return $this->failNotFound('not_found');
+        }
+        $UserClassroomModel->itemCreate($user_id, $classroom_id);
 
         if($UserClassroomModel->errors()){
             return $this->failValidationErrors(json_encode($UserClassroomModel->errors()));
         }
-
-        return $this->respond($result);
+        $classroom = $ClassroomModel->getItem($classroom_id);
+        return $this->respond($classroom);
+        
     }
 
 }

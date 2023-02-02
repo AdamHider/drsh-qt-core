@@ -58,6 +58,7 @@ class User extends BaseController
 
         return $this->respond($result);
     }
+
     public function saveItemProfile()
     {
         $UserProfileModel = model('UserProfileModel');
@@ -67,11 +68,17 @@ class User extends BaseController
         $course_id    = $this->request->getVar('course_id');
 
         $data = [
-            'user_id'       => session()->get('user_id'),
-            'character_id'  => $character_id,
-            'classroom_id'  => $classroom_id,
-            'course_id'     => $course_id
+            'user_id'       => session()->get('user_id')
         ];
+        if ($character_id) {
+            $data['character_id'] = $character_id;
+        }
+        if ($classroom_id) {
+            $data['classroom_id'] = $classroom_id;
+        }
+        if ($course_id) {
+            $data['course_id'] = $course_id;
+        }
 
         $result = $UserProfileModel->updateItem($data);
 
@@ -81,6 +88,7 @@ class User extends BaseController
 
         return $this->respond($result);
     }
+
     public function signUp()
     {
         $UserModel = model('UserModel');

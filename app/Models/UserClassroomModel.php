@@ -9,9 +9,6 @@ class UserClassroomModel extends Model
     protected $table      = 'user_classrooms';
     protected $primaryKey = 'user_id';
 
-    protected $useAutoIncrement = true;
-
-    protected $returnType = 'array';
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
@@ -35,10 +32,10 @@ class UserClassroomModel extends Model
             'classroom_id'  => $classroom_id
             
         ];
-        $result = $this->insert($data, true);
+        $this->insert($data, true);
+        
         $this->transCommit();
-
-        return $result;        
+        return;        
     }
 
 

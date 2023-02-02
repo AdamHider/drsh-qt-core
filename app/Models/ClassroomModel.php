@@ -34,7 +34,7 @@ class ClassroomModel extends Model
         if ($classroom) {
             $classroom->description = $DescriptionModel->getItem('classroom', $classroom->id);
             $classroom->image = base_url('image/' . $classroom->image);
-            $classroom->backgorund_image = base_url('backgorund_image/' . $classroom->backgorund_image);
+            $classroom->background_image = base_url('image/' . $classroom->background_image);
         } else {
             return 'not_found';
         }
