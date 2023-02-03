@@ -27,8 +27,8 @@ class Course extends BaseController
     }
     public function getList()
     {
-        $UserModel = model('UserModel');
-        $result = $UserModel->getList();
+        $CourseModel = model('CourseModel');
+        $result = $CourseModel->getList();
         return $this->respond($result, 200);
     }
 

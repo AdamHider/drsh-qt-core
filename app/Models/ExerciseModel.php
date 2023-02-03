@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CourseSectionModel extends Model
+class ExerciseModel extends Model
 {
-    protected $table      = 'course_sections';
+    protected $table      = 'exercises';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -23,21 +23,24 @@ class CourseSectionModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    public function getItem ($course_section_id) 
+    public function getItem ($exercise_id) 
     {
-        if ($course_section_id == 0) {
-            return 'not_found';
-        }
+        $exercise = $this->where('id', $exercise_id)->get()->getRow();
+        return $exercise;
+    }
+    public function getList () 
+    {
         $DescriptionModel = model('DescriptionModel');
-        $course_section = $this->where('id', $course_section_id)->get()->getRow();
-        if ($course_section) {
-            $course_section->description = $DescriptionModel->getItem('course_section', $course_section->id);
-            $course_section->image = base_url('image/' . $course_section->image);
-            $course_section->background_image = base_url('image/' . $course_section->background_image);
-        } else {
-            return 'not_found';
+        $CourseSectionModel = model('CourseSectionModel');
+        
+        $lessons = $this->get()->getResult();
+        foreach($lessons as &$lesson){
+            $lesson->parent_description = $CourseSectionModel->getItem($lesson->course_section_id);
+            $lesson->description = $DescriptionModel->getItem('course', $lesson->id);
+            $lesson->image = base_url('image/' . $lesson->image);
+            $lesson->background_image = base_url('image/' . $lesson->background_image);
         }
-        return $course_section;
+        return $lessons;
     }
         
     public function itemCreate ($image)

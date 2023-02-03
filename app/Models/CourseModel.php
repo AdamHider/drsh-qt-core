@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class CourseModel extends Model
 {
-    protected $table      = 'characters';
+    protected $table      = 'courses';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -31,6 +31,18 @@ class CourseModel extends Model
             $character->image = base_url('image/' . $character->image);
         }
         return $character;
+    }
+    public function getList () 
+    {
+        $DescriptionModel = model('DescriptionModel');
+        
+        $courses = $this->get()->getResult();
+        foreach($courses as &$course){
+            $course->description = $DescriptionModel->getItem('course', $course->id);
+            $course->image = base_url('image/' . $course->image);
+            $course->background_image = base_url('image/' . $course->background_image);
+        }
+        return $courses;
     }
         
     public function itemCreate ($image)

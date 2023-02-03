@@ -53,6 +53,7 @@ class ClassroomModel extends Model
             $classroom->description = $DescriptionModel->getItem('classroom', $classroom->id);
             $classroom->image = base_url('image/' . $classroom->image);
             $classroom->background_image = base_url('image/' . $classroom->background_image);
+            $classroom->is_active = session()->get('user_data')->profile->classroom_id == $classroom->id;
         }
         return $classrooms;
     }
