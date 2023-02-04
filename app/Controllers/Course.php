@@ -9,21 +9,21 @@ class Course extends BaseController
     public function getItem()
     {
         
-        $UserModel = model('UserModel');
+        $CourseModel = model('CourseModel');
 
-        $user_id = $this->request->getVar('user_id');
+        $course_id = $this->request->getVar('course_id');
 
-        if( !$user_id ){
-            $user_id = session()->get('user_id');
+        if( !$course_id ){
+            $course_id = session()->get('user_data')->profile->course_id;
         }
 
-        $user = $UserModel->getItem($user_id);
+        $course = $CourseModel->getItem($course_id);
 
-        if ($user == 'not_found') {
+        if (!$course) {
             return $this->failNotFound('not_found');
         }
 
-        return $this->respond($user);
+        return $this->respond($course);
     }
     public function getList()
     {

@@ -22,7 +22,16 @@ class Lesson extends BaseController
     public function getList()
     {
         $LessonModel = new LessonModel();
-        $result = $LessonModel->getList();
+
+        $limit = $this->request->getVar('limit');
+        $offset = $this->request->getVar('offset');
+
+        $data = [
+            'limit' => $limit,
+            'offset' => $offset
+        ];
+
+        $result = $LessonModel->getList($data);
         return $this->respond($result, 200);
     }
 }

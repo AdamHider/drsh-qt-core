@@ -23,27 +23,48 @@ class CourseModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    public function getItem ($character_id) 
+    public function getItem ($course_id) 
     {
-        $character = $this->join('descriptions', 'descriptions.code = "character" AND descriptions.item_id = characters.id AND descriptions.language_id = 1')
-        ->where('characters.id', $character_id)->get()->getRow();
-        if ($character) {
-            $character->image = base_url('image/' . $character->image);
+        $DescriptionModel = model('DescriptionModel');
+        
+        $course = $this->where('id', $course_id)->get()->getRow();
+        if(!empty($course)){
+            $course->description = $DescriptionModel->getItem('course', $course->id);
+            $course->image = base_url('image/' . $course->image);
+            $course->background_image = base_url('image/' . $course->background_image);
+            $course->progress = $this->getProgress($course->id);
+            $course->progress->percentage = ceil($course->progress->total_exercises * 100 / $course->progress->total_lessons);
         }
-        return $character;
+        return $course;
     }
     public function getList () 
     {
         $DescriptionModel = model('DescriptionModel');
         
         $courses = $this->get()->getResult();
+
+
         foreach($courses as &$course){
             $course->description = $DescriptionModel->getItem('course', $course->id);
             $course->image = base_url('image/' . $course->image);
             $course->background_image = base_url('image/' . $course->background_image);
+            $course->progress = $this->getProgress($course->id);
+            $course->progress->percentage = ceil($course->progress->total_exercises * 100 / $course->progress->total_lessons);
+            $course->is_active = session()->get('user_data')->profile->course_id == $course->id;
         }
         return $courses;
     }
+    private function getProgress($course_id)
+    {
+        $progress = $this->join('lessons', 'lessons.course_id = courses.id')
+        ->join('exercises', 'exercises.lesson_id = lessons.id', 'left')
+        ->select("COALESCE(sum(exercises.points), 0) as total_points, COALESCE(COUNT(exercises.points), 0) as total_exercises, COALESCE(COUNT(lessons.id), 0) as total_lessons")
+        ->where('courses.id', $course_id)
+        ->get()->getRow();
+
+        return $progress;
+    }
+
         
     public function itemCreate ($image)
     {

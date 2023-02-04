@@ -31,8 +31,7 @@ class UserProfileModel extends Model
 
         $user_statistics = $this->join('exercises', 'exercises.user_id = user_profiles.user_id', 'left')
         ->select("COALESCE(sum(exercises.points), 0) as total_points, COALESCE(COUNT(exercises.points), 0) as total_exercises")
-        ->get()
-        ->getRow();
+        ->get()->getRow();
         $profile->total_points = $user_statistics->total_points;
         $profile->total_exercises = $user_statistics->total_exercises;
         $profile->level = $this->getItemLevel($user_statistics->total_points);
