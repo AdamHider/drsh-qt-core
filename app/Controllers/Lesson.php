@@ -8,20 +8,22 @@ class Lesson extends BaseController
 {
     use ResponseTrait;
 
-    public function index()
-    {
-        echo "Lesson Introduction";
-        //return view('welcome_message');
-    }
     public function getItem()
     {
-        $LessonModel = new LessonModel();
-        $result = $LessonModel->getItem(1);
-        return $this->respond($result, 200);
+        $LessonModel = model('LessonModel');
+
+        $lesson_id = $this->request->getVar('lesson_id');
+        
+        $lesson = $LessonModel->getItem($lesson_id);
+        
+        if ($lesson == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($lesson);
     }
     public function getList()
     {
-        $LessonModel = new LessonModel();
+        $LessonModel = model('LessonModel');
 
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
@@ -33,5 +35,31 @@ class Lesson extends BaseController
 
         $result = $LessonModel->getList($data);
         return $this->respond($result, 200);
+    }
+    public function getSatellites()
+    {
+        $LessonModel = model('LessonModel');
+
+        $lesson_id = $this->request->getVar('lesson_id');
+        
+        $satellites = $LessonModel->getSatellites($lesson_id, 'full');
+        
+        if (empty($satellites)) {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($satellites);
+    }
+    public function getPage()
+    {
+        $LessonPageModel = model('LessonPageModel');
+
+        $lesson_id = $this->request->getVar('lesson_id');
+        
+        $page = $LessonPageModel->getItem($lesson_id);
+        
+        if (empty($page)) {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($page);
     }
 }

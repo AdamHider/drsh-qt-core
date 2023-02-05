@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 use stdClass;
 
-class LessonModel extends Model
+class LessonPageModel extends Model
 {
     protected $table      = 'lessons';
     protected $primaryKey = 'id';
@@ -19,39 +19,63 @@ class LessonModel extends Model
         'image'
     ];
     
-    protected $useTimestamps = false;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
-    public function getItem ($lesson_id) 
+    public function getItem($filter) 
     {
-        $DescriptionModel = model('DescriptionModel');
-        $CourseSectionModel = model('CourseSectionModel');
-        $ExerciseModel = model('ExerciseModel');
-
-        $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRow();
-
-        if(!$lesson){
-            return 'not_found';
+        $ExerciseModel = $this->getModel('exercise');
+        
+        $exercise = $ExerciseModel->exerciseGet(['lesson_id' => $filter['lesson_id']]);
+        
+        $pages = $exercise['lesson_pages'];
+        
+        if(empty($pages)){
+            return false;
         }
-        if ($lesson) {
-            $lesson->course_section = $CourseSectionModel->getItem($lesson->course_section_id);
-            $lesson->description = $DescriptionModel->getItem('lesson', $lesson->id);
-            $lesson->image = base_url('image/' . $lesson->image);
-            $lesson->background_image = base_url('image/' . $lesson->background_image);
-            $lesson->exercise = $ExerciseModel->getItem($lesson->exercise_id);
-            $lesson->is_blocked = $this->checkBlocked($lesson->unblock_after);
-            if($lesson->parent_id){
-                $lesson->master_lesson = $DescriptionModel->getItem('lesson', $lesson->parent_id);
+        $exercise['data']['total_pages'] = count($pages);
+        if(empty($filter['action'])){
+            $filter['action'] = 'current';
+        }
+        $index = $this->getIndexByAction($filter['action'], $exercise);
+        if($index['available']){
+            $exercise['data'] = $index['exercise_data'];
+            $filter['page_index'] = $index['index'];
+        } else {
+            return $index;
+        }
+        
+        $page_index = $filter['page_index'];
+        
+        if(!empty($pages[$page_index])){
+            $page = [
+                'exercise' => []
+            ];
+            $page_data = $pages[$page_index];
+            $page['answers'] = [
+                'is_finished' => false
+            ];
+            if(!empty($exercise['data']['answers'][$page_index])){
+                $page['answers'] = $exercise['data']['answers'][$page_index];
             }
-           
-            
+            /*
+            $page_html = $this->renderPage($page_data, $page_index);
+            if(!empty($page_data['template_config']['input_list'])){
+                $page_html = $this->renderFields($page_data, $page_index, $page_html, $exercise['data']);
+            }*/
+            $page['exercise']         = $exercise;
+            //$page['views']['content'] = $this->renderComponents($page_data, $page_index, $page_html);
+            //$page['views']['actions'] = $this->renderPageActions($page_data, $exercise['data']);
+            $page['data'] = $this->composeItemData($page_data);
+            $page['fields'] = $this->composeItemFields($page_data, $exercise);
+            unset($page_data['template_config']);
+            $page['header'] = $page_data;
+            return $page;
+        } 
+        if($exercise['data']['total_pages'] == $page_index && !$exercise['finished_at']){
+            $Exercise->saveExercise(['id' => $exercise['id']], $exercise, 'finish');
         }
-        return $lesson;
+        
+        return false;
     }
+
     public function getList ($data) 
     {
         $DescriptionModel = model('DescriptionModel');
