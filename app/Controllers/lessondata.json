@@ -1,52 +1,4 @@
-'{
-    "start_page":{
-        "number": "2",
-        "type": "common",
-        "title": "Знакомство",
-        "subtitle": "Привет",
-        "description_header": "Meraba",
-        "description_text": "В этом уроке Вы научитесь приветствовать своих друзей и знакомых на крымскотатарском языке.",
-        "background_image": "../../images/lessons/1A/pandaren.jpg",
-        "future_abilities" : [
-            {
-                "type": "reading",
-                "animation": {
-                    "type": "fadeInFromRight",
-                    "sort_order": 6
-                }
-            },
-            {
-                "type": "writing",
-                "animation": {
-                    "type": "fadeInFromRight",
-                    "sort_order": 8
-                }
-            },
-            {
-                "type": "listening",
-                "animation": {
-                    "type": "fadeInFromRight",
-                    "sort_order": 7
-                }
-            },
-            {
-                "type": "speaking",
-                "animation": {
-                    "type": "fadeInFromRight",
-                    "sort_order": 9
-                }
-            }
-        ]
-    }, 
-    "finish_page":{
-        "number": "2",
-        "title": "Знакомство",
-        "subtitle": "Привет",
-        "description_header": "Meraba",
-        "description_text": "В этом уроке Вы научитесь приветствовать своих друзей и знакомых на крымскотатарском языке.",
-        "background_image": "../../images/lessons/1A/pandaren.jpg"
-    },
-    "pages": [
+    [
         {
             "index": 1,
             "title": "Diñleyik, tekrarlayıq",
@@ -1373,7 +1325,3 @@
             }
         }
     ]
-}
-
-
-'

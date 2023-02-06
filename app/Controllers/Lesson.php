@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
-use App\Models\LessonModel;
 class Lesson extends BaseController
 {
     use ResponseTrait;
@@ -54,8 +53,9 @@ class Lesson extends BaseController
         $LessonPageModel = model('LessonPageModel');
 
         $lesson_id = $this->request->getVar('lesson_id');
+        $action = $this->request->getVar('action');
         
-        $page = $LessonPageModel->getItem($lesson_id);
+        $page = $LessonPageModel->getPage($lesson_id, NULL, $action);
         
         if (empty($page)) {
             return $this->failNotFound('not_found');
