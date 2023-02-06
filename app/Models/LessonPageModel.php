@@ -8,47 +8,27 @@ use stdClass;
 class LessonPageModel extends LessonModel
 {
     
-    public function getPage($lesson_id, $index, $action)
+    public function getPage($lesson_id, $index, $action = 'current')
     {
         $exercise = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray();
+        ->where('lessons.id', $lesson_id)->get()->getRow();
 
-        $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
-        $exercise['lesson_pages'] = (array) json_decode($exercise['lesson_pages'], true, JSON_UNESCAPED_UNICODE);
-        $pages = $exercise['lesson_pages'];
-        if(empty($pages)){
-            return false;
-        }
-        $exercise['data']['total_pages'] = count($pages);
-        if(empty($action)){
-            $action = 'current';
-        }
+        $exercise->data = json_decode($exercise->data, false, JSON_UNESCAPED_UNICODE);
+        $exercise->lesson_pages = (array) json_decode($exercise->lesson_pages, false, JSON_UNESCAPED_UNICODE);
         
         $checked_index = $this->checkPageIndex($action, $exercise);
+        print_r($checked_index);
+        die;
         if($checked_index['available']){
             $exercise['data'] = $checked_index['exercise_data'];
             $index = $checked_index['index'];
         } else {
             return $checked_index;
         }
-        $page_index = $index;
         
-        if(!empty($pages[$page_index])){
-            $page = [];
-            $page_data = $pages[$page_index];
-            $page['answers'] = [
-                'is_finished' => false
-            ];
-            if(!empty($exercise['data']['answers'][$page_index])){
-                $page['answers'] = $exercise['data']['answers'][$page_index];
-            }
-            $page['exercise'] = $exercise;
-            $page['data'] = $this->composeItemData($page_data);
-            $page['fields'] = $this->composeItemFields($page_data, $exercise);
-            unset($page_data['template_config']);
-            $page['header'] = $page_data;
-            return $page;
+        if(!empty($exercise->lesson_pages[$index])){
+            return $this->composePage($exercise);
         } 
         if($exercise['data']['total_pages'] == $page_index && !$exercise['finished_at']){
             $ExerciseModel = model('ExerciseModel');
@@ -56,6 +36,24 @@ class LessonPageModel extends LessonModel
         }
         
         return false;
+    }
+
+    private function composePage($exercise)
+    {
+        $page = [];
+        $page_data = $exercise->lesson_pages[$page_index];
+        $page['answers'] = [
+            'is_finished' => false
+        ];
+        if(!empty($exercise['data']['answers'][$page_index])){
+            $page['answers'] = $exercise['data']['answers'][$page_index];
+        }
+        $page['exercise'] = $exercise;
+        $page['data'] = $this->composeItemData($page_data);
+        $page['fields'] = $this->composeItemFields($page_data, $exercise);
+        unset($page_data['template_config']);
+        $page['header'] = $page_data;
+        return $page;
     }
 
     private function composeItemData($page_data)
@@ -117,62 +115,34 @@ class LessonPageModel extends LessonModel
     private function checkPageIndex($action, $exercise)
     {
         $ExerciseModel = model('ExerciseModel');
-        //$Answer = $this->getController('answer');
-        $result = [
-            'available' => true,
-            'index'     => 0,
-            'message'   => ''
-        ];
+        $result = new stdClass;
+        $result->available  = true;
         if($action == 'next'){
-            if($exercise['data']['current_page'] == $exercise['data']['total_pages']){            
-                $result['available'] = false;
+            if($exercise->data->current_page == $exercise->data->total_pages){            
+                $result->available = false;
                 return $result;
             }
-            $exercise['data']['current_page']++;
+            $exercise->data->current_page++;
         }
         if($action == 'previous'){
-            if($exercise['data']['back_attempts'] == 0){            
-                $result['available'] = false;
-                $result['message'] = 'No back attempts left';
+            if($exercise->data->back_attempts == 0){               
+                $result->available  = false;
+                $result->message    = 'No back attempts left';
                 return $result;
             }
-            $exercise['data']['current_page']--;
-            $exercise['data']['back_attempts']--;
+            $exercise->data->current_page--;
+            $exercise->data->back_attempts--;
         }
         if($action == 'again'){
-            if($exercise['data']['again_attempts'] == 0){            
-                $result['available'] = false;
-                $result['message'] = 'No again attempts left';
+            if($exercise->data->again_attempts == 0){             
+                $result->available  = false;
+                $result->message    = 'No again attempts left';
                 return $result;
             }
-            //$exercise = $Answer->refreshAnswer($exercise);
-            $exercise['data']['again_attempts']--;
+            $exercise->data->again_attempts--;
         }
-        /*
-        if($action == 'skip'){
-            if($exercise['data']['skip_attempts'] == 0){            
-                $result['available'] = false;
-                $result['message'] = 'No skip attempts left';
-                return $result;
-            }
-            if(array_search($exercise['data']['current_page'], array_column($exercise['data']['skipped_pages'], 'index')) === false){
-                $exercise['data']['skipped_pages'][] = [
-                    'index' => $exercise['data']['current_page'],
-                    'title' => $exercise['lesson_pages'][$exercise['data']['current_page']]['title']
-                ];
-                $exercise['data']['skip_attempts']--;
-            }
-            $exercise['data']['current_page']++;
-        }
-        if(strpos($action, 'open_skipped') > -1){
-            $page_index = explode('|', $action)[1];
-            if(array_search($page_index, array_column($exercise['data']['skipped_pages'], 'index')) !== false){
-                $exercise['data']['current_page'] = $page_index;
-            }
-        }
-        */
-        $result['index'] = $exercise['data']['current_page'];
-        $result['exercise_data'] = $exercise['data'];
+        $result->exercise_data  = $exercise->data;
+        $result->index          = $exercise->data->current_page;
         $ExerciseModel->updateItem($exercise);
         return $result;
     }
