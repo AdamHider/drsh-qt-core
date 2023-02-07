@@ -32,24 +32,23 @@ class LessonModel extends Model
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRow();
+        ->where('lessons.id', $lesson_id)->get()->getRowArray();
 
         if(!$lesson){
             return 'not_found';
         }
         if ($lesson) {
-            $lesson->course_section = $CourseSectionModel->getItem($lesson->course_section_id);
-            $lesson->description = $DescriptionModel->getItem('lesson', $lesson->id);
-            $lesson->image = base_url('image/' . $lesson->image);
-            $lesson->background_image = base_url('image/' . $lesson->background_image);
-            $lesson->exercise = $ExerciseModel->getItem($lesson->exercise_id);
-            $lesson->is_blocked = $this->checkBlocked($lesson->unblock_after);
-            if($lesson->parent_id){
-                $lesson->master_lesson = $DescriptionModel->getItem('lesson', $lesson->parent_id);
+            $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
+            $lesson['description'] = $DescriptionModel->getItem('lesson', $lesson['id']);
+            $lesson['image'] = base_url('image/' . $lesson['image']);
+            $lesson['background_image'] = base_url('image/' . $lesson['background_image']);
+            $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
+            $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
+            if($lesson['parent_id']){
+                $lesson['master_lesson'] = $DescriptionModel->getItem('lesson', $lesson['parent_id']);
             }
-           
-            
         }
+        unset($lesson['pages']);
         return $lesson;
     }
     public function getList ($data) 
@@ -62,18 +61,19 @@ class LessonModel extends Model
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')->profile->course_id)
         ->where('lessons.parent_id IS NULL')
-        ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResult();
+        ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
         foreach($lessons as $key => &$lesson){
             if(isset($data['offset'])){
-                $lesson->order = $key + $data['offset'];
+                $lesson['order'] = $key + $data['offset'];
             }
-            $lesson->course_section = $CourseSectionModel->getItem($lesson->course_section_id);
-            $lesson->description = $DescriptionModel->getItem('lesson', $lesson->id);
-            $lesson->satellites = $this->getSatellites($lesson->id, 'lite');
-            $lesson->image = base_url('image/' . $lesson->image);
-            $lesson->background_image = base_url('image/' . $lesson->background_image);
-            $lesson->exercise = $ExerciseModel->getItem($lesson->exercise_id);
-            $lesson->is_blocked = $this->checkBlocked($lesson->unblock_after);
+            $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
+            $lesson['description'] = $DescriptionModel->getItem('lesson', $lesson['id']);
+            $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
+            $lesson['image'] = base_url('image/' . $lesson['image']);
+            $lesson['background_image'] = base_url('image/' . $lesson['background_image']);
+            $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
+            $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
+            unset($lesson['pages']);
         }
         return $lessons;
     }
@@ -82,25 +82,25 @@ class LessonModel extends Model
         $DescriptionModel = model('DescriptionModel');
         $ExerciseModel = model('ExerciseModel');
 
-        $result = new stdClass;
-        $result->preview_total = 3;
+        $result = [];
+        $result['preview_total'] = 3;
 
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.parent_id', $lesson_id)->orderBy('id')->get()->getResult();
+        ->where('lessons.parent_id', $lesson_id)->orderBy('id')->get()->getResultArray();
 
         foreach($satellites as $key => &$satellite){
-            $satellite->image = base_url('image/' . $satellite->image);
-            $satellite->description = $DescriptionModel->getItem('lesson', $satellite->id);
+            $satellite['image'] = base_url('image/' . $satellite['image']);
+            $satellite['description'] = $DescriptionModel->getItem('lesson', $satellite['id']);
             if($mode == 'full'){
-                $satellite->background_image = base_url('image/' . $satellite->background_image);
-                $satellite->exercise = $ExerciseModel->getItem($satellite->exercise_id);
-                $satellite->is_blocked = $this->checkBlocked($satellite->unblock_after);
+                $satellite['background_image'] = base_url('image/' . $satellite['background_image']);
+                $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
+                $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
             }
         }
-        $result->preview_list = $this->composeSatellitesPriview($satellites, $result->preview_total);
+        $result['preview_list'] = $this->composeSatellitesPriview($satellites, $result['preview_total']);
         if ($mode == 'full') {
-            $result->list = $satellites;
+            $result['list'] = $satellites;
 
         }
         return $result;
@@ -118,10 +118,10 @@ class LessonModel extends Model
             if($index == $total){
                 break;
             }
-            $satellite->size = rand(15, 20);
-            $satellite->distance = 2*$index;
-            $satellite->duration = rand(15, 20);
-            $satellite->delay = rand(1, 5);
+            $satellite['size'] = rand(15, 20);
+            $satellite['distance'] = 2*$index;
+            $satellite['duration'] = rand(15, 20);
+            $satellite['delay'] = rand(1, 5);
             $result[] = $satellite;
         }
         

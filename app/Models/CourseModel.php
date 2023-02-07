@@ -27,13 +27,13 @@ class CourseModel extends Model
     {
         $DescriptionModel = model('DescriptionModel');
         
-        $course = $this->where('id', $course_id)->get()->getRow();
+        $course = $this->where('id', $course_id)->get()->getRowArray();
         if(!empty($course)){
-            $course->description = $DescriptionModel->getItem('course', $course->id);
-            $course->image = base_url('image/' . $course->image);
-            $course->background_image = base_url('image/' . $course->background_image);
-            $course->progress = $this->getProgress($course->id);
-            $course->progress->percentage = ceil($course->progress->total_exercises * 100 / $course->progress->total_lessons);
+            $course['description'] = $DescriptionModel->getItem('course', $course['id']);
+            $course['image'] = base_url('image/' . $course['image']);
+            $course['background_image'] = base_url('image/' . $course['background_image']);
+            $course['progress'] = $this->getProgress($course['id']);
+            $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
         }
         return $course;
     }
@@ -41,16 +41,16 @@ class CourseModel extends Model
     {
         $DescriptionModel = model('DescriptionModel');
         
-        $courses = $this->get()->getResult();
+        $courses = $this->get()->getResultArray();
 
 
         foreach($courses as &$course){
-            $course->description = $DescriptionModel->getItem('course', $course->id);
-            $course->image = base_url('image/' . $course->image);
-            $course->background_image = base_url('image/' . $course->background_image);
-            $course->progress = $this->getProgress($course->id);
-            $course->progress->percentage = ceil($course->progress->total_exercises * 100 / $course->progress->total_lessons);
-            $course->is_active = session()->get('user_data')->profile->course_id == $course->id;
+            $course['description'] = $DescriptionModel->getItem('course', $course['id']);
+            $course['image'] = base_url('image/' . $course['image']);
+            $course['background_image'] = base_url('image/' . $course['background_image']);
+            $course['progress'] = $this->getProgress($course['id']);
+            $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
+            $course['is_active'] = session()->get('user_data')->profile['course_id'] == $course['id'];
         }
         return $courses;
     }
@@ -60,7 +60,7 @@ class CourseModel extends Model
         ->join('exercises', 'exercises.lesson_id = lessons.id', 'left')
         ->select("COALESCE(sum(exercises.points), 0) as total_points, COALESCE(COUNT(exercises.points), 0) as total_exercises, COALESCE(COUNT(lessons.id), 0) as total_lessons")
         ->where('courses.id', $course_id)
-        ->get()->getRow();
+        ->get()->getRowArray();
 
         return $progress;
     }

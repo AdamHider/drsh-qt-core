@@ -50,5 +50,15 @@ class Exercise extends BaseController
         $result = $ExerciseModel->getList($data);
         return $this->respond($result, 200);
     }
+    public function saveAnswer()
+    {
+        $ExerciseAnswerModel = model('ExerciseAnswerModel');
+
+        $lesson_id = $this->request->getVar('lesson_id');
+        $data = (array) $this->request->getVar('data');
+
+        $result = $ExerciseAnswerModel->saveAnswer($lesson_id, $data);
+        return $this->respond($result, 200);
+    }
     
 }
