@@ -29,14 +29,12 @@ class ExerciseModel extends Model
         'finished_at'
     ];
     private $empty_data = [
-        'skip_attempts'     => 2,
         'back_attempts'     => 3,
         'again_attempts'    => 3,
         'current_page'      => 0,
-        'skipped_pages'     => [],
-        'answers'   => [],
-        'totals'    => [
-            'total'       => 0
+        'answers'           => [],
+        'totals'            => [
+            'total'         => 0
         ]
     ];
     
@@ -84,8 +82,6 @@ class ExerciseModel extends Model
             'lesson_pages' => $lesson['pages'],
             'exercise_pending' => $this->empty_data,
             'exercise_submitted' =>  [],
-            'points' => 0,
-            'attempts' => 0,
             'began_at' => date("Y-m-d H:i:s")
         ];
         $exercise_id = $this->insert($data, true);
@@ -97,40 +93,22 @@ class ExerciseModel extends Model
     {
         if(!empty($action)){
             if($action == 'start'){
-                $data['exercise_pending'] = $data['data'];
-                $data['began_at'] = date("Y-m-d H:i:s");
-                $data['finished_at'] = NULL;
+                $data['exercise_pending']   = $data['data'];
+                $data['began_at']           = date("Y-m-d H:i:s");
+                $data['finished_at']        = NULL;
             } 
             if($action == 'finish'){
-                $data['exercise_pending'] = NULL;
-                $data['finished_at'] = date("Y-m-d H:i:s");
-                
-                $data['data']['totals'] = $this->totalsCalculate($data);
-                
-                $exercise_submitted = $this->select('exercise_submitted')->where('id', $data['id'])->get()->getRowArray()['exercise_submitted']; 
-                $exercise_submitted = json_decode($exercise_submitted, true, JSON_UNESCAPED_UNICODE);
-                if(!empty($exercise_submitted) && $exercise_submitted['totals']['total'] > $data['data']['totals']['total']){
-                    $data['exercise_submitted'] = $exercise_submitted['data'];
-                } else {
-                    $data['exercise_submitted'] = $data['data'];
-                }
-                $data['points'] = $data['exercise_submitted']['totals']['total'];
-                $data['began_at'] = NULL;
+                $data['exercise_pending']   = NULL;
+                $data['finished_at']        = date("Y-m-d H:i:s");
+                $data['data']['totals']     = $this->calculateTotals($data);
+                $data['exercise_submitted'] = $this->chooseBestResult($data);
+                $data['points']             = $data['exercise_submitted']['totals']['total'];
             }
         } else {
-            $data['exercise_pending'] = $data['data'];
-            $data['began_at'] = NULL;
-            $data['finished_at'] = NULL;
+            $data['exercise_pending']   = $data['data'];
+            $data['finished_at']        = NULL;
         }
-        if(empty($data['answers'])){
-            $data['answers'] = [];
-        }
-        if(empty($data['exercise_pending'])){
-            $data['exercise_pending'] = NULL;
-        }
-        if(empty($data['exercise_submitted'])){
-            $data['exercise_submitted'] = NULL;
-        }
+
         $this->transBegin();
         $this->set($data);
         $this->where('id', $data['id']);
@@ -140,53 +118,80 @@ class ExerciseModel extends Model
 
         return $result;        
     }
-    public function exerciseGetSubmitted($exercise_id)
+    public function redoItem($lesson_id)
     {
-
+        
+        $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
+        ->where('lesson_id', $lesson_id)->get()->getRowArray();
+        if(!empty($exercise)){
+            $exercise['lesson_pages'] = json_decode($exercise['lesson_pages'], true, JSON_UNESCAPED_UNICODE);
+            $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
+    
+            unset($exercise['exercise_pending']);
+            unset($exercise['exercise_submitted']);
+        } else {
+            return false;
+        }
+        $exercise['data'] = $this->empty_data;
+        $exercise['attempts']++;
+        return $this->updateItem($exercise, 'start');
     }
-
-    private function totalsCalculate($exercise)
+    private function calculateTotals($exercise)
     {
         $data = [];
         $data['total'] = $exercise['data']['totals']['total'];
         $data['exercises'] = $exercise['data']['totals']['total'];
         $data['total_pages'] = count($exercise['data']['answers']);
         if(!empty($exercise['finished_at'])){
-            $start_date = new Time($exercise['began_at']);
-            $finish_date = new Time($exercise['finished_at']);
-            $diff = $start_date->difference($finish_date);
-            $time_difference = $diff->hours.''.$diff->minutes.''.$diff->seconds;
-            $time_difference_seconds = strtotime($exercise['finished_at']) - strtotime($exercise['began_at']);
-            $more_than_day = $time_difference_seconds/3600 > 24;
-            if($more_than_day){
-                $time_difference = '+24:00:00';
-            }
-            $extra_points = 200 - ceil($time_difference_seconds/60*7);
-            if($extra_points < 0 || $time_difference_seconds < 0){
-                $extra_points = 10;
-            }
-            if($extra_points > 200){
-                $extra_points = 200;
-            }
-            $data['total'] += $extra_points;
-            $data['time'] = $extra_points;
-            $data['time_difference'] = $time_difference;
+            $time_points = $this->calculateTotalTimePoints($exercise);
+            $data['total'] += $time_points;
+            $data['time'] = $time_points;
         } else {
             $data['time'] = 0;
         }
         if(!empty($exercise['attempts']) && $exercise['attempts'] !== 0){
-            $extra_points = $exercise['attempts']*10;
-            if($extra_points > 50){
-                $extra_points = 50;
+            $attempts_points = $exercise['attempts']*10;
+            if($attempts_points > 50){
+                $attempts_points = 50;
             }
-            $data['total'] += $extra_points;
-            $data['attempts'] = $extra_points;
+            $data['total'] += $attempts_points;
+            $data['attempts'] = $attempts_points;
             $data['attempts_count'] = $exercise['attempts'];
         } else {
             $data['attempts'] = 0;
             $data['attempts_count'] = 1;
         }
         return $data;
+    }
+    private function calculateTotalTimePoints($exercise)
+    {
+        $start_date = new \DateTime($exercise['began_at']);
+        $finish_date = new \DateTime($exercise['finished_at']);
+        //$difference_readable = $start_date->diff($finish_date)->format('%H:%I:%S');
+        $difference = strtotime($exercise['finished_at']) - strtotime($exercise['began_at']);
+        $more_than_day = $difference/3600 > 24;
+        if($more_than_day){
+            $time_difference = 'More than a day';
+        }
+        $time_points = 200 - ceil($difference/60*7);
+        if($time_points < 0 || $difference < 0){
+            $time_points = 10;
+        }
+        if($time_points > 200){
+            $time_points = 200;
+        }
+        return $time_points;
+    }
+
+    private function chooseBestResult ($exercise)
+    {
+        $exercise_submitted = $this->select('exercise_submitted')->where('id', $exercise['id'])->get()->getRowArray()['exercise_submitted']; 
+        $exercise_submitted = json_decode($exercise_submitted, true, JSON_UNESCAPED_UNICODE);
+        if(!empty($exercise_submitted) && $exercise_submitted['totals']['total'] > $exercise['data']['totals']['total']){
+            return $exercise_submitted['data'];
+        } else {
+            return $exercise['data'];
+        }
     }
     protected function jsonPrepare (array $data)
     {

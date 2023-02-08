@@ -33,6 +33,27 @@ class Exercise extends BaseController
         if ($exercise_id == 'not_found') {
             return $this->failNotFound('not_found');
         }
+        if($ExerciseModel->errors()){
+            return $this->failValidationErrors(json_encode($ExerciseModel->errors()));
+        }
+        return $this->respond($exercise_id);
+    }
+    public function redoItem()
+    {
+        $ExerciseModel = model('ExerciseModel');
+
+        $lesson_id = $this->request->getVar('lesson_id');
+        if (!$lesson_id) {
+            return $this->fail('no_lesson');
+        }
+        $exercise_id = $ExerciseModel->redoItem($lesson_id);
+        
+        if (!$exercise_id) {
+            return $this->failNotFound('not_found');
+        }
+        if($ExerciseModel->errors()){
+            return $this->failValidationErrors(json_encode($ExerciseModel->errors()));
+        }
         return $this->respond($exercise_id);
     }
     public function getList()
@@ -58,6 +79,9 @@ class Exercise extends BaseController
         $data = (array) $this->request->getVar('data');
 
         $result = $ExerciseAnswerModel->saveAnswer($lesson_id, $data);
+        if($ExerciseAnswerModel->errors()){
+            return $this->failValidationErrors(json_encode($ExerciseAnswerModel->errors()));
+        }
         return $this->respond($result, 200);
     }
     
