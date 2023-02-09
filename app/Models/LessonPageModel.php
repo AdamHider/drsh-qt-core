@@ -17,6 +17,9 @@ class LessonPageModel extends LessonModel
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
         
         $exercise = $ExerciseModel->getItem($lesson['exercise_id']);
+        if(empty($exercise)){
+            return false;
+        }
         $exercise['data']['total_pages'] = count($exercise['lesson_pages']);
 
         $checked = $this->checkIfAvailable($exercise, $action);
@@ -139,6 +142,9 @@ class LessonPageModel extends LessonModel
                 $result['message']    = 'No again attempts left';
                 return $result;
             }
+            $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] - $exercise['data']['answers'][$exercise['data']['current_page']]['totals']['total'];
+            unset($exercise['data']['answers'][$exercise['data']['current_page']]);
+            $exercise['exercise_pending'] = $exercise['data'];
             $exercise['data']['again_attempts']--;
         }
         $result['exercise_data']  = $exercise['data'];

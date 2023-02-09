@@ -75,13 +75,14 @@ class ExerciseModel extends Model
             return 'not_found';
         }
         $lesson['pages'] = (array) json_decode($lesson['pages'], true, JSON_UNESCAPED_UNICODE);
+        $lesson_pages = $LessonModel->composePages($lesson['pages'], $lesson['type']);
         $this->transBegin();
         $data = [
             'lesson_id' => $lesson_id,
             'user_id' => session()->get('user_id'),
-            'lesson_pages' => $lesson['pages'],
+            'lesson_pages' => $lesson_pages,
             'exercise_pending' => $this->empty_data,
-            'exercise_submitted' =>  [],
+            'exercise_submitted' => NULL,
             'began_at' => date("Y-m-d H:i:s")
         ];
         $exercise_id = $this->insert($data, true);
