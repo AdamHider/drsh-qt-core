@@ -49,8 +49,8 @@ class UserProfileModel extends Model
         $data = [
             'user_id'       => $user_id,
             'character_id'  => getenv('user_profile.character_id'),
-            'classroom_id'  => getenv('user_profile.classroom_id'),
-            'course_id'     => getenv('user_profile.course_id')
+            'classroom_id'  => NULL,
+            'course_id'     => NULL
             
         ];
         $user_profile_id = $this->insert($data, true);

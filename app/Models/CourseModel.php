@@ -57,7 +57,7 @@ class CourseModel extends Model
     private function getProgress($course_id)
     {
         $progress = $this->join('lessons', 'lessons.course_id = courses.id')
-        ->join('exercises', 'exercises.lesson_id = lessons.id', 'left')
+        ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
         ->select("COALESCE(sum(exercises.points), 0) as total_points, COALESCE(COUNT(exercises.points), 0) as total_exercises, COALESCE(COUNT(lessons.id), 0) as total_lessons")
         ->where('courses.id', $course_id)
         ->get()->getRowArray();
