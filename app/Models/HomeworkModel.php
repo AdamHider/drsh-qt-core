@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
-class HomeworkModel extends Model
+class ChallengeModel extends Model
 {
-    protected $table      = 'challenges';
+    protected $table      = 'homeworks';
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
@@ -25,18 +26,31 @@ class HomeworkModel extends Model
 
     public function getList ($data) 
     {
+        $CourseSectionModel = model('CourseSectionModel');
         $DescriptionModel = model('DescriptionModel');
+        $LessonModel = model('LessonModel');
+        $ExerciseModel = model('ExerciseModel');
         
-        if($data['user_id']){
-            $this->join('achievements_to_users', 'achievements_to_users.achievement_id = achievements.id')
-            ->where('achievements_to_users.user_id', $data['user_id']);
+        
+        $homeworks = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
+        ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
+        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
+        ->where('homeworks.classroom_id', session()->get('user_data')->profile->classroom_id)
+        ->limit($data['limit'], $data['offset'])->orderBy('date_end')
+        ->get()->getResultArray();
+
+        foreach($homeworks as &$homework){
+            $homework['course_section'] = $CourseSectionModel->getItem($homework['course_section_id']);
+            $homework['description'] = $DescriptionModel->getItem('lesson', $homework['lesson_id']);
+            $homework['image'] = base_url('image/' . $homework['image']);
+            $homework['exercise'] = $ExerciseModel->getItem($homework['exercise_id']);
+            $homework['is_blocked'] = $LessonModel->checkBlocked($homework['unblock_after']);
+            if($homework['date_end']){
+                $time = Time::parse($homework['date_end'], Time::now()->getTimezone());
+                $homework['time_left'] = Time::now()->difference($time)->getDays();
+                $homework['time_left_humanized'] = Time::now()->difference($time)->humanize();
+            }
         }
-        $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResult();
-        foreach($achievements as &$achievement){
-            $achievement->description = $DescriptionModel->getItem('achievement', $achievement->id);
-            $achievement->image = base_url('image/' . $achievement->image);
-            $achievement->progress = $this->calculateProgress($achievement);
-        }
-        return $achievements;
+        return $homeworks;
     }
 }

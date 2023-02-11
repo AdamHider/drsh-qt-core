@@ -41,7 +41,6 @@ class LessonModel extends Model
             $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['description'] = $DescriptionModel->getItem('lesson', $lesson['id']);
             $lesson['image'] = base_url('image/' . $lesson['image']);
-            $lesson['background_image'] = base_url('image/' . $lesson['background_image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             if($lesson['parent_id']){
@@ -70,7 +69,6 @@ class LessonModel extends Model
             $lesson['description'] = $DescriptionModel->getItem('lesson', $lesson['id']);
             $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
             $lesson['image'] = base_url('image/' . $lesson['image']);
-            $lesson['background_image'] = base_url('image/' . $lesson['background_image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             unset($lesson['pages']);
@@ -93,7 +91,6 @@ class LessonModel extends Model
             $satellite['image'] = base_url('image/' . $satellite['image']);
             $satellite['description'] = $DescriptionModel->getItem('lesson', $satellite['id']);
             if($mode == 'full'){
-                $satellite['background_image'] = base_url('image/' . $satellite['background_image']);
                 $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
             }
@@ -129,7 +126,7 @@ class LessonModel extends Model
         return $result;
     }
         
-    private function checkBlocked ($lesson_id) 
+    public function checkBlocked ($lesson_id) 
     {
         if (!$lesson_id) {
             return false;

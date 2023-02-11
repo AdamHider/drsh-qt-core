@@ -40,32 +40,32 @@ class AchievementModel extends Model
             $this->join('achievements_to_users', 'achievements_to_users.achievement_id = achievements.id')
             ->where('achievements_to_users.user_id', $data['user_id']);
         }
-        $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResult();
+        $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResultArray();
         foreach($achievements as &$achievement){
-            $achievement->description = $DescriptionModel->getItem('achievement', $achievement->id);
-            $achievement->image = base_url('image/' . $achievement->image);
-            $achievement->progress = $this->calculateProgress($achievement);
+            $achievement['description'] = $DescriptionModel->getItem('achievement', $achievement['id']);
+            $achievement['image'] = base_url('image/' . $achievement['image']);
+            $achievement['progress'] = $this->calculateProgress($achievement);
         }
         return $achievements;
     }
     public function calculateProgress($data)
     {
-        if ($data->code == 'total_lessons') {
+        if ($data['code'] == 'total_lessons') {
             $current_progress = session()->get('user_data')->profile->total_exercises;
         } else
-        if ($data->code == 'total_points') {
+        if ($data['code'] == 'total_points') {
             $current_progress = session()->get('user_data')->profile->total_points;
         } else 
-        if ($data->code == 'total_classrooms') {
+        if ($data['code'] == 'total_classrooms') {
             $current_progress = session()->get('user_data')->profile->total_classrooms;
         } else {
             $current_progress = 0;
         }
         return [
             'current' => $current_progress,
-            'target' => $data->value,
-            'percentage' => ceil($current_progress * 100 / $data->value),
-            'is_done' => $current_progress >=  $data->value
+            'target' => $data['value'],
+            'percentage' => ceil($current_progress * 100 / $data['value']),
+            'is_done' => $current_progress >=  $data['value']
         ];
         
     }

@@ -29,18 +29,13 @@ class Homework extends BaseController
     {
         $HomeworkModel = model('HomeworkModel');
 
-        $mode = $this->request->getVar('mode');
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
 
         $data = [
-            'user_id' => false,
             'limit' => $limit,
             'offset' => $offset
         ];
-        if($mode == 'user'){
-            $data['user_id'] = session()->get('user_id');
-        }
         $result = $HomeworkModel->getList($data);
         
         return $this->respond($result, 200);
