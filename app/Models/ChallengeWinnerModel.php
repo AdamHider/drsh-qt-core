@@ -15,7 +15,9 @@ class ChallengeWinnerModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'image'
+        'challenge_id',
+        'phone', 
+        'status'
     ];
     
     protected $useTimestamps = false;
