@@ -7,19 +7,6 @@ class Exercise extends BaseController
 {
     use ResponseTrait;
 
-    public function getItem()
-    {
-        $ExerciseModel = model('ExerciseModel');
-
-        $exercise_id = $this->request->getVar('exercise_id');
-        
-        $exercise = $ExerciseModel->getItem($exercise_id);
-        
-        if ($exercise == 'not_found') {
-            return $this->failNotFound('not_found');
-        }
-        return $this->respond($exercise);
-    }
     public function addItem()
     {
         $ExerciseModel = model('ExerciseModel');
@@ -56,21 +43,6 @@ class Exercise extends BaseController
         }
         return $this->respond($exercise_id);
     }
-    public function getList()
-    {
-        $ExerciseModel = model('ExerciseModel');
-
-        $limit = $this->request->getVar('limit');
-        $offset = $this->request->getVar('offset');
-
-        $data = [
-            'limit' => $limit,
-            'offset' => $offset
-        ];
-
-        $result = $ExerciseModel->getList($data);
-        return $this->respond($result, 200);
-    }
     public function saveAnswer()
     {
         $ExerciseAnswerModel = model('ExerciseAnswerModel');
@@ -82,6 +54,21 @@ class Exercise extends BaseController
         if($ExerciseAnswerModel->errors()){
             return $this->failValidationErrors(json_encode($ExerciseAnswerModel->errors()));
         }
+        return $this->respond($result, 200);
+    }
+    public function getLeaderboard()
+    {
+        $ExerciseStatisticModel = model('ExerciseStatisticModel');
+
+        $classroom_id = $this->request->getVar('classroom_id');
+        $time_period = $this->request->getVar('time_period');
+
+        $data = [
+            'time_period' => $time_period,
+            'classroom_id' => $classroom_id
+        ];
+
+        $result = $ExerciseStatisticModel->getLeaderboard($data);
         return $this->respond($result, 200);
     }
     
