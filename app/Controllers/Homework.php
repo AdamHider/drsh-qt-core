@@ -11,19 +11,15 @@ class Homework extends BaseController
         
         $HomeworkModel = model('HomeworkModel');
 
-        $user_id = $this->request->getVar('user_id');
+        $homework_id = $this->request->getVar('homework_id');
 
-        if( !$user_id ){
-            $user_id = session()->get('user_id');
-        }
+        $homework = $HomeworkModel->getItem($homework_id);
 
-        $user = $HomeworkModel->getItem($user_id);
-
-        if ($user == 'not_found') {
+        if ($homework == 'not_found') {
             return $this->failNotFound('not_found');
         }
 
-        return $this->respond($user);
+        return $this->respond($homework);
     }
     public function getList()
     {
@@ -36,9 +32,13 @@ class Homework extends BaseController
             'limit' => $limit,
             'offset' => $offset
         ];
-        $result = $HomeworkModel->getList($data);
+        $homeworks = $HomeworkModel->getList($data);
         
-        return $this->respond($result, 200);
+        if ($homeworks == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($homeworks);
     }
 
 }

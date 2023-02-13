@@ -45,7 +45,7 @@ class ExerciseModel extends Model
     protected $beforeInsert = ['jsonPrepare'];
     protected $beforeUpdate = ['jsonPrepare'];
 
-    public function getItem ($exercise_id) 
+    public function getItem ($exercise_id, $mode = 'default') 
     {
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
         ->where('id', $exercise_id)->get()->getRowArray();
@@ -53,8 +53,12 @@ class ExerciseModel extends Model
             $exercise['lesson_pages'] = json_decode($exercise['lesson_pages'], true, JSON_UNESCAPED_UNICODE);
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
     
+            $exercise['data']['progress_percentage'] = floor($exercise['data']['current_page'] * 100 / count($exercise['lesson_pages']));
             unset($exercise['exercise_pending']);
             unset($exercise['exercise_submitted']);
+            if($mode == 'lite'){
+                unset($exercise['lesson_pages']);
+            }
         }
         return $exercise;
     }
@@ -63,7 +67,9 @@ class ExerciseModel extends Model
         $exercise = $this->select('COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
         ->where('id', $exercise_id)->get()->getRowArray();
         if(!empty($exercise)){
-            return json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
+            $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
+            $exercise['data']['progress_percentage'] = floor($exercise['data']['current_page'] * 100 / count($exercise['lesson_pages']));
+            return $exercise;
         }
         return null;
     }
@@ -136,6 +142,21 @@ class ExerciseModel extends Model
         $exercise['data'] = $this->empty_data;
         $exercise['attempts']++;
         return $this->updateItem($exercise, 'start');
+    }
+    public function getTotal($date_start = null, $date_end = null)
+    {
+        $this->where('exercises.user_id = '.session()->get('user_id'))
+        ->select("COALESCE(sum(exercises.points), 0) as total_points");
+
+        if($date_start){
+            $this->where("exercises.finished_at > '".$date_start."'");
+        }
+        if($date_end){
+            $this->where("exercises.finished_at < '".$date_end."'");
+        }
+        $exercise = $this->get()->getRowArray();
+
+        return $exercise['total_points'];
     }
     private function calculateTotals($exercise)
     {

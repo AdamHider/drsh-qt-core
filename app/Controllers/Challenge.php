@@ -6,24 +6,21 @@ use CodeIgniter\API\ResponseTrait;
 class Challenge extends BaseController
 {
     use ResponseTrait;
+
     public function getItem()
     {
         
         $ChallengeModel = model('ChallengeModel');
 
-        $user_id = $this->request->getVar('user_id');
+        $challenge_id = $this->request->getVar('challenge_id');
 
-        if( !$user_id ){
-            $user_id = session()->get('user_id');
-        }
+        $challenge = $ChallengeModel->getItem($challenge_id);
 
-        $user = $ChallengeModel->getItem($user_id);
-
-        if ($user == 'not_found') {
+        if ($challenge == 'not_found') {
             return $this->failNotFound('not_found');
         }
 
-        return $this->respond($user);
+        return $this->respond($challenge);
     }
     public function getList()
     {
@@ -36,9 +33,13 @@ class Challenge extends BaseController
             'limit' => $limit,
             'offset' => $offset
         ];
-        $result = $ChallengeModel->getList($data);
+        $challenges = $ChallengeModel->getList($data);
         
-        return $this->respond($result, 200);
+        if ($challenges == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($challenges);
     }
 
 }

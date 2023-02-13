@@ -24,6 +24,35 @@ class ChallengeModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
+    public function getItem ($challenge_id) 
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $ChallengeWinnerModel = model('ChallengeWinnerModel');
+        
+        $challenge = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
+        ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
+        ->where('challenges.classroom_id', session()->get('user_data')->profile->classroom_id)
+        ->where('challenges.id', $challenge_id)->get()->getRowArray();
+
+        if(empty($challenge)){
+            return 'not_found';
+        }
+        $challenge['description'] = $DescriptionModel->getItem('challenge', $challenge['id']);
+        $challenge['image'] = base_url('image/' . $challenge['image']);
+        $challenge['progress'] = $this->getProgress($challenge['value'], $challenge['date_start'], $challenge['date_end']);
+        $challenge['is_finished'] = $this->checkFinished($challenge);
+        $challenge['is_winner'] = $ChallengeWinnerModel->checkWinner($challenge);
+        if($challenge['date_start']){
+            $challenge['date_start_humanized'] = Time::parse($challenge['date_start'], Time::now()->getTimezone())->humanize();
+        }
+        if($challenge['date_end']){
+            $date_end = Time::parse($challenge['date_end'], Time::now()->getTimezone());
+            $challenge['time_left'] = Time::now()->difference($date_end)->getDays();
+            $challenge['date_end_humanized'] = $date_end->humanize();
+            $challenge['time_left_humanized'] = Time::now()->difference($date_end)->humanize();
+        }
+        return $challenge;
+    }
     public function getList ($data) 
     {
         $DescriptionModel = model('DescriptionModel');
@@ -34,6 +63,11 @@ class ChallengeModel extends Model
         ->where('challenges.classroom_id', session()->get('user_data')->profile->classroom_id)
         ->groupBy('challenges.id')
         ->limit($data['limit'], $data['offset'])->orderBy('date_end')->get()->getResultArray();
+
+        if(empty($challenges)){
+            return 'not_found';
+        }
+        
         foreach($challenges as &$challenge){
             $challenge['description'] = $DescriptionModel->getItem('challenge', $challenge['id']);
             $challenge['image'] = base_url('image/' . $challenge['image']);
@@ -55,20 +89,11 @@ class ChallengeModel extends Model
     }
     public function getProgress($target_value, $date_start, $date_end)
     {
-        $this->from('exercises')->where('exercises.user_id = '.session()->get('user_id'))
-        ->select("COALESCE(sum(exercises.points), 0) as total_points");
+        $ExerciseModel = model('ExerciseModel');
 
-        if($date_start){
-            $this->where("exercises.finished_at > '".$date_start."'");
-        }
-        if($date_end){
-            $this->where("exercises.finished_at < '".$date_end."'");
-        }
-
-        $progress = $this->get()->getRowArray();
-
+        $total_points = $ExerciseModel->getTotal($date_start, $date_end);
         $result = [
-            'value' => $progress['total_points'],
+            'value' => $total_points,
             'percentage' => 0
         ];
         if($target_value != 0){
