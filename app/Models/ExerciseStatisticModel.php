@@ -4,12 +4,37 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
+use App\Libraries\DateProcessor;
+
 
 class ExerciseStatisticModel extends ExerciseModel
 {
     protected $table      = 'exercises_leaderboard';
+
+    public $limit = 6;
+    public $chart_colors = [
+        '#4dc9f6',
+        '#f67019',
+        '#f53794',
+        '#537bc4',
+        '#acc236',
+        '#166a8f',
+        '#00a950',
+        '#58595b',
+        '#8549ba',
+        '#f67019',
+        '#f53794',
+        '#537bc4',
+        '#acc236',
+        '#166a8f',
+        '#00a950',
+        '#58595b',
+        '#8549ba'
+    ];
     public function getLeaderboard($data)
     {
+        $this->createTempView($data);
+        
         $statistics = [
             'common_statistics' => $this->getCommonView($data),
             'chart_statistics' => $this->getChartView($data)
@@ -18,21 +43,19 @@ class ExerciseStatisticModel extends ExerciseModel
     } 
     public function getCommonView($data)
     {
-        $this->getTable($data);
         
         $groups = $this->table('exercises_leaderboard')
-        ->select('exercises_leaderboard.*, GROUP_CONCAT(exercises_leaderboard.`name`) as `usernames`, GROUP_CONCAT(exercises_leaderboard.avatar_link) as `avatar_images`, COUNT(exercises_leaderboard.user_id) as total_students')
+        ->select('place, GROUP_CONCAT(username) as `usernames`, COUNT(user_id) as total_students, points, COALESCE(is_active) as is_active')
         ->groupBy('place')->limit(5)->get()->getResultArray();
-
         $result = [
             'list' => $groups
         ];
         foreach($result['list'] as &$row){
-            $row['avatar_images'] = explode(',', $row['avatar_images']);
+            //$row['avatar_images'] = explode(',', $row['avatar_images']);
             if($row['total_students'] > 3){
                 $usernames = explode(',', $row['usernames']);
                 $row['usernames'] = implode(', ', [$usernames[0], $usernames[1], $usernames[2]]);
-                $row['avatar_images'] = [$row['avatar_images'][0], $row['avatar_images'][1], $row['avatar_images'][2]];
+                //$row['avatar_images'] = [$row['avatar_images'][0], $row['avatar_images'][1], $row['avatar_images'][2]];
                 $row['need_more'] = true;
                 $row['need_more_total'] = $row['total_students'] - 3;
             }
@@ -43,27 +66,57 @@ class ExerciseStatisticModel extends ExerciseModel
         }
         return $result;
     }
+    public function getChartView($data)
+    {
+        $DateProcessor = new DateProcessor();
+        $table = $this->getTable($data);
+        $min_date = $this->select('COALESCE(MIN(date_start), DATE_SUB(NOW(),INTERVAL 1 YEAR)) as min_date')->get()->getRow()->min_date;
+        $max_date = $this->select('COALESCE(MAX(date_finish), NOW()) as max_date')->get()->getRow()->max_date;
+        $result = [
+            'users' => [],
+            'dates' => $DateProcessor->getDates($data, $min_date, $max_date, 5),
+            'max_points' => $table['max_points']
+        ];
+        foreach($table['list'] as $index => $row){
+            $student_row = [
+                'label' => $row['username'],
+                'fill' => false,
+                'backgroundColor' => $this->chart_colors[$index],
+                'borderColor' => $this->chart_colors[$index],
+                'borderWidth' => 2,
+                'tension' => '0',
+                'data' => [],
+                'animations' => ['y'=> ['duration' => 1500, 'delay' => 200]]
+            ];
+            $start_date = $result['dates']['start_dates'][0];
+            foreach($result['dates']['start_dates'] as $date_key => $date){
+                $student_row['data'][] = $this->from('exercises')->where('exercises.user_id', $row['user_id'])
+                ->where("exercises.finished_at >= '".$start_date."'") 
+                ->where("exercises.finished_at <= '".$result['dates']['end_dates'][$date_key]."'")
+                ->select('COALESCE(SUM(exercises.points), 0) as total_points')->get()->getRow()->total_points;
+            }
+            $result['users'][] = $student_row;
+        }
+        return $result;
+    }
     private function getTable($data)
     {
         $table = [];
-        $this->createTempView($data);
-
         $user_row = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
         $max_points = $this->selectMax('points')->get()->getRow()->points;
         if($user_row['place'] > $this->limit + 1){
-            $top_students = $this->getStudentsBetween(0, $this->limit);
-            $student = $this->getStudentByPosition($user_row['place']);
-            $table = array_merge($top_students, $student);
+            $top_students = $this->where("place BETWEEN '0' AND '$this->limit' ")->get()->getResultArray();
+            $table = array_merge($top_students, $user_row);
         } else {
             if($max_points > 0){
                 $offset = ceil($this->limit/2);
-                $table = $this->getStudentsBetween($user_row['place'] - $offset, $user_row['place'] + $offset);
+                $table = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->get()->getResultArray();
             } else {
-                $table = $this->getStudentsBetween(0, $this->limit);
+                $table = $this->where("place BETWEEN '0' AND '$this->limit'")->get()->getResultArray();
             }
         }
-        if(!$user_row['place'] && session()->get('user_id') && !$this->activeStudent['is_owner']){
-            $table[] = $this->composeStudentRow();
+        if(!$user_row['place'] && session()->get('user_id')){
+            $table[] = $user_row;
         }
         $result = [
             'list' => $table,
@@ -82,7 +135,6 @@ class ExerciseStatisticModel extends ExerciseModel
             }
             //$where .= " AND student.classroom_id = '".$data['classroom_id']."'";
         }
-        
         if(isset($data['date_from'])){
             if($data['date_from'] == 'week'){
                 $exercise_where .= " AND stats.finished_at > '".date('Y-m-d Y H:i.s', strtotime('-1 week'))."'";
@@ -103,13 +155,12 @@ class ExerciseStatisticModel extends ExerciseModel
             $order_by = $data['order_by'];
         }
         /* ORDER BY SECTION END */
-        
         $sql = "
             CREATE TEMPORARY TABLE IF NOT EXISTS exercises_leaderboard
             SELECT * FROM
             (SELECT 
                 t.*,
-                IF(t.total_points != @total_points,@rating:=@rating + 1, @rating) AS place, 
+                IF(t.total_points != @total_points,@rating:=@rating + 1, @rating) as place, 
                 @total_points:=t.total_points as points
             FROM
                 (SELECT 
