@@ -60,15 +60,17 @@ class Exercise extends BaseController
     {
         $ExerciseStatisticModel = model('ExerciseStatisticModel');
 
-        $classroom_id = $this->request->getVar('classroom_id');
+        $mode = $this->request->getVar('mode');
+        $by_classroom = $this->request->getVar('by_classroom');
         $time_period = $this->request->getVar('time_period');
+
 
         $data = [
             'time_period' => $time_period,
-            'classroom_id' => $classroom_id
+            'by_classroom' => $by_classroom
         ];
 
-        $result = $ExerciseStatisticModel->getLeaderboard($data);
+        $result = $ExerciseStatisticModel->getLeaderboard($mode, $data);
         return $this->respond($result, 200);
     }
     
