@@ -35,7 +35,7 @@ class LessonModel extends Model
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
 
         if(!$lesson){
-            return 'not_found';
+            return false;
         }
         if ($lesson) {
             $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);

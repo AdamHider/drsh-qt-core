@@ -62,16 +62,23 @@ class Exercise extends BaseController
 
         $mode = $this->request->getVar('mode');
         $by_classroom = $this->request->getVar('by_classroom');
+        $lesson_id = $this->request->getVar('lesson_id');
         $time_period = $this->request->getVar('time_period');
 
 
         $data = [
             'time_period' => $time_period,
-            'by_classroom' => $by_classroom
+            'by_classroom' => $by_classroom,
+            'lesson_id' => $lesson_id
         ];
 
-        $result = $ExerciseStatisticModel->getLeaderboard($mode, $data);
-        return $this->respond($result, 200);
+        
+        $leaderboard = $ExerciseStatisticModel->getLeaderboard($mode, $data);
+        
+        if (!$leaderboard) {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($leaderboard, 200);
     }
     
 }

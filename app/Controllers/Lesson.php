@@ -15,7 +15,7 @@ class Lesson extends BaseController
         
         $lesson = $LessonModel->getItem($lesson_id);
         
-        if ($lesson == 'not_found') {
+        if (!$lesson) {
             return $this->failNotFound('not_found');
         }
         return $this->respond($lesson);

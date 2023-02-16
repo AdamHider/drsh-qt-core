@@ -34,26 +34,21 @@ class ExerciseStatisticModel extends Model
             $result = $this->getChart($data);
         }
         if(empty($result)){
-            return 'not_found';
+            return false;
         }
         return $result;
     } 
     public function getTable($data)
     {
-        $result = $this->select('place, GROUP_CONCAT(username) as `usernames`, COUNT(user_id) as total_students, points, COALESCE(is_active) as is_active')
-        ->groupBy('place, username, user_id, points, is_active')->limit(5)->get()->getResultArray();
+        $user_row = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
+        $offset = ceil($this->limit/2);
+        $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active')
+        ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")
+        ->groupBy('place, points')->get()->getResultArray();
 
         foreach($result as &$row){
-            if($row['total_students'] > 3){
-                $usernames = explode(',', $row['usernames']);
-                $row['usernames'] = implode(', ', [$usernames[0], $usernames[1], $usernames[2]]);
-                $row['need_more'] = true;
-                $row['need_more_total'] = $row['total_students'] - 3;
-            }
-            if(isset($row['finished_at'])){
-                $finished_at = Time::parse($row['finished_at'], Time::now()->getTimezone());
-                $row['finished_at'] = $finished_at->humanize();
-            }
+            $row['data'] = $this->where("place", $row['place'])->limit(3)->get()->getResultArray();
+            $row['is_active'] = (bool) $row['is_active'];
         }
         return $result;
     }
@@ -70,7 +65,7 @@ class ExerciseStatisticModel extends Model
         $max_date = $this->select('COALESCE(MAX(finished_at), NOW()) as max_date')->get()->getRow()->max_date;
 
         $offset = ceil($this->limit/2);
-        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->get()->getResultArray();;
+        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->get()->getResultArray();
 
         $dates = $DateProcessor->getDates($data, $min_date, $max_date, 5);
         $result = [
@@ -80,13 +75,6 @@ class ExerciseStatisticModel extends Model
         foreach($list as $index => $row){
             $student_row = [
                 'name' => $row['username'],
-                'fill' => false,
-                'backgroundColor' => $this->chart_colors[$index],
-                'borderColor' => $this->chart_colors[$index],
-                'borderWidth' => 2,
-                'tension' => '0',
-                'data' => [],
-                'animations' => ['y'=> ['duration' => 1500, 'delay' => 200]]
             ];
             $start_date = $dates['start_dates'][0];
             foreach($dates['start_dates'] as $date_key => $date){
@@ -101,7 +89,7 @@ class ExerciseStatisticModel extends Model
     }
     
     public function createTempView($data){
-        $this->query("SET @place=0");
+        $this->query("DROP TABLE IF EXISTS exercises_rating");
 
         /* CLASSROOM FILTER SECTION */
         $classroom_filter = "";
@@ -109,9 +97,16 @@ class ExerciseStatisticModel extends Model
             $classroom_filter = " JOIN user_classrooms ON users.id = user_classrooms.user_id AND user_classrooms.classroom_id = '".session()->get('user_data')->profile->classroom_id."' ";
         }
         /* CLASSROOM FILTER SECTION END */
+
+        /* LESSON FILTER SECTION */
+        $lesson_filter = "";
+        if(isset($data['lesson_id'])){
+            $lesson_filter = " AND exercises.lesson_id = '".$data['lesson_id']."' ";
+        }
+        /* LESSON FILTER SECTION END */
         
         /* DATE FILTER SECTION */
-        $date_filter = " 1 ";
+        $date_filter = "";
         if(isset($data['time_period'])){
             if($data['time_period'] == 'week'){
                 $date_filter .= " AND exercises.finished_at > '".date('Y-m-d H:i.s', strtotime('-1 week'))."'";
@@ -135,16 +130,24 @@ class ExerciseStatisticModel extends Model
             }
         }
         /* ORDER BY SECTION END */
+        
+        $this->query("SET @place=0");
+        $this->query("SET @points=0");
         $sql = "
             CREATE TEMPORARY TABLE IF NOT EXISTS exercises_rating
             SELECT 
-                @place:=@place + 1 AS place,
-                rating.*
+                IF(rating.points != @points, @place:=@place + 1, @place) AS place,
+                @points:=rating.points as points,
+                rating.user_id,
+                rating.username,
+                rating.created_at,
+                rating.finished_at,
+                rating.is_active
             FROM (
                 SELECT 
-                    exercises.user_id, 
+                    users.id as user_id, 
                     users.username,
-                    SUM(exercises.points) as points,
+                    COALESCE(SUM(exercises.points), 0) as points,
                     MIN(exercises.created_at) AS created_at,
                     MAX(exercises.finished_at) AS finished_at,
                     IF('".session()->get('user_id')."' = users.id, 1, 0) AS is_active
@@ -152,9 +155,10 @@ class ExerciseStatisticModel extends Model
                     users 
                     $classroom_filter
                         LEFT JOIN
-                    exercises ON exercises.user_id = users.id
-                WHERE
-                    $date_filter AND exercises.finished_at IS NOT NULL
+                    exercises ON exercises.user_id = users.id 
+                        AND exercises.finished_at IS NOT NULL 
+                        $lesson_filter 
+                        $date_filter  
                 GROUP BY users.id) rating
                 ORDER BY
                     $order_by,
