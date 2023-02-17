@@ -41,7 +41,16 @@ class User extends BaseController
         $username = $this->request->getVar('username');
         $email    = $this->request->getVar('email');
         $phone    = $this->request->getVar('phone');
-
+        
+        if(!$username){
+            $username = session()->get('user_data')->username;
+        }
+        if(!$email){
+            $email = session()->get('user_data')->email;
+        }
+        if(!$phone){
+            $phone = session()->get('user_data')->phone;
+        }
         $data = [
             'id'        => session()->get('user_id'),
             'username'  => $username,

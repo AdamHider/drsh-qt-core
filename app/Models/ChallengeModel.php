@@ -34,6 +34,9 @@ class ChallengeModel extends Model
         ->where('challenges.classroom_id', session()->get('user_data')->profile->classroom_id)
         ->where('challenges.id', $challenge_id)->get()->getRowArray();
 
+        $user_winner = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id')
+        ->where('challenges_winners.user_id', session()->get('user_id'))
+        ->where('challenges.id', $challenge_id)->get()->getRowArray();
         if(empty($challenge)){
             return 'not_found';
         }
@@ -42,6 +45,7 @@ class ChallengeModel extends Model
         $challenge['progress'] = $this->getProgress($challenge['value'], $challenge['date_start'], $challenge['date_end']);
         $challenge['is_finished'] = $this->checkFinished($challenge);
         $challenge['is_winner'] = $ChallengeWinnerModel->checkWinner($challenge);
+        $challenge['winner_confirmed'] = !empty($user_winner['user_id']);
         if($challenge['date_start']){
             $challenge['date_start_humanized'] = Time::parse($challenge['date_start'], Time::now()->getTimezone())->humanize();
         }
@@ -98,6 +102,9 @@ class ChallengeModel extends Model
         ];
         if($target_value != 0){
             $result['percentage'] = ceil($result['value'] * 100 / $target_value);
+            if($result['percentage'] > 100){
+                $result['percentage'] = 100;
+            }
         }
         return $result;
     }

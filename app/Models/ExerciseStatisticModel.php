@@ -44,7 +44,7 @@ class ExerciseStatisticModel extends Model
         $offset = ceil($this->limit/2);
         $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
         ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")
-        ->groupBy('place, points')->get()->getResultArray();
+        ->groupBy('place, points, is_winner')->get()->getResultArray();
 
         foreach($result as &$row){
             $row['data'] = $this->where("place", $row['place'])->limit(3)->get()->getResultArray();
