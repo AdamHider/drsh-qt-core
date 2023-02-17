@@ -42,13 +42,17 @@ class ExerciseStatisticModel extends Model
     {
         $user_row = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
         $offset = ceil($this->limit/2);
-        $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active')
+        $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
         ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")
         ->groupBy('place, points')->get()->getResultArray();
 
         foreach($result as &$row){
             $row['data'] = $this->where("place", $row['place'])->limit(3)->get()->getResultArray();
             $row['is_active'] = (bool) $row['is_active'];
+            $row['is_winner'] = (bool) $row['is_winner'];
+            if($row['finished_at']){
+                $row['finished_at_humanized'] = Time::parse($row['finished_at'], Time::now()->getTimezone())->toLocalizedString('d MMM yyyy');
+            }
         }
         return $result;
     }
@@ -87,9 +91,18 @@ class ExerciseStatisticModel extends Model
         }
         return $result;
     }
+
+    public function checkUserPlace($data)
+    {
+        $this->createTempView($data);
+        $result = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
+        return $result;
+    } 
+
     
     public function createTempView($data){
         $this->query("DROP TABLE IF EXISTS exercises_rating");
+
 
         /* CLASSROOM FILTER SECTION */
         $classroom_filter = "";
@@ -116,33 +129,48 @@ class ExerciseStatisticModel extends Model
         }
         /* DATE FILTER SECTION END */
 
-        if(isset($data['date_from'])){
-            $date_filter .= " AND exercises.finished_at > '".$data['date_from']."'";
+        if(isset($data['date_start'])){
+            $date_filter .= " AND exercises.finished_at > '".$data['date_start']."'";
         }
-        if(isset($data['date_to'])){
-            $date_filter .= " AND exercises.finished_at < '".$data['date_to']."'";
+        if(isset($data['date_end'])){
+            $date_filter .= " AND exercises.finished_at < '".$data['date_end']."'";
         }
+        
         /* ORDER BY SECTION */
+        $place_counter_condition = "rating.points != @points";
         $order_by = "rating.points DESC, rating.finished_at DESC";
         if(isset($data['order_by'])){
             if($data['order_by'] == 'finished_at'){
-                $order_by = "rating.finished_at ASC, rating.points DESC";
+                $order_by = "IF(rating.created_at, 1, 0) DESC, rating.finished_at ASC, rating.points DESC";
+                $place_counter_condition .= " OR rating.finished_at != @finished_at";
             }
         }
         /* ORDER BY SECTION END */
-        
+
+        /* WINNER LIMIT SECTION */
+        $winner_limit = 3;
+        if(isset($data['winner_limit'])){
+            $winner_limit = $data['winner_limit'];
+        }
+        /* WINNER LIMIT SECTION END */
+
         $this->query("SET @place=0");
         $this->query("SET @points=0");
+        $this->query("SET @finished_at='0000-00-00 00:00:00'");
+        $this->query("SET @winner_limit=".$winner_limit);
+        
         $sql = "
             CREATE TEMPORARY TABLE IF NOT EXISTS exercises_rating
             SELECT 
-                IF(rating.points != @points, @place:=@place + 1, @place) AS place,
+                IF($place_counter_condition, @place:=@place + 1, @place) AS place,
                 @points:=rating.points as points,
                 rating.user_id,
                 rating.username,
                 rating.created_at,
-                rating.finished_at,
-                rating.is_active
+                @finished_at:=rating.finished_at as finished_at,
+                rating.is_active,
+                IF(@winner_limit > 0 AND rating.points > 0, 1, 0) as is_winner,
+                @winner_limit:=@winner_limit - 1 as winner_limit
             FROM (
                 SELECT 
                     users.id as user_id, 

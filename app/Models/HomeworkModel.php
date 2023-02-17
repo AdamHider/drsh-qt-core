@@ -52,9 +52,11 @@ class HomeworkModel extends Model
         }
         if($homework['date_end']){
             $date_end = Time::parse($homework['date_end'], Time::now()->getTimezone());
-            $homework['time_left'] = Time::now()->difference($date_end)->getDays();
+            $time_diff = Time::now()->difference($date_end);
+            $homework['time_left'] = $time_diff->getDays();
             $homework['time_left_humanized'] = Time::now()->difference($date_end)->humanize();
             $homework['date_end_humanized'] = $date_end->humanize();
+            $homework['is_finished'] = $time_diff->getSeconds() <= 0;
         }
         return $homework;
     }
@@ -83,9 +85,11 @@ class HomeworkModel extends Model
             $homework['exercise'] = $ExerciseModel->getItem($homework['exercise_id'], 'lite');
             $homework['is_blocked'] = $LessonModel->checkBlocked($homework['unblock_after']);
             if($homework['date_end']){
-                $time = Time::parse($homework['date_end'], Time::now()->getTimezone());
-                $homework['time_left'] = Time::now()->difference($time)->getDays();
-                $homework['time_left_humanized'] = Time::now()->difference($time)->humanize();
+                $date_end = Time::parse($homework['date_end'], Time::now()->getTimezone());
+                $time_diff = Time::now()->difference($date_end);
+                $homework['time_left'] = $time_diff->getDays();
+                $homework['time_left_humanized'] = Time::now()->difference($date_end)->humanize();
+                $homework['is_finished'] = $time_diff->getSeconds() <= 0;
             }
         }
         return $homeworks;

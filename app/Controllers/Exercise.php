@@ -58,21 +58,34 @@ class Exercise extends BaseController
     }
     public function getLeaderboard()
     {
+        $ChallengeModel = model('ChallengeModel');
         $ExerciseStatisticModel = model('ExerciseStatisticModel');
 
         $mode = $this->request->getVar('mode');
         $by_classroom = $this->request->getVar('by_classroom');
         $lesson_id = $this->request->getVar('lesson_id');
+        $challenge_id = $this->request->getVar('challenge_id');
         $time_period = $this->request->getVar('time_period');
-
 
         $data = [
             'time_period' => $time_period,
             'by_classroom' => $by_classroom,
-            'lesson_id' => $lesson_id
+            'lesson_id' => $lesson_id,
+            'order_by' => false
         ];
 
-        
+        if($challenge_id){
+            $challenge = $ChallengeModel->where('id', $challenge_id)->get()->getRowArray();
+            if(!empty($challenge)){
+                $data['by_classroom'] = true;
+                $data['date_start'] = $challenge['date_start'];
+                $data['date_end'] = $challenge['date_end'];
+                $data['winner_limit'] = $challenge['winner_limit'];
+                if($challenge['code'] == 'total_points_first'){
+                    $data['order_by'] = 'finished_at';
+                }
+            }
+        }
         $leaderboard = $ExerciseStatisticModel->getLeaderboard($mode, $data);
         
         if (!$leaderboard) {

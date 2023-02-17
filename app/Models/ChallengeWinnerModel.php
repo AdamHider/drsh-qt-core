@@ -15,6 +15,7 @@ class ChallengeWinnerModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
+        'user_id',
         'challenge_id',
         'phone', 
         'status'
@@ -29,36 +30,25 @@ class ChallengeWinnerModel extends Model
     public function checkWinner($challenge)
     {
         $has_won = false;
-        if($challenge['winner_left'] > 0){
-            if($challenge['code'] == 'total_points'){
-                $has_won = $challenge['progress']['value'] >= $challenge['value'] && !$challenge['is_finished'];
-            }
-            if($challenge['code'] == 'total_points_first'){
-                $has_won = $challenge['progress']['value'] >= $challenge['value'];
-            }
-            if($challenge['code'] == 'total_lessons'){
-                $has_won = $challenge['progress']['value'] >= $challenge['value'];
-            }
+        $ExerciseStatisticModel = model('ExerciseStatisticModel');
+        $data = [];
+        $data['by_classroom'] = true;
+        $data['date_start'] = $challenge['date_start'];
+        $data['date_end'] = $challenge['date_end'];
+        $data['winner_limit'] = $challenge['winner_limit'];
+        if($challenge['code'] == 'total_points_first'){
+            $data['order_by'] = 'finished_at';
         }
-        if($has_won){
-            $winner = [
-                'challenge_id' => $challenge['id'],
-                'phone' => '', 
-                'status' => 'unconfirmed' 
-            ];
-            $this->itemCreate($winner);
-            return 'unconfirmed';
-        } else {
-            return 'none';
-        }
+        $user_leaderboard_position = $ExerciseStatisticModel->checkUserPlace($data);
+        return (bool) $user_leaderboard_position['is_winner'];
     }
     
         
-    public function itemCreate ($winner)
+    public function createItem ($data)
     {
-        $this->transBegin();
-        $winner_id = $this->insert($winner, true);
-        $this->transCommit();
+        //$this->transBegin();
+        $winner_id = $this->insert($data, true);
+        //$this->transCommit();
 
         return $winner_id;        
     }
