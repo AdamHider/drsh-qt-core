@@ -14,13 +14,16 @@ class Classroom extends BaseController
         $classroom_id = $this->request->getVar('classroom_id');
 
         if( !$classroom_id ){
-            $classroom_id = session()->get('user_data')->profile->classroom_id;
+            $classroom_id = session()->get('user_data')['profile']['classroom_id'];
         }
         
         $result = $ClassroomModel->getItem($classroom_id);
 
         if ($result == 'not_found') {
             return $this->failNotFound('not_found');
+        }
+        if ($result == 'forbidden') {
+            return $this->failForbidden();
         }
 
         return $this->respond($result);

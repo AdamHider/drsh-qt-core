@@ -62,14 +62,17 @@ class Exercise extends BaseController
         $ExerciseStatisticModel = model('ExerciseStatisticModel');
 
         $mode = $this->request->getVar('mode');
+        $classroom_id = $this->request->getVar('classroom_id');
         $by_classroom = $this->request->getVar('by_classroom');
         $lesson_id = $this->request->getVar('lesson_id');
         $challenge_id = $this->request->getVar('challenge_id');
         $time_period = $this->request->getVar('time_period');
-
+        if($by_classroom && !$classroom_id){
+            $classroom_id = session()->get('user_data')->profile->classroom_id;
+        }
         $data = [
             'time_period' => $time_period,
-            'by_classroom' => $by_classroom,
+            'classroom_id' => $classroom_id,
             'lesson_id' => $lesson_id,
             'order_by' => false
         ];

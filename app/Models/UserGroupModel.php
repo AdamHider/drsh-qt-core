@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class UserClassroomModel extends Model
 {
-    protected $table      = 'users_to_classrooms';
+    protected $table      = 'user_groups';
     protected $primaryKey = 'user_id';
 
     protected $useSoftDeletes = true;
@@ -20,13 +20,21 @@ class UserClassroomModel extends Model
 
     public function getItem ($user_id, $classroom_id) 
     {
-        $user_classroom = $this->where('user_id = '.$user_id.' AND item_id = '.$classroom_id)->get()->getRowArray(0);
+        $user_classroom = $this->where('user_id = '.$user_id.' AND classroom_id = '.$classroom_id)->get()->getRowArray(0);
         return $user_classroom;
     }
     public function getList ($user_id) 
     {
-        $classrooms = $this->where('user_id', $user_id)->get()->getResult();
-        return $classrooms;
+        $DescriptionModel = model('DescriptionModel');
+
+        $groups =  $this->join('users_to_user_groups', 'users_to_user_groups.item_id = user_groups.id')
+        ->select('user_groups.id, user_groups.code, user_groups.path')
+        ->where('users_to_user_groups.user_id', $user_id)->get()->getResultArray();
+
+        foreach($groups as &$group){
+            $group['description'] = $DescriptionModel->getItem('user_group', $group['id']);
+        }
+        return $groups;
     }
         
     public function itemCreate ($user_id, $classroom_id)
@@ -34,7 +42,7 @@ class UserClassroomModel extends Model
         $this->transBegin();
         $data = [
             'user_id'       => $user_id,
-            'item_id'  => $classroom_id
+            'classroom_id'  => $classroom_id
             
         ];
         $this->insert($data, true);

@@ -34,7 +34,6 @@ class HomeworkModel extends Model
         $homework = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
         ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
         ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
-        ->where('homeworks.classroom_id', session()->get('user_data')->profile->classroom_id)
         ->where('homeworks.id', $homework_id)
         ->get()->getRowArray();
 
@@ -70,7 +69,7 @@ class HomeworkModel extends Model
         $homeworks = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
         ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
         ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
-        ->where('homeworks.classroom_id', session()->get('user_data')->profile->classroom_id)
+        ->where('homeworks.classroom_id', $data['classroom_id'])
         ->limit($data['limit'], $data['offset'])->orderBy('date_end')
         ->get()->getResultArray();
 

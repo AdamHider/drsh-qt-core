@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class ClassroomModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'classrooms';
     protected $primaryKey = 'id';
 
@@ -25,15 +26,21 @@ class ClassroomModel extends Model
 
     public function getItem ($classroom_id) 
     {
+        if(!$this->permit($classroom_id, 'r')){
+            return 'forbidden';
+        }
+
+        $DescriptionModel = model('DescriptionModel');
+        $UserClassroomModel = model('UserClassroomModel');
         if ($classroom_id == 0) {
             return 'not_found';
         }
-        $DescriptionModel = model('DescriptionModel');
-        $classroom = $this->where('id', $classroom_id)->get()->getRow();
+        $classroom = $this->where('id', $classroom_id)->get()->getRowArray();
         if ($classroom) {
-            $classroom->description = $DescriptionModel->getItem('classroom', $classroom->id);
-            $classroom->image = base_url('image/' . $classroom->image);
-            $classroom->background_image = base_url('image/' . $classroom->background_image);
+            $classroom['description'] = $DescriptionModel->getItem('classroom', $classroom['id']);
+            $classroom['image'] = base_url('image/' . $classroom['image']);
+            $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
+            $classroom['is_subscribed'] = (bool) $UserClassroomModel->getItem((int) session()->get('user_id'), $classroom['id']);
         } else {
             return 'not_found';
         }
@@ -44,15 +51,15 @@ class ClassroomModel extends Model
         $DescriptionModel = model('DescriptionModel');
         
         if($data['user_id']){
-            $this->join('user_classrooms', 'user_classrooms.classroom_id = classrooms.id')
-            ->where('user_classrooms.user_id', $data['user_id']);
+            $this->join('users_to_classrooms', 'users_to_classrooms.classroom_id = classrooms.id')
+            ->where('users_to_classrooms.user_id', $data['user_id']);
         }
-        $classrooms = $this->get()->getResult();
+        $classrooms = $this->get()->getResultArray();
         foreach($classrooms as &$classroom){
-            $classroom->description = $DescriptionModel->getItem('classroom', $classroom->id);
-            $classroom->image = base_url('image/' . $classroom->image);
-            $classroom->background_image = base_url('image/' . $classroom->background_image);
-            $classroom->is_active = session()->get('user_data')->profile->classroom_id == $classroom->id;
+            $classroom['description'] = $DescriptionModel->getItem('classroom', $classroom['id']);
+            $classroom['image'] = base_url('image/' . $classroom['image']);
+            $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
+            $classroom['is_active'] = session()->get('user_data')['profile']['classroom_id'] == $classroom['id'];
         }
         return $classrooms;
     }

@@ -42,6 +42,11 @@ class ExerciseStatisticModel extends Model
     {
         $user_row = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
         $offset = ceil($this->limit/2);
+        if(empty($user_row['place'])){
+            $user_row = [
+                'place' => 0
+            ];
+        }
         $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
         ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")
         ->groupBy('place, points, is_winner')->get()->getResultArray();
@@ -70,7 +75,9 @@ class ExerciseStatisticModel extends Model
 
         $offset = ceil($this->limit/2);
         $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->get()->getResultArray();
-
+        if(empty($list)){
+            return false;
+        }
         $dates = $DateProcessor->getDates($data, $min_date, $max_date, 5);
         $result = [
             'data' => [],
@@ -106,8 +113,8 @@ class ExerciseStatisticModel extends Model
 
         /* CLASSROOM FILTER SECTION */
         $classroom_filter = "";
-        if(isset($data['by_classroom']) && $data['by_classroom']){
-            $classroom_filter = " JOIN user_classrooms ON users.id = user_classrooms.user_id AND user_classrooms.classroom_id = '".session()->get('user_data')->profile->classroom_id."' ";
+        if(isset($data['classroom_id']) && $data['classroom_id']){
+            $classroom_filter = " JOIN users_to_classrooms ON users.id = users_to_classrooms.user_id AND users_to_classrooms.classroom_id = '".$data['classroom_id']."' ";
         }
         /* CLASSROOM FILTER SECTION END */
 

@@ -37,10 +37,13 @@ class AchievementModel extends Model
         $DescriptionModel = model('DescriptionModel');
         
         if($data['user_id']){
-            $this->join('achievements_to_users', 'achievements_to_users.achievement_id = achievements.id')
-            ->where('achievements_to_users.user_id', $data['user_id']);
+            $this->join('users_to_achievements', 'users_to_achievements.item_id = achievements.id')
+            ->where('users_to_achievements.user_id', $data['user_id']);
         }
         $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResultArray();
+        if(empty($achievements)){
+            return false;
+        }
         foreach($achievements as &$achievement){
             $achievement['description'] = $DescriptionModel->getItem('achievement', $achievement['id']);
             $achievement['image'] = base_url('image/' . $achievement['image']);

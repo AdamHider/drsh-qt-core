@@ -25,20 +25,20 @@ class UserProfileModel extends Model
 
     public function getItem ($user_id) 
     {
-        $profile = $this->where('user_id', $user_id)->get()->getRow();
+        $profile = $this->where('user_id', $user_id)->get()->getRowArray();
 
         $UserClassroomModel = model('UserClassroomModel');
 
         $user_statistics = $this->join('exercises', 'exercises.user_id = user_profiles.user_id', 'left')
         ->select("COALESCE(sum(exercises.points), 0) as total_points, COALESCE(COUNT(exercises.points), 0) as total_exercises")
-        ->get()->getRow();
-        $profile->total_points = $user_statistics->total_points;
-        $profile->total_exercises = $user_statistics->total_exercises;
-        $profile->level = $this->getItemLevel($user_statistics->total_points);
-        $profile->total_classrooms  = count($UserClassroomModel->getList($user_id));
+        ->get()->getRowArray();
+        $profile['total_points'] = $user_statistics['total_points'];
+        $profile['total_exercises'] = $user_statistics['total_exercises'];
+        $profile['level'] = $this->getItemLevel($user_statistics['total_points']);
+        $profile['total_classrooms']  = count($UserClassroomModel->getList($user_id));
 
         $CharacterModel = model('CharacterModel');
-        $profile->character  = $CharacterModel->getItem($profile->character_id);
+        $profile['character']  = $CharacterModel->getItem($profile['character_id']);
         return $profile;
     }
         
@@ -73,10 +73,10 @@ class UserProfileModel extends Model
     }
     public function getItemLevel ($total_points) 
     {
-        $level_data = $this->from('user_levels')->where(['points_from <=' => $total_points, 'points_to >' => $total_points])->get()->getRow();
+        $level_data = $this->from('user_levels')->where(['points_from <=' => $total_points, 'points_to >' => $total_points])->get()->getRowArray();
         
         if(!empty($level_data)){
-            $level_data->percentage = ceil($total_points * 100 / $level_data->points_to);
+            $level_data['percentage'] = ceil($total_points * 100 / $level_data['points_to']);
         }
         return $level_data;
     }

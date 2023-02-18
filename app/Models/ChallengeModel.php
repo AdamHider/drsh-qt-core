@@ -31,7 +31,6 @@ class ChallengeModel extends Model
         
         $challenge = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
         ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
-        ->where('challenges.classroom_id', session()->get('user_data')->profile->classroom_id)
         ->where('challenges.id', $challenge_id)->get()->getRowArray();
 
         $user_winner = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id')
@@ -64,7 +63,7 @@ class ChallengeModel extends Model
         
         $challenges = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
         ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
-        ->where('challenges.classroom_id', session()->get('user_data')->profile->classroom_id)
+        ->where('challenges.classroom_id', $data['classroom_id'])
         ->groupBy('challenges.id')
         ->limit($data['limit'], $data['offset'])->orderBy('date_end')->get()->getResultArray();
 

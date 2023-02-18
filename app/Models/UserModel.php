@@ -78,24 +78,24 @@ class UserModel extends Model
         if ($user_id == 0) {
             return $this->getGuestItem();
         }
-        $user = $this->where('id', $user_id)->get()->getRow();
+        $user = $this->where('id', $user_id)->get()->getRowArray();
         
         if(!$user){
             return 'not_found';
         }
         $UserProfileModel = model('UserProfileModel');
+        $UserGroupModel = model('UserGroupModel');
 
-        $user->profile = $UserProfileModel->getItem($user->id);
-
-        unset($user->password);
+        $user['profile'] = $UserProfileModel->getItem($user['id']);
+        $user['groups'] = $UserGroupModel->getList($user['id']);
+        $user['group_ids'] = [];
+        foreach($user['groups'] as $group){
+            $user['group_ids'][] = $group['id'];
+        } 
+        unset($user['password']);
         return $user;
     }
-
-    public function getList () 
-    {
-        return $this->findAll();
-    }
-        
+  
     public function updateItem ($data)
     {
         $this->transBegin();

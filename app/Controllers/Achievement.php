@@ -42,7 +42,9 @@ class Achievement extends BaseController
             $data['user_id'] = session()->get('user_id');
         }
         $result = $AchievementModel->getList($data);
-        
+        if(!$result){
+            return $this->failNotFound('not_found');
+        }
         return $this->respond($result, 200);
     }
 

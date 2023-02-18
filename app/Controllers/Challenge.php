@@ -28,10 +28,16 @@ class Challenge extends BaseController
 
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
+        $classroom_id = $this->request->getVar('classroom_id');
+
+        if(!$classroom_id){
+            $classroom_id = session()->get('user_data')->profile->classroom_id;
+        }
 
         $data = [
             'limit' => $limit,
-            'offset' => $offset
+            'offset' => $offset,
+            'classroom_id' => $classroom_id
         ];
         $challenges = $ChallengeModel->getList($data);
         
@@ -40,25 +46,6 @@ class Challenge extends BaseController
         }
 
         return $this->respond($challenges);
-    }
-
-    public function addItem()
-    {
-        $ExerciseModel = model('ExerciseModel');
-
-        $lesson_id = $this->request->getVar('lesson_id');
-        if (!$lesson_id) {
-            return $this->fail('no_lesson');
-        }
-        $exercise_id = $ExerciseModel->createItem($lesson_id);
-        
-        if ($exercise_id == 'not_found') {
-            return $this->failNotFound('not_found');
-        }
-        if($ExerciseModel->errors()){
-            return $this->failValidationErrors(json_encode($ExerciseModel->errors()));
-        }
-        return $this->respond($exercise_id);
     }
     
     public function addWinnerItem()
