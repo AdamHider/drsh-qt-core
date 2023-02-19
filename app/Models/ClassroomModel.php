@@ -10,26 +10,14 @@ class ClassroomModel extends Model
     protected $table      = 'classrooms';
     protected $primaryKey = 'id';
 
-    protected $useAutoIncrement = true;
-
-    protected $returnType = 'array';
-    protected $useSoftDeletes = true;
-
     protected $allowedFields = [
         'image'
     ];
-    
-    protected $useTimestamps = false;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
     public function getItem ($classroom_id) 
     {
-        if(!$this->permit($classroom_id, 'r')){
+        if(!$this->hasPermission($classroom_id, 'r')){
             return 'forbidden';
         }
-
         $DescriptionModel = model('DescriptionModel');
         $UserClassroomModel = model('UserClassroomModel');
         if ($classroom_id == 0) {

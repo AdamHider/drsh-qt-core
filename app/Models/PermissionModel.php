@@ -7,15 +7,16 @@ class PermissionModel extends Model{
     
     use PermissionTrait;
     
-    protected $table      = 'user_role_permission_list';
-    protected $primaryKey = 'permission_id';
+    protected $table      = 'permisions';
+    protected $primaryKey = 'id';
     protected $allowedFields = [
-        'permited_class',
-        'permited_method',
+        'user_group_id',
+        'scope',
+        'method',
         'owner',
         'ally',
         'other'
-        ];
+    ];
     
     public function itemGet(){
         return $this->get()->getResult();
@@ -28,20 +29,24 @@ class PermissionModel extends Model{
         return [];
     }
     
-    public function listFillSession(){
-        $permission_list=$this->get()->getResult();
-        $permissions=[];
-        foreach($permission_list as $perm){
-            $permissions["{$perm->permited_class}.{$perm->permited_method}"]=[
-                'owner'=>$perm->owner,
-                'ally'=>$perm->ally,
-                'other'=>$perm->other,
+    public function updateSession(){
+        $UserGroupModel = model('UserGroupModel');
+        $max_user_group = $UserGroupModel->join('users_to_user_groups', 'users_to_user_groups.item_id = user_groups.id')
+        ->select('MAX(user_groups.id) as id')->where('users_to_user_groups.user_id', session()->get('user_id'))->get()->getRow('id');
+
+        $permissions = $this->where('user_group_id', $max_user_group)->get()->getResult();
+        $result = [];
+        foreach($permissions as $permission){
+            $result["{$permission->scope}.{$permission->method}"]=[
+                'owner' => $permission->owner,
+                'party' => $permission->party,
+                'other' => $permission->other,
             ];
         }
-        session()->set('permissions',$permissions);
+        session()->set('permissions', $result);
     }
     
-    public function itemCreate($permited_owner,$permited_class,$permited_method,$permited_rights){
+    public function createItem($permited_owner,$permited_class,$permited_method,$permited_rights){
         if( !sudo() ){
             return false;
         }

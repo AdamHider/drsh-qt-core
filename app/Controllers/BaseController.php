@@ -49,6 +49,8 @@ abstract class BaseController extends Controller
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         $this->handleSession($request,$response);
+
+        $this->initPermission();
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
@@ -64,5 +66,13 @@ abstract class BaseController extends Controller
         }
         session();
         $response->setHeader('x-sid', session_id());
+    }
+
+    
+    private function initPermission(){
+        //if(empty(session()->get('permissions'))){
+            $PermissionModel = model('PermissionModel');
+            //$PermissionModel->updateSession();
+        //}
     }
 }

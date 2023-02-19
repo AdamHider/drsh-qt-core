@@ -32,7 +32,7 @@ class ChallengeModel extends Model
         $challenge = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
         ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
         ->where('challenges.id', $challenge_id)->get()->getRowArray();
-
+        
         $user_winner = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id')
         ->where('challenges_winners.user_id', session()->get('user_id'))
         ->where('challenges.id', $challenge_id)->get()->getRowArray();
@@ -41,6 +41,7 @@ class ChallengeModel extends Model
         }
         $challenge['description'] = $DescriptionModel->getItem('challenge', $challenge['id']);
         $challenge['image'] = base_url('image/' . $challenge['image']);
+
         $challenge['progress'] = $this->getProgress($challenge['value'], $challenge['date_start'], $challenge['date_end']);
         $challenge['is_finished'] = $this->checkFinished($challenge);
         $challenge['is_winner'] = $ChallengeWinnerModel->checkWinner($challenge);

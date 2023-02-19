@@ -7,25 +7,17 @@ use CodeIgniter\I18n\Time;
 
 class HomeworkModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'homeworks';
     protected $primaryKey = 'id';
-
-    protected $useAutoIncrement = true;
-
-    protected $returnType = 'array';
-    protected $useSoftDeletes = true;
 
     protected $allowedFields = [
         'image'
     ];
-    
-    protected $useTimestamps = false;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
 
     public function getItem ($homework_id) 
     {
+        $ClassroomModel = model('ClassroomModel');
         $CourseSectionModel = model('CourseSectionModel');
         $DescriptionModel = model('DescriptionModel');
         $LessonModel = model('LessonModel');
@@ -39,6 +31,9 @@ class HomeworkModel extends Model
 
         if(empty($homework)){
             return 'not_found';
+        }
+        if(!$ClassroomModel->hasPermission($homework['classroom_id'], 'ra')){
+            return 'forbidden';
         }
 
         $homework['course_section'] = $CourseSectionModel->getItem($homework['course_section_id']);
@@ -61,6 +56,10 @@ class HomeworkModel extends Model
     }
     public function getList ($data) 
     {
+        $ClassroomModel = model('ClassroomModel');
+        if(!$ClassroomModel->hasPermission($data['classroom_id'], 'r')){
+            return 'forbidden';
+        }
         $CourseSectionModel = model('CourseSectionModel');
         $DescriptionModel = model('DescriptionModel');
         $LessonModel = model('LessonModel');
@@ -78,17 +77,20 @@ class HomeworkModel extends Model
         }
         
         foreach($homeworks as &$homework){
+
             $homework['course_section'] = $CourseSectionModel->getItem($homework['course_section_id']);
             $homework['description'] = $DescriptionModel->getItem('lesson', $homework['lesson_id']);
             $homework['image'] = base_url('image/' . $homework['image']);
-            $homework['exercise'] = $ExerciseModel->getItem($homework['exercise_id'], 'lite');
-            $homework['is_blocked'] = $LessonModel->checkBlocked($homework['unblock_after']);
-            if($homework['date_end']){
-                $date_end = Time::parse($homework['date_end'], Time::now()->getTimezone());
-                $time_diff = Time::now()->difference($date_end);
-                $homework['time_left'] = $time_diff->getDays();
-                $homework['time_left_humanized'] = Time::now()->difference($date_end)->humanize();
-                $homework['is_finished'] = $time_diff->getSeconds() <= 0;
+            if($ClassroomModel->hasPermission($homework['classroom_id'], 'ra')){
+                $homework['exercise'] = $ExerciseModel->getItem($homework['exercise_id'], 'lite');
+                $homework['is_blocked'] = $LessonModel->checkBlocked($homework['unblock_after']);
+                if($homework['date_end']){
+                    $date_end = Time::parse($homework['date_end'], Time::now()->getTimezone());
+                    $time_diff = Time::now()->difference($date_end);
+                    $homework['time_left'] = $time_diff->getDays();
+                    $homework['time_left_humanized'] = Time::now()->difference($date_end)->humanize();
+                    $homework['is_finished'] = $time_diff->getSeconds() <= 0;
+                }
             }
         }
         return $homeworks;

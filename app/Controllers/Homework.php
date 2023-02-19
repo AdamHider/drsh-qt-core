@@ -18,6 +18,9 @@ class Homework extends BaseController
         if ($homework == 'not_found') {
             return $this->failNotFound('not_found');
         }
+        if ($homework == 'forbidden') {
+            return $this->failForbidden();
+        }
 
         return $this->respond($homework);
     }
@@ -42,6 +45,9 @@ class Homework extends BaseController
         
         if ($homeworks == 'not_found') {
             return $this->failNotFound('not_found');
+        }
+        if ($homeworks == 'forbidden') {
+            return $this->failForbidden();
         }
 
         return $this->respond($homeworks);
