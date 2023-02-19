@@ -9,6 +9,7 @@ use App\Libraries\DateProcessor;
 
 class ExerciseStatisticModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'exercises_rating';
 
     public $limit = 6;
@@ -40,6 +41,7 @@ class ExerciseStatisticModel extends Model
     } 
     public function getTable($data)
     {
+        
         $user_row = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
         $offset = ceil($this->limit/2);
         if(empty($user_row['place'])){
@@ -47,6 +49,10 @@ class ExerciseStatisticModel extends Model
                 'place' => 0
             ];
         }
+        if($data['classroom_id']){
+            $this->considerSubscription('classrooms', 'classroom_id');
+        }
+        $this->permitWhere('r');
         $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
         ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")
         ->groupBy('place, points, is_winner')->get()->getResultArray();
@@ -74,6 +80,10 @@ class ExerciseStatisticModel extends Model
         $max_date = $this->select('COALESCE(MAX(finished_at), NOW()) as max_date')->get()->getRow()->max_date;
 
         $offset = ceil($this->limit/2);
+        if($data['classroom_id']){
+            $this->considerSubscription('classrooms', 'classroom_id');
+        }
+        $this->permitWhere('r');
         $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->get()->getResultArray();
         if(empty($list)){
             return false;
@@ -113,8 +123,10 @@ class ExerciseStatisticModel extends Model
 
         /* CLASSROOM FILTER SECTION */
         $classroom_filter = "";
+        $classroom_id = "0";
         if(isset($data['classroom_id']) && $data['classroom_id']){
-            $classroom_filter = " JOIN users_to_classrooms ON users.id = users_to_classrooms.user_id AND users_to_classrooms.classroom_id = '".$data['classroom_id']."' ";
+            $classroom_filter = " JOIN users_to_classrooms ON users.id = users_to_classrooms.user_id AND users_to_classrooms.item_id = '".$data['classroom_id']."' ";
+            $classroom_id = $data['classroom_id'];
         }
         /* CLASSROOM FILTER SECTION END */
 
@@ -175,9 +187,11 @@ class ExerciseStatisticModel extends Model
                 rating.username,
                 rating.created_at,
                 @finished_at:=rating.finished_at as finished_at,
+                0 as owner_id,
                 rating.is_active,
                 IF(@winner_limit > 0 AND rating.points > 0, 1, 0) as is_winner,
-                @winner_limit:=@winner_limit - 1 as winner_limit
+                @winner_limit:=@winner_limit - 1 as winner_limit,
+                $classroom_id as classroom_id
             FROM (
                 SELECT 
                     users.id as user_id, 

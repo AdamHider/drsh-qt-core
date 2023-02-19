@@ -19,6 +19,9 @@ class Challenge extends BaseController
         if ($challenge == 'not_found') {
             return $this->failNotFound('not_found');
         }
+        if ($challenge == 'forbidden') {
+            return $this->failForbidden();
+        }
 
         return $this->respond($challenge);
     }

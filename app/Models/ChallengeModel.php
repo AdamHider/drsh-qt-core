@@ -7,25 +7,22 @@ use CodeIgniter\I18n\Time;
 
 class ChallengeModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'challenges';
     protected $primaryKey = 'id';
-
-    protected $useAutoIncrement = true;
-
-    protected $returnType = 'array';
-    protected $useSoftDeletes = true;
 
     protected $allowedFields = [
         'image'
     ];
     
-    protected $useTimestamps = false;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
     public function getItem ($challenge_id) 
     {
+        $this->considerSubscription('classrooms', 'classroom_id');
+
+        if(!$this->hasPermission($challenge_id, 'r')){
+            return 'forbidden';
+        }
+
         $DescriptionModel = model('DescriptionModel');
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         
@@ -59,6 +56,9 @@ class ChallengeModel extends Model
     }
     public function getList ($data) 
     {
+        $this->considerSubscription('classrooms', 'classroom_id');
+        $this->permitWhere('r');
+        
         $DescriptionModel = model('DescriptionModel');
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         
