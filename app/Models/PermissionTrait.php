@@ -26,7 +26,7 @@ trait PermissionTrait{
             SELECT
                 IF(owner_id = $user_id
                     ,'owner',
-                IF(COALESCE(".implode(' AND ', $this->shared_selector).", 0)
+                IF(COALESCE($this->shared_query, 0)
                     ,'shared'
                     ,'other'
                 )) user_role
@@ -52,7 +52,6 @@ trait PermissionTrait{
             return $cached_permission;
         }*/
         $user_role = $this->userRole($item_id);
-
         $permissions = session()->get('permissions');
         $permission = 0;
         if($user_role == 'admin'){
@@ -112,37 +111,31 @@ trait PermissionTrait{
                 $query = "1=2";//All denied
             } else
             if( $owner_has && $shared_has ){//!$other_has
-                $query = "({$this->table}.owner_id='$user_id' OR ".implode(' AND ', $this->shared_selector)." )";
+                $query = "({$this->table}.owner_id = '$user_id' OR $this->shared_query )";
             } else
             if( $owner_has && $other_has ){//!$shared_has
-                $query = "NOT FIND_IN_SET('$user_id',{$this->table}.owner_shared_ids)";
+                $query = "!$this->shared_query";
             } else
             if( $shared_has ){
-                $query = "(".implode(' AND ', $this->shared_selector).") IS NOT NULL";
+                $query = "$this->shared_query";
             } else
             if( $shared_has && $other_has ){//!$owner_has
-                $query = "{$this->table}.owner_id<>'$user_id'";
+                $query = "{$this->table}.owner_id <> '$user_id'";
             } else
             if( $owner_has ){
-                $query = "{$this->table}.owner_id='$user_id'";
+                $query = "{$this->table}.owner_id = '$user_id'";
             } else
             if( $other_has ){
-                $query = "{$this->table}.owner_id<>'$user_id' AND (".implode(' AND ', $this->shared_selector).") IS NULL)";
+                $query = "{$this->table}.owner_id <> '$user_id' AND !$this->shared_query)";
             }
             if($query == ""){
                 $query = " {$this->table}.is_private = '".(int) ($status == 'private')."'";
             } else {
                 $query .= " AND {$this->table}.is_private = '".(int) ($status == 'private')."'";
-                
-            }
-            foreach($this->shared_queue as $table => $field_name){
-                //$query .= " AND (SELECT is_private FROM $table WHERE $table.id = $this->table.$field_name) = '".(int) ($status == 'private')."' ";
             }
             $result[] = '('.$query.')';
         }
 
-        print_r('('.implode(' OR ', $result).')');
-        die;
         if(count($result) > 0){
             return '('.implode(' OR ', $result).')';
         }
@@ -150,12 +143,14 @@ trait PermissionTrait{
         
     }
     private $shared_selector = [];
+    private $shared_query = '0';
     private $shared_queue = [];
     public function useSharedOf( $table, $field_name ){
         if($this->query("SHOW TABLES LIKE '".$table."_usermap'")->getNumRows() > 0){
-            $subscription_query = " (SELECT `".$table."_usermap`.user_id FROM ".$table."_usermap WHERE `".$table."_usermap`.item_id = $this->table.$field_name AND `".$table."_usermap`.user_id = ".session()->get('user_id').")";
+            $subscription_query = " ((SELECT `".$table."_usermap`.user_id FROM ".$table."_usermap WHERE `".$table."_usermap`.item_id = $this->table.$field_name AND `".$table."_usermap`.user_id = ".session()->get('user_id').") IS NOT NULL )";
             $this->shared_selector[] = $subscription_query;
             $this->shared_queue[$table] = $field_name;
+            $this->shared_query = implode(' AND ', $this->shared_selector);
         }
     }
 

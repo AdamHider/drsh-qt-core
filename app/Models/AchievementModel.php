@@ -37,8 +37,8 @@ class AchievementModel extends Model
         $DescriptionModel = model('DescriptionModel');
         
         if($data['user_id']){
-            $this->join('users_to_achievements', 'users_to_achievements.item_id = achievements.id')
-            ->where('users_to_achievements.user_id', $data['user_id']);
+            $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id')
+            ->where('achievements_usermap.user_id', $data['user_id']);
         }
         $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResultArray();
         if(empty($achievements)){

@@ -56,8 +56,9 @@ class ChallengeModel extends Model
     }
     public function getList ($data) 
     {
-        $this->useSharedOf('classrooms', 'classroom_id');
-        
+        if(isset($data['classroom_id'])){
+            $this->useSharedOf('classrooms', 'classroom_id');
+        }
         $DescriptionModel = model('DescriptionModel');
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         

@@ -30,8 +30,12 @@ class PermissionModel extends Model{
     }
     
     public function updateSession(){
-        $permissions = $this->whereIn('user_group_id', session()->get('user_data')['group_ids'])
-        ->select("scope, method, status, GROUP_CONCAT(owner) as owner, GROUP_CONCAT(shared) as shared, GROUP_CONCAT(other) as other")->groupBy('scope, status')
+        $user_groups = [1];
+        if(!empty(session()->get('user_data')['group_ids'])){
+            $user_groups = session()->get('user_data')['group_ids'];
+        }
+        $permissions = $this->whereIn('user_group_id', $user_groups)
+        ->select("scope, method, status, GROUP_CONCAT(owner) as owner, GROUP_CONCAT(shared) as shared, GROUP_CONCAT(other) as other")->groupBy('scope, method, status')
         ->get()->getResultArray();
         $result = [];
         foreach($permissions as $permission){

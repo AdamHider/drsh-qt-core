@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'users';
     protected $primaryKey = 'id';
 
@@ -78,6 +79,10 @@ class UserModel extends Model
         if ($user_id == 0) {
             return $this->getGuestItem();
         }
+        
+        if(!$this->hasPermission($user_id, 'r')){
+            return 'forbidden';
+        }
         $user = $this->where('id', $user_id)->get()->getRowArray();
         
         if(!$user){
@@ -127,17 +132,17 @@ class UserModel extends Model
 
     public function signIn ($username, $password)
     {
-        $user = $this->where('username', $username)->get()->getRow();
-        if(!$user || !$user->id){
+        $user = $this->where('username', $username)->get()->getRowArray();
+        if(!$user || !$user['id']){
             return 'not_found';
         }
-        if(!password_verify($password, $user->password)){
+        if(!password_verify($password, $user['password'])){
             return 'wrong_password';
         }
-        if($user->blocked){
+        if($user['blocked']){
             return 'blocked';
         }
-        if($user->deleted_at){
+        if($user['deleted_at']){
             return 'is_deleted';
         }
         /*
@@ -146,7 +151,7 @@ class UserModel extends Model
         $this->protect(false)
                 ->update($user->id,['signed_in_at'=>\CodeIgniter\I18n\Time::now()]);
         $this->protect(true);*/
-        session()->set('user_id', $user->id);
+        session()->set('user_id', $user['id']);
         return 'success' ;
     }
     public function saveItemPassword($data, $user_id)
@@ -155,7 +160,7 @@ class UserModel extends Model
         $user = $this->where('id', $user_id)->get()->getRow();
 
         //CHECK OLD PASSWORD SECTION
-        if (!password_verify($data['old_password'], $user->password)) {
+        if (!password_verify($data['old_password'], $user['password'])) {
             return 'wrong_password';
         }
         //CHECK PASSWORD SECTION
@@ -219,7 +224,7 @@ class UserModel extends Model
     }
     
     private function getGuestItem(){
-        return (object)[
+        return [
             'id'=> 0,
             'username'=>'Guest'
         ];

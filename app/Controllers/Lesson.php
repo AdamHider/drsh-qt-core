@@ -13,10 +13,16 @@ class Lesson extends BaseController
 
         $lesson_id = $this->request->getVar('lesson_id');
         
+        if (!$lesson_id) {
+            return $this->failNotFound('not_found');
+        }
         $lesson = $LessonModel->getItem($lesson_id);
         
         if (!$lesson) {
             return $this->failNotFound('not_found');
+        }
+        if ($lesson == 'forbidden') {
+            return $this->failForbidden();
         }
         return $this->respond($lesson);
     }
@@ -41,6 +47,9 @@ class Lesson extends BaseController
 
         $lesson_id = $this->request->getVar('lesson_id');
         
+        if (!$lesson_id) {
+            return $this->failNotFound('not_found');
+        }
         $satellites = $LessonModel->getSatellites($lesson_id, 'full');
         
         if (empty($satellites)) {

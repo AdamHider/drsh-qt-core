@@ -29,9 +29,9 @@ class UserClassroomModel extends Model
         if(!$user_id){
             $user_id == session()->get('user_id');
         }
-        $groups =  $this->join('users_to_user_groups', 'users_to_user_groups.item_id = user_groups.id')
+        $groups =  $this->join('user_groups_usermap', 'user_groups_usermap.item_id = user_groups.id')
         ->select('user_groups.id, user_groups.code, user_groups.path')
-        ->where('users_to_user_groups.user_id', $user_id)->get()->getResultArray();
+        ->where('user_groups_usermap.user_id', $user_id)->get()->getResultArray();
 
         foreach($groups as &$group){
             $group['description'] = $DescriptionModel->getItem('user_group', $group['id']);

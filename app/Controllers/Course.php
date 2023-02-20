@@ -13,7 +13,7 @@ class Course extends BaseController
 
         $course_id = $this->request->getVar('course_id');
 
-        if( !$course_id ){
+        if( !$course_id && session()->get('user_data')){
             $course_id = session()->get('user_data')['profile']['course_id'];
         }
 
