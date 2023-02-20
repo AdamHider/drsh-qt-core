@@ -50,13 +50,13 @@ class ExerciseStatisticModel extends Model
             ];
         }
         if($data['classroom_id']){
-            $this->considerSubscription('classrooms', 'classroom_id');
+            $this->useSharedOf('classrooms', 'classroom_id');
         }
-        $this->permitWhere('r');
         $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
-        ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")
+        ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->whereHasPermission('r')
         ->groupBy('place, points, is_winner')->get()->getResultArray();
-
+        
+        
         foreach($result as &$row){
             $row['data'] = $this->where("place", $row['place'])->limit(3)->get()->getResultArray();
             $row['is_active'] = (bool) $row['is_active'];
@@ -81,10 +81,9 @@ class ExerciseStatisticModel extends Model
 
         $offset = ceil($this->limit/2);
         if($data['classroom_id']){
-            $this->considerSubscription('classrooms', 'classroom_id');
+            $this->useSharedOf('classrooms', 'classroom_id');
         }
-        $this->permitWhere('r');
-        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->get()->getResultArray();
+        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->whereHasPermission('r')->get()->getResultArray();
         if(empty($list)){
             return false;
         }
@@ -120,13 +119,15 @@ class ExerciseStatisticModel extends Model
     public function createTempView($data){
         $this->query("DROP TABLE IF EXISTS exercises_rating");
 
-
+        $is_private = 0;
         /* CLASSROOM FILTER SECTION */
         $classroom_filter = "";
         $classroom_id = "0";
         if(isset($data['classroom_id']) && $data['classroom_id']){
-            $classroom_filter = " JOIN users_to_classrooms ON users.id = users_to_classrooms.user_id AND users_to_classrooms.item_id = '".$data['classroom_id']."' ";
+            $ClassroomModel = model('ClassroomModel');
+            $classroom_filter = " JOIN classrooms_usermap ON users.id = classrooms_usermap.user_id AND classrooms_usermap.item_id = '".$data['classroom_id']."' ";
             $classroom_id = $data['classroom_id'];
+            $is_private = $ClassroomModel->where('id', $data['classroom_id'])->get()->getRow('is_private');
         }
         /* CLASSROOM FILTER SECTION END */
 
@@ -189,6 +190,7 @@ class ExerciseStatisticModel extends Model
                 @finished_at:=rating.finished_at as finished_at,
                 0 as owner_id,
                 rating.is_active,
+                $is_private  as is_private,
                 IF(@winner_limit > 0 AND rating.points > 0, 1, 0) as is_winner,
                 @winner_limit:=@winner_limit - 1 as winner_limit,
                 $classroom_id as classroom_id

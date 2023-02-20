@@ -17,7 +17,7 @@ class HomeworkModel extends Model
 
     public function getItem ($homework_id) 
     {
-        $this->considerSubscription('classrooms', 'classroom_id');
+        $this->useSharedOf('classrooms', 'classroom_id');
 
         if(!$this->hasPermission($homework_id, 'r')){
             return 'forbidden';
@@ -63,8 +63,8 @@ class HomeworkModel extends Model
         if(!$ClassroomModel->hasPermission($data['classroom_id'], 'r')){
             return 'forbidden';
         }*/
-        $this->considerSubscription('classrooms', 'classroom_id');
-        $this->permitWhere('r');
+        $this->useSharedOf('classrooms', 'classroom_id');
+        
         $CourseSectionModel = model('CourseSectionModel');
         $DescriptionModel = model('DescriptionModel');
         $LessonModel = model('LessonModel');
@@ -73,7 +73,7 @@ class HomeworkModel extends Model
         $homeworks = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
         ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
         ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
-        ->where('homeworks.classroom_id', $data['classroom_id'])
+        ->where('homeworks.classroom_id', $data['classroom_id'])->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('date_end')
         ->get()->getResultArray();
 

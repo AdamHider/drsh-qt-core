@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserClassroomModel extends Model
+class ClassroomUsermapModel extends Model
 {
-    protected $table      = 'users_to_classrooms';
+    protected $table      = 'classrooms_usermap';
     protected $primaryKey = 'user_id';
 
     protected $useSoftDeletes = true;

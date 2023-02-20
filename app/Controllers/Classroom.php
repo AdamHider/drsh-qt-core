@@ -61,7 +61,7 @@ class Classroom extends BaseController
     }
 
     public function subscribe(){
-        $UserClassroomModel = model('UserClassroomModel');
+        $ClassroomUsermap = model('ClassroomUsermap');
         $ClassroomModel = model('ClassroomModel');
 
         $code = $this->request->getVar('classroom_code');
@@ -71,10 +71,10 @@ class Classroom extends BaseController
         if (!$classroom_id) {
             return $this->failNotFound('not_found');
         }
-        $UserClassroomModel->itemCreate($user_id, $classroom_id);
+        $ClassroomUsermap->itemCreate($user_id, $classroom_id);
 
-        if($UserClassroomModel->errors()){
-            return $this->failValidationErrors(json_encode($UserClassroomModel->errors()));
+        if($ClassroomUsermap->errors()){
+            return $this->failValidationErrors(json_encode($ClassroomUsermap->errors()));
         }
         $classroom = $ClassroomModel->getItem($classroom_id);
         return $this->respond($classroom);

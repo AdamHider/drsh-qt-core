@@ -27,7 +27,7 @@ class UserProfileModel extends Model
     {
         $profile = $this->where('user_id', $user_id)->get()->getRowArray();
 
-        $UserClassroomModel = model('UserClassroomModel');
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
 
         $user_statistics = $this->join('exercises', 'exercises.user_id = user_profiles.user_id', 'left')
         ->select("COALESCE(sum(exercises.points), 0) as total_points, COALESCE(COUNT(exercises.points), 0) as total_exercises")
@@ -35,7 +35,7 @@ class UserProfileModel extends Model
         $profile['total_points'] = $user_statistics['total_points'];
         $profile['total_exercises'] = $user_statistics['total_exercises'];
         $profile['level'] = $this->getItemLevel($user_statistics['total_points']);
-        $profile['total_classrooms']  = count($UserClassroomModel->getList($user_id));
+        $profile['total_classrooms']  = count($ClassroomUsermapModel->getList($user_id));
 
         $CharacterModel = model('CharacterModel');
         $profile['character']  = $CharacterModel->getItem($profile['character_id']);

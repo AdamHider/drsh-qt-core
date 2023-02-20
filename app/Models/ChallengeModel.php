@@ -17,7 +17,7 @@ class ChallengeModel extends Model
     
     public function getItem ($challenge_id) 
     {
-        $this->considerSubscription('classrooms', 'classroom_id');
+        $this->useSharedOf('classrooms', 'classroom_id');
 
         if(!$this->hasPermission($challenge_id, 'r')){
             return 'forbidden';
@@ -56,15 +56,14 @@ class ChallengeModel extends Model
     }
     public function getList ($data) 
     {
-        $this->considerSubscription('classrooms', 'classroom_id');
-        $this->permitWhere('r');
+        $this->useSharedOf('classrooms', 'classroom_id');
         
         $DescriptionModel = model('DescriptionModel');
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         
         $challenges = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
         ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
-        ->where('challenges.classroom_id', $data['classroom_id'])
+        ->where('challenges.classroom_id', $data['classroom_id'])->whereHasPermission('r')
         ->groupBy('challenges.id')
         ->limit($data['limit'], $data['offset'])->orderBy('date_end')->get()->getResultArray();
 

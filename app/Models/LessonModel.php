@@ -7,6 +7,7 @@ use stdClass;
 
 class LessonModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'lessons';
     protected $primaryKey = 'id';
 
@@ -52,6 +53,10 @@ class LessonModel extends Model
     }
     public function getList ($data) 
     {
+        
+        $this->useSharedOf('courses', 'course_id');
+        $this->useSharedOf('course_sections', 'course_section_id');
+
         $DescriptionModel = model('DescriptionModel');
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
@@ -60,7 +65,9 @@ class LessonModel extends Model
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['profile']['course_id'])
         ->where('lessons.parent_id IS NULL')
+        ->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
+        die;
         foreach($lessons as $key => &$lesson){
             if(isset($data['offset'])){
                 $lesson['order'] = $key + $data['offset'];

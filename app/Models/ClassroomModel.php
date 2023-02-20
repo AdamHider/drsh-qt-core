@@ -19,7 +19,7 @@ class ClassroomModel extends Model
             return 'forbidden';
         }
         $DescriptionModel = model('DescriptionModel');
-        $UserClassroomModel = model('UserClassroomModel');
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
         if ($classroom_id == 0) {
             return 'not_found';
         }
@@ -28,7 +28,7 @@ class ClassroomModel extends Model
             $classroom['description'] = $DescriptionModel->getItem('classroom', $classroom['id']);
             $classroom['image'] = base_url('image/' . $classroom['image']);
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
-            $classroom['is_subscribed'] = (bool) $UserClassroomModel->getItem((int) session()->get('user_id'), $classroom['id']);
+            $classroom['is_subscribed'] = (bool) $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
         } else {
             return 'not_found';
         }
@@ -39,8 +39,8 @@ class ClassroomModel extends Model
         $DescriptionModel = model('DescriptionModel');
         
         if($data['user_id']){
-            $this->join('users_to_classrooms', 'users_to_classrooms.classroom_id = classrooms.id')
-            ->where('users_to_classrooms.user_id', $data['user_id']);
+            $this->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
+            ->where('classrooms_usermap.user_id', $data['user_id']);
         }
         $classrooms = $this->get()->getResultArray();
         foreach($classrooms as &$classroom){

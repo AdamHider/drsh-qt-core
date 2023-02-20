@@ -23,10 +23,12 @@ class UserClassroomModel extends Model
         $user_classroom = $this->where('user_id = '.$user_id.' AND classroom_id = '.$classroom_id)->get()->getRowArray(0);
         return $user_classroom;
     }
-    public function getList ($user_id) 
+    public function getList ($user_id = false) 
     {
         $DescriptionModel = model('DescriptionModel');
-
+        if(!$user_id){
+            $user_id == session()->get('user_id');
+        }
         $groups =  $this->join('users_to_user_groups', 'users_to_user_groups.item_id = user_groups.id')
         ->select('user_groups.id, user_groups.code, user_groups.path')
         ->where('users_to_user_groups.user_id', $user_id)->get()->getResultArray();

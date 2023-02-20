@@ -80,7 +80,7 @@ class Exercise extends BaseController
         if($challenge_id){
             $challenge = $ChallengeModel->where('id', $challenge_id)->get()->getRowArray();
             if(!empty($challenge)){
-                $data['by_classroom'] = true;
+                $data['classroom_id'] = $challenge['classroom_id'];
                 $data['date_start'] = $challenge['date_start'];
                 $data['date_end'] = $challenge['date_end'];
                 $data['winner_limit'] = $challenge['winner_limit'];

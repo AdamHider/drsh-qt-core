@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class CourseModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'courses';
     protected $primaryKey = 'id';
 
@@ -25,6 +26,9 @@ class CourseModel extends Model
 
     public function getItem ($course_id) 
     {
+        if(!$this->hasPermission($course_id, 'r')){
+            return 'forbidden';
+        }
         $DescriptionModel = model('DescriptionModel');
         
         $course = $this->where('id', $course_id)->get()->getRowArray();
@@ -41,8 +45,7 @@ class CourseModel extends Model
     {
         $DescriptionModel = model('DescriptionModel');
         
-        $courses = $this->get()->getResultArray();
-
+        $courses = $this->whereHasPermission('r')->get()->getResultArray();
 
         foreach($courses as &$course){
             $course['description'] = $DescriptionModel->getItem('course', $course['id']);

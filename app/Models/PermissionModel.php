@@ -30,17 +30,19 @@ class PermissionModel extends Model{
     }
     
     public function updateSession(){
-        $UserGroupModel = model('UserGroupModel');
-        $max_user_group = $UserGroupModel->join('users_to_user_groups', 'users_to_user_groups.item_id = user_groups.id')
-        ->select('MAX(user_groups.id) as id')->where('users_to_user_groups.user_id', session()->get('user_id'))->get()->getRow('id');
-
-        $permissions = $this->where('user_group_id', $max_user_group)->get()->getResult();
+        $permissions = $this->whereIn('user_group_id', session()->get('user_data')['group_ids'])
+        ->select("scope, method, status, GROUP_CONCAT(owner) as owner, GROUP_CONCAT(shared) as shared, GROUP_CONCAT(other) as other")->groupBy('scope, status')
+        ->get()->getResultArray();
         $result = [];
         foreach($permissions as $permission){
-            $result["{$permission->scope}.{$permission->method}"]=[
-                'owner' => $permission->owner,
-                'party' => $permission->party,
-                'other' => $permission->other,
+            $permission_name = $permission['scope'].".".$permission['method'];
+            if(empty($result[$permission_name])){
+                $result[$permission_name] = [];
+            }
+            $result[$permission_name][$permission['status']] = [
+                'owner' => $permission['owner'],
+                'shared' => $permission['shared'],
+                'other' => $permission['other'],
             ];
         }
         session()->set('permissions', $result);
