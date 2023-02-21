@@ -30,6 +30,9 @@ class ClassroomModel extends Model
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
             $classroom['is_subscribed'] = (bool) $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
             $classroom['is_private'] = (bool) $classroom['is_private'];
+            //if(!$this->hasPermission($classroom_id, 'w')){
+                $classroom['descriptions'] = $DescriptionModel->getList('classroom', $classroom['id']);
+            //}
         } else {
             return 'not_found';
         }

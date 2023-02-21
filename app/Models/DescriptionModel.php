@@ -28,11 +28,20 @@ class DescriptionModel extends Model
     {
         $description = $this->select('title, description')->where('code', $code)->where('item_id', $item_id)->where('language_id', 1)->get()->getRow();
         if (empty($description)) {
-            $description = new stdClass;
-            $description->title = '';
-            $description->description = '';
+            $description = [
+                $description['title'] => '',
+                $description['description'] => ''
+            ];
         }
         return $description;
+    }
+    public function getList ($code, $item_id) 
+    {
+        $descriptions = $this->join('languages', 'languages.id = descriptions.language_id', 'left')
+        ->select('languages.code as language_code, languages.title as language_title, descriptions.language_id, descriptions.title, descriptions.description')
+        ->where('descriptions.code', $code)->where('descriptions.item_id', $item_id)->get()->getResultArray();
+        
+        return $descriptions;
     }
 
 }
