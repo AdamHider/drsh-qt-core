@@ -41,6 +41,7 @@ class AchievementModel extends Model
             ->where('achievements_usermap.user_id', $data['user_id']);
         }
         $achievements = $this->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResultArray();
+        
         if(empty($achievements)){
             return false;
         }
