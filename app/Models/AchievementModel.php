@@ -46,7 +46,7 @@ class AchievementModel extends Model
             return false;
         }
         foreach($achievements as &$achievement){
-            $achievement['description'] = $DescriptionModel->getItem('achievement', $achievement['id']);
+            $achievement = array_merge($achievement, $DescriptionModel->getItem('achievement', $achievement['id']));
             $achievement['image'] = base_url('image/' . $achievement['image']);
             $achievement['progress'] = $this->calculateProgress($achievement);
         }
@@ -55,13 +55,13 @@ class AchievementModel extends Model
     public function calculateProgress($data)
     {
         if ($data['code'] == 'total_lessons') {
-            $current_progress = session()->get('user_data')['profile']['total_exercises'];
+            $current_progress = session()->get('user_data')['dashboard']['total_exercises'];
         } else
         if ($data['code'] == 'total_points') {
-            $current_progress = session()->get('user_data')['profile']['total_points'];
+            $current_progress = session()->get('user_data')['dashboard']['total_points'];
         } else 
         if ($data['code'] == 'total_classrooms') {
-            $current_progress = session()->get('user_data')['profile']['total_classrooms'];
+            $current_progress = session()->get('user_data')['dashboard']['total_classrooms'];
         } else {
             $current_progress = 0;
         }

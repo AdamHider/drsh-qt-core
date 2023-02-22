@@ -28,12 +28,10 @@ class CourseSectionModel extends Model
         if ($course_section_id == 0) {
             return 'not_found';
         }
-        $DescriptionModel = model('DescriptionModel');
-        $course_section = $this->where('id', $course_section_id)->get()->getRow();
+        $course_section = $this->where('id', $course_section_id)->get()->getRowArray();
         if ($course_section) {
-            $course_section->description = $DescriptionModel->getItem('course_section', $course_section->id);
-            $course_section->image = base_url('image/' . $course_section->image);
-            $course_section->background_image = base_url('image/' . $course_section->background_image);
+            $course_section['image'] = base_url('image/' . $course_section['image']);
+            $course_section['background_image'] = base_url('image/' . $course_section['background_image']);
         } else {
             return 'not_found';
         }

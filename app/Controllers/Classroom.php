@@ -14,7 +14,7 @@ class Classroom extends BaseController
         $classroom_id = $this->request->getVar('classroom_id');
 
         if( !$classroom_id ){
-            $classroom_id = session()->get('user_data')['profile']['classroom_id'];
+            $classroom_id = session()->get('user_data')['settings']['classroom_id'];
         }
         
         $result = $ClassroomModel->getItem($classroom_id);

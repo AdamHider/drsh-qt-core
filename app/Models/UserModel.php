@@ -88,19 +88,25 @@ class UserModel extends Model
         if(!$user){
             return 'not_found';
         }
-        $UserProfileModel = model('UserProfileModel');
-        $UserGroupModel = model('UserGroupModel');
+        $UserSettingsModel = model('UserSettingsModel');
+        $user['settings'] = $UserSettingsModel->getItem($user['id']);
 
-        $user['profile'] = $UserProfileModel->getItem($user['id']);
+        $UserGroupModel = model('UserGroupModel');
         $user['groups'] = $UserGroupModel->getList($user['id']);
         $user['group_ids'] = [];
         foreach($user['groups'] as $group){
             $user['group_ids'][] = $group['id'];
         } 
+        
+        $CharacterModel = model('CharacterModel');
+        $user['character'] = $CharacterModel->getItem($user['settings']['character_id']);
+
+        $UserDashboardModel = model('UserDashboardModel');
+        $user['dashboard'] = $UserDashboardModel->getItem($user['id']);
+
         unset($user['password']);
         return $user;
     }
-  
     public function updateItem ($data)
     {
         $this->transBegin();
@@ -121,8 +127,8 @@ class UserModel extends Model
         $user_id = $this->insert($data, true);
         
         if( $user_id ){
-            $UserProfileModel = model('UserProfileModel');
-            $UserProfileModel->createItem($user_id);
+            $UserSettingsModel = model('UserSettingsModel');
+            $UserSettingsModel->createItem($user_id);
         }
 
         $this->transCommit();

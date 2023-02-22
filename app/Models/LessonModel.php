@@ -32,7 +32,6 @@ class LessonModel extends Model
             return 'forbidden';
         }
 
-        $DescriptionModel = model('DescriptionModel');
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
 
@@ -45,12 +44,11 @@ class LessonModel extends Model
         }
         if ($lesson) {
             $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
-            $lesson['description'] = $DescriptionModel->getItem('lesson', $lesson['id']);
             $lesson['image'] = base_url('image/' . $lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             if($lesson['parent_id']){
-                $lesson['master_lesson'] = $DescriptionModel->getItem('lesson', $lesson['parent_id']);
+                $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
         }
         unset($lesson['pages']);
@@ -61,13 +59,12 @@ class LessonModel extends Model
         
         $this->useSharedOf('courses', 'course_id');
 
-        $DescriptionModel = model('DescriptionModel');
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
 
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.course_id', session()->get('user_data')['profile']['course_id'])
+        ->where('lessons.course_id', session()->get('user_data')['settings']['course_id'])
         ->where('lessons.parent_id IS NULL')
         ->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
@@ -77,7 +74,6 @@ class LessonModel extends Model
                 $lesson['order'] = $key + $data['offset'];
             }
             $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
-            $lesson['description'] = $DescriptionModel->getItem('lesson', $lesson['id']);
             $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
             $lesson['image'] = base_url('image/' . $lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
@@ -90,7 +86,6 @@ class LessonModel extends Model
     {
         $this->useSharedOf('courses', 'course_id');
 
-        $DescriptionModel = model('DescriptionModel');
         $ExerciseModel = model('ExerciseModel');
 
         $result = [];
@@ -103,7 +98,6 @@ class LessonModel extends Model
 
         foreach($satellites as $key => &$satellite){
             $satellite['image'] = base_url('image/' . $satellite['image']);
-            $satellite['description'] = $DescriptionModel->getItem('lesson', $satellite['id']);
             if($mode == 'full'){
                 $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);

@@ -24,13 +24,12 @@ class HomeworkModel extends Model
         }
 
         $CourseSectionModel = model('CourseSectionModel');
-        $DescriptionModel = model('DescriptionModel');
         $LessonModel = model('LessonModel');
         $ExerciseModel = model('ExerciseModel');
         
         $homework = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
         ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
-        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
+        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.title, lessons.description, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
         ->where('homeworks.id', $homework_id)
         ->get()->getRowArray();
 
@@ -39,7 +38,6 @@ class HomeworkModel extends Model
         }
 
         $homework['course_section'] = $CourseSectionModel->getItem($homework['course_section_id']);
-        $homework['description'] = $DescriptionModel->getItem('lesson', $homework['lesson_id']);
         $homework['image'] = base_url('image/' . $homework['image']);
         $homework['exercise'] = $ExerciseModel->getItem($homework['exercise_id'], 'lite');
         $homework['is_blocked'] = $LessonModel->checkBlocked($homework['unblock_after']);
@@ -66,13 +64,12 @@ class HomeworkModel extends Model
         $this->useSharedOf('classrooms', 'classroom_id');
         
         $CourseSectionModel = model('CourseSectionModel');
-        $DescriptionModel = model('DescriptionModel');
         $LessonModel = model('LessonModel');
         $ExerciseModel = model('ExerciseModel');
         
         $homeworks = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
         ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
-        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.course_section_id, lessons.unblock_after")
+        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.title, lessons.description, lessons.course_section_id, lessons.unblock_after")
         ->where('homeworks.classroom_id', $data['classroom_id'])->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('date_end')
         ->get()->getResultArray();
@@ -84,7 +81,6 @@ class HomeworkModel extends Model
         foreach($homeworks as &$homework){
 
             $homework['course_section'] = $CourseSectionModel->getItem($homework['course_section_id']);
-            $homework['description'] = $DescriptionModel->getItem('lesson', $homework['lesson_id']);
             $homework['image'] = base_url('image/' . $homework['image']);
             $homework['exercise'] = $ExerciseModel->getItem($homework['exercise_id'], 'lite');
             $homework['is_blocked'] = $LessonModel->checkBlocked($homework['unblock_after']);

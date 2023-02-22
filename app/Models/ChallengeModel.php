@@ -23,7 +23,6 @@ class ChallengeModel extends Model
             return 'forbidden';
         }
 
-        $DescriptionModel = model('DescriptionModel');
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         
         $challenge = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
@@ -36,9 +35,9 @@ class ChallengeModel extends Model
         if(empty($challenge)){
             return 'not_found';
         }
-        $challenge['description'] = $DescriptionModel->getItem('challenge', $challenge['id']);
-        $challenge['image'] = base_url('image/' . $challenge['image']);
+        $challenge['title'] = lang('App.challenge.title.'.$challenge['code'], [$challenge['value']]);
 
+        $challenge['image'] = base_url('image/' . $challenge['image']);
         $challenge['progress'] = $this->getProgress($challenge['value'], $challenge['date_start'], $challenge['date_end']);
         $challenge['is_finished'] = $this->checkFinished($challenge);
         $challenge['is_winner'] = $ChallengeWinnerModel->checkWinner($challenge);
@@ -59,7 +58,6 @@ class ChallengeModel extends Model
         if(isset($data['classroom_id'])){
             $this->useSharedOf('classrooms', 'classroom_id');
         }
-        $DescriptionModel = model('DescriptionModel');
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         
         $challenges = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
@@ -73,7 +71,7 @@ class ChallengeModel extends Model
         }
         
         foreach($challenges as &$challenge){
-            $challenge['description'] = $DescriptionModel->getItem('challenge', $challenge['id']);
+            $challenge['title'] = lang('App.challenge.title.'.$challenge['code'], [$challenge['value']]);
             $challenge['image'] = base_url('image/' . $challenge['image']);
             $challenge['progress'] = $this->getProgress($challenge['value'], $challenge['date_start'], $challenge['date_end']);
             $challenge['is_finished'] = $this->checkFinished($challenge);

@@ -18,21 +18,16 @@ class ClassroomModel extends Model
         if(!$this->hasPermission($classroom_id, 'r')){
             return 'forbidden';
         }
-        $DescriptionModel = model('DescriptionModel');
         $ClassroomUsermapModel = model('ClassroomUsermapModel');
         if ($classroom_id == 0) {
             return 'not_found';
         }
         $classroom = $this->where('id', $classroom_id)->get()->getRowArray();
         if ($classroom) {
-            $classroom['description'] = $DescriptionModel->getItem('classroom', $classroom['id']);
             $classroom['image'] = base_url('image/' . $classroom['image']);
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
             $classroom['is_subscribed'] = (bool) $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
             $classroom['is_private'] = (bool) $classroom['is_private'];
-            //if(!$this->hasPermission($classroom_id, 'w')){
-                $classroom['descriptions'] = $DescriptionModel->getList('classroom', $classroom['id']);
-            //}
         } else {
             return 'not_found';
         }
@@ -40,18 +35,15 @@ class ClassroomModel extends Model
     }
     public function getList ($data) 
     {
-        $DescriptionModel = model('DescriptionModel');
-        
         if($data['user_id']){
             $this->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
             ->where('classrooms_usermap.user_id', $data['user_id']);
         }
         $classrooms = $this->get()->getResultArray();
         foreach($classrooms as &$classroom){
-            $classroom['description'] = $DescriptionModel->getItem('classroom', $classroom['id']);
             $classroom['image'] = base_url('image/' . $classroom['image']);
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
-            $classroom['is_active'] = session()->get('user_data')['profile']['classroom_id'] == $classroom['id'];
+            $classroom['is_active'] = session()->get('user_data')['settings']['classroom_id'] == $classroom['id'];
         }
         return $classrooms;
     }
