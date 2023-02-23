@@ -17,13 +17,16 @@ class Course extends BaseController
             $course_id = session()->get('user_data')['settings']['course_id'];
         }
 
-        $course = $CourseModel->getItem($course_id);
+        $result = $CourseModel->getItem($course_id);
 
-        if (!$course) {
+        if ($result == 'forbidden') {
+            return $this->failForbidden();
+        }
+        if (!$result) {
             return $this->failNotFound('not_found');
         }
 
-        return $this->respond($course);
+        return $this->respond($result);
     }
     public function getList()
     {

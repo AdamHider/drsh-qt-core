@@ -68,9 +68,9 @@ class User extends BaseController
         return $this->respond($result);
     }
 
-    public function saveItemProfile()
+    public function saveItemSettings()
     {
-        $UserProfileModel = model('UserProfileModel');
+        $UserSettingsModel = model('UserSettingsModel');
 
         $character_id = $this->request->getVar('character_id');
         $classroom_id = $this->request->getVar('classroom_id');
@@ -89,10 +89,10 @@ class User extends BaseController
             $data['course_id'] = $course_id;
         }
 
-        $result = $UserProfileModel->updateItem($data);
+        $result = $UserSettingsModel->updateItem($data);
 
-        if($UserProfileModel->errors()){
-            return $this->failValidationErrors(json_encode($UserProfileModel->errors()));
+        if($UserSettingsModel->errors()){
+            return $this->failValidationErrors(json_encode($UserSettingsModel->errors()));
         }
 
         return $this->respond($result);

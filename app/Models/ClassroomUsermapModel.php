@@ -9,8 +9,6 @@ class ClassroomUsermapModel extends Model
     protected $table      = 'classrooms_usermap';
     protected $primaryKey = 'user_id';
 
-    protected $useSoftDeletes = true;
-
     protected $allowedFields = [
         'user_id', 
         'item_id'
@@ -28,6 +26,11 @@ class ClassroomUsermapModel extends Model
         $classrooms = $this->where('user_id', $user_id)->get()->getResult();
         return $classrooms;
     }
+    public function getUserList ($item_id) 
+    {
+        $classrooms = $this->where('item_id', $item_id)->get()->getResult();
+        return $classrooms;
+    }
         
     public function itemCreate ($user_id, $classroom_id)
     {
@@ -35,14 +38,25 @@ class ClassroomUsermapModel extends Model
         $data = [
             'user_id'       => $user_id,
             'item_id'  => $classroom_id
-            
         ];
         $this->insert($data, true);
         
         $this->transCommit();
-        return;        
+        return true;        
+    }
+    public function itemDelete ($user_id, $classroom_id)
+    {
+        $this->transBegin();
+        $data = [
+            'user_id'       => $user_id,
+            'item_id'  => $classroom_id
+        ];
+        $this->delete($data);
+        $this->transCommit();
+        return true;        
     }
 
+    
 
 
 }

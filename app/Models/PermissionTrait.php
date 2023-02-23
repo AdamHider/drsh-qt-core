@@ -53,13 +53,13 @@ trait PermissionTrait{
         }*/
         $user_role = $this->userRole($item_id);
         $permissions = session()->get('permissions');
-        $permission = 0;
+        $permission = false;
         if($user_role == 'admin'){
             $permission = 1;//grant all permissions to admin
         } else
         if( isset($permissions["$scope.$method"][$status][$user_role]) ){
             $rights = $permissions["$scope.$method"][$status][$user_role];
-            $permission = str_contains($rights, $right) ? 1 : 0;
+            $permission = str_contains($rights, $right) ? true : false;
         }
         //session()->set($permission_name, $permission);
         return $permission;

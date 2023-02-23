@@ -51,6 +51,7 @@ class ClassroomModel extends Model
         if ($classroom) {
             $classroom['image'] = base_url('image/' . $classroom['image']);
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
+            $classroom['is_owner'] = $classroom['owner_id'] == session()->get('user_id');
             $classroom['is_subscribed'] = (bool) $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
             $classroom['is_private'] = (bool) $classroom['is_private'];
         } else {
@@ -96,6 +97,9 @@ class ClassroomModel extends Model
     }
     public function updateItem ($data)
     {
+        if(!$this->hasPermission($data['id'], 'w')){
+            return 'forbidden';
+        }
         $this->transBegin();
         
         $this->update(['id'=>$data['id']], $data);
@@ -107,8 +111,7 @@ class ClassroomModel extends Model
 
     public function checkIfExists($code)
     {
-        $classroom = $this->where('code', $code)->get()->getRow();
-        return $classroom && $classroom->id;
+        return $this->where('code', $code)->get()->getRow('id');
     }
     
 

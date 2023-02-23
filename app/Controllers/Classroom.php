@@ -19,7 +19,7 @@ class Classroom extends BaseController
         
         $result = $ClassroomModel->getItem($classroom_id);
 
-        if ($result == 'not_found') {
+        if ($result === 'not_found') {
             return $this->failNotFound('not_found');
         }
         if ($result == 'forbidden') {
@@ -36,7 +36,7 @@ class Classroom extends BaseController
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
         $user_id = false;
-        if ($mode == 'by_user') {
+        if ($mode === 'by_user') {
             $user_id = session()->get('user_id');
         }
         $data = [
@@ -55,7 +55,9 @@ class Classroom extends BaseController
 
         $result = $ClassroomModel->updateItem($data);
 
-
+        if ($result === 'forbidden') {
+            return $this->failForbidden();
+        }
         if($ClassroomModel->errors()){
             return $this->failValidationErrors(json_encode($ClassroomModel->errors()));
         }
@@ -69,6 +71,9 @@ class Classroom extends BaseController
 
         $classroom_id = $ClassroomModel->createItem();
 
+        if ($classroom_id === 'forbidden') {
+            return $this->failForbidden();
+        }
 
         if($ClassroomModel->errors()){
             return $this->failValidationErrors(json_encode($ClassroomModel->errors()));
@@ -100,14 +105,31 @@ class Classroom extends BaseController
         if (!$classroom_id) {
             return $this->failNotFound('not_found');
         }
-        $ClassroomUsermapModel->itemCreate($user_id, $classroom_id);
+        $result = $ClassroomUsermapModel->itemCreate($user_id, $classroom_id);
 
         if($ClassroomUsermapModel->errors()){
             return $this->failValidationErrors(json_encode($ClassroomUsermapModel->errors()));
         }
-        $classroom = $ClassroomModel->getItem($classroom_id);
-        return $this->respond($classroom);
-        
+        return $this->respond($result);
     }
+    public function unsubscribe(){
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
+        $ClassroomModel = model('ClassroomModel');
+
+        $code = $this->request->getVar('classroom_code');
+        $user_id = session()->get('user_id');
+
+        $classroom_id = $ClassroomModel->checkIfExists($code);
+        if (!$classroom_id) {
+            return $this->failNotFound('not_found');
+        }
+        $result = $ClassroomUsermapModel->itemDelete($user_id, $classroom_id);
+
+        if($ClassroomUsermapModel->errors()){
+            return $this->failValidationErrors(json_encode($ClassroomUsermapModel->errors()));
+        }
+        return $this->respond($result);
+    }
+    
 
 }
