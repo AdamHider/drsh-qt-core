@@ -48,6 +48,35 @@ class Classroom extends BaseController
         
         return $this->respond($result, 200);
     }
+    public function saveItem()
+    {
+        $ClassroomModel = model('ClassroomModel');
+        $data = $this->request->getJSON(true);
+
+        $result = $ClassroomModel->updateItem($data);
+
+
+        if($ClassroomModel->errors()){
+            return $this->failValidationErrors(json_encode($ClassroomModel->errors()));
+        }
+
+        return $this->respond($result);
+    }
+    public function createItem()
+    {
+        $ClassroomModel = model('ClassroomModel');
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
+
+        $classroom_id = $ClassroomModel->createItem();
+
+
+        if($ClassroomModel->errors()){
+            return $this->failValidationErrors(json_encode($ClassroomModel->errors()));
+        }
+        $ClassroomUsermapModel->itemCreate(session()->get('user_id'), $classroom_id);
+
+        return $this->respond($classroom_id);
+    }
     public function checkIfExists()
     {
         $ClassroomModel = model('ClassroomModel');
@@ -61,7 +90,7 @@ class Classroom extends BaseController
     }
 
     public function subscribe(){
-        $ClassroomUsermap = model('ClassroomUsermap');
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
         $ClassroomModel = model('ClassroomModel');
 
         $code = $this->request->getVar('classroom_code');
@@ -71,10 +100,10 @@ class Classroom extends BaseController
         if (!$classroom_id) {
             return $this->failNotFound('not_found');
         }
-        $ClassroomUsermap->itemCreate($user_id, $classroom_id);
+        $ClassroomUsermapModel->itemCreate($user_id, $classroom_id);
 
-        if($ClassroomUsermap->errors()){
-            return $this->failValidationErrors(json_encode($ClassroomUsermap->errors()));
+        if($ClassroomUsermapModel->errors()){
+            return $this->failValidationErrors(json_encode($ClassroomUsermapModel->errors()));
         }
         $classroom = $ClassroomModel->getItem($classroom_id);
         return $this->respond($classroom);

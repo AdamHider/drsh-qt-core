@@ -13,7 +13,7 @@ class ClassroomUsermapModel extends Model
 
     protected $allowedFields = [
         'user_id', 
-        'classroom_id'
+        'item_id'
     ];
     
     protected $useTimestamps = false;

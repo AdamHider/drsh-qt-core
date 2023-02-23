@@ -11,7 +11,32 @@ class ClassroomModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'image'
+        'owner_id',
+        'code',
+        'title',
+        'description',
+        'image',
+        'background_image',
+        'is_private',
+        'is_disabled'
+    ];
+    protected $validationRules    = [
+        'title'     => [
+            'label' =>'title',
+            'rules' =>'required|min_length[3]|is_unique[classrooms.title,id,{id}]',
+            'errors'=>[
+                'required'=>'required',
+                'min_length'=>'short',
+                'is_unique'=>'notunique'
+            ]
+        ],
+        'description'     => [
+            'label' =>'description',
+            'rules' =>'permit_empty|min_length[4]',
+            'errors'=>[
+                'min_length'=>'short'
+            ]
+        ]
     ];
     public function getItem ($classroom_id) 
     {
@@ -48,17 +73,38 @@ class ClassroomModel extends Model
         return $classrooms;
     }
         
-    public function itemCreate ($image)
+    public function createItem ()
     {
-        $this->transBegin();
+        $this->validationRules = [];
+        $code = substr(md5(time()), 0, 6);
         $data = [
-            'image' => $image
+            'owner_id'          => session()->get('user_id'),
+            'code'              => $code,
+            'title'             => lang('App.classroom.default.title').' '.$code,
+            'description'       => lang('App.classroom.default.description'),
+            'image'             => getenv('image.image.placeholder'),
+            'background_image'  => getenv('image.background_image.placeholder'),
+            'is_private'        => false,
+            'is_disabled'       => true
         ];
-        $character_id = $this->insert($data, true);
+        $this->transBegin();
+        $classroom_id = $this->insert($data, true);
+
         $this->transCommit();
 
-        return $character_id;        
+        return $classroom_id;        
     }
+    public function updateItem ($data)
+    {
+        $this->transBegin();
+        
+        $this->update(['id'=>$data['id']], $data);
+
+        $this->transCommit();
+
+        return true;        
+    }
+
     public function checkIfExists($code)
     {
         $classroom = $this->where('code', $code)->get()->getRow();
