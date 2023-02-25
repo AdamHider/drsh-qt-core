@@ -54,6 +54,8 @@ class ClassroomModel extends Model
             $classroom['is_owner'] = $classroom['owner_id'] == session()->get('user_id');
             $classroom['is_subscribed'] = (bool) $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
             $classroom['is_private'] = (bool) $classroom['is_private'];
+            $ClassroomDashboardModel = model('ClassroomDashboardModel');
+            $classroom['dashboard'] = $ClassroomDashboardModel->getItem($classroom['id']);
         } else {
             return 'not_found';
         }
@@ -64,6 +66,9 @@ class ClassroomModel extends Model
         if($data['user_id']){
             $this->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
             ->where('classrooms_usermap.user_id', $data['user_id']);
+        }
+        if(isset($data['limit'])){
+            $this->limit($data['limit'], $data['offset']);
         }
         $classrooms = $this->get()->getResultArray();
         foreach($classrooms as &$classroom){
@@ -112,6 +117,27 @@ class ClassroomModel extends Model
     public function checkIfExists($code)
     {
         return $this->where('code', $code)->get()->getRow('id');
+    }
+    public function getSubscribers($data)
+    {
+        if(isset($data['classroom_id'])){
+            if(!$this->hasPermission($data['classroom_id'], 'r')){
+                return 'forbidden';
+            }
+        }
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
+        $subscribers = $ClassroomUsermapModel->getUserList($data);
+        foreach($subscribers as &$subscriber){
+            if(!$subscriber['avatar']){
+                $subscriber['avatar'] = getenv('character.avatar.placeholder');
+            }
+            if(!$subscriber['image']){
+                $subscriber['image'] = getenv('character.image.placeholder');
+            }
+            $subscriber['avatar'] = base_url('image/' . $subscriber['avatar']);
+            $subscriber['image'] = base_url('image/' . $subscriber['image']);
+        }
+        return $subscribers;
     }
     
 

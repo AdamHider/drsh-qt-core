@@ -7,6 +7,7 @@ return [
     ],
     'classroom' => [
         'default.title' => 'Classroom',
-        'default.description' => 'My description'
+        'default.description' => 'My description',
+        'subscribers.text' => ' and {0, number} more are subscribed'
     ]
 ];

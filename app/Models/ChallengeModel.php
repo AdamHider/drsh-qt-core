@@ -63,8 +63,13 @@ class ChallengeModel extends Model
         $challenges = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
         ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
         ->where('challenges.classroom_id', $data['classroom_id'])->whereHasPermission('r')
-        ->groupBy('challenges.id')
-        ->limit($data['limit'], $data['offset'])->orderBy('date_end')->get()->getResultArray();
+        ->groupBy('challenges.id');
+        
+        if(isset($data['limit'])){
+            $this->limit($data['limit'], $data['offset']);
+        }
+
+        $challenges = $this->orderBy('date_end')->get()->getResultArray();
 
         if(empty($challenges)){
             return 'not_found';
@@ -88,6 +93,22 @@ class ChallengeModel extends Model
             
         }
         return $challenges;
+    }
+    public function getTotal ($data) 
+    {
+        if(isset($data['classroom_id'])){
+            $this->useSharedOf('classrooms', 'classroom_id');
+        }
+        
+        $challenges = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
+        ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
+        ->where('challenges.classroom_id', $data['classroom_id'])->whereHasPermission('r')
+        ->groupBy('challenges.id')->orderBy('date_end')->get()->getResultArray();
+
+        if(empty($challenges)){
+            return 'not_found';
+        }
+        return count($challenges);
     }
     public function getProgress($target_value, $date_start, $date_end)
     {

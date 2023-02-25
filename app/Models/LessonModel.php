@@ -89,7 +89,7 @@ class LessonModel extends Model
         $ExerciseModel = model('ExerciseModel');
 
         $result = [];
-        $result['preview_total'] = 3;
+        $result['preview_total'] = getenv('lesson.satellites.preview_total');
 
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
@@ -107,7 +107,6 @@ class LessonModel extends Model
         $result['preview_list'] = $this->composeSatellitesPriview($satellites, $result['preview_total']);
         if ($mode == 'full') {
             $result['list'] = $satellites;
-
         }
         return $result;
     }

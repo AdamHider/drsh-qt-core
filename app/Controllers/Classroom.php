@@ -131,5 +131,30 @@ class Classroom extends BaseController
         return $this->respond($result);
     }
     
+    public function getSubscribers()
+    {
+        $ClassroomModel = model('ClassroomModel');
+
+        $limit = $this->request->getVar('limit');
+        $offset = $this->request->getVar('offset');
+        $classroom_id = $this->request->getVar('classroom_id');
+
+        if(!$classroom_id){
+            $classroom_id = session()->get('user_data')['settings']['classroom_id'];
+        }
+
+        $data = [
+            'limit' => $limit,
+            'offset' => $offset,
+            'classroom_id' => $classroom_id
+        ];
+        $subscribers = $ClassroomModel->getSubscribers($data);
+        
+        if ($subscribers == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($subscribers);
+    }
 
 }

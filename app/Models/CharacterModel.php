@@ -26,10 +26,11 @@ class CharacterModel extends Model
     public function getItem ($character_id) 
     {
         $DescriptionModel = model('DescriptionModel');
-        $character = $this->where('characters.id', $character_id)->get()->getRow();
+        $character = $this->where('characters.id', $character_id)->get()->getRowArray();
         if ($character) {
-            $character->image = base_url('image/' . $character->image);
-            $character->description = $DescriptionModel->getItem('character', $character->id);
+            $character['avatar'] = base_url('image/' . $character['avatar']);
+            $character['image'] = base_url('image/' . $character['image']);
+            $character['description'] = $DescriptionModel->getItem('character', $character['id']);
         }
         return $character;
     }
