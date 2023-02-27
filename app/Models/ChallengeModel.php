@@ -106,7 +106,7 @@ class ChallengeModel extends Model
         ->groupBy('challenges.id')->orderBy('date_end')->get()->getResultArray();
 
         if(empty($challenges)){
-            return 'not_found';
+            return 0;
         }
         return count($challenges);
     }

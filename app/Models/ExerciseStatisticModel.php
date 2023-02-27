@@ -64,6 +64,9 @@ class ExerciseStatisticModel extends Model
             if($row['finished_at']){
                 $row['finished_at_humanized'] = Time::parse($row['finished_at'], Time::now()->getTimezone())->toLocalizedString('d MMM yyyy');
             }
+            foreach($row['data'] as &$user){
+                $user['avatar'] = base_url('image/' . $user['avatar']);
+            }
         }
         return $result;
     }
@@ -112,6 +115,7 @@ class ExerciseStatisticModel extends Model
     {
         $this->createTempView($data);
         $result = $this->where('user_id', session()->get('user_id'))->get()->getRowArray();
+        $result['avatar'] = base_url('image/' . $result['avatar']);
         return $result;
     } 
 
@@ -186,6 +190,7 @@ class ExerciseStatisticModel extends Model
                 @points:=rating.points as points,
                 rating.user_id,
                 rating.username,
+                rating.avatar,
                 rating.created_at,
                 @finished_at:=rating.finished_at as finished_at,
                 0 as owner_id,
@@ -198,6 +203,7 @@ class ExerciseStatisticModel extends Model
                 SELECT 
                     users.id as user_id, 
                     users.username,
+                    (SELECT characters.avatar FROM characters JOIN user_settings ON users.id = user_settings.user_id) AS avatar,
                     COALESCE(SUM(exercises.points), 0) as points,
                     MIN(exercises.created_at) AS created_at,
                     MAX(exercises.finished_at) AS finished_at,

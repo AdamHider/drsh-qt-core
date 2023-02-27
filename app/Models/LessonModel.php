@@ -139,7 +139,7 @@ class LessonModel extends Model
             return false;
         }
         $exercise  = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'))
-        ->where('lessons.id', $lesson_id)->where('exercises.finished_at IS NOT NULL')->get()->getResult();
+        ->where('lessons.id', $lesson_id)->where('exercises.exercise_submitted IS NOT NULL')->get()->getResult();
         return empty($exercise);
     }
     public function itemCreate ($image)

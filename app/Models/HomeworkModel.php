@@ -104,7 +104,7 @@ class HomeworkModel extends Model
         ->get()->getResultArray();
 
         if(empty($homeworks)){
-            return 'not_found';
+            return 0;
         }
         return count($homeworks);
     }
