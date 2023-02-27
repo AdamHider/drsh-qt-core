@@ -46,6 +46,10 @@ class Classroom extends BaseController
         ];
         $result = $ClassroomModel->getList($data);
         
+        if(empty($result)){
+            return $this->failNotFound('not_found');
+        }
+
         return $this->respond($result, 200);
     }
     public function saveItem()

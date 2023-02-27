@@ -38,7 +38,7 @@ class Achievement extends BaseController
             'limit' => $limit,
             'offset' => $offset
         ];
-        if($mode == 'user'){
+        if($mode == 'by_user'){
             $data['user_id'] = session()->get('user_id');
         }
         $result = $AchievementModel->getList($data);
