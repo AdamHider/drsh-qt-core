@@ -10,7 +10,7 @@ use App\Libraries\DateProcessor;
 class ExerciseStatisticModel extends Model
 {
     use PermissionTrait;
-    protected $table      = 'exercises_rating';
+    protected $table      = 'exercise_statistic';
 
     public $limit = 6;
     public $chart_colors = [
@@ -121,7 +121,7 @@ class ExerciseStatisticModel extends Model
 
     
     public function createTempView($data){
-        $this->query("DROP TABLE IF EXISTS exercises_rating");
+        $this->query("DROP TABLE IF EXISTS exercise_statistic");
 
         $is_private = 0;
         /* CLASSROOM FILTER SECTION */
@@ -184,7 +184,7 @@ class ExerciseStatisticModel extends Model
         $this->query("SET @winner_limit=".$winner_limit);
         
         $sql = "
-            CREATE TEMPORARY TABLE IF NOT EXISTS exercises_rating
+            CREATE TEMPORARY TABLE IF NOT EXISTS exercise_statistic
             SELECT 
                 IF($place_counter_condition, @place:=@place + 1, @place) AS place,
                 @points:=rating.points as points,

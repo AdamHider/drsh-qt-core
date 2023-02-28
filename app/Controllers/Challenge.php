@@ -29,19 +29,22 @@ class Challenge extends BaseController
     {
         $ChallengeModel = model('ChallengeModel');
 
+        $mode = $this->request->getVar('mode');
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
         $classroom_id = $this->request->getVar('classroom_id');
 
-        if(!$classroom_id){
-            $classroom_id = session()->get('user_data')['settings']['classroom_id'];
-        }
-
         $data = [
             'limit' => $limit,
-            'offset' => $offset,
-            'classroom_id' => $classroom_id
+            'offset' => $offset
         ];
+        if($mode == 'by_user'){
+            $data['user_id'] = session()->get('user_id');
+        }
+        if($classroom_id){
+            $data['classroom_id'] = $classroom_id;
+        }
+
         $challenges = $ChallengeModel->getList($data);
         
         if ($challenges == 'not_found') {

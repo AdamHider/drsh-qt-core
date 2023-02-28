@@ -160,5 +160,25 @@ class Classroom extends BaseController
 
         return $this->respond($subscribers);
     }
+    
+    public function getFeed()
+    {
+        $ClassroomFeedModel = model('ClassroomFeedModel');
+
+        $limit = $this->request->getVar('limit');
+        $offset = $this->request->getVar('offset');
+
+        $data = [
+            'limit' => $limit,
+            'offset' => $offset
+        ];
+        $feed = $ClassroomFeedModel->getFeed($data);
+        
+        if ($feed == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($feed);
+    }
 
 }

@@ -8,6 +8,8 @@ return [
     'classroom' => [
         'default.title' => 'Classroom',
         'default.description' => 'My description',
-        'subscribers.text' => ' and {0, number} more are subscribed'
+        'subscribers.text' => ' and {0, number} more are subscribed',
+        'feed.homework.title' => 'New task is available',
+        'feed.challenge.title' => 'New challenge added'
     ]
 ];

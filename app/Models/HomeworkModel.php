@@ -67,11 +67,24 @@ class HomeworkModel extends Model
         $LessonModel = model('LessonModel');
         $ExerciseModel = model('ExerciseModel');
         
-        $homeworks = $this->join('lessons', 'lessons.id = homeworks.lesson_id')
+        $this->join('lessons', 'lessons.id = homeworks.lesson_id')
         ->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
-        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.title, lessons.description, lessons.course_section_id, lessons.unblock_after")
-        ->where('homeworks.classroom_id', $data['classroom_id'])->whereHasPermission('r')
-        ->limit($data['limit'], $data['offset'])->orderBy('date_end')->get()->getResultArray();
+        ->select("homeworks.*, exercises.finished_at, exercises.id as exercise_id, lessons.image as image, lessons.title, lessons.description, lessons.course_section_id, lessons.unblock_after");
+        
+        if(isset($data['classroom_id'])){
+            $this->where('homeworks.classroom_id', $data['classroom_id']);
+        }
+        if(isset($data['user_id'])){
+            $this->join('classrooms', 'classrooms.id = homeworks.classroom_id')
+            ->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
+            ->where('classrooms_usermap.user_id', $data['user_id']);
+        }
+        $this->whereHasPermission('r');
+
+        if(isset($data['limit'])){
+            $this->limit($data['limit'], $data['offset']);
+        }
+        $homeworks =  $this->orderBy('date_end DESC')->get()->getResultArray();
 
         if(empty($homeworks)){
             return 'not_found';

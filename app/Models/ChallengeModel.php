@@ -55,21 +55,28 @@ class ChallengeModel extends Model
     }
     public function getList ($data) 
     {
-        if(isset($data['classroom_id'])){
-            $this->useSharedOf('classrooms', 'classroom_id');
-        }
         $ChallengeWinnerModel = model('ChallengeWinnerModel');
         
-        $challenges = $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
-        ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left')
-        ->where('challenges.classroom_id', $data['classroom_id'])->whereHasPermission('r')
-        ->groupBy('challenges.id');
+        $this->join('challenges_winners', 'challenges_winners.challenge_id = challenges.id', 'left')
+        ->select('challenges.*, (challenges.winner_limit - COUNT(challenges_winners.id)) as winner_left');
+
+        if(isset($data['classroom_id'])){
+            $this->useSharedOf('classrooms', 'classroom_id');
+            $this->where('challenges.classroom_id', $data['classroom_id']);
+        }
+        if(isset($data['user_id'])){
+            $this->join('classrooms', 'classrooms.id = challenges.classroom_id')
+            ->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
+            ->where('classrooms_usermap.user_id', $data['user_id']);
+        }
+
+        $this->whereHasPermission('r')->groupBy('challenges.id');
         
         if(isset($data['limit'])){
             $this->limit($data['limit'], $data['offset']);
         }
 
-        $challenges = $this->orderBy('date_end')->get()->getResultArray();
+        $challenges = $this->orderBy('date_end DESC')->get()->getResultArray();
 
         if(empty($challenges)){
             return 'not_found';

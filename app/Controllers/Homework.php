@@ -28,19 +28,22 @@ class Homework extends BaseController
     {
         $HomeworkModel = model('HomeworkModel');
 
+        $mode = $this->request->getVar('mode');
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
         $classroom_id = $this->request->getVar('classroom_id');
 
-        if(!$classroom_id){
-            $classroom_id = session()->get('user_data')->profile->classroom_id;
-        }
-
         $data = [
             'limit' => $limit,
             'offset' => $offset,
-            'classroom_id' => $classroom_id
         ];
+        if($mode == 'by_user'){
+            $data['user_id'] = session()->get('user_id');
+        }
+        if($classroom_id){
+            $data['classroom_id'] = $classroom_id;
+        }
+        
         $homeworks = $HomeworkModel->getList($data);
         
         if ($homeworks == 'not_found') {
