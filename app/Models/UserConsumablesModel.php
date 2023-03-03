@@ -36,7 +36,7 @@ class UserConsumablesModel extends Model
                 'quantity'      => $consumable['quantity'],
                 'is_restorable' => $consumable['is_restorable']
             ];
-            if((bool) $consumable['is_restorable'] && $consumable['consumed_at']){
+            if((bool) $consumable['is_restorable']){
                 $item['next_restoration'] = $this->getNextRestorationTime($consumable['consumed_at']);
                 $item['total_time_cost'] = $this->getTotalCost($consumable['code']);
                 $item['total'] = $this->getTotal($consumable['code']);
@@ -52,6 +52,9 @@ class UserConsumablesModel extends Model
         foreach($restorable_consumables as $consumable){
             $time_cost = 200;
             $max_quantity = 5;
+            if(!$consumable['consumed_at']){
+                continue;
+            }
             $consumed_at = Time::parse($consumable['consumed_at'], Time::now()->getTimezone());
             $time_difference = $consumed_at->difference(Time::now())->getSeconds();
             $result = [
@@ -76,9 +79,13 @@ class UserConsumablesModel extends Model
     public function getNextRestorationTime ($consumed_at)
     {
         $time_cost = 200;
-        $consumed_at = Time::parse($consumed_at, Time::now()->getTimezone());
-        $next_consumed_at = $consumed_at->addSeconds($time_cost);
-        return Time::now()->difference($next_consumed_at)->getSeconds();
+        if($consumed_at){
+            $consumed_at = Time::parse($consumed_at, Time::now()->getTimezone());
+            $next_consumed_at = $consumed_at->addSeconds($time_cost);
+            return Time::now()->difference($next_consumed_at)->getSeconds();
+        } else {
+            return 0;
+        }
     }
     public function getTotal ($code)
     {
