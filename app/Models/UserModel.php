@@ -104,6 +104,9 @@ class UserModel extends Model
         $UserDashboardModel = model('UserDashboardModel');
         $user['dashboard'] = $UserDashboardModel->getItem($user['id']);
 
+        $UserExperienceModel = model('UserExperienceModel');
+        $user['level'] = $UserExperienceModel->getItem($user['id']);
+
         $UserConsumablesModel = model('UserConsumablesModel');
         $user['consumables'] = $UserConsumablesModel->getList($user['id']);
 

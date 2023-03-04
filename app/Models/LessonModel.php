@@ -56,7 +56,7 @@ class LessonModel extends Model
     }
     public function getList ($data) 
     {
-        
+        $data['offset'] = 0;
         $this->useSharedOf('courses', 'course_id');
 
         $CourseSectionModel = model('CourseSectionModel');

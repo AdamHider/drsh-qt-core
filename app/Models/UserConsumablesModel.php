@@ -24,9 +24,11 @@ class UserConsumablesModel extends Model
     ];
     
     protected $useTimestamps = false;
+    private $config = [];
 
     public function getList ($user_id) 
     {
+        $this->getLevelConfig($user_id);   
         $this->checkRestoration($user_id);
         $consumables = $this->where('user_id', $user_id)->get()->getResultArray();
 
@@ -37,9 +39,9 @@ class UserConsumablesModel extends Model
                 'is_restorable' => $consumable['is_restorable']
             ];
             if((bool) $consumable['is_restorable']){
-                $item['next_restoration'] = $this->getNextRestorationTime($consumable['consumed_at']);
-                $item['total_time_cost'] = $this->getTotalCost($consumable['code']);
-                $item['total'] = $this->getTotal($consumable['code']);
+                $item['next_restoration'] = $this->getNextRestorationTime($consumable['code'], $consumable['consumed_at']);
+                $item['total_time_cost'] = $this->config[$consumable['code']]['restoration'];
+                $item['total'] = $this->config[$consumable['code']]['total'];
                 $item['percentage'] = ($item['total_time_cost'] - $item['next_restoration']) * 100 / $item['total_time_cost'];
             }
             $result[$consumable['code']] = $item;
@@ -50,10 +52,13 @@ class UserConsumablesModel extends Model
     {
         $restorable_consumables = $this->where('user_id', $user_id)->where('is_restorable', 1)->get()->getResultArray();
         foreach($restorable_consumables as $consumable){
-            $time_cost = 200;
-            $max_quantity = 5;
-            if(!$consumable['consumed_at']){
+            $time_cost = $this->config[$consumable['code']]['restoration'];
+            $total = $this->config[$consumable['code']]['total'];
+            if(!$consumable['consumed_at'] && $consumable['quantity'] == $total){
                 continue;
+            }
+            if(!$consumable['consumed_at']){
+                $consumable['consumed_at'] = Time::now()->toDateTimeString();;
             }
             $consumed_at = Time::parse($consumable['consumed_at'], Time::now()->getTimezone());
             $time_difference = $consumed_at->difference(Time::now())->getSeconds();
@@ -61,11 +66,11 @@ class UserConsumablesModel extends Model
                 'quantity' => 0,
                 'consumed_at' => ''
             ];
-            if($time_difference >= $time_cost){
+            if($time_difference >= 0){
                 $restorated_quantity = floor($time_difference / $time_cost);
                 $new_quantity = $consumable['quantity'] + $restorated_quantity;
-                if($new_quantity >= $max_quantity){
-                    $result['quantity'] = $max_quantity;
+                if($new_quantity >= $total){
+                    $result['quantity'] = $new_quantity;
                     $result['consumed_at'] = null;
                 } else {
                     $consumed_at = $consumed_at->addSeconds($restorated_quantity * $time_cost);
@@ -76,9 +81,9 @@ class UserConsumablesModel extends Model
             }
         }      
     }
-    public function getNextRestorationTime ($consumed_at)
+    public function getNextRestorationTime ($code, $consumed_at)
     {
-        $time_cost = 200;
+        $time_cost = $this->config[$code]['restoration'];
         if($consumed_at){
             $consumed_at = Time::parse($consumed_at, Time::now()->getTimezone());
             $next_consumed_at = $consumed_at->addSeconds($time_cost);
@@ -87,15 +92,11 @@ class UserConsumablesModel extends Model
             return 0;
         }
     }
-    public function getTotal ($code)
+    public function getLevelConfig ($user_id)
     {
-        $max_quantity = 5;
-        return $max_quantity;
-    }
-    public function getTotalCost ($code)
-    {
-        $time_cost = 200;
-        return $time_cost;
+        $UserExperienceModel = model('UserExperienceModel');
+        $level = $UserExperienceModel->getItem($user_id);
+        $this->config = $level['level_config']['consumables'];
     }
     public function createItem ($user_id)
     {

@@ -27,21 +27,10 @@ class UserDashboardModel extends UserModel
         $dashboard = [
             'total_points' => $user_statistics['total_points'],
             'total_exercises' => $user_statistics['total_exercises'],
-            'level' => $this->getItemLevel($user_statistics['total_points']),
             'total_classrooms' => count($ClassroomUsermapModel->getList($user_id))
         ];
 
         return $dashboard;
-    }
-  
-    public function getItemLevel ($total_points) 
-    {
-        $level_data = $this->from('user_levels')->where(['points_from <=' => $total_points, 'points_to >' => $total_points])->get()->getRowArray();
-        
-        if(!empty($level_data)){
-            $level_data['percentage'] = ceil($total_points * 100 / $level_data['points_to']);
-        }
-        return $level_data;
     }
 
 }
