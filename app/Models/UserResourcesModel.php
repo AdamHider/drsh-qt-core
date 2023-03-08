@@ -36,9 +36,9 @@ class UserResourcesModel extends Model
         foreach($resources as &$resource){
             $item = [
                 'quantity'      => $resource['quantity'],
-                'is_restorable' => $resource['is_restorable']
+                'is_restorable' => (bool) $resource['is_restorable']
             ];
-            if((bool) $resource['is_restorable']){
+            if($resource['is_restorable']){
                 $item['next_restoration'] = $this->getNextRestorationTime($resource['code'], $resource['consumed_at']);
                 $item['total_time_cost'] = $this->config[$resource['code']]['restoration'];
                 $item['total'] = $this->config[$resource['code']]['total'];
