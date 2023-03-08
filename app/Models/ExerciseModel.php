@@ -80,6 +80,13 @@ class ExerciseModel extends Model
         if (empty($lesson)) {
             return 'not_found';
         }
+        $cost_config = json_decode($lesson['cost_config'], true);
+
+        $UserResourcesModel = model('UserResourcesModel');
+        if(!$UserResourcesModel->substract(session()->get('user_id'), $cost_config)){
+            return 'bad_request';
+        } 
+
         $lesson['pages'] = (array) json_decode($lesson['pages'], true, JSON_UNESCAPED_UNICODE);
         $lesson_pages = $LessonModel->composePages($lesson['pages'], $lesson['type']);
         $this->transBegin();

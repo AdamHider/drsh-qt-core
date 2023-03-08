@@ -50,13 +50,14 @@ class LessonModel extends Model
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
+            $lesson['cost_config'] = json_decode($lesson['cost_config']);
+            $lesson['reward_config'] = json_decode($lesson['reward_config']);
         }
         unset($lesson['pages']);
         return $lesson;
     }
     public function getList ($data) 
     {
-        $data['offset'] = 0;
         $this->useSharedOf('courses', 'course_id');
 
         $CourseSectionModel = model('CourseSectionModel');
@@ -78,6 +79,9 @@ class LessonModel extends Model
             $lesson['image'] = base_url('image/' . $lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
+            $lesson['is_explored'] = $this->checkExplored($lesson['id']);
+            $lesson['cost_config'] = json_decode($lesson['cost_config']);
+            $lesson['reward_config'] = json_decode($lesson['reward_config']);
             unset($lesson['pages']);
         }
         return $lessons;
@@ -101,6 +105,8 @@ class LessonModel extends Model
             if($mode == 'full'){
                 $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
+                $satellite['cost_config'] = json_decode($satellite['cost_config']);
+                $satellite['reward_config'] = json_decode($satellite['reward_config']);
             }
             unset($satellite['pages']);
         }
@@ -142,6 +148,16 @@ class LessonModel extends Model
         ->where('lessons.id', $lesson_id)->where('exercises.exercise_submitted IS NOT NULL')->get()->getResult();
         return empty($exercise);
     }
+    public function checkExplored ($lesson_id) 
+    {
+        if (!$lesson_id) {
+            return false;
+        }
+        $exercise  = $this->join('user_resources_expenses', 'user_resources_expenses.item_id = lessons.id AND user_resources_expenses.code = "lesson_explored"')
+        ->join('user_resources', 'user_resources.user_id = '.session()->get('user_id'))
+        ->where('lessons.id', $lesson_id)->get()->getResult();
+        return !empty($exercise);
+    }
     public function itemCreate ($image)
     {
         $this->transBegin();
@@ -154,6 +170,8 @@ class LessonModel extends Model
         return $character_id;        
     }
 
+    
+
     public function composePages($pages, $lesson_type)
     {
         if($lesson_type == 'lexis'){
@@ -162,6 +180,7 @@ class LessonModel extends Model
             return $pages;
         }
     }
+    
     private function parseLexis($page_config)
     {
         $seed = rand(1, 10);

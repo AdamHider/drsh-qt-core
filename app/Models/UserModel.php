@@ -107,8 +107,8 @@ class UserModel extends Model
         $UserExperienceModel = model('UserExperienceModel');
         $user['level'] = $UserExperienceModel->getItem($user['id']);
 
-        $UserConsumablesModel = model('UserConsumablesModel');
-        $user['consumables'] = $UserConsumablesModel->getList($user['id']);
+        $UserResourcesModel = model('UserResourcesModel');
+        $user['resources'] = $UserResourcesModel->getList($user['id']);
 
         unset($user['password']);
         return $user;

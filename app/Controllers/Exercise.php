@@ -20,6 +20,9 @@ class Exercise extends BaseController
         if ($exercise_id == 'not_found') {
             return $this->failNotFound('not_found');
         }
+        if ($exercise_id == 'bad_request') {
+            return $this->fail('bad_request');
+        }
         if($ExerciseModel->errors()){
             return $this->failValidationErrors(json_encode($ExerciseModel->errors()));
         }
