@@ -58,7 +58,7 @@ class ExerciseStatisticModel extends Model
         
         
         foreach($result as &$row){
-            $row['data'] = $this->where("place", $row['place'])->limit(3)->get()->getResultArray();
+            $row['data'] = $this->where("place", $row['place'])->get()->getResultArray();
             $row['is_active'] = (bool) $row['is_active'];
             $row['is_winner'] = (bool) $row['is_winner'];
             if($row['finished_at']){

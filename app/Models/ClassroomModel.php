@@ -49,10 +49,14 @@ class ClassroomModel extends Model
         }
         $classroom = $this->where('id', $classroom_id)->get()->getRowArray();
         if ($classroom) {
+            $subscriber = $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
+            if(!empty($subscriber)){
+                $classroom['is_subscribed'] = true;
+                $classroom['is_disabled_subscriber'] = (bool) $subscriber['is_disabled'];
+            }
             $classroom['image'] = base_url('image/' . $classroom['image']);
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
             $classroom['is_owner'] = $classroom['owner_id'] == session()->get('user_id');
-            $classroom['is_subscribed'] = (bool) $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
             $classroom['is_private'] = (bool) $classroom['is_private'];
             $ClassroomDashboardModel = model('ClassroomDashboardModel');
             $classroom['dashboard'] = $ClassroomDashboardModel->getItem($classroom['id']);
@@ -63,18 +67,30 @@ class ClassroomModel extends Model
     }
     public function getList ($data) 
     {
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
+        
         if($data['user_id']){
             $this->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
             ->where('classrooms_usermap.user_id', $data['user_id']);
+        } else  {
+            $this->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id AND classrooms_usermap.user_id = '.session()->get('user_id'), 'left');
         }
         if(isset($data['limit'])){
             $this->limit($data['limit'], $data['offset']);
         }
-        $classrooms = $this->get()->getResultArray();
+        $classrooms = $this->orderBy('(classrooms_usermap.item_id IS NOT NULL) DESC, (classrooms.owner_id ='.session()->get('user_id').') DESC')->get()->getResultArray();
         foreach($classrooms as &$classroom){
+            $subscriber = $ClassroomUsermapModel->getItem((int) session()->get('user_id'), $classroom['id']);
+            if(!empty($subscriber)){
+                $classroom['is_subscribed'] = true;
+                $classroom['is_disabled_subscriber'] = (bool) $subscriber['is_disabled'];
+            }
             $classroom['image'] = base_url('image/' . $classroom['image']);
             $classroom['background_image'] = base_url('image/' . $classroom['background_image']);
-            $classroom['is_active'] = session()->get('user_data')['settings']['classroom_id'] == $classroom['id'];
+            $classroom['is_owner'] = $classroom['owner_id'] == session()->get('user_id');
+            $classroom['is_private'] = (bool) $classroom['is_private'];
+            $classroom['subscribers_total'] = count($ClassroomUsermapModel->getUserList(['classroom_id' => $classroom['id'], 'is_disabled' => 0]));
+            
         }
         return $classrooms;
     }
@@ -136,6 +152,9 @@ class ClassroomModel extends Model
             }
             $subscriber['avatar'] = base_url('image/' . $subscriber['avatar']);
             $subscriber['image'] = base_url('image/' . $subscriber['image']);
+            $subscriber['is_owner'] = (bool) $subscriber['is_owner'];
+            $subscriber['is_classroom_owner'] = (bool) $subscriber['is_classroom_owner'];
+            $subscriber['disabled_subscriber'] = (bool) $subscriber['disabled_subscriber'];
         }
         return $subscribers;
     }

@@ -103,13 +103,30 @@ class Classroom extends BaseController
         $ClassroomModel = model('ClassroomModel');
 
         $code = $this->request->getVar('classroom_code');
-        $user_id = session()->get('user_id');
+        $user_id = $this->request->getVar('user_id');
+        if(!$user_id){
+            $user_id = session()->get('user_id');
+        }
 
-        $classroom_id = $ClassroomModel->checkIfExists($code);
-        if (!$classroom_id) {
+        $is_disabled = false;
+        $classroom = $ClassroomModel->where('code', $code)->get()->getRowArray();
+        if (empty($classroom['id'])) {
             return $this->failNotFound('not_found');
         }
-        $result = $ClassroomUsermapModel->itemCreate($user_id, $classroom_id);
+        if((bool) $classroom['is_private'] && $classroom['owner_id'] != session()->get('user_id') ){
+            $is_disabled = true;
+        }
+        $existing_subscriber = $ClassroomUsermapModel->getItem($user_id, $classroom['id']);
+        if(empty($existing_subscriber)){
+            $result = $ClassroomUsermapModel->createItem($user_id, $classroom['id'], $is_disabled);
+        } else {
+            $data = [
+                'user_id' => $user_id,
+                'item_id' => $classroom['id'],
+                'is_disabled' => $is_disabled,
+            ];
+            $result = $ClassroomUsermapModel->updateItem($data);
+        }
 
         if($ClassroomUsermapModel->errors()){
             return $this->failValidationErrors(json_encode($ClassroomUsermapModel->errors()));
@@ -121,7 +138,10 @@ class Classroom extends BaseController
         $ClassroomModel = model('ClassroomModel');
 
         $code = $this->request->getVar('classroom_code');
-        $user_id = session()->get('user_id');
+        $user_id = $this->request->getVar('user_id');
+        if(!$user_id){
+            $user_id = session()->get('user_id');
+        }
 
         $classroom_id = $ClassroomModel->checkIfExists($code);
         if (!$classroom_id) {
