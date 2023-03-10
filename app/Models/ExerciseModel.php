@@ -150,20 +150,27 @@ class ExerciseModel extends Model
         $exercise['attempts']++;
         return $this->updateItem($exercise, 'start');
     }
-    public function getTotal($date_start = null, $date_end = null)
+    public function getTotal($data, $mode = 'sum')
     {
-        $this->where('exercises.user_id = '.session()->get('user_id'))
-        ->select("COALESCE(sum(exercises.points), 0) as total_points");
-
-        if($date_start){
-            $this->where("exercises.finished_at > '".$date_start."'");
+        $this->where('exercises.user_id = '.session()->get('user_id'));
+        if($mode == 'sum'){
+            $this->select("COALESCE(sum(exercises.points), 0) as total");
         }
-        if($date_end){
-            $this->where("exercises.finished_at < '".$date_end."'");
+        if($mode == 'count'){
+            $this->select("COALESCE(count(exercises.points), 0) as total");
+        }
+        if($data['date_start']){
+            $this->where("exercises.finished_at > '".$data['date_start']."'");
+        }
+        if($data['date_end']){
+            $this->where("exercises.finished_at < '".$data['date_end']."'");
+        }
+        if($data['lesson_id']){
+            $this->where("exercises.lesson_id = '".$data['lesson_id']."'");
         }
         $exercise = $this->get()->getRowArray();
 
-        return $exercise['total_points'];
+        return $exercise['total'];
     }
     private function calculateTotals($exercise)
     {

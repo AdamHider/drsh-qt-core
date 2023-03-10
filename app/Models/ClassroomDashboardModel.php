@@ -18,11 +18,11 @@ class ClassroomDashboardModel extends ClassroomModel
     public function getItem($classroom_id)
     {
         $HomeworkModel = model('HomeworkModel');
-        $ChallengeModel = model('ChallengeModel');
+        $QuestModel = model('QuestModel');
         $dashboard = [
             'total_subscribers' => $this->getSubscribersTotal($classroom_id),
             'total_homeworks' => $HomeworkModel->getTotal(['classroom_id' => $classroom_id]),
-            'total_challenges' => $ChallengeModel->getTotal(['classroom_id' => $classroom_id])
+            'total_challenges' => $QuestModel->getTotal(['classroom_id' => $classroom_id])
         ];
         return $dashboard;
     }
