@@ -21,7 +21,6 @@ class QuestModel extends Model
         if(!$this->hasPermission($quest_id, 'r')){
             return 'forbidden';
         }
-
         
         $quest = $this->join('lessons', 'lessons.id = quests.lesson_id', 'left')
         ->select('quests.*, lessons.title as lesson_title, lessons.image as lesson_image')
@@ -70,6 +69,7 @@ class QuestModel extends Model
             ->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
             ->where('classrooms_usermap.user_id', $data['user_id']);
         }
+        $this->where('IF(quests.date_end, quests.date_end > NOW(), 1)');
 
         $this->whereHasPermission('r')->groupBy('quests.id');
         
@@ -86,8 +86,10 @@ class QuestModel extends Model
         foreach($quests as &$quest){
             $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['value']]);
             $quest['image'] = base_url('image/' . $quest['image']);
+            $quest['reward'] = json_decode($quest['reward'], true);
             $quest['progress'] = $this->getProgress($quest);
-            $quest['is_finished'] = $this->checkFinished($quest);
+            $quest['is_completed'] = $this->checkCompleted($quest);
+            $quest['is_outdated'] = $this->checkOutdated($quest);
             if($quest['lesson_id']){
                 $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['lesson_title']]);
                 $quest['image'] = base_url('image/' . $quest['lesson_image']);
@@ -106,7 +108,6 @@ class QuestModel extends Model
                 $quest['date_end_humanized'] = $time->humanize();
                 $quest['time_left_humanized'] = Time::now()->difference($time)->humanize();
             }
-            
         }
         return $quests;
     }
@@ -148,14 +149,40 @@ class QuestModel extends Model
         $result['percentage_text'] = lang('App.quest.progress.'.$data['code'].'.percentage_text', [$result['percentage'], $result['value'], $result['total']]);
         return $result;
     }
-    private function checkFinished($quest)
+    private function checkCompleted($quest)
     {
-        if($quest['code'] == 'total_points' || $quest['code'] == 'total_lessons'){
-            return strtotime($quest['date_end']) <= strtotime('now');
-        }
-        if($quest['code'] == 'total_points_first'){
-            return $quest['progress']['value'] >= $quest['value'];
-        }
+        return $quest['progress']['value'] >= $quest['value'];
     }
+    private function checkOutdated($quest)
+    {
+        $is_outdated = false;
+        if($quest['date_end']){
+            $is_outdated = strtotime($quest['date_end']) <= strtotime('now');
+        } 
+        return $is_outdated;
+    }
+    private function checkRewarded($quest)
+    {
+        $is_rewarded = false;
+        if(!empty($quest['reward'])){
+            $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
+            foreach($quest['reward'] as $resource_title => $resource_quantity){
+                $is_rewarded = !empty($UserResourcesExpensesModel->getItem($resource_title, 'quest', $quest['id']));
+            }
+        }
+        return $is_rewarded;
+    }
+    private function claimReward($quest_id)
+    {
+        $this->useSharedOf('classrooms', 'classroom_id');
+        if(!$this->hasPermission($quest_id, 'r')){
+            return 'forbidden';
+        }
+        
+        $quest = $this->where('quests.id', $quest_id)->get()->getRowArray();
+        
+    }
+    
+    
     
 }

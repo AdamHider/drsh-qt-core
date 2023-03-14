@@ -53,4 +53,19 @@ class Quest extends BaseController
 
         return $this->respond($quests);
     }
+    public function claimReward()
+    {
+        $QuestModel = model('QuestModel');
+
+        $quest_id = $this->request->getVar('quest_id');
+
+        $result = $QuestModel->claimReward($quest_id);
+        
+        if ($result == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+        
+        return $this->respond($result);
+
+    }
 }

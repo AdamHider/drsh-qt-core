@@ -16,23 +16,18 @@ class UserResourcesExpensesModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'user_id', 
-        'code', 
-        'quantity', 
-        'is_restorable', 
-        'consumed_at'
+        'code',
+        'item_code', 
+        'item_id', 
+        'quantity' 
     ];
     
     protected $useTimestamps = false;
     private $config = [];
 
-    public function getItem ($code, $item_id) 
+    public function getItem ($resource_code, $item_code, $item_id) 
     {
-        $this->getLevelConfig($user_id);   
-        $this->checkRestoration($user_id);
-        $consumables = $this->where('user_id', $user_id)->get()->getResultArray();
-
-        return $consumables;
+        return $this->where('user_resources_expenses.code', $resource_code)->where('user_resources_expenses.item_code', $item_code)->where('user_resources_expenses.item_id', $item_id)->get()->getRowArray();
     }
     
     public function createItem ($user_id)

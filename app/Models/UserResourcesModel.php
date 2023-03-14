@@ -48,9 +48,9 @@ class UserResourcesModel extends Model
         }
         return $result;
     }
-    public function getItem ($code, $user_id) 
+    public function getItem ($code, $user_id, $item_id) 
     {
-        $resource = $this->where('user_id', $user_id)->where('code', $code)->get()->getResultArray();
+        $resource = $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
         return $resource;
     }
     public function checkRestoration ($user_id)
