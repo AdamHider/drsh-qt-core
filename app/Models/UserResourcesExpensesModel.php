@@ -16,6 +16,7 @@ class UserResourcesExpensesModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
+        'user_id',
         'code',
         'item_code', 
         'item_id', 
@@ -25,27 +26,21 @@ class UserResourcesExpensesModel extends Model
     protected $useTimestamps = false;
     private $config = [];
 
-    public function getItem ($resource_code, $item_code, $item_id) 
+    public function getItem ($resource_code, $item_code, $item_id, $user_id) 
     {
-        return $this->where('user_resources_expenses.code', $resource_code)->where('user_resources_expenses.item_code', $item_code)->where('user_resources_expenses.item_id', $item_id)->get()->getRowArray();
+        return $this->where('user_resources_expenses.code', $resource_code)->where('user_resources_expenses.item_code', $item_code)
+        ->where('user_resources_expenses.item_id', $item_id)->where('user_resources_expenses.user_id', $user_id)->get()->getRowArray();
     }
     
-    public function createItem ($user_id)
+    public function createItem ($data)
     {
         $this->transBegin();
         
-        $data = [
-            'user_id'       => $user_id,
-            'character_id'  => getenv('user_resources_expenses.character_id'),
-            'classroom_id'  => NULL,
-            'course_id'     => NULL
-            
-        ];
-        $user_resources_expenses_id = $this->insert($data, true);
+        $result = $this->insert($data, true);
 
         $this->transCommit();
 
-        return $user_resources_expenses_id;        
+        return $result;        
     }
     public function updateItem ($data)
     {

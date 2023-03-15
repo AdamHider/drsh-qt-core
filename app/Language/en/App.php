@@ -18,8 +18,8 @@ return [
         'goal.total_lessons.title' => 'Complete lessons',
         'goal.total_lessons.description' => 'Complete lessons and gain points',
         'goal.total_lessons.value' => '',
-        'progress.total_points.percentage_text' => '{0, number}%',
-        'progress.total_points_first.percentage_text' => '{0, number}%',
+        'progress.total_points.percentage_text' => '{1, number}/{2, number}',
+        'progress.total_points_first.percentage_text' => '{1, number}/{2, number}',
         'progress.lesson.percentage_text' => '{1, number}/{2, number}',
         'progress.total_lessons.percentage_text' => '{1, number}/{2, number}'
     ],

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\BaseBuilder;
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
 
@@ -30,10 +31,12 @@ class QuestModel extends Model
             return 'not_found';
         }
         $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['value']]);
-
         $quest['image'] = base_url('image/' . $quest['image']);
+        $quest['reward'] = json_decode($quest['reward'], true);
         $quest['progress'] = $this->getProgress($quest);
-        $quest['is_finished'] = $this->checkFinished($quest);
+        $quest['is_completed'] = $this->checkCompleted($quest);
+        $quest['is_outdated'] = $this->checkOutdated($quest);
+        $quest['is_rewarded'] = $this->checkRewarded($quest);
         if($quest['lesson_id']){
             $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['lesson_title']]);
             $quest['image'] = base_url('image/' . $quest['lesson_image']);
@@ -69,7 +72,11 @@ class QuestModel extends Model
             ->join('classrooms_usermap', 'classrooms_usermap.item_id = classrooms.id')
             ->where('classrooms_usermap.user_id', $data['user_id']);
         }
-        $this->where('IF(quests.date_end, quests.date_end > NOW(), 1)');
+        if(isset($data['active_only'])){
+            $this->join('user_resources_expenses', 'user_resources_expenses.item_id = quests.id AND user_resources_expenses.item_code = "quest" AND user_resources_expenses.user_id = '.session()->get('user_id'), 'left')
+            ->where('user_resources_expenses.id', NULL);
+            $this->where('IF(quests.date_end, quests.date_end > NOW(), 1)');
+        }
 
         $this->whereHasPermission('r')->groupBy('quests.id');
         
@@ -77,7 +84,7 @@ class QuestModel extends Model
             $this->limit($data['limit'], $data['offset']);
         }
 
-        $quests = $this->orderBy('date_end DESC')->get()->getResultArray();
+        $quests = $this->orderBy('COALESCE(date_end, NOW()) DESC')->get()->getResultArray();
 
         if(empty($quests)){
             return 'not_found';
@@ -90,6 +97,7 @@ class QuestModel extends Model
             $quest['progress'] = $this->getProgress($quest);
             $quest['is_completed'] = $this->checkCompleted($quest);
             $quest['is_outdated'] = $this->checkOutdated($quest);
+            $quest['is_rewarded'] = $this->checkRewarded($quest);
             if($quest['lesson_id']){
                 $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['lesson_title']]);
                 $quest['image'] = base_url('image/' . $quest['lesson_image']);
@@ -119,7 +127,7 @@ class QuestModel extends Model
         
         $quests = $this->where('quests.classroom_id', $data['classroom_id'])->whereHasPermission('r')
         ->groupBy('quests.id')->orderBy('date_end')->get()->getResultArray();
-
+        
         if(empty($quests)){
             return 0;
         }
@@ -167,20 +175,44 @@ class QuestModel extends Model
         if(!empty($quest['reward'])){
             $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
             foreach($quest['reward'] as $resource_title => $resource_quantity){
-                $is_rewarded = !empty($UserResourcesExpensesModel->getItem($resource_title, 'quest', $quest['id']));
+                $is_rewarded = !empty($UserResourcesExpensesModel->getItem($resource_title, 'quest', $quest['id'], session()->get('user_id')));
             }
         }
         return $is_rewarded;
     }
-    private function claimReward($quest_id)
+    public function claimReward($quest_id)
     {
         $this->useSharedOf('classrooms', 'classroom_id');
         if(!$this->hasPermission($quest_id, 'r')){
             return 'forbidden';
         }
         
-        $quest = $this->where('quests.id', $quest_id)->get()->getRowArray();
-        
+        $quest = $this->where('id', $quest_id)->get()->getRowArray();
+
+        if(empty($quest)){
+            return 'not_found';
+        }
+        $quest['reward'] = json_decode($quest['reward'], true);
+        $quest['progress'] = $this->getProgress($quest);
+        $quest['is_completed'] = $this->checkCompleted($quest);
+        $quest['is_outdated'] = $this->checkOutdated($quest);
+        $quest['is_rewarded'] = $this->checkRewarded($quest);
+        if($this->checkCompleted($quest) && !$this->checkOutdated($quest) && !$this->checkRewarded($quest)){
+            $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
+            foreach($quest['reward'] as $resource_title => $resource_quantity){
+                $data = [
+                    'user_id' => session()->get('user_id'),
+                    'code' => $resource_title,
+                    'item_code' => 'quest',
+                    'item_id' => $quest['id'],
+                    'quantity' => $resource_quantity
+                ];
+                $UserResourcesExpensesModel->createItem($data);
+            }
+            return $quest;
+        } else {
+            return 'forbidden';
+        }
     }
     
     

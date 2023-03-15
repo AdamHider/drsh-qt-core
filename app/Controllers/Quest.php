@@ -30,6 +30,7 @@ class Quest extends BaseController
         $QuestModel = model('QuestModel');
 
         $mode = $this->request->getVar('mode');
+        $active_only = $this->request->getVar('active_only');
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
         $classroom_id = $this->request->getVar('classroom_id');
@@ -40,6 +41,9 @@ class Quest extends BaseController
         ];
         if($mode == 'by_user'){
             $data['user_id'] = session()->get('user_id');
+        }
+        if($active_only){
+            $data['active_only'] = $active_only;
         }
         if($classroom_id){
             $data['classroom_id'] = $classroom_id;
@@ -64,7 +68,12 @@ class Quest extends BaseController
         if ($result == 'not_found') {
             return $this->failNotFound('not_found');
         }
-        
+        if ($result == 'forbidden') {
+            return $this->failForbidden();
+        }
+        if($QuestModel->errors()){
+            return $this->failValidationErrors(json_encode($QuestModel->errors()));
+        }
         return $this->respond($result);
 
     }
