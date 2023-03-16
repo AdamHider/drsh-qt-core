@@ -48,12 +48,9 @@ class ClassroomDashboardModel extends ClassroomModel
     public function getTotalRank($classroom_id)
     {
         $ClassroomModel = model('ClassroomModel');
-        $data = [
-            'classroom_id' => $classroom_id
-        ];
         $total = $ClassroomModel->join('classrooms_usermap', 'classrooms.id = classrooms_usermap.item_id')
-        ->join('user_experience', 'user_experience.user_id = classrooms_usermap.user_id')
-        ->select('SUM(user_experience.value) as total')->where('classrooms.id', $classroom_id)->get()->getRowArray();
+        ->join("user_resources", "user_resources.user_id = classrooms_usermap.user_id AND user_resources.code = 'experience'")
+        ->select('SUM(user_resources.quantity) as total')->where('classrooms.id', $classroom_id)->get()->getRow('total');
         return $total;
     }
 

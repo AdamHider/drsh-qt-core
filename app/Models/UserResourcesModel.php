@@ -99,8 +99,8 @@ class UserResourcesModel extends Model
     }
     public function getLevelConfig ($user_id)
     {
-        $UserExperienceModel = model('UserExperienceModel');
-        $level = $UserExperienceModel->getItem($user_id);
+        $UserLevelModel = model('UserLevelModel');
+        $level = $UserLevelModel->getItem($user_id);
         $this->config = $level['level_config']['resources'];
     }
     public function substract ($user_id, $resources)
