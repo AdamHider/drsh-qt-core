@@ -34,7 +34,6 @@ $routes->post('/Exercise/(:any)', 'Exercise::$1');
 $routes->post('/User/(:any)', 'User::$1');
 $routes->post('/Achievement/(:any)', 'Achievement::$1');
 $routes->post('/Quest/(:any)', 'Quest::$1');
-$routes->post('/Homework/(:any)', 'Homework::$1');
 $routes->post('/Classroom/(:any)', 'Classroom::$1');
 $routes->post('/Course/(:any)', 'Course::$1');
 $routes->post('/CourseSection/(:any)', 'CourseSection::$1');

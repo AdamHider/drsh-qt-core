@@ -79,15 +79,16 @@ class UserModel extends Model
         if ($user_id == 0) {
             return $this->getGuestItem();
         }
-        
         if(!$this->hasPermission($user_id, 'r')){
             return 'forbidden';
         }
+
         $user = $this->where('id', $user_id)->get()->getRowArray();
         
         if(!$user){
             return 'not_found';
         }
+        
         $UserSettingsModel = model('UserSettingsModel');
         $user['settings'] = $UserSettingsModel->getItem($user['id']);
 
