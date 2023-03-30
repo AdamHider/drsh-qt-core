@@ -271,5 +271,4 @@ class LessonModel extends Model
         return $tmp;
     }
 
-
 }

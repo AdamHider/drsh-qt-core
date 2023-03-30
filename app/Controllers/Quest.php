@@ -72,9 +72,61 @@ class Quest extends BaseController
             return $this->failForbidden();
         }
         if($QuestModel->errors()){
-            return $this->failValidationErrors(json_encode($QuestModel->errors()));
+            return $this->failValidationErrors($QuestModel->errors());
         }
         return $this->respond($result);
 
+    }
+    public function saveItem()
+    {
+        $QuestModel = model('QuestModel');
+        $data = $this->request->getJSON(true);
+
+        $result = $QuestModel->updateItem($data);
+
+        if ($result === 'forbidden') {
+            return $this->failForbidden();
+        }
+        if($QuestModel->errors()){
+            return $this->failValidationErrors($QuestModel->errors());
+        }
+        return $this->respond($result);
+    }
+    public function createItem()
+    {
+        $QuestModel = model('QuestModel');
+        //$ClassroomUsermapModel = model('ClassroomUsermapModel');
+
+        $classroom_id = $this->request->getVar('classroom_id');
+
+        $data = [
+            'classroom_id' => $classroom_id
+        ];
+
+        $quest_id = $QuestModel->createItem($data);
+
+        if ($quest_id === 'forbidden') {
+            return $this->failForbidden();
+        }
+
+        if($QuestModel->errors()){
+            return $this->failValidationErrors($QuestModel->errors());
+        }
+        //$ClassroomUsermapModel->itemCreate(session()->get('user_id'), $quest_id);
+
+        return $this->respond($quest_id);
+    }
+    public function getAvailableLessons()
+    {
+        $QuestModel = model('QuestModel');
+
+        $title = $this->request->getVar('title');
+
+        $data = [
+            'title' => $title
+        ];
+
+        $result = $QuestModel->getAvailableLessons($data);
+        return $this->respond($result, 200);
     }
 }

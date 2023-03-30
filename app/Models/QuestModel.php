@@ -13,7 +13,34 @@ class QuestModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'image'
+        'classroom_id', 
+        'lesson_id', 
+        'code', 
+        'value', 
+        'image', 
+        'date_start', 
+        'date_end', 
+        'reward', 
+        'owner_id', 
+        'is_disabled', 
+        'is_private'
+    ];
+    protected $validationRules    = [
+        'code'     => [
+            'label' =>'code',
+            'rules' =>'required',
+            'errors'=>[
+                'required'=>'required'
+            ]
+        ],
+        'value'     => [
+            'label' =>'value',
+            'rules' =>'required|greater_than[0]',
+            'errors'=>[
+                'required'=>'required',
+                'greater_than'=>'greater_than'
+            ]
+        ]
     ];
     
     public function getItem ($quest_id) 
@@ -32,6 +59,10 @@ class QuestModel extends Model
         }
         $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['value']]);
         $quest['image'] = base_url('image/' . $quest['image']);
+        $quest['value'] = (int) $quest['value'];
+        $quest['is_private'] = (bool) $quest['is_private'];
+        $quest['is_disabled'] = (bool) $quest['is_disabled'];
+        $quest['is_owner'] = $quest['owner_id'] == session()->get('user_id');
         $quest['reward'] = json_decode($quest['reward'], true);
         $quest['progress'] = $this->getProgress($quest);
         $quest['is_completed'] = $this->checkCompleted($quest);
@@ -214,7 +245,74 @@ class QuestModel extends Model
             return 'forbidden';
         }
     }
-    
+    public function createItem ($data)
+    {
+        $ClassroomModel = model('ClassroomModel');
+        
+        if(!$ClassroomModel->hasPermission($data['classroom_id'], 'w')){
+            return 'forbidden';
+        }
+        $classroom = $ClassroomModel->where('id', $data['classroom_id'])->get()->getRowArray();
+        $this->validationRules = [];
+        $data = [
+            'classroom_id' => $data['classroom_id'], 
+            'lesson_id' => NULL, 
+            'code' => NULL, 
+            'value' => NULL, 
+            'image' => NULL, 
+            'date_start' => NULL,
+            'date_end' => NULL, 
+            'reward' => '{}', 
+            'owner_id' => session()->get('user_id'), 
+            'is_disabled' => false, 
+            'is_private' => $classroom['is_private']
+        ];
+        $this->transBegin();
+        $quest_id = $this->insert($data, true);
+
+        $this->transCommit();
+
+        return $quest_id;        
+    }
+    public function updateItem ($data)
+    {
+        if(!$this->hasPermission($data['id'], 'w')){
+            return 'forbidden';
+        }
+        if($data['code'] == 'lesson'){
+            $this->validationRules['lesson_id'] = [
+                'label' =>'lesson_id',
+                'rules' =>'required',
+                'errors'=>[
+                    'required'=>'required'
+                ]
+            ];
+        }
+        $this->transBegin();
+        
+        $this->update(['id'=>$data['id']], $data);
+
+        $this->transCommit();
+
+        return true;        
+    }
+
+    public function getAvailableLessons ($data) 
+    {
+        $LessonModel = model('LessonModel');
+
+        $lessons = $LessonModel->like('title', $data['title'])->limit(10)->orderBy('id')->get()->getResultArray();
+        $result = [];
+        foreach($lessons as $key => $lesson){
+            $result[] = [
+                'id'    => $lesson['id'],
+                'title' => $lesson['title'],
+                'image' => base_url('image/' . $lesson['image'])
+            ];
+        }
+        return $result;
+    }
+
     
     
 }
