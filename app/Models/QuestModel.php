@@ -288,6 +288,9 @@ class QuestModel extends Model
                 ]
             ];
         }
+        if(!empty($data['reward'])){
+            $data['reward'] = json_encode($data['reward']);
+        }
         $this->transBegin();
         
         $this->update(['id'=>$data['id']], $data);
@@ -312,7 +315,57 @@ class QuestModel extends Model
         }
         return $result;
     }
-
+    public function calculateReward ($data) 
+    {
+        $result = [
+            'credits' => 0,
+            'experience' => 0
+        ];
+        if($data['code'] === 'total_points' || $data['code'] === 'total_points_first'){
+            $result['credits'] = ceil($data['value']*0.05); 
+            $result['experience'] = ceil($data['value']*0.1); 
+        } else 
+        if($data['code'] === 'total_lessons'){
+            $result['credits'] = ceil($data['value']*20); 
+            $result['experience'] = ceil($data['value']*50); 
+        } else 
+        if($data['code'] === 'lesson'){
+            $result['credits'] = ceil($data['value']*40); 
+            $result['experience'] = ceil($data['value']*100); 
+        }
+        return $result;
+    }
+    public function getAvailableCodes ($data) 
+    {
+        $codes_conf = [
+            [
+                'label' => 'Total points',
+                'value' => 'total_points'
+            ],
+            [
+                'label' => 'Total points first',
+                'value' => 'total_points_first'
+            ],
+            [
+                'label' => 'Total lessons',
+                'value' => 'total_lessons'
+            ],
+            [
+                'label' => 'Lesson',
+                'value' => 'lesson'
+            ]
+        ];
+        $codes = $this->where('classroom_id', $data['classroom_id'])->where('IF(quests.date_end, quests.date_end > NOW(), 1)')
+        ->groupBy('code')->select('code')->get()->getResultArray('code');
+        $result = [];
+        foreach($codes_conf as $code){
+            if(array_search($code['value'], array_column($codes, 'code')) === false){
+                $result[] = $code;
+            }
+        }
+        return $result;
+    }
+    
     
     
 }

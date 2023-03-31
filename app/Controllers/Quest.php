@@ -129,4 +129,36 @@ class Quest extends BaseController
         $result = $QuestModel->getAvailableLessons($data);
         return $this->respond($result, 200);
     }
+    public function calculateReward()
+    {
+        $QuestModel = model('QuestModel');
+
+        $quest_id = $this->request->getVar('quest_id');
+        $code = $this->request->getVar('code');
+        $value = $this->request->getVar('value');
+
+        $data = [
+            'quest_id' => $quest_id,
+            'code' => $code,
+            'value' => (int) $value
+        ];
+
+        $result = $QuestModel->calculateReward($data);
+        return $this->respond($result, 200);
+    }
+    public function getAvailableCodes()
+    {
+        $QuestModel = model('QuestModel');
+
+        $classroom_id = $this->request->getVar('classroom_id');
+
+        $data = [
+            'classroom_id' => $classroom_id
+        ];
+
+        $result = $QuestModel->getAvailableCodes($data);
+        return $this->respond($result, 200);
+    }
+    
+    
 }
