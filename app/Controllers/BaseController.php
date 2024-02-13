@@ -50,7 +50,7 @@ abstract class BaseController extends Controller
     {
         $this->handleSession($request,$response);
 
-        $this->initPermission();
+        //$this->initPermission();
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 

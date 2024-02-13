@@ -101,7 +101,10 @@ class UserResourcesModel extends Model
     {
         $UserLevelModel = model('UserLevelModel');
         $level = $UserLevelModel->getItem($user_id);
-        $this->config = $level['level_config']['resources'];
+        if($level){
+            $this->config = $level['level_config']['resources'];
+        }
+        
     }
     public function substract ($user_id, $resources)
     {
