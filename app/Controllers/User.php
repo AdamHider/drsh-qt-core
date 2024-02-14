@@ -118,7 +118,7 @@ class User extends BaseController
         ];
 
         $this->signOutUser();
-
+        
         $user_id = $UserModel->createItem($data);
 
         if($UserModel->errors()){

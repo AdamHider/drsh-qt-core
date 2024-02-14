@@ -49,6 +49,7 @@ class AchievementModel extends Model
             $achievement = array_merge($achievement, $DescriptionModel->getItem('achievement', $achievement['id']));
             $achievement['image'] = base_url('image/' . $achievement['image']);
             $achievement['progress'] = $this->calculateProgress($achievement);
+            $achievement['params'] = json_decode($achievement['params']);
         }
         return $achievements;
     }

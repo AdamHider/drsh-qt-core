@@ -35,7 +35,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = [];
+    protected $helpers = ['array'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -50,7 +50,7 @@ abstract class BaseController extends Controller
     {
         $this->handleSession($request,$response);
 
-        //$this->initPermission();
+        $this->initPermission();
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
@@ -70,9 +70,9 @@ abstract class BaseController extends Controller
 
     
     private function initPermission(){
-        //if(empty(session()->get('permissions'))){
+        if(empty(session()->get('permissions'))){
             $PermissionModel = model('PermissionModel');
             $PermissionModel->updateSession();
-        //}
+        }
     }
 }
