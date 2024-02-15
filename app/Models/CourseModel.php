@@ -41,7 +41,6 @@ class CourseModel extends Model
     public function getList () 
     {
         $courses = $this->whereHasPermission('r')->get()->getResultArray();
-
         foreach($courses as &$course){
             $course['image'] = base_url('image/' . $course['image']);
             $course['background_image'] = base_url('image/' . $course['background_image']);

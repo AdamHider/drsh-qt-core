@@ -70,9 +70,9 @@ abstract class BaseController extends Controller
 
     
     private function initPermission(){
-        if(empty(session()->get('permissions'))){
+        //if(empty(session()->get('permissions'))){
             $PermissionModel = model('PermissionModel');
             $PermissionModel->updateSession();
-        }
+       // }
     }
 }
