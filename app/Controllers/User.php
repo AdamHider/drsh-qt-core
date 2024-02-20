@@ -43,22 +43,21 @@ class User extends BaseController
         $phone    = $this->request->getVar('phone');
         
         if(!$username){
-            $username = session()->get('user_data')->username;
+            $username = session()->get('user_data')['username'];
         }
         if(!$email){
-            $email = session()->get('user_data')->email;
+            $email = session()->get('user_data')['email'];
         }
         if(!$phone){
-            $phone = session()->get('user_data')->phone;
+            $phone = session()->get('user_data')['phone'];
         }
         $data = [
-            'id'        => session()->get('user_id'),
             'username'  => $username,
             'email'     => $email,
             'phone'     => $phone
         ];
 
-        $result = $UserModel->updateItem($data);
+        $result = $UserModel->updateItem(session()->get('user_id'), $data);
 
 
         if($UserModel->errors()){
@@ -102,43 +101,34 @@ class User extends BaseController
     {
         $UserModel = model('UserModel');
 
-        $username           = $this->request->getVar('username');
         $password           = $this->request->getVar('password');
         $password_confirm   = $this->request->getVar('passwordConfirm');
-        $email              = $this->request->getVar('email');
-        $phone              = $this->request->getVar('phone');
 
         $data = [
-            'username'          => $username,
             'password'          => $password,
             'password_confirm'  => $password_confirm,
-            'email'             => $email,
-            'phone'             => $phone,
             'blocked'           => 0
         ];
 
         $this->signOutUser();
         
-        $user_id = $UserModel->createItem($data);
+        $auth_key = $UserModel->createItem($data);
 
         if($UserModel->errors()){
             return $this->failValidationErrors(json_encode($UserModel->errors()));
         }
-        $user = $UserModel->getItem($user_id);
-
-        return $this->respondCreated($user);
+        
+        return $this->respondCreated(['auth_key' => $auth_key]);
     }
 
-    public function signIn()
+    public function getAuth()
     {
         $UserModel = model('UserModel');
 
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
-        
-        $this->signOutUser();
 
-        $result = $UserModel->signIn($username, $password);
+        $result = $UserModel->getItemAuth($username, $password);
 
         if($result === 'not_found'){
             return $this->failNotFound('not_found');
@@ -149,7 +139,28 @@ class User extends BaseController
         if($result === 'blocked'){
             return $this->failForbidden('blocked');
         }
+        if($UserModel->errors()){
+            $this->fail($result);
+        }
 
+        return $this->respond(['auth_key' => $result]);
+    }
+    public function signIn()
+    {
+        $UserModel = model('UserModel');
+
+        $auth_key = $this->request->getVar('auth_key');
+        
+        $this->signOutUser();
+
+        $result = $UserModel->signIn($auth_key);
+
+        if($result === 'not_found'){
+            return $this->failNotFound('not_found');
+        }
+        if($result === 'blocked'){
+            return $this->failForbidden('blocked');
+        }
         if($result === 'success'){
             $user_id = session()->get('user_id');
             $user = $UserModel->getItem($user_id);
@@ -183,6 +194,7 @@ class User extends BaseController
 
 
         $user_id = session()->get('user_id');
+
         $data = [
             'old_password'      => $old_password,
             'password'      => $password,
@@ -204,8 +216,8 @@ class User extends BaseController
         if($UserModel->errors()){
             return $this->failValidationErrors(json_encode($UserModel->errors()));
         }
-
-        return $this->respond($result);
+        $auth_key = $UserModel->updateItemAuthKey($user_id);
+        return $this->respond(['auth_key' => $auth_key]);
     }
     public function checkUsername()
     {

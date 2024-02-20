@@ -56,7 +56,6 @@ class ExerciseStatisticModel extends Model
         ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->whereHasPermission('r')
         ->groupBy('place, points, is_winner')->get()->getResultArray();
         
-        
         foreach($result as &$row){
             $row['data'] = $this->where("place", $row['place'])->get()->getResultArray();
             $row['is_active'] = (bool) $row['is_active'];

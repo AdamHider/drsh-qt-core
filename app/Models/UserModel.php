@@ -18,6 +18,7 @@ class UserModel extends Model
     protected $allowedFields = [
         'username', 
         'password', 
+        'auth_key',
         'email', 
         'phone', 
         'blocked'
@@ -39,6 +40,13 @@ class UserModel extends Model
             'errors'=>[
                 'required'=>'required',
                 'min_length'=>'short'
+            ]
+        ],
+        'auth_key'     => [
+            'label' =>'password',
+            'rules' =>'required',
+            'errors'=>[
+                'required'=>'required'
             ]
         ],
         'email'    => [
@@ -82,13 +90,11 @@ class UserModel extends Model
         if(!$this->hasPermission($user_id, 'r')){
             return 'forbidden';
         }
-
         $user = $this->where('id', $user_id)->get()->getRowArray();
         
         if(!$user){
             return 'not_found';
         }
-        
         $UserSettingsModel = model('UserSettingsModel');
         $user['settings'] = $UserSettingsModel->getItem($user['id']);
 
@@ -112,13 +118,13 @@ class UserModel extends Model
         $user['resources'] = $UserResourcesModel->getList($user['id']);
 
         unset($user['password']);
+        unset($user['auth_key']);
         return $user;
     }
-    public function updateItem ($data)
+    public function updateItem ($user_id, $data)
     {
         $this->transBegin();
-        
-        $this->update(['id'=>$data['id']], $data);
+        $this->update(['id' => $user_id], $data);
 
         $this->transCommit();
 
@@ -129,6 +135,8 @@ class UserModel extends Model
         if (empty($data['username'])) {
             $data['username'] = $this->generateUsername();
         }
+        $data['auth_key'] = md5($data['id'].$data['password']);
+
         $this->transBegin();
 
         $user_id = $this->insert($data, true);
@@ -136,21 +144,21 @@ class UserModel extends Model
         if( $user_id ){
             $UserSettingsModel = model('UserSettingsModel');
             $UserSettingsModel->createItem($user_id);
+            $UserDashboardModel = model('UserDashboardModel');
+            $UserDashboardModel->createItem($user_id);
         }
 
         $this->transCommit();
 
-        return $user_id;        
+        return $this->select('auth_key')->where('id', $user_id)->get()->getRowArray()['auth_key'];        
     }
 
-    public function signIn ($username, $password)
+    public function signIn ($auth_key)
     {
-        $user = $this->where('username', $username)->get()->getRowArray();
+        $user = $this->where('auth_key', $auth_key)->get()->getRowArray();
+
         if(!$user || !$user['id']){
             return 'not_found';
-        }
-        if(!password_verify($password, $user['password'])){
-            return 'wrong_password';
         }
         if($user['blocked']){
             return 'blocked';
@@ -169,8 +177,7 @@ class UserModel extends Model
     }
     public function saveItemPassword($data, $user_id)
     {
-
-        $user = $this->where('id', $user_id)->get()->getRow();
+        $user = $this->where('id', $user_id)->get()->getRowArray();
 
         //CHECK OLD PASSWORD SECTION
         if (!password_verify($data['old_password'], $user['password'])) {
@@ -183,9 +190,14 @@ class UserModel extends Model
         if ($data['password'] !== $data['password_confirm']) {
             return 'different_password';
         }
-        $this->set('password', $data['password']);
-        $this->where('id', $user_id);
-        return $this->update();
+        return $this->set('password', $data['password'])->where('id', $user_id)->update();
+    }
+    public function updateItemAuthKey($user_id)
+    {
+        $user = $this->where('id', $user_id)->get()->getRowArray();
+        $auth_key = md5($user['id'].$user['password']);
+        $this->set('auth_key', $auth_key)->where('id', $user_id)->update();
+        return $auth_key;
     }
 
     
@@ -195,7 +207,6 @@ class UserModel extends Model
         $affix = $this->getUsernameAffix($usernamePrefix);
         $result = $usernamePrefix.$affix;
         return $result;
-        
     }
     public function checkUsername($username)
     {
@@ -248,6 +259,24 @@ class UserModel extends Model
             $data['data']['password'] = password_hash($data['data']['password'],PASSWORD_BCRYPT);
         }
         return $data;
+    }
+    
+    public function getItemAuth($username, $password){
+        
+        $user = $this->where('username', $username)->get()->getRowArray();
+        if(!password_verify($password, $user['password'])){
+            return 'wrong_password';
+        }
+        if(!$user || !$user['id']){
+            return 'not_found';
+        }
+        if($user['blocked']){
+            return 'blocked';
+        }
+        if($user['deleted_at']){
+            return 'is_deleted';
+        }
+        return $user['auth_key'];
     }
 
 }
