@@ -5,10 +5,9 @@ namespace App\Models;
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
 
-class UserResourcesModel extends Model
+class ResourceModel extends Model
 {
-    protected $table      = 'user_resources';
-    protected $primaryKey = 'id';
+    protected $table      = 'resources';
 
     protected $useAutoIncrement = true;
 
@@ -16,10 +15,9 @@ class UserResourcesModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
+        'item_id', 
         'user_id', 
-        'code', 
         'quantity', 
-        'is_restorable', 
         'consumed_at'
     ];
     
