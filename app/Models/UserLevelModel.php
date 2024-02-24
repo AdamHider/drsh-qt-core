@@ -17,7 +17,7 @@ class UserLevelModel extends UserModel
 
     public function getItem($user_id)
     {
-        $result = $this->join("user_resources", "user_resources.user_id = ".$user_id." AND user_resources.code = 'experience'")
+        $result = $this->join("user_resources", "resources_usermap.user_id = ".$user_id." AND user_resources.code = 'experience'")
         ->select("user_resources.quantity as experience, user_levels.id as level, user_levels.points_from, user_levels.points_to, user_levels.config as level_config")
         ->where('user_levels.points_from <= user_resources.quantity AND user_levels.points_to > user_resources.quantity')
         ->get()->getRowArray();

@@ -117,7 +117,7 @@ class User extends BaseController
         if($UserModel->errors()){
             return $this->failValidationErrors(json_encode($UserModel->errors()));
         }
-        
+
         return $this->respondCreated(['auth_key' => $auth_key]);
     }
 

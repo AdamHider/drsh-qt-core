@@ -8,108 +8,110 @@ use CodeIgniter\I18n\Time;
 class ResourceModel extends Model
 {
     protected $table      = 'resources';
-
     protected $useAutoIncrement = true;
 
+    protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'item_id', 
-        'user_id', 
-        'quantity', 
-        'consumed_at'
+        'code', 
+        'is_restorable'
     ];
     
     protected $useTimestamps = false;
-    private $config = [];
 
-    public function getList ($user_id) 
+    private $settings;
+    public function __construct()
     {
-        $this->getLevelConfig($user_id);   
-        $this->checkRestoration($user_id);
-        $resources = $this->where('user_id', $user_id)->get()->getResultArray();
-
+        $UserSettingsModel = model('UserSettingsModel');
+        $this->settings = $UserSettingsModel->getList(['user_id' => session()->get('user_id')]);
+        $this->recalculateRestoration(session()->get('user_id'));
+    }
+    public function getList ($data) 
+    {
+        $resources = $this->select('resources.id, resources.code, resources.is_restorable, COALESCE(resources_usermap.quantity, 0) quantity, resources_usermap.consumed_at')
+        ->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$data['user_id'], 'left')->get()->getResultArray();
+        
         $result = [];
+        
         foreach($resources as &$resource){
-            $item = [
-                'quantity'      => $resource['quantity'],
-                'is_restorable' => (bool) $resource['is_restorable']
-            ];
-            if($resource['is_restorable']){
-                $item['next_restoration'] = $this->getNextRestorationTime($resource['code'], $resource['consumed_at']);
-                $item['total_time_cost'] = $this->config[$resource['code']]['restoration'];
-                $item['total'] = $this->config[$resource['code']]['total'];
-                $item['percentage'] = ($item['total_time_cost'] - $item['next_restoration']) * 100 / $item['total_time_cost'];
+            if((bool) $resource['is_restorable']){
+                
             }
-            $result[$resource['code']] = $item;
+            $result[$resource['code']] = [
+                'quantity'      => $resource['quantity'],
+                'is_restorable' => (bool) $resource['is_restorable'],
+                'restoration'   =>  $this->getItemRestoration($resource)
+            ];
         }
         return $result;
     }
+    
     public function getItem ($code, $user_id, $item_id) 
     {
-        $resource = $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
-        return $resource;
+        return $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
     }
-    public function checkRestoration ($user_id)
-    {
-        $restorable_resources = $this->where('user_id', $user_id)->where('is_restorable', 1)->get()->getResultArray();
-        foreach($restorable_resources as $resource){
-            $time_cost = $this->config[$resource['code']]['restoration'];
-            $total = $this->config[$resource['code']]['total'];
-            if(!$resource['consumed_at'] && $resource['quantity'] == $total){
-                continue;
-            }
-            if(!$resource['consumed_at']){
-                $resource['consumed_at'] = Time::now()->toDateTimeString();
-            }
-            $consumed_at = Time::parse($resource['consumed_at'], Time::now()->getTimezone());
-            $time_difference = $consumed_at->difference(Time::now())->getSeconds();
-            $result = [
-                'quantity' => 0,
-                'consumed_at' => ''
-            ];
-            if($time_difference >= 0){
-                $restorated_quantity = floor($time_difference / $time_cost);
-                $new_quantity = $resource['quantity'] + $restorated_quantity;
-                if($new_quantity >= $total){
-                    $result['quantity'] = $total;
-                    $result['consumed_at'] = null;
-                } else {
-                    $consumed_at = $consumed_at->addSeconds($restorated_quantity * $time_cost);
-                    $result['quantity'] = $new_quantity;
-                    $result['consumed_at'] = $consumed_at->toDateTimeString();
-                }
-                $this->update($resource['id'], $result);
-            }
-        }      
+
+    public function getItemRestoration ($resource)
+    {   
+        if(!(bool)$resource['is_restorable'] || !$resource['consumed_at']) return null;
+
+        $restorationTime = $this->settings[$resource['code'].'RestorationTime'];
+        $maxValue = $this->settings[$resource['code'].'MaxValue'];
+
+        if($resource['quantity'] >= $maxValue) return null;
+
+        return [
+            'nextRestoration' => $this->getNextRestoration($restorationTime,Time::parse($resource['consumed_at'], Time::now()->getTimezone())),
+            'restorationTime' => (int) $restorationTime,
+            'maxValue' => (int) $maxValue
+        ];
     }
-    public function getNextRestorationTime ($code, $consumed_at)
+    
+    private function recalculateRestoration ($user_id)
     {
-        $time_cost = $this->config[$code]['restoration'];
-        if($consumed_at){
-            $consumed_at = Time::parse($consumed_at, Time::now()->getTimezone());
-            $next_consumed_at = $consumed_at->addSeconds($time_cost);
-            return Time::now()->difference($next_consumed_at)->getSeconds();
-        } else {
-            return 0;
+        $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
+        ->where('is_restorable', 1)->get()->getResultArray();
+
+        $ResourceUsermapModel = model('ResourceUsermapModel');
+        foreach($resources as $resource){
+            if(!$resource['consumed_at']) $resource['consumed_at'] = Time::now()->toDateTimeString();
+
+            $restorationTime = $this->settings[$resource['code'].'RestorationTime'];
+            $maxValue = $this->settings[$resource['code'].'MaxValue'];
+    
+            $consumptionTime = Time::parse($resource['consumed_at'], Time::now()->getTimezone());
+            $timeDifference = $consumptionTime->difference(Time::now())->getSeconds();
+            
+            if($timeDifference < 0) continue;
+    
+            $restoratedValue = floor($timeDifference / $restorationTime);
+            $newValue = $resource['quantity'] + $restoratedValue;
+            if($newValue >= $maxValue){
+                $ResourceUsermapModel->update($resource['id'], ['quantity' => $maxValue, 'consumed_at' => null]);
+            } else {
+                $consumptionTime = $consumptionTime->addSeconds($restoratedValue * $restorationTime);
+                $ResourceUsermapModel->update($resource['id'], ['quantity' => $newValue, 'consumed_at' => $consumptionTime->toDateTimeString()]);
+            }
         }
     }
-    public function getLevelConfig ($user_id)
+
+    public function getNextRestoration ($restorationTime, $consumptionTime)
     {
-        $UserLevelModel = model('UserLevelModel');
-        $level = $UserLevelModel->getItem($user_id);
-        if($level){
-            $this->config = $level['level_config']['resources'];
-        }
-        
+        if($consumptionTime){
+            $consumptionTime = Time::parse($consumptionTime, Time::now()->getTimezone());
+            $nextRestoration = $consumptionTime->addSeconds($restorationTime);
+            return Time::now()->difference($nextRestoration)->getSeconds();
+        } 
+        return 0;
     }
+
     public function substract ($user_id, $resources)
     {
-        if(!$this->checkResources($user_id, $resources)){
-            return false;
-        }
-        $user_resources = $this->where('user_id', $user_id)->get()->getResultArray();
+        $ResourceUsermapModel = model('ResourceUsermapModel');
+        $user_resources = $ResourceUsermapModel->where('user_id', $user_id)->get()->getResultArray();
+
         foreach($user_resources as &$resource_data){
             if(!isset($resources[$resource_data['code']])){
                 continue;
@@ -125,47 +127,57 @@ class ResourceModel extends Model
         }  
         return true;
     }
-    
-    public function checkResources ($user_id, $resources)
+
+
+
+
+    public function createUserItem($data)
     {
-        $user_resources = $this->getList(session()->get('user_id'));
-        foreach($user_resources as $resource_title => $resource_data){
-            if(!isset($resources[$resource_title])){
-                continue;
-            }
-            if($resources[$resource_title] > $resource_data['quantity']){
-                return false;
+        $ResourceUsermapModel = model('ResourceUsermapModel');
+        $resource = $this->where('code', $data['code'])->get()->getRowArray();
+        $data = [
+            'item_id' => $resource['id'],
+            'user_id' => $data['user_id'],
+            'quantity' => $data['quantity']
+        ];
+        $result = $ResourceUsermapModel->insert($data, true);
+        return $result;  
+    }
+
+    public function createUserList ($user_id, $resources)
+    {
+        foreach($resources as $code => $quantity){
+            $resource = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
+            ->where('code', $code)->get()->getRowArray();
+            if(isset($resource['id'])){
+                $this->updateUserItem([
+                    'code' => $code, 
+                    'user_id' => $user_id, 
+                    'quantity' => $quantity
+                ]);
+            } else {
+                $this->createUserItem([
+                    'code' => $code, 
+                    'user_id' => $user_id, 
+                    'quantity' => $quantity
+                ]);
             }
         }
-        return true;
+        return;        
     }
-    public function createItem ($user_id)
+    
+    public function updateUserItem($data)
     {
-        $this->transBegin();
-        
+        $ResourceUsermapModel = model('ResourceUsermapModel');
+        $resource = $this->where('code', $data['code'])->get()->getRowArray();
         $data = [
-            'user_id'       => $user_id,
-            'character_id'  => getenv('user_resources.character_id'),
-            'classroom_id'  => NULL,
-            'course_id'     => NULL
-            
+            'item_id' => $resource['id'],
+            'user_id' => $data['user_id'],
+            'quantity' => $data['quantity']
         ];
-        $user_resources_id = $this->insert($data, true);
-
-        $this->transCommit();
-
-        return $user_resources_id;        
+        $result = $ResourceUsermapModel->insert($data, true);
+        return $result;  
     }
-    public function updateItem ($data)
-    {
-        $this->transBegin();
-
-        $result = $this->update(['id'=>$data['id']], $data);
-
-        $this->transCommit();
-
-        return $result;        
-    }
-
+    
 
 }

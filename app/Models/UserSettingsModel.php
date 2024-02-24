@@ -16,43 +16,31 @@ class UserSettingsModel extends Model
 
     protected $allowedFields = [
         'user_id',
-        'character_id', 
-        'classroom_id', 
-        'course_id'
+        'code', 
+        'value'
     ];
     
     protected $useTimestamps = false;
 
-    public function getItem ($user_id) 
+    public function getList ($data) 
     {
-        $LanguageModel = model('LanguageModel');
-        
-        $settings = $this->where('user_id', $user_id)->get()->getRowArray();
-
-        $settings['language'] = [
-            'active' => $LanguageModel->getItem($settings['language_id']),
-            'list' => $LanguageModel->getList()
-        ];
-        
-        return $settings;
+        $result = [];
+        $settings = $this->where('user_id', ['user_id' => $data['user_id']])->get()->getResultArray();
+        foreach($settings as $parameter){
+            $result[$parameter['code']] = $parameter['value'];
+        }
+        return $result;
     }
         
-    public function createItem ($user_id)
+    public function createItem ($data)
     {
         $this->transBegin();
         
-        $data = [
-            'user_id'       => $user_id,
-            'character_id'  => getenv('user_settings.character_id'),
-            'classroom_id'  => NULL,
-            'course_id'     => NULL
-            
-        ];
-        $user_settings_id = $this->insert($data, true);
+        $result = $this->insert($data, true);
 
         $this->transCommit();
 
-        return $user_settings_id;        
+        return $result;        
     }
     public function updateItem ($data)
     {
@@ -67,5 +55,16 @@ class UserSettingsModel extends Model
         return $result;        
     }
 
+    public function createList ($user_id, $settings)
+    {
+        foreach($settings as $code => $value){
+            $this->createItem([
+                'user_id' => $user_id, 
+                'code' => $code, 
+                'value' => $value
+            ]);
+        }
+        return;        
+    }
 
 }

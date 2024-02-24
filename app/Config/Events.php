@@ -22,6 +22,18 @@ use CodeIgniter\Exceptions\FrameworkException;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
+Events::on('signUp', static function ($user_id) {
+    $UserSettingsModel = new \App\Models\UserSettingsModel();
+    $settings = parse_ini_file(ROOTPATH.'/defaults.ini')['settings'];
+    $UserSettingsModel->createList($user_id, $settings);
+
+    $ResourceModel = new \App\Models\ResourceModel();
+    $resources = parse_ini_file(ROOTPATH.'/defaults.ini')['resources'];
+    $ResourceModel->createUserList($user_id, $resources);
+});
+
+
+
 Events::on('pre_system', static function () {
     if (ENVIRONMENT !== 'testing') {
         if (ini_get('zlib.output_compression')) {

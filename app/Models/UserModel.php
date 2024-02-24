@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Events\Events;
 
 class UserModel extends Model
 {
@@ -96,26 +97,24 @@ class UserModel extends Model
             return 'not_found';
         }
         $UserSettingsModel = model('UserSettingsModel');
-        $user['settings'] = $UserSettingsModel->getItem($user['id']);
+        $user['settings'] = $UserSettingsModel->getList(['user_id' => $user['id']]);
 
         $UserGroupModel = model('UserGroupModel');
-        $user['groups'] = $UserGroupModel->getList($user['id']);
+        $user['groups'] = $UserGroupModel->getList(['user_id' => $user['id']]);
         $user['group_ids'] = [];
         foreach($user['groups'] as $group){
             $user['group_ids'][] = $group['id'];
         } 
         
         $CharacterModel = model('CharacterModel');
-        $user['character'] = $CharacterModel->getItem($user['settings']['character_id']);
+        $user['character'] = $CharacterModel->getItem($user['settings']['characterId']);
 
-        $UserDashboardModel = model('UserDashboardModel');
-        $user['dashboard'] = $UserDashboardModel->getItem($user['id']);
-
+        /*
         $UserLevelModel = model('UserLevelModel');
         $user['level'] = $UserLevelModel->getItem($user['id']);
-
-        $UserResourcesModel = model('UserResourcesModel');
-        $user['resources'] = $UserResourcesModel->getList($user['id']);
+        */
+        $ResourceModel = model('ResourceModel');
+        $user['resources'] = $ResourceModel->getList(['user_id' => $user['id']]);
 
         unset($user['password']);
         unset($user['auth_key']);
@@ -135,22 +134,18 @@ class UserModel extends Model
         if (empty($data['username'])) {
             $data['username'] = $this->generateUsername();
         }
-        $data['auth_key'] = md5($data['id'].$data['password']);
 
         $this->transBegin();
-
+        $data['auth_key'] = '####';
         $user_id = $this->insert($data, true);
         
-        if( $user_id ){
-            $UserSettingsModel = model('UserSettingsModel');
-            $UserSettingsModel->createItem($user_id);
-            $UserDashboardModel = model('UserDashboardModel');
-            $UserDashboardModel->createItem($user_id);
-        }
-
+        $auth_key = md5($user_id.$data['password']);
+        $ok = $this->update(['id' => $user_id], ['auth_key' => $auth_key]);
         $this->transCommit();
 
-        return $this->select('auth_key')->where('id', $user_id)->get()->getRowArray()['auth_key'];        
+        Events::trigger('signUp', $user_id);
+
+        return $auth_key;        
     }
 
     public function signIn ($auth_key)
@@ -192,6 +187,7 @@ class UserModel extends Model
         }
         return $this->set('password', $data['password'])->where('id', $user_id)->update();
     }
+
     public function updateItemAuthKey($user_id)
     {
         $user = $this->where('id', $user_id)->get()->getRowArray();
@@ -199,7 +195,6 @@ class UserModel extends Model
         $this->set('auth_key', $auth_key)->where('id', $user_id)->update();
         return $auth_key;
     }
-
     
     private function generateUsername()
     {
@@ -256,7 +251,7 @@ class UserModel extends Model
     protected function hashPassword (array $data)
     {
         if ( isset($data['data']['password']) ){
-            $data['data']['password'] = password_hash($data['data']['password'],PASSWORD_BCRYPT);
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
         }
         return $data;
     }
