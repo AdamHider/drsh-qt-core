@@ -15,3 +15,4 @@ $routes->post('/Classroom/(:any)', 'Classroom::$1');
 $routes->post('/Course/(:any)', 'Course::$1');
 $routes->post('/CourseSection/(:any)', 'CourseSection::$1');
 $routes->post('/Image/(:any)', 'Image::$1');
+$routes->post('/Skill/(:any)', 'Skill::$1');

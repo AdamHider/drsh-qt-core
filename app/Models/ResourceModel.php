@@ -24,9 +24,11 @@ class ResourceModel extends Model
     private $settings;
     public function __construct()
     {
-        $UserSettingsModel = model('UserSettingsModel');
-        $this->settings = $UserSettingsModel->getList(['user_id' => session()->get('user_id')]);
-        $this->recalculateRestoration(session()->get('user_id'));
+        if(session()->get('user_id')){
+            $UserSettingsModel = model('UserSettingsModel');
+            $this->settings = $UserSettingsModel->getList(['user_id' => session()->get('user_id')]);
+            $this->recalculateRestoration(session()->get('user_id'));
+        }
     }
     public function getList ($data) 
     {
@@ -36,9 +38,6 @@ class ResourceModel extends Model
         $result = [];
         
         foreach($resources as &$resource){
-            if((bool) $resource['is_restorable']){
-                
-            }
             $result[$resource['code']] = [
                 'quantity'      => $resource['quantity'],
                 'is_restorable' => (bool) $resource['is_restorable'],
@@ -60,10 +59,8 @@ class ResourceModel extends Model
         $restorationTime = $this->settings[$resource['code'].'RestorationTime'];
         $maxValue = $this->settings[$resource['code'].'MaxValue'];
 
-        if($resource['quantity'] >= $maxValue) return null;
-
         return [
-            'nextRestoration' => $this->getNextRestoration($restorationTime,Time::parse($resource['consumed_at'], Time::now()->getTimezone())),
+            'nextRestoration' => $this->getNextRestoration($restorationTime, Time::parse($resource['consumed_at'], Time::now()->getTimezone())),
             'restorationTime' => (int) $restorationTime,
             'maxValue' => (int) $maxValue
         ];

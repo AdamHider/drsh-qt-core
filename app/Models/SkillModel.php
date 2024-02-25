@@ -5,9 +5,9 @@ namespace App\Models;
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
 
-class ResourceModel extends Model
+class SkillModel extends Model
 {
-    protected $table      = 'resources';
+    protected $table      = 'skills';
 
     protected $useAutoIncrement = true;
 
@@ -15,34 +15,49 @@ class ResourceModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'item_id', 
-        'user_id', 
-        'quantity', 
-        'consumed_at'
+        'code'
     ];
     
     protected $useTimestamps = false;
     private $config = [];
 
-    public function getList ($user_id) 
+    public function getList ($data) 
     {
-        $this->getLevelConfig($user_id);   
-        $this->checkRestoration($user_id);
-        $resources = $this->where('user_id', $user_id)->get()->getResultArray();
-
+        $DescriptionModel = model('DescriptionModel');
+        
+        if($data['user_id']){
+            $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$data['user_id'], 'left')
+            ->join('skills s1', 's1.unblock_after = skills_usermap.item_id', 'left')->select('skills.*');
+        }
+        if(isset($data['limit']) && isset($data['offset'])){
+            $this->limit($data['limit'], $data['offset']);
+        }
+        
+        $skills = $this->orderBy('skills.level, skills.unblock_after')->groupBy('skills.code, s1.code')->get()->getResultArray();
+        
+        if(empty($skills)){
+            return false;
+        }
         $result = [];
-        foreach($resources as &$resource){
-            $item = [
-                'quantity'      => $resource['quantity'],
-                'is_restorable' => (bool) $resource['is_restorable']
+        foreach($skills as &$skill){
+            $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
+            //$skill['image'] = base_url('image/' . $skill['image']);
+            //$skill['progress'] = $this->calculateProgress($skill);
+            //$skill['params'] = json_decode($skill['params']);
+        }
+        foreach(array_group_by($skills, ['category']) as $categoryTitle => $category){
+            $categoryObj = [
+                'title' => lang('App.skills.category.'.$categoryTitle.'.title'),
+                'list' => []
             ];
-            if($resource['is_restorable']){
-                $item['next_restoration'] = $this->getNextRestorationTime($resource['code'], $resource['consumed_at']);
-                $item['total_time_cost'] = $this->config[$resource['code']]['restoration'];
-                $item['total'] = $this->config[$resource['code']]['total'];
-                $item['percentage'] = ($item['total_time_cost'] - $item['next_restoration']) * 100 / $item['total_time_cost'];
+            foreach(array_group_by($category, ['code']) as $skillTitle => $skillGroup){
+
+                $categoryObj['list'][] = [
+                    'title' => lang('App.skills.itemClass.'.$skillTitle.'.title'),
+                    'list' => $skillGroup
+                ];
             }
-            $result[$resource['code']] = $item;
+            $result[] = $categoryObj;
         }
         return $result;
     }
