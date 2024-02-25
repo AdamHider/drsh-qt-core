@@ -27,13 +27,14 @@ class SkillModel extends Model
         
         if($data['user_id']){
             $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$data['user_id'], 'left')
-            ->join('skills s1', 's1.unblock_after = skills_usermap.item_id', 'left')->select('skills.*');
+            ->join('skills s1', 's1.unblock_after = skills_usermap.item_id', 'left')
+            ->select('IF(skills_usermap.item_id, s1.id, skills.id) as id, skills.category, skills.code, IF(skills_usermap.item_id, s1.level, 0) as level');
         }
         if(isset($data['limit']) && isset($data['offset'])){
             $this->limit($data['limit'], $data['offset']);
         }
         
-        $skills = $this->orderBy('skills.level, skills.unblock_after')->groupBy('skills.code, s1.code')->get()->getResultArray();
+        $skills = $this->groupBy('skills.code')->get()->getResultArray();
         
         if(empty($skills)){
             return false;
@@ -41,23 +42,20 @@ class SkillModel extends Model
         $result = [];
         foreach($skills as &$skill){
             $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
+            $available_skills = $this->where(['unblock_after' => $skill['id'], 'code' => $skill['code']])->get()->getResultArray();
+            $skill['available_skills'] = $available_skills;
+            foreach($skill['available_skills'] as &$available){
+                $available = array_merge($available, $DescriptionModel->getItem('skill', $available['id']));
+            }
             //$skill['image'] = base_url('image/' . $skill['image']);
             //$skill['progress'] = $this->calculateProgress($skill);
             //$skill['params'] = json_decode($skill['params']);
         }
         foreach(array_group_by($skills, ['category']) as $categoryTitle => $category){
-            $categoryObj = [
+            $result[] = [
                 'title' => lang('App.skills.category.'.$categoryTitle.'.title'),
-                'list' => []
+                'list' => $category
             ];
-            foreach(array_group_by($category, ['code']) as $skillTitle => $skillGroup){
-
-                $categoryObj['list'][] = [
-                    'title' => lang('App.skills.itemClass.'.$skillTitle.'.title'),
-                    'list' => $skillGroup
-                ];
-            }
-            $result[] = $categoryObj;
         }
         return $result;
     }
