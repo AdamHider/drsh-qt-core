@@ -27,75 +27,100 @@ class SkillModel extends Model
         
         if($data['user_id']){
             $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$data['user_id'], 'left')
-            ->join('skills s1', 's1.unblock_after = skills_usermap.item_id', 'left')
-            ->select('IF(skills_usermap.item_id, s1.id, skills.id) as id, skills.category, skills.code, IF(skills_usermap.item_id, s1.level, 0) as level');
+            ->select('skills.id, skills.code, skills.group_id, skills.icon, skills.cost_config, skills.level, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
         }
         if(isset($data['limit']) && isset($data['offset'])){
             $this->limit($data['limit'], $data['offset']);
         }
         
-        $skills = $this->groupBy('skills.code')->get()->getResultArray();
-        
+        $skills = $this->get()->getResultArray();
+
         if(empty($skills)){
             return false;
         }
         $result = [];
         foreach($skills as &$skill){
+            $skill['cost_config'] = json_decode($skill['cost_config'], true);
+            $skill['is_gained'] = (bool) $skill['is_gained'];
             $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
-            $available_skills = $this->where(['unblock_after' => $skill['id'], 'code' => $skill['code']])->get()->getResultArray();
-            $skill['available_skills'] = $available_skills;
-            foreach($skill['available_skills'] as &$available){
-                $available = array_merge($available, $DescriptionModel->getItem('skill', $available['id']));
+            if($data['user_id']){
+                $skill['is_available'] = $this->checkAvailable($skill, $data['user_id']);
+                $skill['is_purchasable'] = $this->checkPurchasable($skill, $data['user_id']);
             }
             //$skill['image'] = base_url('image/' . $skill['image']);
             //$skill['progress'] = $this->calculateProgress($skill);
             //$skill['params'] = json_decode($skill['params']);
         }
-        foreach(array_group_by($skills, ['category']) as $categoryTitle => $category){
-            $result[] = [
-                'title' => lang('App.skills.category.'.$categoryTitle.'.title'),
-                'list' => $category
+        $table = $this->drawTable($skills, 'level', 'code');
+        $levelCount = 0;
+        $prevCount = 0;
+        $nextCount = 0;
+        foreach(array_group_by($skills, ['group_id']) as $code => $levels){
+            $skillRow = [
+                'title' => lang('App.skills.itemClass.'.$code.'.title'),
+                'list' => []
             ];
+            foreach(array_group_by($levels, ['code']) as $level => $skillGroup){
+                $skillRow['list'][] = [
+                    'title' => $level,
+                    'list' => $skillGroup
+                ];
+            }
+            $result[] = $skillRow;
         }
         return $result;
     }
+
+
+    private function drawTable($skills, $rowKey, $columnKey){
+        $table = [];
+        $rows = array_column($skills, null, $rowKey);
+        $cols = array_column($skills, null, $columnKey);
+        $rowKeys = array_keys($rows);
+        $colKeys = array_keys($cols);
+        for($i = 0; $i < count($rowKeys); $i++){
+            $row = [];
+            for($k = 0; $k < count($colKeys); $k++){
+                $row[$k] = array_column($skills, null, $rowKey)[$colKeys[$k]];
+            }
+            $table[] = $row;
+        }
+        print_r($table);
+        die;
+    }
+    
+    private function searchInSkills($arr, $search){
+        $result = [];
+        foreach($arr as $item){
+            
+            foreach($arr as $item){
+
+            }
+        }
+    }
+
     public function getItem ($code, $user_id, $item_id) 
     {
         $resource = $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
         return $resource;
     }
-    public function checkRestoration ($user_id)
+    public function checkAvailable ($skill, $user_id)
     {
-        $restorable_resources = $this->where('user_id', $user_id)->where('is_restorable', 1)->get()->getResultArray();
-        foreach($restorable_resources as $resource){
-            $time_cost = $this->config[$resource['code']]['restoration'];
-            $total = $this->config[$resource['code']]['total'];
-            if(!$resource['consumed_at'] && $resource['quantity'] == $total){
-                continue;
+        if(!(bool) $skill['unblock_after']) return true;
+        return !empty($this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$user_id)
+        ->where('skills_usermap.item_id', $skill['unblock_after'])->get()->getRowArray());
+    }
+    public function checkPurchasable ($skill, $user_id)
+    {
+        if(empty($skill['cost_config'])) return true;
+        $ResourceModel = model('ResourceModel');
+        $resources = $ResourceModel->getList(['user_id' => $user_id]);
+        foreach($skill['cost_config'] as $resourceTitle => $quantity){
+            if($quantity > $resources[$resourceTitle]['quantity']){
+                return false;
             }
-            if(!$resource['consumed_at']){
-                $resource['consumed_at'] = Time::now()->toDateTimeString();
-            }
-            $consumed_at = Time::parse($resource['consumed_at'], Time::now()->getTimezone());
-            $time_difference = $consumed_at->difference(Time::now())->getSeconds();
-            $result = [
-                'quantity' => 0,
-                'consumed_at' => ''
-            ];
-            if($time_difference >= 0){
-                $restorated_quantity = floor($time_difference / $time_cost);
-                $new_quantity = $resource['quantity'] + $restorated_quantity;
-                if($new_quantity >= $total){
-                    $result['quantity'] = $total;
-                    $result['consumed_at'] = null;
-                } else {
-                    $consumed_at = $consumed_at->addSeconds($restorated_quantity * $time_cost);
-                    $result['quantity'] = $new_quantity;
-                    $result['consumed_at'] = $consumed_at->toDateTimeString();
-                }
-                $this->update($resource['id'], $result);
-            }
-        }      
+        }
+        return true;
     }
     public function getNextRestorationTime ($code, $consumed_at)
     {
