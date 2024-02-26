@@ -35,10 +35,8 @@ class SkillModel extends Model
         
         $skills = $this->get()->getResultArray();
 
-        if(empty($skills)){
-            return false;
-        }
-        $result = [];
+        if(empty($skills)) return false;
+        
         foreach($skills as &$skill){
             $skill['cost_config'] = json_decode($skill['cost_config'], true);
             $skill['is_gained'] = (bool) $skill['is_gained'];
@@ -46,26 +44,16 @@ class SkillModel extends Model
             if($data['user_id']){
                 $skill['is_available'] = $this->checkAvailable($skill, $data['user_id']);
                 $skill['is_purchasable'] = $this->checkPurchasable($skill, $data['user_id']);
+                $skill['prev_relation'] = $this->checkPrevRelation($skill, $skills);
             }
-            //$skill['image'] = base_url('image/' . $skill['image']);
-            //$skill['progress'] = $this->calculateProgress($skill);
-            //$skill['params'] = json_decode($skill['params']);
         }
-        $table = $this->drawTable($skills, 'level', 'code');
-        $levelCount = 0;
-        $prevCount = 0;
-        $nextCount = 0;
-        foreach(array_group_by($skills, ['group_id']) as $code => $levels){
+        
+        $result = [];
+        foreach(array_group_by($skills, ['group_id']) as $code => $groups){
             $skillRow = [
                 'title' => lang('App.skills.itemClass.'.$code.'.title'),
-                'list' => []
+                'table' =>  $this->drawTable($groups, 'level', 'code')
             ];
-            foreach(array_group_by($levels, ['code']) as $level => $skillGroup){
-                $skillRow['list'][] = [
-                    'title' => $level,
-                    'list' => $skillGroup
-                ];
-            }
             $result[] = $skillRow;
         }
         return $result;
@@ -73,32 +61,28 @@ class SkillModel extends Model
 
 
     private function drawTable($skills, $rowKey, $columnKey){
-        $table = [];
-        $rows = array_column($skills, null, $rowKey);
-        $cols = array_column($skills, null, $columnKey);
-        $rowKeys = array_keys($rows);
-        $colKeys = array_keys($cols);
-        for($i = 0; $i < count($rowKeys); $i++){
+        $table = $this->drawTableMask($skills, $rowKey, $columnKey);
+        
+        foreach($skills as $skill){
+            $table[$skill[$rowKey]][$skill[$columnKey]] = $skill;
+        }
+        return $table;
+    }
+
+    private function drawTableMask($skills, $rowKey, $columnKey){
+        $mask = [];
+        $rowKeys = max(array_keys(array_column($skills, null, $rowKey)));
+        $colKeys = array_keys(array_column($skills, null, $columnKey));
+        for($i = 1; $i <= $rowKeys; $i++){
             $row = [];
             for($k = 0; $k < count($colKeys); $k++){
-                $row[$k] = array_column($skills, null, $rowKey)[$colKeys[$k]];
+                $row[$colKeys[$k]] = [];
             }
-            $table[] = $row;
+            $mask[$i] = $row;
         }
-        print_r($table);
-        die;
+        return $mask;
     }
     
-    private function searchInSkills($arr, $search){
-        $result = [];
-        foreach($arr as $item){
-            
-            foreach($arr as $item){
-
-            }
-        }
-    }
-
     public function getItem ($code, $user_id, $item_id) 
     {
         $resource = $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
@@ -122,61 +106,16 @@ class SkillModel extends Model
         }
         return true;
     }
-    public function getNextRestorationTime ($code, $consumed_at)
+    public function checkPrevRelation ($skill, $skills)
     {
-        $time_cost = $this->config[$code]['restoration'];
-        if($consumed_at){
-            $consumed_at = Time::parse($consumed_at, Time::now()->getTimezone());
-            $next_consumed_at = $consumed_at->addSeconds($time_cost);
-            return Time::now()->difference($next_consumed_at)->getSeconds();
-        } else {
-            return 0;
-        }
-    }
-    public function getLevelConfig ($user_id)
-    {
-        $UserLevelModel = model('UserLevelModel');
-        $level = $UserLevelModel->getItem($user_id);
-        if($level){
-            $this->config = $level['level_config']['resources'];
-        }
-        
-    }
-    public function substract ($user_id, $resources)
-    {
-        if(!$this->checkResources($user_id, $resources)){
-            return false;
-        }
-        $user_resources = $this->where('user_id', $user_id)->get()->getResultArray();
-        foreach($user_resources as &$resource_data){
-            if(!isset($resources[$resource_data['code']])){
-                continue;
-            }
-            if($resource_data['quantity'] == 0){
-                return false;
-            }
-            $resource_data['quantity'] = $resource_data['quantity'] - $resources[$resource_data['code']];
-            if(!$resource_data['consumed_at']){
-                $resource_data['consumed_at'] = Time::now()->toDateTimeString();
-            }
-            $this->updateItem($resource_data);      
-        }  
-        return true;
+        if(!empty($skill['unblock_after'])){
+            $previousSkill = array_column($skills, null, 'id')[$skill['unblock_after']];
+            if($previousSkill['code'] == $skill['code'] && $skill['level'] - $previousSkill['level'] == 1) return 1;
+        };
+        return 0;
     }
     
-    public function checkResources ($user_id, $resources)
-    {
-        $user_resources = $this->getList(session()->get('user_id'));
-        foreach($user_resources as $resource_title => $resource_data){
-            if(!isset($resources[$resource_title])){
-                continue;
-            }
-            if($resources[$resource_title] > $resource_data['quantity']){
-                return false;
-            }
-        }
-        return true;
-    }
+    
     public function createItem ($user_id)
     {
         $this->transBegin();
