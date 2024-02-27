@@ -104,6 +104,18 @@ class ResourceModel extends Model
         return 0;
     }
 
+    public function proccessItemCost ($cost_config)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $resourceCodes = array_keys($cost_config);
+        $resources = $this->whereIn('code', $resourceCodes)->get()->getResultArray();
+        foreach($resources as &$resource){
+            $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
+            $resource['quantity'] = $cost_config[$resource['code']];
+        }
+        return $resources;
+    }
+
     public function substract ($user_id, $resources)
     {
         $ResourceUsermapModel = model('ResourceUsermapModel');

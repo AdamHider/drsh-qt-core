@@ -24,10 +24,11 @@ class SkillModel extends Model
     public function getList ($data) 
     {
         $DescriptionModel = model('DescriptionModel');
+        $ResourceModel = model('ResourceModel');
         
         if($data['user_id']){
             $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$data['user_id'], 'left')
-            ->select('skills.id, skills.code, skills.group_id, skills.icon, skills.cost_config, skills.level, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
+            ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.icon, skills.cost_config, skills.level, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
         }
         if(isset($data['limit']) && isset($data['offset'])){
             $this->limit($data['limit'], $data['offset']);
@@ -38,49 +39,42 @@ class SkillModel extends Model
         if(empty($skills)) return false;
         
         foreach($skills as &$skill){
-            $skill['cost_config'] = json_decode($skill['cost_config'], true);
+            $cost_config = json_decode($skill['cost_config'], true);
             $skill['is_gained'] = (bool) $skill['is_gained'];
             $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
             if($data['user_id']){
                 $skill['is_available'] = $this->checkAvailable($skill, $data['user_id']);
-                $skill['is_purchasable'] = $this->checkPurchasable($skill, $data['user_id']);
-                $skill['prev_relation'] = $this->checkPrevRelation($skill, $skills);
+                $skill['is_purchasable'] = $this->checkPurchasable($cost_config, $data['user_id']);
             }
+            if($skill['is_available'] && !empty($cost_config)){
+                $skill['cost'] = $ResourceModel->proccessItemCost($cost_config);
+            }
+            if(!$skill['is_available'] && !$skill['is_gained']){
+                $skill['required_skill'] = array_column($skills, null, 'id')[$skill['unblock_after']];
+            }
+            unset($skill['cost_config']);
         }
         
         $result = [];
-        foreach(array_group_by($skills, ['group_id']) as $code => $groups){
-            $skillRow = [
-                'title' => lang('App.skills.itemClass.'.$code.'.title'),
-                'table' =>  $this->drawTable($groups, 'level', 'code')
+        foreach(array_group_by($skills, ['group_id']) as $category => $categories){
+            $categoryObject = [
+                'id' => $category,
+                'list' => []
             ];
-            $result[] = $skillRow;
+            $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_group', $category));
+
+            foreach(array_group_by($categories, ['code']) as $subcategory => $subcategories){
+                $subcategoryObject = [
+                    'list' => []
+                ];
+                foreach(array_group_by($subcategories, ['chain']) as $chain => $chains){
+                    $subcategoryObject['list'][] = $chains;
+                }
+                $categoryObject['list'][] = $subcategoryObject;
+            }
+            $result[] = $categoryObject;
         }
         return $result;
-    }
-
-
-    private function drawTable($skills, $rowKey, $columnKey){
-        $table = $this->drawTableMask($skills, $rowKey, $columnKey);
-        
-        foreach($skills as $skill){
-            $table[$skill[$rowKey]][$skill[$columnKey]] = $skill;
-        }
-        return $table;
-    }
-
-    private function drawTableMask($skills, $rowKey, $columnKey){
-        $mask = [];
-        $rowKeys = max(array_keys(array_column($skills, null, $rowKey)));
-        $colKeys = array_keys(array_column($skills, null, $columnKey));
-        for($i = 1; $i <= $rowKeys; $i++){
-            $row = [];
-            for($k = 0; $k < count($colKeys); $k++){
-                $row[$colKeys[$k]] = [];
-            }
-            $mask[$i] = $row;
-        }
-        return $mask;
     }
     
     public function getItem ($code, $user_id, $item_id) 
@@ -90,31 +84,58 @@ class SkillModel extends Model
     }
     public function checkAvailable ($skill, $user_id)
     {
+        if((bool) $skill['is_gained']) return false;
         if(!(bool) $skill['unblock_after']) return true;
         return !empty($this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$user_id)
         ->where('skills_usermap.item_id', $skill['unblock_after'])->get()->getRowArray());
     }
-    public function checkPurchasable ($skill, $user_id)
+    public function checkPurchasable ($cost_config, $user_id)
     {
-        if(empty($skill['cost_config'])) return true;
+        if(empty($cost_config)) return true;
         $ResourceModel = model('ResourceModel');
         $resources = $ResourceModel->getList(['user_id' => $user_id]);
-        foreach($skill['cost_config'] as $resourceTitle => $quantity){
+        foreach($cost_config as $resourceTitle => $quantity){
             if($quantity > $resources[$resourceTitle]['quantity']){
                 return false;
             }
         }
         return true;
     }
-    public function checkPrevRelation ($skill, $skills)
-    {
-        if(!empty($skill['unblock_after'])){
-            $previousSkill = array_column($skills, null, 'id')[$skill['unblock_after']];
-            if($previousSkill['code'] == $skill['code'] && $skill['level'] - $previousSkill['level'] == 1) return 1;
-        };
-        return 0;
-    }
+
     
+    public function claimItem($skill_id, $user_id)
+    {
+        $ResourceModel = model('ResourceModel');
+
+        if(!$this->hasPermission($skill_id, 'r')){
+            return 'forbidden';
+        }
+        
+        $skill = $this->where('id', $skill_id)->get()->getRowArray();
+
+        if(empty($quest)){
+            return 'not_found';
+        }
+        
+        $cost_config = json_decode($skill['cost_config'], true);
+        if((bool) $skill['is_gained']){
+            return 'forbidden';
+        }
+        if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
+            $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
+            $data = [
+                'user_id' => session()->get('user_id'),
+                'code' => $resource_title,
+                'item_code' => 'quest',
+                'item_id' => $quest['id'],
+                'quantity' => $resource_quantity
+            ];
+            $UserResourcesExpensesModel->createItem($data);
+            return true;
+        } else {
+            return 'forbidden';
+        }
+    }
     
     public function createItem ($user_id)
     {

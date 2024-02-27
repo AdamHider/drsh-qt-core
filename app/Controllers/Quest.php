@@ -75,7 +75,6 @@ class Quest extends BaseController
             return $this->failValidationErrors($QuestModel->errors());
         }
         return $this->respond($result);
-
     }
     public function saveItem()
     {
