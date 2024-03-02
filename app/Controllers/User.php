@@ -217,7 +217,7 @@ class User extends BaseController
 
         $username = $this->request->getVar('username');
         
-        if($UserModel->checkUsername($username) &&  $username !== session()->get('user_data')->username){
+        if($UserModel->checkUsername($username) &&  $username !== session()->get('user_data')['username']){
             return $this->respond($UserModel->getUsernameSuggestions($username)); 
         } 
         return $this->respond(false);
