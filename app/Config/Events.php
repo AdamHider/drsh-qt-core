@@ -29,7 +29,7 @@ Events::on('signUp', static function ($user_id) {
 
     $ResourceModel = new \App\Models\ResourceModel();
     $resources = parse_ini_file(ROOTPATH.'/defaults.ini')['resources'];
-    $ResourceModel->createUserList($user_id, $resources);
+    $ResourceModel->saveUserList($user_id, $resources);
 });
 
 

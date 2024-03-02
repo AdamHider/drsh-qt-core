@@ -46,7 +46,7 @@ class CourseModel extends Model
             $course['background_image'] = base_url('image/' . $course['background_image']);
             $course['progress'] = $this->getProgress($course['id']);
             $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
-            $course['is_active'] = session()->get('user_data')['settings']['course_id'] == $course['id'];
+            $course['is_active'] = session()->get('user_data')['settings']['courseId'] == $course['id'];
         }
         return $courses;
     }

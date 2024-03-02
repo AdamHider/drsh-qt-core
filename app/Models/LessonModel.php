@@ -65,7 +65,7 @@ class LessonModel extends Model
 
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.course_id', session()->get('user_data')['settings']['course_id'])
+        ->where('lessons.course_id', session()->get('user_data')['settings']['courseId'])
         ->where('lessons.parent_id IS NULL')
         ->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
@@ -79,7 +79,7 @@ class LessonModel extends Model
             $lesson['image'] = base_url('image/' . $lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
-            $lesson['is_explored'] = $this->checkExplored($lesson['id']);
+            $lesson['is_explored'] = isset($lesson['exercise']['id']);
             $lesson['cost_config'] = json_decode($lesson['cost_config']);
             $lesson['reward_config'] = json_decode($lesson['reward_config']);
             unset($lesson['pages']);
@@ -99,7 +99,7 @@ class LessonModel extends Model
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.parent_id', $lesson_id)
         ->whereHasPermission('r')->orderBy('id')->get()->getResultArray();
-
+        
         foreach($satellites as $key => &$satellite){
             $satellite['image'] = base_url('image/' . $satellite['image']);
             if($mode == 'full'){

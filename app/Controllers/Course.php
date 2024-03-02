@@ -14,7 +14,7 @@ class Course extends BaseController
         $course_id = $this->request->getVar('course_id');
 
         if( !$course_id && session()->get('user_data')){
-            $course_id = session()->get('user_data')['settings']['course_id'];
+            $course_id = session()->get('user_data')['settings']['courseId'];
         }
 
         $result = $CourseModel->getItem($course_id);

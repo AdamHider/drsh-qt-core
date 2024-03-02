@@ -55,14 +55,19 @@ class AchievementModel extends Model
     }
     public function calculateProgress($data)
     {
+        $ExerciseModel = model('ExerciseModel');
+        $user_statistics = $ExerciseModel->where('user_id', session()->get('user_id'))
+        ->select("COALESCE(sum(points), 0) as total_points, COALESCE(COUNT(points), 0) as total_exercises")
+        ->get()->getRowArray();
+        
         if ($data['code'] == 'total_lessons') {
-            $current_progress = session()->get('user_data')['dashboard']['total_exercises'];
+            $current_progress = $user_statistics['total_exercises'];
         } else
         if ($data['code'] == 'total_points') {
-            $current_progress = session()->get('user_data')['dashboard']['total_points'];
+            $current_progress = $user_statistics['total_points'];
         } else 
         if ($data['code'] == 'total_classrooms') {
-            $current_progress = session()->get('user_data')['dashboard']['total_classrooms'];
+            $current_progress = 0;
         } else {
             $current_progress = 0;
         }

@@ -29,14 +29,5 @@ return [
         'subscribers.text' => ' and {0, number} more are subscribed',
         'feed.homework.title' => 'New task is available',
         'feed.challenge.title' => 'New challenge added'
-    ],
-    'skills' => [
-        'category.resources.title' => 'Resources',
-        'category.lessons.title' => 'Lesson Access',
-        'itemClass.resource_gain.title' => 'Miner',
-        'itemClass.experience_gain.title' => 'Neurostim',
-        'itemClass.lessons_access.title' => 'Telescope',
-        'itemClass.energy_restoration_time.title' => 'Reactor',
-        'itemClass.energy_max.title' => 'Generator'
     ]
 ];

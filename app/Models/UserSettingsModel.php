@@ -47,14 +47,13 @@ class UserSettingsModel extends Model
         $this->transBegin();
 
         $this->set($data);
-        $this->where('user_id', $data['user_id']);
+        $this->where(['user_id' => $data['user_id'], 'code' => $data['code']]);
         $result = $this->update();
 
         $this->transCommit();
 
         return $result;        
     }
-
     public function createList ($user_id, $settings)
     {
         foreach($settings as $code => $value){

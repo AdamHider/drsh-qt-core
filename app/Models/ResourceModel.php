@@ -32,14 +32,20 @@ class ResourceModel extends Model
     }
     public function getList ($data) 
     {
-        $resources = $this->select('resources.id, resources.code, resources.is_restorable, COALESCE(resources_usermap.quantity, 0) quantity, resources_usermap.consumed_at')
+        $DescriptionModel = model('DescriptionModel');
+        $resources = $this->select('resources.*, COALESCE(resources_usermap.quantity, 0) quantity, resources_usermap.consumed_at')
         ->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$data['user_id'], 'left')->get()->getResultArray();
         
         $result = [];
         
         foreach($resources as &$resource){
+            $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $result[$resource['code']] = [
                 'quantity'      => $resource['quantity'],
+                'icon'      => $resource['icon'],
+                'title'      => $resource['title'],
+                'description'      => $resource['description'],
+                'color'      => $resource['color'],
                 'is_restorable' => (bool) $resource['is_restorable'],
                 'restoration'   =>  $this->getItemRestoration($resource)
             ];
@@ -107,8 +113,7 @@ class ResourceModel extends Model
     public function proccessItemCost ($cost_config)
     {
         $DescriptionModel = model('DescriptionModel');
-        $resourceCodes = array_keys($cost_config);
-        $resources = $this->whereIn('code', $resourceCodes)->get()->getResultArray();
+        $resources = $this->whereIn('code', array_keys($cost_config))->get()->getResultArray();
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $resource['quantity'] = $cost_config[$resource['code']];
@@ -118,27 +123,22 @@ class ResourceModel extends Model
 
     public function substract ($user_id, $resources)
     {
-        $ResourceUsermapModel = model('ResourceUsermapModel');
-        $user_resources = $ResourceUsermapModel->where('user_id', $user_id)->get()->getResultArray();
-
-        foreach($user_resources as &$resource_data){
-            if(!isset($resources[$resource_data['code']])){
-                continue;
-            }
-            if($resource_data['quantity'] == 0){
-                return false;
-            }
-            $resource_data['quantity'] = $resource_data['quantity'] - $resources[$resource_data['code']];
-            if(!$resource_data['consumed_at']){
-                $resource_data['consumed_at'] = Time::now()->toDateTimeString();
-            }
-            $this->updateItem($resource_data);      
-        }  
-        return true;
+        foreach($resources as $code => &$quantity){
+            $quantity = $quantity * -1;
+        }
+        if(!$this->checkListQuantity($user_id, $resources)) return false;
+        return $this->saveUserList($user_id, $resources);
     }
 
-
-
+    public function checkListQuantity($user_id, $resources)
+    {
+        $list = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
+        ->whereIn('code', array_keys($resources))->get()->getResultArray();
+        foreach($list as &$item){
+            if(($item['quantity'] + $resources[$item['code']]) < 0) return false;
+        }
+        return true;
+    }
 
     public function createUserItem($data)
     {
@@ -153,39 +153,43 @@ class ResourceModel extends Model
         return $result;  
     }
 
-    public function createUserList ($user_id, $resources)
+    public function saveUserList ($user_id, $resources)
     {
+        
         foreach($resources as $code => $quantity){
             $resource = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
             ->where('code', $code)->get()->getRowArray();
             if(isset($resource['id'])){
-                $this->updateUserItem([
+                if(!$this->updateUserItem([
                     'code' => $code, 
                     'user_id' => $user_id, 
                     'quantity' => $quantity
-                ]);
+                ])){ 
+                    return false;
+                };
             } else {
-                $this->createUserItem([
+                if(!$this->createUserItem([
                     'code' => $code, 
                     'user_id' => $user_id, 
                     'quantity' => $quantity
-                ]);
+                ])){
+                    return false;
+                };
             }
         }
-        return;        
+        return true;        
     }
     
     public function updateUserItem($data)
     {
         $ResourceUsermapModel = model('ResourceUsermapModel');
-        $resource = $this->where('code', $data['code'])->get()->getRowArray();
-        $data = [
-            'item_id' => $resource['id'],
-            'user_id' => $data['user_id'],
-            'quantity' => $data['quantity']
-        ];
-        $result = $ResourceUsermapModel->insert($data, true);
-        return $result;  
+        $resource = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$data['user_id'], 'left')
+        ->where('code', $data['code'])->get()->getRowArray();
+        $ResourceUsermapModel->set('quantity', 'quantity+'.$data['quantity'], false);
+        if($resource['quantity'] < 0){
+            $ResourceUsermapModel->set('consumed_at', Time::now()->toDateTimeString(), false);
+        }
+        return $ResourceUsermapModel->where(['item_id' => $resource['id'], 'user_id' => $data['user_id']])->update(); 
     }
     
 

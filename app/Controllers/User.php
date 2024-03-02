@@ -71,22 +71,14 @@ class User extends BaseController
     {
         $UserSettingsModel = model('UserSettingsModel');
 
-        $character_id = $this->request->getVar('character_id');
-        $classroom_id = $this->request->getVar('classroom_id');
-        $course_id    = $this->request->getVar('course_id');
+        $code = $this->request->getVar('code');
+        $value = $this->request->getVar('value');
 
         $data = [
-            'user_id'       => session()->get('user_id')
+            'user_id'   => session()->get('user_id'),
+            'code'      => $code,
+            'value'     => $value
         ];
-        if ($character_id) {
-            $data['character_id'] = $character_id;
-        }
-        if ($classroom_id) {
-            $data['classroom_id'] = $classroom_id;
-        }
-        if ($course_id) {
-            $data['course_id'] = $course_id;
-        }
 
         $result = $UserSettingsModel->updateItem($data);
 

@@ -97,9 +97,10 @@ class Skill extends BaseController
     {
         $SkillModel = model('SkillModel');
 
-        $quest_id = $this->request->getVar('quest_id');
+        $skill_id = $this->request->getVar('skill_id');
+        $user_id = session()->get('user_id');
 
-        $result = $SkillModel->claimItem($quest_id);
+        $result = $SkillModel->claimItem($skill_id, $user_id);
         
         if ($result == 'not_found') {
             return $this->failNotFound('not_found');
@@ -107,7 +108,7 @@ class Skill extends BaseController
         if ($result == 'forbidden') {
             return $this->failForbidden();
         }
-        if($SkillModel->errors()){
+        if(!empty($SkillModel->errors())){
             return $this->failValidationErrors($SkillModel->errors());
         }
         return $this->respond($result);

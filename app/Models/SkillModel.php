@@ -7,6 +7,7 @@ use CodeIgniter\I18n\Time;
 
 class SkillModel extends Model
 {
+    use PermissionTrait;
     protected $table      = 'skills';
 
     protected $useAutoIncrement = true;
@@ -28,7 +29,7 @@ class SkillModel extends Model
         
         if($data['user_id']){
             $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$data['user_id'], 'left')
-            ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.icon, skills.cost_config, skills.level, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
+            ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.image, skills.cost_config, skills.level, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
         }
         if(isset($data['limit']) && isset($data['offset'])){
             $this->limit($data['limit'], $data['offset']);
@@ -42,6 +43,7 @@ class SkillModel extends Model
             $cost_config = json_decode($skill['cost_config'], true);
             $skill['is_gained'] = (bool) $skill['is_gained'];
             $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
+            $skill['image'] = base_url('image/' . $skill['image']);
             if($data['user_id']){
                 $skill['is_available'] = $this->checkAvailable($skill, $data['user_id']);
                 $skill['is_purchasable'] = $this->checkPurchasable($cost_config, $data['user_id']);
@@ -55,15 +57,25 @@ class SkillModel extends Model
             unset($skill['cost_config']);
         }
         
+        return $this->compileList($skills);
+    }
+    
+    private function compileList($skills)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $SkillGroupModel = model('SkillGroupModel');
         $result = [];
         foreach(array_group_by($skills, ['group_id']) as $category => $categories){
+            $group = $SkillGroupModel->where('id', $category)->get()->getRowArray();
             $categoryObject = [
                 'id' => $category,
+                'color' => $group['color'],
+                'available_total' => count(array_filter($categories, function($k) {return $k['is_available'] == 1;})),
                 'list' => []
             ];
             $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_group', $category));
 
-            foreach(array_group_by($categories, ['code']) as $subcategory => $subcategories){
+            foreach(array_group_by($categories, ['code']) as $subcategories){
                 $subcategoryObject = [
                     'list' => []
                 ];
@@ -76,7 +88,7 @@ class SkillModel extends Model
         }
         return $result;
     }
-    
+
     public function getItem ($code, $user_id, $item_id) 
     {
         $resource = $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
@@ -95,7 +107,7 @@ class SkillModel extends Model
         $ResourceModel = model('ResourceModel');
         $resources = $ResourceModel->getList(['user_id' => $user_id]);
         foreach($cost_config as $resourceTitle => $quantity){
-            if($quantity > $resources[$resourceTitle]['quantity']){
+            if(isset($resources[$resourceTitle]) && $quantity > $resources[$resourceTitle]['quantity']){
                 return false;
             }
         }
@@ -106,32 +118,25 @@ class SkillModel extends Model
     public function claimItem($skill_id, $user_id)
     {
         $ResourceModel = model('ResourceModel');
+        $SkillUsermapModel = model('SkillUsermapModel');
+        $UserSettingsModel = model('UserSettingsModel');
 
-        if(!$this->hasPermission($skill_id, 'r')){
-            return 'forbidden';
-        }
-        
-        $skill = $this->where('id', $skill_id)->get()->getRowArray();
+        $skill = $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$user_id, 'left')
+        ->where('id', $skill_id)->get()->getRowArray();
 
-        if(empty($quest)){
+        if(empty($skill)){
             return 'not_found';
         }
-        
+        $skill['is_gained'] = (bool) $skill['item_id'];
         $cost_config = json_decode($skill['cost_config'], true);
-        if((bool) $skill['is_gained']){
-            return 'forbidden';
-        }
+
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
-            $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
-            $data = [
-                'user_id' => session()->get('user_id'),
-                'code' => $resource_title,
-                'item_code' => 'quest',
-                'item_id' => $quest['id'],
-                'quantity' => $resource_quantity
-            ];
-            $UserResourcesExpensesModel->createItem($data);
-            return true;
+            if($ResourceModel->substract($user_id, $cost_config)){
+                $UserSettingsModel->updateItem(['user_id' => $user_id, 'code' => $skill['target'], 'value' => $skill['value']]);
+                $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
+                return 'success';
+            };
+            return 'forbidden';
         } else {
             return 'forbidden';
         }

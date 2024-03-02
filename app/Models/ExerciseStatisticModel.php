@@ -78,14 +78,16 @@ class ExerciseStatisticModel extends Model
                 'place' => 0
             ];
         }
-        $min_date = $this->select('COALESCE(MIN(created_at), DATE_SUB(NOW(),INTERVAL 1 YEAR)) as min_date')->get()->getRow()->min_date;
+        $min_date = $this->select('COALESCE(MIN(created_at), null) as min_date')->get()->getRow()->min_date;
         $max_date = $this->select('COALESCE(MAX(finished_at), NOW()) as max_date')->get()->getRow()->max_date;
-
+        if(empty($min_date)){
+            return false;
+        }
         $offset = ceil($this->limit/2);
         if($data['classroom_id']){
             $this->useSharedOf('classrooms', 'classroom_id');
         }
-        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->whereHasPermission('r')->get()->getResultArray();
+        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."' AND points > 0")->limit(10)->whereHasPermission('r')->get()->getResultArray();
         if(empty($list)){
             return false;
         }
@@ -181,7 +183,6 @@ class ExerciseStatisticModel extends Model
         $this->query("SET @points=0");
         $this->query("SET @finished_at='0000-00-00 00:00:00'");
         $this->query("SET @winner_limit=".$winner_limit);
-        
         $sql = "
             CREATE TEMPORARY TABLE IF NOT EXISTS exercise_statistic
             SELECT 
@@ -202,7 +203,7 @@ class ExerciseStatisticModel extends Model
                 SELECT 
                     users.id as user_id, 
                     users.username,
-                    (SELECT characters.avatar FROM characters JOIN user_settings ON users.id = user_settings.user_id) AS avatar,
+                    (SELECT characters.avatar FROM characters JOIN user_settings ON users.id = user_settings.user_id  AND user_settings.code = 'characterId') AS avatar,
                     COALESCE(SUM(exercises.points), 0) as points,
                     MIN(exercises.created_at) AS created_at,
                     MAX(exercises.finished_at) AS finished_at,
