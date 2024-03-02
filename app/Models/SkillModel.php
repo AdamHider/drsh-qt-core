@@ -70,7 +70,7 @@ class SkillModel extends Model
             $categoryObject = [
                 'id' => $category,
                 'color' => $group['color'],
-                'available_total' => count(array_filter($categories, function($k) {return $k['is_available'] == 1;})),
+                'available_total' => count(array_filter($categories, function($k) {return $k['is_purchasable'] == 1;})),
                 'list' => []
             ];
             $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_group', $category));
