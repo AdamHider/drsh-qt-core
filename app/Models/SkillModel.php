@@ -75,10 +75,13 @@ class SkillModel extends Model
             ];
             $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_group', $category));
 
-            foreach(array_group_by($categories, ['code']) as $subcategories){
+            foreach(array_group_by($categories, ['code']) as $subcategory => $subcategories){
                 $subcategoryObject = [
-                    'list' => []
+                    'list' => [],
+                    'total' => count($subcategories),
+                    'gained_total' => count(array_filter( $subcategories, function($skill) { return $skill['is_gained']; } ))
                 ];
+                $subcategoryObject = array_merge($subcategoryObject, $DescriptionModel->getItem('skill_subcategory', $subcategory));
                 foreach(array_group_by($subcategories, ['chain']) as $chain => $chains){
                     $subcategoryObject['list'][] = $chains;
                 }
