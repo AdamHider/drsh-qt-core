@@ -35,7 +35,7 @@ class SkillModel extends Model
             $this->limit($data['limit'], $data['offset']);
         }
         
-        $skills = $this->get()->getResultArray();
+        $skills = $this->orderBy('code, chain')->get()->getResultArray();
 
         if(empty($skills)) return false;
         
@@ -74,7 +74,7 @@ class SkillModel extends Model
                 'list' => []
             ];
             $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_group', $category));
-
+            
             foreach(array_group_by($categories, ['code']) as $subcategory => $subcategories){
                 $subcategoryObject = [
                     'list' => [],
@@ -82,9 +82,7 @@ class SkillModel extends Model
                     'gained_total' => count(array_filter( $subcategories, function($skill) { return $skill['is_gained']; } ))
                 ];
                 $subcategoryObject = array_merge($subcategoryObject, $DescriptionModel->getItem('skill_subcategory', $subcategory));
-                foreach(array_group_by($subcategories, ['chain']) as $chain => $chains){
-                    $subcategoryObject['list'][] = $chains;
-                }
+                $subcategoryObject['list'] = array_group_by($subcategories, ['level']);
                 $categoryObject['list'][] = $subcategoryObject;
             }
             $result[] = $categoryObject;
