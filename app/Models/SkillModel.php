@@ -35,7 +35,7 @@ class SkillModel extends Model
             $this->limit($data['limit'], $data['offset']);
         }
         
-        $skills = $this->orderBy('code, chain')->get()->getResultArray();
+        $skills = $this->orderBy('code, level')->get()->getResultArray();
 
         if(empty($skills)) return false;
         
@@ -52,7 +52,9 @@ class SkillModel extends Model
                 $skill['cost'] = $ResourceModel->proccessItemCost($cost_config);
             }
             if(!$skill['is_available'] && !$skill['is_gained']){
-                $skill['required_skill'] = array_column($skills, null, 'id')[$skill['unblock_after']];
+                $skill['required_skills'] = array_filter($skills, function ($item) use ($skill)  {
+                    return in_array($item['id'], explode(',', $skill['unblock_after'])); 
+                });
             }
             unset($skill['cost_config']);
         }
@@ -77,15 +79,41 @@ class SkillModel extends Model
             
             foreach(array_group_by($categories, ['code']) as $subcategory => $subcategories){
                 $subcategoryObject = [
-                    'list' => [],
+                    'list' => $this->buildColumns($subcategories),
                     'total' => count($subcategories),
                     'gained_total' => count(array_filter( $subcategories, function($skill) { return $skill['is_gained']; } ))
                 ];
                 $subcategoryObject = array_merge($subcategoryObject, $DescriptionModel->getItem('skill_subcategory', $subcategory));
-                $subcategoryObject['list'] = array_group_by($subcategories, ['level']);
                 $categoryObject['list'][] = $subcategoryObject;
             }
             $result[] = $categoryObject;
+        }
+        return $result;
+    }
+
+    private function buildColumns($skills)
+    {
+        $result = [];
+        $columns = array_group_by($skills, ['level']);
+        foreach($columns as $index => &$column){
+            $relations = [];
+            if(isset($columns[$index+1])){ 
+                $nextColumn = $columns[$index+1];
+                foreach($column as $slotIndex => $slot){
+                    foreach($nextColumn as $nextSlotIndex => $nextSlot){
+                        if(in_array($slot['id'], explode(',', $nextSlot['unblock_after']))){
+                            $relations[] = [
+                                'direction' => count($column).'-'.$slotIndex.'-'.$nextSlotIndex.'-'.count($nextColumn),
+                                'is_gained' => $slot['is_gained']
+                            ];
+                        }
+                    }
+                }
+            }
+            $result[] = [
+                'slots' => $column,
+                'relations' => $relations
+            ];
         }
         return $result;
     }
@@ -100,7 +128,7 @@ class SkillModel extends Model
         if((bool) $skill['is_gained']) return false;
         if(!(bool) $skill['unblock_after']) return true;
         return !empty($this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$user_id)
-        ->where('skills_usermap.item_id', $skill['unblock_after'])->get()->getRowArray());
+        ->whereIn('skills_usermap.item_id', explode(',', $skill['unblock_after']))->get()->getRowArray());
     }
     public function checkPurchasable ($cost_config, $user_id)
     {
