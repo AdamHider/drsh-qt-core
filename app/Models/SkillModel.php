@@ -65,27 +65,14 @@ class SkillModel extends Model
     private function compileList($skills)
     {
         $DescriptionModel = model('DescriptionModel');
-        $SkillGroupModel = model('SkillGroupModel');
         $result = [];
-        foreach(array_group_by($skills, ['group_id']) as $category => $categories){
-            $group = $SkillGroupModel->where('id', $category)->get()->getRowArray();
+        foreach(array_group_by($skills, ['code']) as $category => $categories){
             $categoryObject = [
-                'id' => $category,
-                'color' => $group['color'],
-                'available_total' => count(array_filter($categories, function($k) {return $k['is_purchasable'] == 1 && $k['is_available'] == 1; })),
-                'list' => []
+                'list' => $this->buildColumns($categories),
+                'total' => count($categories),
+                'gained_total' => count(array_filter( $categories, function($skill) { return $skill['is_gained'] == 1; } ))
             ];
-            $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_group', $category));
-            
-            foreach(array_group_by($categories, ['code']) as $subcategory => $subcategories){
-                $subcategoryObject = [
-                    'list' => $this->buildColumns($subcategories),
-                    'total' => count($subcategories),
-                    'gained_total' => count(array_filter( $subcategories, function($skill) { return $skill['is_gained']; } ))
-                ];
-                $subcategoryObject = array_merge($subcategoryObject, $DescriptionModel->getItem('skill_subcategory', $subcategory));
-                $categoryObject['list'][] = $subcategoryObject;
-            }
+            $categoryObject = array_merge($categoryObject, $DescriptionModel->getItem('skill_subcategory', $category));
             $result[] = $categoryObject;
         }
         return $result;
@@ -95,25 +82,32 @@ class SkillModel extends Model
     {
         $result = [];
         $columns = array_group_by($skills, ['level']);
-        foreach($columns as $index => &$column){
+        foreach($columns as $index => $column){
             $relations = [];
             if(isset($columns[$index+1])){ 
                 $nextColumn = $columns[$index+1];
-                foreach($column as $slotIndex => $slot){
-                    foreach($nextColumn as $nextSlotIndex => $nextSlot){
-                        if(in_array($slot['id'], explode(',', $nextSlot['unblock_after']))){
-                            $relations[] = [
-                                'direction' => count($column).'-'.$slotIndex.'-'.$nextSlotIndex.'-'.count($nextColumn),
-                                'is_gained' => $slot['is_gained']
-                            ];
-                        }
-                    }
-                }
+                $relations = $this->buildRelations($column, $nextColumn);
             }
             $result[] = [
                 'slots' => $column,
                 'relations' => $relations
             ];
+        }
+        return $result;
+    }
+    
+    private function buildRelations($column, $nextColumn)
+    {
+        $result = [];
+        foreach($column as $slotIndex => $slot){
+            foreach($nextColumn as $nextSlotIndex => $nextSlot){
+                if(in_array($slot['id'], explode(',', $nextSlot['unblock_after']))){
+                    $result[] = [
+                        'direction' => count($column).'-'.$slotIndex.'-'.$nextSlotIndex.'-'.count($nextColumn),
+                        'is_gained' => $slot['is_gained']
+                    ];
+                }
+            }
         }
         return $result;
     }
