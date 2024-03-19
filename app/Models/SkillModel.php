@@ -49,7 +49,7 @@ class SkillModel extends Model
                 $skill['is_purchasable'] = $this->checkPurchasable($cost_config, $data['user_id']);
             }
             if($skill['is_available'] && !empty($cost_config)){
-                $skill['cost'] = $ResourceModel->proccessItemCost($cost_config);
+                $skill['cost'] = $ResourceModel->proccessItemCost($data['user_id'], $cost_config);
             }
             if(!$skill['is_available'] && !$skill['is_gained']){
                 $skill['required_skills'] = array_filter($skills, function ($item) use ($skill)  {

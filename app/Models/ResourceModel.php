@@ -15,6 +15,7 @@ class ResourceModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
+        'image',
         'code', 
         'is_restorable'
     ];
@@ -42,7 +43,7 @@ class ResourceModel extends Model
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $result[$resource['code']] = [
                 'quantity'      => $resource['quantity'],
-                'icon'      => $resource['icon'],
+                'image'      => $resource['image'],
                 'title'      => $resource['title'],
                 'description'      => $resource['description'],
                 'color'      => $resource['color'],
@@ -110,13 +111,15 @@ class ResourceModel extends Model
         return 0;
     }
 
-    public function proccessItemCost ($cost_config)
+    public function proccessItemCost ($user_id, $cost_config)
     {
         $DescriptionModel = model('DescriptionModel');
-        $resources = $this->whereIn('code', array_keys($cost_config))->get()->getResultArray();
+        $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
+        ->whereIn('code', array_keys($cost_config))->get()->getResultArray();
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
-            $resource['quantity'] = $cost_config[$resource['code']];
+            $resource['quantity'] = (int) $resource['quantity'];
+            $resource['quantity_cost'] = (int) $cost_config[$resource['code']];
         }
         return $resources;
     }

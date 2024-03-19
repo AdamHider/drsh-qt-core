@@ -222,7 +222,8 @@ class User extends BaseController
         } 
         return $this->respond(false);
     }
-    public function checkEmail(){
+    public function checkEmail()
+    {
         $UserModel = model('UserModel');
 
         $email = $this->request->getVar('email');

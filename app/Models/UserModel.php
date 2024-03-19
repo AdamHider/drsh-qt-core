@@ -108,11 +108,10 @@ class UserModel extends Model
         
         $CharacterModel = model('CharacterModel');
         $user['character'] = $CharacterModel->getItem($user['settings']['characterId']);
-
-        /*
+        
         $UserLevelModel = model('UserLevelModel');
         $user['level'] = $UserLevelModel->getItem($user['id']);
-        */
+        
         $ResourceModel = model('ResourceModel');
         $user['resources'] = $ResourceModel->getList(['user_id' => $user['id']]);
 
@@ -273,5 +272,6 @@ class UserModel extends Model
         }
         return $user['auth_key'];
     }
+   
 
 }
