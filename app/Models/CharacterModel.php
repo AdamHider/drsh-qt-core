@@ -28,23 +28,27 @@ class CharacterModel extends Model
         $DescriptionModel = model('DescriptionModel');
         $character = $this->where('characters.id', $character_id)->get()->getRowArray();
         if ($character) {
-            $character['avatar'] = base_url('image/' . $character['avatar']);
-            $character['image'] = base_url('image/' . $character['image']);
-            $character['description'] = $DescriptionModel->getItem('character', $character['id']);
+            $character = array_merge($character, $DescriptionModel->getItem('character', $character['id']));
+            $character['character_image'] = base_url('image/' . $character['character_image']);
+            $character['planet_image'] = base_url('image/' . $character['planet_image']);
+            $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
         }
         return $character;
     }
-        
-    public function itemCreate ($image)
+    public function getList($data)
     {
-        $this->transBegin();
-        $data = [
-            'image' => $image
-        ];
-        $character_id = $this->insert($data, true);
-        $this->transCommit();
-
-        return $character_id;        
+        $DescriptionModel = model('DescriptionModel');
+        if(isset($data['limit'])){
+            $this->limit($data['limit'], $data['offset']);
+        }
+        $characters = $this->get()->getResultArray();
+        foreach($characters as &$character){
+            $character = array_merge($character, $DescriptionModel->getItem('character', $character['id']));
+            $character['character_image'] = base_url('image/' . $character['character_image']);
+            $character['planet_image'] = base_url('image/' . $character['planet_image']);
+            $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
+        }
+        return $characters;
     }
 
 

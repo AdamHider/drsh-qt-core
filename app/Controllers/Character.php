@@ -27,9 +27,23 @@ class Character extends BaseController
     }
     public function getList()
     {
-        $UserModel = model('UserModel');
-        $result = $UserModel->getList();
-        return $this->respond($result, 200);
+        $CharacterModel = model('CharacterModel');
+
+        $limit = $this->request->getVar('limit');
+        $offset = $this->request->getVar('offset');
+
+        $data = [];
+        if($limit && $offset){
+            $data['limit'] = $limit;
+            $data['offset'] = $offset;
+        }
+        $characters = $CharacterModel->getList($data);
+        
+        if ($characters == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($characters);
     }
 
 }
