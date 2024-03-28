@@ -32,6 +32,7 @@ class CharacterModel extends Model
             $character['character_image'] = base_url('image/' . $character['character_image']);
             $character['planet_image'] = base_url('image/' . $character['planet_image']);
             $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
+            $character['background_image'] = base_url('image/' . $character['background_image']);
         }
         return $character;
     }
@@ -47,8 +48,17 @@ class CharacterModel extends Model
             $character['character_image'] = base_url('image/' . $character['character_image']);
             $character['planet_image'] = base_url('image/' . $character['planet_image']);
             $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
+            $character['background_image'] = base_url('image/' . $character['background_image']);
         }
         return $characters;
+    }
+    public function selectItem ($character_id) 
+    {
+        $UserSettingsModel = model('UserSettingsModel');
+        
+        $character = $this->where('characters.id', $character_id)->get()->getRowArray();
+        
+        return $character;
     }
 
 

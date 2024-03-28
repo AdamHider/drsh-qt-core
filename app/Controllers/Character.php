@@ -6,25 +6,6 @@ use CodeIgniter\API\ResponseTrait;
 class Character extends BaseController
 {
     use ResponseTrait;
-    public function getItem()
-    {
-        
-        $UserModel = model('UserModel');
-
-        $user_id = $this->request->getVar('user_id');
-
-        if( !$user_id ){
-            $user_id = session()->get('user_id');
-        }
-
-        $user = $UserModel->getItem($user_id);
-
-        if ($user == 'not_found') {
-            return $this->failNotFound('not_found');
-        }
-
-        return $this->respond($user);
-    }
     public function getList()
     {
         $CharacterModel = model('CharacterModel');
@@ -44,6 +25,21 @@ class Character extends BaseController
         }
 
         return $this->respond($characters);
+    }
+    public function selectItem()
+    {
+        
+        $CharacterModel = model('CharacterModel');
+
+        $character_id = $this->request->getVar('id');
+
+        $result = $CharacterModel->selectItem($character_id);
+
+        if ($result == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respond($result);
     }
 
 }
