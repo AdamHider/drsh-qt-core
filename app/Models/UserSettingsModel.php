@@ -44,26 +44,38 @@ class UserSettingsModel extends Model
     }
     public function updateItem ($data)
     {
+        
         $this->transBegin();
-
-        $this->set($data);
-        $this->where(['user_id' => $data['user_id'], 'code' => $data['code']]);
-        $result = $this->update();
-
+        
+        $result = $this->set($data)->where(['user_id' => $data['user_id'], 'code' => $data['code']])->update();
+       
         $this->transCommit();
 
         return $result;        
     }
     public function createList ($user_id, $settings)
     {
+        $result = true;
         foreach($settings as $code => $value){
-            $this->createItem([
+            $result = $this->createItem([
                 'user_id' => $user_id, 
                 'code' => $code, 
                 'value' => $value
             ]);
         }
-        return;        
+        return $result;        
+    }
+    public function updateList ($user_id, $settings)
+    {
+        $result = true;
+        foreach($settings as $code => $value){
+            $result = $this->updateItem([
+                'user_id' => $user_id, 
+                'code' => $code, 
+                'value' => $value
+            ]);
+        }
+        return $result;      
     }
 
 }

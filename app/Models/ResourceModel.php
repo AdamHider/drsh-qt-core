@@ -152,16 +152,13 @@ class ResourceModel extends Model
             'user_id' => $data['user_id'],
             'quantity' => $data['quantity']
         ];
-        $result = $ResourceUsermapModel->insert($data, true);
-        return $result;  
+        $ResourceUsermapModel->insert($data, true);
     }
 
     public function saveUserList ($user_id, $resources)
     {
-        
         foreach($resources as $code => $quantity){
-            $resource = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
-            ->where('code', $code)->get()->getRowArray();
+            $resource = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)->where('code', $code)->get()->getRowArray();
             if(isset($resource['id'])){
                 if(!$this->updateUserItem([
                     'code' => $code, 
@@ -171,13 +168,11 @@ class ResourceModel extends Model
                     return false;
                 };
             } else {
-                if(!$this->createUserItem([
+                $this->createUserItem([
                     'code' => $code, 
                     'user_id' => $user_id, 
                     'quantity' => $quantity
-                ])){
-                    return false;
-                };
+                ]);
             }
         }
         return true;        

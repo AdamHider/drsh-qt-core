@@ -52,13 +52,14 @@ class CharacterModel extends Model
         }
         return $characters;
     }
-    public function selectItem ($character_id) 
+    public function linkItem ($data) 
     {
         $UserSettingsModel = model('UserSettingsModel');
         
-        $character = $this->where('characters.id', $character_id)->get()->getRowArray();
-        
-        return $character;
+        $character = $this->where('characters.id', $data['character_id'])->get()->getRowArray();
+        $settingsConfig = json_decode($character['settings_config'], true);
+        $settingsConfig['characterId'] = $character['id'];
+        return $UserSettingsModel->updateList($data['user_id'], $settingsConfig);
     }
 
 

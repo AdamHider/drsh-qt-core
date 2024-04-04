@@ -20,26 +20,31 @@ class Character extends BaseController
         }
         $characters = $CharacterModel->getList($data);
         
-        if ($characters == 'not_found') {
+        if ($characters === 'not_found') {
             return $this->failNotFound('not_found');
         }
 
         return $this->respond($characters);
     }
-    public function selectItem()
+    public function linkItem()
     {
         
         $CharacterModel = model('CharacterModel');
 
         $character_id = $this->request->getVar('id');
+        $user_id = session()->get('user_id');
 
-        $result = $CharacterModel->selectItem($character_id);
+        $data = [
+            'character_id' => $character_id,
+            'user_id' => $user_id
+        ];
+        $result = $CharacterModel->linkItem($data);
 
-        if ($result == 'not_found') {
+        if ($result === 'not_found') {
             return $this->failNotFound('not_found');
         }
 
-        return $this->respond($result);
+        return $this->respondCreated(['result' => $result]);
     }
 
 }
