@@ -96,8 +96,8 @@ class UserModel extends Model
         if(!$user){
             return 'not_found';
         }
-        $UserSettingsModel = model('UserSettingsModel');
-        $user['settings'] = $UserSettingsModel->getList(['user_id' => $user['id']]);
+        $SettingsModel = model('SettingsModel');
+        $user['settings'] = $SettingsModel->getList(['user_id' => $user['id']]);
 
         $UserGroupModel = model('UserGroupModel');
         $user['groups'] = $UserGroupModel->getList(['user_id' => $user['id']]);
@@ -107,7 +107,7 @@ class UserModel extends Model
         } 
         
         $CharacterModel = model('CharacterModel');
-        $user['character'] = $CharacterModel->getItem($user['settings']['characterId']);
+        $user['character'] = $CharacterModel->getItem($user['settings']['characterId']['value']);
         
         $UserLevelModel = model('UserLevelModel');
         $user['level'] = $UserLevelModel->getItem($user['id']);

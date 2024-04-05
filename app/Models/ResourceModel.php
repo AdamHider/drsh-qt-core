@@ -26,8 +26,8 @@ class ResourceModel extends Model
     public function __construct()
     {
         if(session()->get('user_id')){
-            $UserSettingsModel = model('UserSettingsModel');
-            $this->settings = $UserSettingsModel->getList(['user_id' => session()->get('user_id')]);
+            $SettingsModel = model('SettingsModel');
+            $this->settings = $SettingsModel->getList(['user_id' => session()->get('user_id')]);
             $this->recalculateRestoration(session()->get('user_id'));
         }
     }
@@ -63,8 +63,8 @@ class ResourceModel extends Model
     {   
         if(!(bool)$resource['is_restorable'] || !$resource['consumed_at']) return null;
 
-        $restorationTime = $this->settings[$resource['code'].'RestorationTime'];
-        $maxValue = $this->settings[$resource['code'].'MaxValue'];
+        $restorationTime = $this->settings[$resource['code'].'RestorationTime']['value'];
+        $maxValue = $this->settings[$resource['code'].'MaxValue']['value'];
 
         return [
             'nextRestoration' => $this->getNextRestoration($restorationTime, Time::parse($resource['consumed_at'], Time::now()->getTimezone())),
@@ -82,8 +82,8 @@ class ResourceModel extends Model
         foreach($resources as $resource){
             if(!$resource['consumed_at']) $resource['consumed_at'] = Time::now()->toDateTimeString();
 
-            $restorationTime = $this->settings[$resource['code'].'RestorationTime'];
-            $maxValue = $this->settings[$resource['code'].'MaxValue'];
+            $restorationTime = $this->settings[$resource['code'].'RestorationTime']['value'];
+            $maxValue = $this->settings[$resource['code'].'MaxValue']['value'];
     
             $consumptionTime = Time::parse($resource['consumed_at'], Time::now()->getTimezone());
             $timeDifference = $consumptionTime->difference(Time::now())->getSeconds();

@@ -23,9 +23,8 @@ use CodeIgniter\Exceptions\FrameworkException;
  */
 
 Events::on('signUp', static function ($user_id) {
-    $UserSettingsModel = new \App\Models\UserSettingsModel();
-    $settings = parse_ini_file(ROOTPATH.'/defaults.ini')['settings'];
-    $UserSettingsModel->createList($user_id, $settings);
+    $SettingsModel = new \App\Models\SettingsModel();
+    $SettingsModel->createUserList($user_id);
 
     $ResourceModel = new \App\Models\ResourceModel();
     $resources = parse_ini_file(ROOTPATH.'/defaults.ini')['resources'];
