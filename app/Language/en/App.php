@@ -29,5 +29,11 @@ return [
         'subscribers.text' => ' and {0, number} more are subscribed',
         'feed.homework.title' => 'New task is available',
         'feed.challenge.title' => 'New challenge added'
+    ],
+    'modifier' => [
+        'description.multiply.increase' => '%s increased by %s%%',
+        'description.multiply.decrease' => '%s decreased by %s%%',
+        'description.add' => '%s increased by %s',
+        'description.substract' => '%s decreased by %s',
     ]
 ];

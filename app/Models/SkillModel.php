@@ -26,16 +26,17 @@ class SkillModel extends Model
     {
         $DescriptionModel = model('DescriptionModel');
         $ResourceModel = model('ResourceModel');
+        $SettingsModel = model('SettingsModel');
         
         if($data['user_id']){
             $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$data['user_id'], 'left')
-            ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.image, skills.cost_config, skills.level, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
+            ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.image, skills.cost_config, skills.level, skills.modifiers_config, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
         }
         if(isset($data['limit']) && isset($data['offset'])){
             $this->limit($data['limit'], $data['offset']);
         }
         
-        $skills = $this->orderBy('code, level')->get()->getResultArray();
+        $skills = $this->orderBy('code, level, chain')->get()->getResultArray();
 
         if(empty($skills)) return false;
         
@@ -55,6 +56,11 @@ class SkillModel extends Model
                 $skill['required_skills'] = array_filter($skills, function ($item) use ($skill)  {
                     return in_array($item['id'], explode(',', $skill['unblock_after'])); 
                 });
+            }
+            if(!empty($skill['modifiers_config'])){
+                $modifiers_config = json_decode($skill['modifiers_config'], true);
+                $skill['modifiers'] = $SettingsModel->processModifierList($modifiers_config);
+                unset($skill['modifiers_config']);
             }
             unset($skill['cost_config']);
         }
@@ -142,7 +148,7 @@ class SkillModel extends Model
     {
         $ResourceModel = model('ResourceModel');
         $SkillUsermapModel = model('SkillUsermapModel');
-        $UserSettingsModel = model('UserSettingsModel');
+        $SettingsModel = model('SettingsModel');
 
         $skill = $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$user_id, 'left')
         ->where('id', $skill_id)->get()->getRowArray();
@@ -152,10 +158,11 @@ class SkillModel extends Model
         }
         $skill['is_gained'] = (bool) $skill['item_id'];
         $cost_config = json_decode($skill['cost_config'], true);
+        $modifiers_config = json_decode($skill['modifiers_config'], true);
 
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
             if($ResourceModel->substract($user_id, $cost_config)){
-                $UserSettingsModel->updateItem(['user_id' => $user_id, 'code' => $skill['target'], 'value' => $skill['value']]);
+                $SettingsModel->createModifierList($user_id, $modifiers_config);
                 $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
                 return 'success';
             };

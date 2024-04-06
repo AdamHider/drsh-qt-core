@@ -30,16 +30,42 @@ class SettingsModel extends Model
         }
         $settings = $this->get()->getResultArray();
         foreach($settings as $setting){
+            if (isset($data['user_id'])){
+                $setting['value'] = $this->getItemValue($data['user_id'], $setting['id'], $setting['value']);
+            }
+            $effect = ($setting['value'] >= $setting['default_value']) ? ($setting['value'] == $setting['default_value']) ? 'neutral' : 'positive' : 'negative';
             $setting = array_merge($setting, $DescriptionModel->getItem('setting', $setting['id']));
             $result[$setting['code']] = [
                 'value'         => $setting['value'],
                 'title'         => $setting['title'],
-                'description'   => $setting['description']
+                'description'   => $setting['description'],
+                'color'         => $effect
             ];
         }
         return $result;
     }
-        
+    private function getItemValue ($user_id, $setting_id, $value) 
+    {
+        $SettingsModifiersModel = model('SettingsModifiersModel');
+        $modifiers = $SettingsModifiersModel ->where('settings_modifiers.setting_id = '.$setting_id.' AND settings_modifiers.user_id = '.$user_id)
+        ->orderBy('FIELD(operand, "multiply", "divide", "add", "substract")')->get()->getResultArray();
+        $result = $value;
+        foreach($modifiers as $modifier){
+            switch ($modifier['operand']){ 
+                case 'multiply' :
+                    $result *= $modifier['value'];
+                    break;
+                case 'add' :
+                    $result += $modifier['value'];
+                    break;
+                case 'substract' :
+                    $result -= $modifier['value'];
+                    break;
+                default;
+            }
+        }
+        return round($result, 2);
+    }
     public function createItem ($data)
     {
         $this->transBegin();
@@ -85,6 +111,8 @@ class SettingsModel extends Model
         }
         return $result;      
     }
+
+
     public function createUserList ($user_id)
     {
         $settings = $this->get()->getResultArray();
@@ -97,7 +125,7 @@ class SettingsModel extends Model
         }
         return true;        
     }
-    public function createUserItem($data)
+    public function createUserItem ($data)
     {
         $SettingsUsermapModel = model('SettingsUsermapModel');
         $SettingsUsermapModel->insert($data, true);
@@ -110,11 +138,36 @@ class SettingsModel extends Model
     }
     
 
+    public function processModifierList ($data)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        foreach($data as &$item){
+            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id')->where('settings.code', $item['code'])->get()->getRowArray();
+            $item = array_merge($item, $DescriptionModel->getItem('setting', $setting['id']));
+            switch ($item['operand']){ 
+                case 'multiply' :
+                    if($item['value'] > 1){
+                        $item['description'] = sprintf(lang('App.modifier.description.multiply.increase'), $item['description'], ($item['value']-1)*100);
+                    } else {
+                        $item['description'] = sprintf(lang('App.modifier.description.multiply.decrease'), $item['description'], (1-$item['value'])*100);
+                    }
+                    break;
+                case 'add' :
+                    $item['description'] = sprintf(lang('App.modifier.description.add'), $item['description'], $item['value']);
+                    break;
+                case 'substract' :
+                    $item['description'] = sprintf(lang('App.modifier.description.substract'), $item['description'], $item['value']);
+                    break;
+                default;
+            }
+        }
+        return $data;        
+    }
 
-    public function createModifiersList ($user_id, $data)
+    public function createModifierList ($user_id, $data)
     {
         foreach($data as $item){
-            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id)->get()->getRowArray();
+            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id)->where('settings.code', $item['code'])->get()->getRowArray();
             $this->createModifierItem([
                 'setting_id' => $setting['id'], 
                 'user_id' => $user_id, 
@@ -125,7 +178,7 @@ class SettingsModel extends Model
         }
         return true;        
     }
-    public function createModifierItem($data)
+    public function createModifierItem ($data)
     {
         $SettingsModifiersModel = model('SettingsModifiersModel');
         $SettingsModifiersModel->insert($data, true);
