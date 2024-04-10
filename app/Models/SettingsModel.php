@@ -26,7 +26,7 @@ class SettingsModel extends Model
         $DescriptionModel = model('DescriptionModel');
         $result = [];
         if(isset($data['user_id'])){
-            $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$data['user_id']);
+            $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$data['user_id'], 'left');
         }
         $settings = $this->get()->getResultArray();
         foreach($settings as $setting){

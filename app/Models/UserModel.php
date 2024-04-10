@@ -115,6 +115,8 @@ class UserModel extends Model
         $ResourceModel = model('ResourceModel');
         $user['resources'] = $ResourceModel->getList(['user_id' => $user['id']]);
 
+        $user['statistics'] = $this->getItemStatistics($user['id']);
+        
         unset($user['password']);
         unset($user['auth_key']);
         return $user;
@@ -272,6 +274,31 @@ class UserModel extends Model
         }
         return $user['auth_key'];
     }
-   
+    public function getItemStatistics($user_id)
+    {
+        $ClassroomUsermapModel = model('ClassroomUsermapModel');
+        $ExerciseModel = model('ExerciseModel');
+
+        $user_statistics = $ExerciseModel->where('user_id', $user_id)
+        ->select("COALESCE(sum(points), 0) as total_points, COALESCE(COUNT(points), 0) as total_exercises")
+        ->get()->getRowArray();
+
+        $dashboard = [
+            'total_points' => [
+                'label' => lang('App.user.statistics.total_points'),
+                'value' => (int) $user_statistics['total_points']
+            ],
+            'total_exercises' => [
+                'label' => lang('App.user.statistics.total_exercises'),
+                'value' => (int) $user_statistics['total_exercises']
+            ],
+            'total_classrooms' =>  [
+                'label' => lang('App.user.statistics.total_classrooms'),
+                'value' => count($ClassroomUsermapModel->getList($user_id))
+            ]
+        ];
+
+        return $dashboard;
+    }
 
 }

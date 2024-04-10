@@ -40,13 +40,13 @@ class CourseModel extends Model
     }
     public function getList () 
     {
-        $courses = $this->whereHasPermission('r')->get()->getResultArray();
+        $courses = $this->get()->getResultArray();
         foreach($courses as &$course){
             $course['image'] = base_url('image/' . $course['image']);
             $course['background_image'] = base_url('image/' . $course['background_image']);
             $course['progress'] = $this->getProgress($course['id']);
             $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
-            $course['is_active'] = session()->get('user_data')['settings']['courseId'] == $course['id'];
+            $course['is_active'] = session()->get('user_data')['settings']['courseId']['value'] == $course['id'];
         }
         return $courses;
     }

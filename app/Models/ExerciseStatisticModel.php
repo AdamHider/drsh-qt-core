@@ -201,9 +201,9 @@ class ExerciseStatisticModel extends Model
                 $classroom_id as classroom_id
             FROM (
                 SELECT 
-                    users.id as user_id, 
+                    users.id as user_id,
                     users.username,
-                    (SELECT characters.avatar FROM characters JOIN user_settings ON users.id = user_settings.user_id  AND user_settings.code = 'characterId') AS avatar,
+                    (SELECT characters.avatar FROM settings_usermap JOIN settings ON settings.code = 'characterId' AND settings.id = settings_usermap.item_id JOIN characters ON settings_usermap.value = characters.id WHERE settings_usermap.user_id = users.id) AS avatar,
                     COALESCE(SUM(exercises.points), 0) as points,
                     MIN(exercises.created_at) AS created_at,
                     MAX(exercises.finished_at) AS finished_at,

@@ -14,10 +14,10 @@ return [
         'goal.total_points_first.value' => '{0, number} points',
         'goal.lesson.title' => 'Complete lesson',
         'goal.lesson.description' => 'Complete lesson and gain points',
-        'goal.lesson.value' => '',
+        'goal.lesson.value' => '{0, number} points',
         'goal.total_lessons.title' => 'Complete lessons',
         'goal.total_lessons.description' => 'Complete lessons and gain points',
-        'goal.total_lessons.value' => '',
+        'goal.total_lessons.value' => '{0, number} points',
         'progress.total_points.percentage_text' => '{1, number}/{2, number}',
         'progress.total_points_first.percentage_text' => '{1, number}/{2, number}',
         'progress.lesson.percentage_text' => '{1, number}/{2, number}',
@@ -35,5 +35,10 @@ return [
         'description.multiply.decrease' => '%s decreased by %s%%',
         'description.add' => '%s increased by %s',
         'description.substract' => '%s decreased by %s',
+    ],
+    'user' => [
+        'statistics.total_exercises' => 'Exercises',
+        'statistics.total_points' => 'Points',
+        'statistics.total_classrooms' => 'Classrooms'
     ]
 ];

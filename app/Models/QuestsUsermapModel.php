@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 use CodeIgniter\Model;
-class SkillGroupModel extends Model
+class QuestsUsermapModel extends Model
 {
-    protected $table      = 'skill_groups';
-    protected $primaryKey = 'id';
+    protected $table      = 'quests_usermap';
+    protected $primaryKey = 'item_id';
     protected $allowedFields = [
         'item_id', 
         'user_id'
