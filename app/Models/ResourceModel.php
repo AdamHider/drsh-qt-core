@@ -123,6 +123,17 @@ class ResourceModel extends Model
         }
         return $resources;
     }
+    public function proccessItemReward ($user_id, $reward_config)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
+        ->whereIn('code', array_keys($reward_config))->get()->getResultArray();
+        foreach($resources as &$resource){
+            $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
+            $resource['quantity'] = (int) $resource['quantity'];
+        }
+        return $resources;
+    }
 
     public function substract ($user_id, $resources)
     {

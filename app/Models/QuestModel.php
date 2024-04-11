@@ -43,11 +43,12 @@ class QuestModel extends Model
     
     public function getItem ($quest_id) 
     {
+        $ResourceModel = model('ResourceModel');
         if(!$this->hasPermission($quest_id, 'r')){
             return 'forbidden';
         }
         
-        $quest = $this->select('quests.*, lessons.title as lesson_title, lessons.image as lesson_image')
+        $quest = $this->select('quests.*')
         ->where('quests.id', $quest_id)->get()->getRowArray();
         
         if(empty($quest)){
@@ -59,11 +60,12 @@ class QuestModel extends Model
         $quest['is_private'] = (bool) $quest['is_private'];
         $quest['is_disabled'] = (bool) $quest['is_disabled'];
         $quest['is_owner'] = $quest['owner_id'] == session()->get('user_id');
-        $quest['reward'] = json_decode($quest['reward'], true);
+
+        $reward_config = json_decode($quest['reward_config'], true);
+        $quest['reward'] = $ResourceModel->proccessItemReward(session()->get('user_id'), $reward_config);
+        
         $quest['progress'] = $this->getProgress($quest);
         $quest['is_completed'] = $this->checkCompleted($quest);
-        $quest['is_outdated'] = $this->checkOutdated($quest);
-        $quest['is_rewarded'] = $this->checkRewarded($quest);
         $quest['goal'] = [
             'title' => lang('App.quest.goal.'.$quest['code'].'.title'),
             'description' => lang('App.quest.goal.'.$quest['code'].'.description'),
@@ -82,58 +84,56 @@ class QuestModel extends Model
     }
     public function getList ($data) 
     {
-        
         $DescriptionModel = model('DescriptionModel');
+        $QuestGroupsModel = model('QuestGroupsModel');
+        $ResourceModel = model('ResourceModel');
+
         if(isset($data['active_only'])){
-            /*
-            $this->join('user_resources_expenses', 'user_resources_expenses.item_id = quests.id AND user_resources_expenses.item_code = "quest" AND user_resources_expenses.user_id = '.session()->get('user_id'), 'left')
-            ->where('user_resources_expenses.id', NULL);*/
             $this->where('IF(quests.date_end, quests.date_end > NOW(), 1)');
+            $this->whereIn('id', $this->getActiveIDs($data['user_id']));
         }
 
-        $this->whereHasPermission('r')->groupBy('quests.id');
-        
-        if(isset($data['limit'])){
-            $this->limit($data['limit'], $data['offset']);
-        }
-
-        $quests = $this->orderBy('COALESCE(date_end, NOW()) DESC')->get()->getResultArray();
+        $quests = $this->orderBy('group_id')->get()->getResultArray();
 
         if(empty($quests)){
             return 'not_found';
         }
-        $result = [];
-        foreach(array_group_by($quests, ['group_id']) as $group_id => &$quest_group){
 
-            $groupObject = $DescriptionModel->getItem('quest_group', $group_id);
+        foreach($quests as &$quest){
+            $quest = array_merge($quest, $DescriptionModel->getItem('quest', $quest['id']));
+            $quest['group'] = $QuestGroupsModel->getItem($quest['group_id']);
+            $quest['image'] = base_url('image/' . $quest['image']);
+            
+            $reward_config = json_decode($quest['reward_config'], true);
+            $quest['reward'] = $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
 
-            foreach($quest_group as &$quest){
-                $quest['title'] = lang('App.quest.title.'.$quest['code'], [$quest['value']]);
-                $quest['image'] = base_url('image/' . $quest['image']);
-                $quest['reward'] = json_decode($quest['reward'], true);
-                $quest['progress'] = $this->getProgress($quest);
-                $quest['is_completed'] = $this->checkCompleted($quest);
-                $quest['is_outdated'] = $this->checkOutdated($quest);
-                $quest['is_rewarded'] = $this->checkRewarded($quest);
-                $quest['goal'] = [
-                    'title' => lang('App.quest.goal.'.$quest['code'].'.title'),
-                    'description' => lang('App.quest.goal.'.$quest['code'].'.description'),
-                    'value' => lang('App.quest.goal.'.$quest['code'].'.value', [$quest['value']])
-                ];
-                if($quest['date_start']){
-                    $quest['date_start_humanized'] = Time::parse($quest['date_start'], Time::now()->getTimezone())->humanize();
-                }
-                if($quest['date_end']){
-                    $time = Time::parse($quest['date_end'], Time::now()->getTimezone());
-                    $quest['time_left'] = Time::now()->difference($time)->getDays();
-                    $quest['date_end_humanized'] = $time->humanize();
-                    $quest['time_left_humanized'] = Time::now()->difference($time)->humanize();
-                }
+            $quest['progress'] = $this->getProgress($quest);
+            $quest['is_completed'] = $this->checkCompleted($quest);
+            
+            if($quest['date_start']){
+                $quest['date_start_humanized'] = Time::parse($quest['date_start'], Time::now()->getTimezone())->humanize();
             }
-            $groupObject['list'] = $quest_group;
-            $result[] = $groupObject;
+            if($quest['date_end']){
+                $time = Time::parse($quest['date_end'], Time::now()->getTimezone());
+                $quest['time_left'] = Time::now()->difference($time)->getDays();
+                $quest['date_end_humanized'] = $time->humanize();
+                $quest['time_left_humanized'] = Time::now()->difference($time)->humanize();
+            }
         }
-        return $result;
+
+        return $quests;
+    }
+
+    private function getActiveIDs($user_id)
+    {
+        $QuestGroupsModel = model('QuestGroupsModel');
+        $groups = $QuestGroupsModel->getActiveList();
+        $groupsIds = array_map(function($group) { return $group['id'];}, $groups);
+        $activeQuestIds = $this->select("SUBSTRING_INDEX(GROUP_CONCAT(id ORDER BY level SEPARATOR ','), ',', 1) AS id")
+        ->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.$user_id, 'left')
+        ->where('quests_usermap.item_id IS NULL AND group_id IN ('.implode(',', $groupsIds).')')
+        ->whereHasPermission('r')->groupBy('quests.group_id')->get()->getResultArray();
+        return array_map(function($quest) { return $quest['id'];}, $activeQuestIds);
     }
     public function getTotal ($data) 
     {

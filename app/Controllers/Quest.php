@@ -36,12 +36,10 @@ class Quest extends BaseController
         $classroom_id = $this->request->getVar('classroom_id');
 
         $data = [
+            'user_id' => session()->get('user_id'),
             'limit' => $limit,
             'offset' => $offset
         ];
-        if($mode == 'by_user'){
-            $data['user_id'] = session()->get('user_id');
-        }
         if($active_only){
             $data['active_only'] = $active_only;
         }
