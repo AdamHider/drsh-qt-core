@@ -41,15 +41,15 @@ class QuestModel extends Model
         ]
     ];
     
-    public function getItem ($quest_id) 
+    public function getItem ($data) 
     {
         $ResourceModel = model('ResourceModel');
-        if(!$this->hasPermission($quest_id, 'r')){
+        if(!$this->hasPermission($data['quest_id'], 'r')){
             return 'forbidden';
         }
         
         $quest = $this->select('quests.*')
-        ->where('quests.id', $quest_id)->get()->getRowArray();
+        ->where('quests.id', $data['quest_id'])->get()->getRowArray();
         
         if(empty($quest)){
             return 'not_found';
@@ -59,13 +59,13 @@ class QuestModel extends Model
         $quest['value'] = (int) $quest['value'];
         $quest['is_private'] = (bool) $quest['is_private'];
         $quest['is_disabled'] = (bool) $quest['is_disabled'];
-        $quest['is_owner'] = $quest['owner_id'] == session()->get('user_id');
+        $quest['is_owner'] = $quest['owner_id'] == $data['user_id'];
 
         $reward_config = json_decode($quest['reward_config'], true);
-        $quest['reward'] = $ResourceModel->proccessItemReward(session()->get('user_id'), $reward_config);
+        $quest['reward'] = $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
         
-        $quest['progress'] = $this->getProgress($quest);
-        $quest['is_completed'] = $this->checkCompleted($quest);
+        $quest['progress'] = $this->getItemProgress($quest, $data['user_id']);
+        $quest['is_completed'] = $this->checkItemCompleted($quest);
         $quest['goal'] = [
             'title' => lang('App.quest.goal.'.$quest['code'].'.title'),
             'description' => lang('App.quest.goal.'.$quest['code'].'.description'),
@@ -107,8 +107,8 @@ class QuestModel extends Model
             $reward_config = json_decode($quest['reward_config'], true);
             $quest['reward'] = $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
 
-            $quest['progress'] = $this->getProgress($quest);
-            $quest['is_completed'] = $this->checkCompleted($quest);
+            $quest['progress'] = $this->getItemProgress($quest, $data['user_id']);
+            $quest['is_completed'] = $this->checkItemCompleted($quest);
             
             if($quest['date_start']){
                 $quest['date_start_humanized'] = Time::parse($quest['date_start'], Time::now()->getTimezone())->humanize();
@@ -144,15 +144,27 @@ class QuestModel extends Model
         }
         return count($quests);
     }
-    public function getProgress($data)
+    public function getItemProgress($data, $user_id)
     {
         $ExerciseModel = model('ExerciseModel');
+        $SkillUsermapModel = model('SkillUsermapModel');
         $current_total = 0;
         if($data['code'] == 'total_points' || $data['code'] == 'total_points_first'){
            // $current_total = $ExerciseModel->getTotal($data, 'sum');
         }
         if($data['code'] == 'lesson' || $data['code'] == 'total_lessons'){
             //$current_total = $ExerciseModel->getTotal($data, 'count');
+        }
+        if($data['code'] == 'skill'){
+            $current_total = !empty($SkillUsermapModel->where('item_id', $data['value'])->where('user_id', $user_id)->get()->getResultArray());
+            $data['value'] = 1;
+        }
+        if($data['code'] == 'skills_total'){
+            $total_skills = $SkillUsermapModel->select('COUNT(*) as total')->where('item_id', $data['value'])->where('user_id', $user_id)->get()->getResultArray();
+            if(!empty($total_skills['total'])){
+                $current_total = $total_skills['total'];
+            }
+
         }
         $result = [
             'value' => $current_total,
@@ -168,11 +180,11 @@ class QuestModel extends Model
         $result['percentage_text'] = lang('App.quest.progress.'.$data['code'].'.percentage_text', [$result['percentage'], $result['value'], $result['total']]);
         return $result;
     }
-    private function checkCompleted($quest)
+    private function checkItemCompleted($quest)
     {
-        return $quest['progress']['value'] >= $quest['value'];
+        return $quest['progress']['percentage'] == 100;
     }
-    private function checkOutdated($quest)
+    private function checkItemOutdated($quest)
     {
         $is_outdated = false;
         if($quest['date_end']){
@@ -180,50 +192,41 @@ class QuestModel extends Model
         } 
         return $is_outdated;
     }
-    private function checkRewarded($quest)
+
+    public function claimReward($data)
     {
-        $is_rewarded = false;
-        if(!empty($quest['reward'])){
-            $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
-            foreach($quest['reward'] as $resource_title => $resource_quantity){
-                $is_rewarded = false; //!empty($UserResourcesExpensesModel->getItem($resource_title, 'quest', $quest['id'], session()->get('user_id')));
-            }
-        }
-        return $is_rewarded;
-    }
-    public function claimReward($quest_id)
-    {
-        if(!$this->hasPermission($quest_id, 'r')){
+        $ResourceModel = model('ResourceModel');
+        $QuestsUsermapModel = model('QuestsUsermapModel');
+
+        if(!$this->hasPermission($data['quest_id'], 'r')){
             return 'forbidden';
         }
         
-        $quest = $this->where('id', $quest_id)->get()->getRowArray();
+        $quest = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.$data['user_id'], 'left')
+        ->where('quests_usermap.item_id IS NULL AND id = '.$data['quest_id'])->get()->getRowArray();
 
         if(empty($quest)){
             return 'not_found';
         }
-        $quest['reward'] = json_decode($quest['reward'], true);
-        $quest['progress'] = $this->getProgress($quest);
-        $quest['is_completed'] = $this->checkCompleted($quest);
-        $quest['is_outdated'] = $this->checkOutdated($quest);
-        $quest['is_rewarded'] = $this->checkRewarded($quest);
-        if($this->checkCompleted($quest) && !$this->checkOutdated($quest) && !$this->checkRewarded($quest)){
-            $UserResourcesExpensesModel = model('UserResourcesExpensesModel');
-            foreach($quest['reward'] as $resource_title => $resource_quantity){
-                $data = [
-                    'user_id' => session()->get('user_id'),
-                    'code' => $resource_title,
-                    'item_code' => 'quest',
-                    'item_id' => $quest['id'],
-                    'quantity' => $resource_quantity
-                ];
-                $UserResourcesExpensesModel->createItem($data);
-            }
-            return $quest;
+
+        $reward_config = json_decode($quest['reward_config'], true);
+
+        $quest['progress'] = $this->getItemProgress($quest, $data['user_id']);
+        $quest['is_completed'] = $this->checkItemCompleted($quest);
+        $quest['is_outdated'] = $this->checkItemOutdated($quest);
+        
+        if($this->checkItemCompleted($quest) && !$this->checkItemOutdated($quest)){
+            if($ResourceModel->enrollUserList($data['user_id'], $reward_config)){
+                $QuestsUsermapModel->insert(['item_id' => $quest['id'], 'user_id' => $data['user_id']], true);
+                return $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
+            };
+            return 'forbidden';
         } else {
             return 'forbidden';
         }
+            
     }
+
     public function createItem ($data)
     {
         $ClassroomModel = model('ClassroomModel');
@@ -263,6 +266,10 @@ class QuestModel extends Model
 
         return true;        
     }
+
+
+
+
 
     public function getAvailableLessons ($data) 
     {

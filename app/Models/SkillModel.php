@@ -161,7 +161,7 @@ class SkillModel extends Model
         $modifiers_config = json_decode($skill['modifiers_config'], true);
 
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
-            if($ResourceModel->substract($user_id, $cost_config)){
+            if($ResourceModel->enrollUserList($user_id, $cost_config, 'substract')){
                 $SettingsModel->createModifierList($user_id, $modifiers_config);
                 $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
                 return 'success';

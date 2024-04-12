@@ -4,15 +4,15 @@ function handleCors(){
         return 'fromCli';
     }
     foreach (getallheaders() as $name => $value) {
-        if( strtolower($name)=='origin' && (str_contains($value, 'tezkel') || str_contains($value, 'localhost')) ){
+        if( strtolower($name)=='origin' && (str_contains($value, 'mektepium') || str_contains($value, 'localhost')) ){
             header("Access-Control-Allow-Origin: $value");
             break;
         }
     }
-    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, x-sid");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, x-sid, Data-Hash");
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Credentials: true");
-    header("Access-Control-Expose-Headers: x-sid");
+    header("Access-Control-Expose-Headers: x-sid, Data-Hash");
     $method = isset($_SERVER['REQUEST_METHOD'])?$_SERVER['REQUEST_METHOD']:'';
     if( $method == "OPTIONS" ) {
         die();

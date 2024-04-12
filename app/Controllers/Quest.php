@@ -14,7 +14,11 @@ class Quest extends BaseController
 
         $quest_id = $this->request->getVar('quest_id');
 
-        $quest = $QuestModel->getItem($quest_id);
+        $data = [
+            'user_id' => session()->get('user_id'),
+            'quest_id' => $quest_id
+        ];
+        $quest = $QuestModel->getItem($data);
 
         if ($quest == 'not_found') {
             return $this->failNotFound('not_found');
@@ -52,7 +56,7 @@ class Quest extends BaseController
         if ($quests == 'not_found') {
             return $this->failNotFound('not_found');
         }
-
+        $this->response->setHeader('Data-Hash', md5(json_encode($quests)));
         return $this->respond($quests);
     }
     public function claimReward()
@@ -60,8 +64,11 @@ class Quest extends BaseController
         $QuestModel = model('QuestModel');
 
         $quest_id = $this->request->getVar('quest_id');
-
-        $result = $QuestModel->claimReward($quest_id);
+        $data = [
+            'user_id' => session()->get('user_id'),
+            'quest_id' => $quest_id
+        ];
+        $result = $QuestModel->claimReward($data);
         
         if ($result == 'not_found') {
             return $this->failNotFound('not_found');

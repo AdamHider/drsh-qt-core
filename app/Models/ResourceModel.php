@@ -126,19 +126,20 @@ class ResourceModel extends Model
     public function proccessItemReward ($user_id, $reward_config)
     {
         $DescriptionModel = model('DescriptionModel');
-        $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
-        ->whereIn('code', array_keys($reward_config))->get()->getResultArray();
+        $resources = $this->whereIn('code', array_keys($reward_config))->get()->getResultArray();
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
-            $resource['quantity'] = (int) $resource['quantity'];
+            $resource['quantity'] = (int) $reward_config[$resource['code']];
         }
         return $resources;
     }
 
-    public function substract ($user_id, $resources)
+    public function enrollUserList ($user_id, $resources, $mode = 'add')
     {
         foreach($resources as $code => &$quantity){
-            $quantity = $quantity * -1;
+            if($mode == 'substract'){
+                $quantity = $quantity * -1;
+            }
         }
         if(!$this->checkListQuantity($user_id, $resources)) return false;
         return $this->saveUserList($user_id, $resources);

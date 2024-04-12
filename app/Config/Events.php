@@ -34,8 +34,6 @@ Events::on('signUp', static function ($user_id) {
     $UserGroupModel->createUserItem($user_id, 'registered');
 });
 
-
-
 Events::on('pre_system', static function () {
     if (ENVIRONMENT !== 'testing') {
         if (ini_get('zlib.output_compression')) {
