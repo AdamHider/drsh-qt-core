@@ -60,20 +60,20 @@ class CourseModel extends Model
 
         return $progress;
     }
-
-        
     public function itemCreate ($image)
     {
         $this->transBegin();
         $data = [
             'image' => $image
         ];
-        $character_id = $this->insert($data, true);
+        $course_id = $this->insert($data, true);
         $this->transCommit();
 
-        return $character_id;        
+        return $course_id;        
     }
-
-
-
+    public function linkItem ($data) 
+    {
+        $SettingsModel = model('SettingsModel');
+        return $SettingsModel->updateUserItem($data['user_id'], ['code' => 'courseId', 'value' => $data['course_id']]);
+    }
 }

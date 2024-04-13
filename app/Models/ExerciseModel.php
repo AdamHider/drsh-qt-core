@@ -82,8 +82,8 @@ class ExerciseModel extends Model
         }
         $cost_config = json_decode($lesson['cost_config'], true);
 
-        $UserResourcesModel = model('UserResourcesModel');
-        if(!$UserResourcesModel->substract(session()->get('user_id'), $cost_config)){
+        $ResourceModel = model('ResourceModel');
+        if(!$ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
             return 'bad_request';
         } 
 

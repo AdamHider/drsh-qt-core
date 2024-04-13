@@ -34,5 +34,25 @@ class Course extends BaseController
         $result = $CourseModel->getList();
         return $this->respond($result, 200);
     }
+    public function linkItem()
+    {
+        
+        $CourseModel = model('CourseModel');
+
+        $course_id = $this->request->getVar('id');
+        $user_id = session()->get('user_id');
+
+        $data = [
+            'course_id' => $course_id,
+            'user_id' => $user_id
+        ];
+        $result = $CourseModel->linkItem($data);
+
+        if ($result === 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+
+        return $this->respondCreated(['result' => $result]);
+    }
 
 }

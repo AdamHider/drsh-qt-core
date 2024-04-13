@@ -61,7 +61,4 @@ class CharacterModel extends Model
         $SettingsModel->updateUserItem($data['user_id'], ['code' => 'characterId', 'value' => $character['id']]);
         return $SettingsModel->createModifierList($data['user_id'], $modifiersConfig);
     }
-
-
-
 }

@@ -65,7 +65,7 @@ class LessonModel extends Model
 
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.course_id', session()->get('user_data')['settings']['courseId'])
+        ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
         ->where('lessons.parent_id IS NULL')
         ->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
