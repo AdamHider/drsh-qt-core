@@ -48,8 +48,7 @@ class QuestModel extends Model
             return 'forbidden';
         }
         
-        $quest = $this->select('quests.*')
-        ->where('quests.id', $data['quest_id'])->get()->getRowArray();
+        $quest = $this->where('quests.id', $data['quest_id'])->get()->getRowArray();
         
         if(empty($quest)){
             return 'not_found';
@@ -133,7 +132,10 @@ class QuestModel extends Model
         ->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.$user_id, 'left')
         ->where('quests_usermap.item_id IS NULL AND group_id IN ('.implode(',', $groupsIds).')')
         ->whereHasPermission('r')->groupBy('quests.group_id')->get()->getResultArray();
-        return array_map(function($quest) { return $quest['id'];}, $activeQuestIds);
+        if(!empty($activeQuestIds)){
+            return array_map(function($quest) { return $quest['id'];}, $activeQuestIds);
+        }
+        return [0];
     }
     public function getTotal ($data) 
     {

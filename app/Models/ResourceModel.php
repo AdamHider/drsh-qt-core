@@ -89,7 +89,7 @@ class ResourceModel extends Model
             $timeDifference = $consumptionTime->difference(Time::now())->getSeconds();
             
             if($timeDifference < 0) continue;
-    
+            
             $restoratedValue = floor($timeDifference / $restorationTime);
             $newValue = $resource['quantity'] + $restoratedValue;
             if($newValue >= $maxValue){

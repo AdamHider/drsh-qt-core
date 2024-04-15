@@ -34,6 +34,7 @@ class LessonModel extends Model
 
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
+        $ResourceModel = model('ResourceModel');
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
@@ -50,7 +51,9 @@ class LessonModel extends Model
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
-            $lesson['cost_config'] = json_decode($lesson['cost_config']);
+            
+            $cost_config = json_decode($lesson['cost_config'], true);
+            $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
             $lesson['reward_config'] = json_decode($lesson['reward_config']);
         }
         unset($lesson['pages']);
@@ -62,7 +65,8 @@ class LessonModel extends Model
 
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
-
+        $ResourceModel = model('ResourceModel');
+        
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
@@ -80,7 +84,10 @@ class LessonModel extends Model
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
-            $lesson['cost_config'] = json_decode($lesson['cost_config']);
+            
+            $cost_config = json_decode($lesson['cost_config'], true);
+            $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
+
             $lesson['reward_config'] = json_decode($lesson['reward_config']);
             unset($lesson['pages']);
         }
@@ -91,6 +98,7 @@ class LessonModel extends Model
         $this->useSharedOf('courses', 'course_id');
 
         $ExerciseModel = model('ExerciseModel');
+        $ResourceModel = model('ResourceModel');
 
         $result = [];
         $result['preview_total'] = getenv('lesson.satellites.preview_total');
@@ -105,7 +113,8 @@ class LessonModel extends Model
             if($mode == 'full'){
                 $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
-                $satellite['cost_config'] = json_decode($satellite['cost_config']);
+                $cost_config = json_decode($satellite['cost_config'], true);
+                $satellite['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
                 $satellite['reward_config'] = json_decode($satellite['reward_config']);
             }
             unset($satellite['pages']);
