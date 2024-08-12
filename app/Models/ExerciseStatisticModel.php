@@ -12,7 +12,7 @@ class ExerciseStatisticModel extends Model
     use PermissionTrait;
     protected $table      = 'exercise_statistic';
 
-    public $limit = 6;
+    public $limit = 10;
     public $chart_colors = [
         '#4dc9f6',
         '#f67019',
@@ -52,17 +52,13 @@ class ExerciseStatisticModel extends Model
         if($data['classroom_id']){
             $this->useSharedOf('classrooms', 'classroom_id');
         }
-        $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
+        $result = $this->select('place, COALESCE(points, 0) as points, GROUP_CONCAT(DISTINCT is_active) as is_active, MIN(finished_at) as finished_at, is_winner')
         ->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."'")->whereHasPermission('r')
         ->groupBy('place, points, is_winner')->get()->getResultArray();
-        
         foreach($result as &$row){
             $row['data'] = $this->where("place", $row['place'])->get()->getResultArray();
             $row['is_active'] = (bool) $row['is_active'];
             $row['is_winner'] = (bool) $row['is_winner'];
-            if($row['finished_at']){
-                $row['finished_at_humanized'] = Time::parse($row['finished_at'], Time::now()->getTimezone())->toLocalizedString('d MMM yyyy');
-            }
             foreach($row['data'] as &$user){
                 $user['avatar'] = base_url('image/' . $user['avatar']);
             }
@@ -87,7 +83,12 @@ class ExerciseStatisticModel extends Model
         if($data['classroom_id']){
             $this->useSharedOf('classrooms', 'classroom_id');
         }
-        $list = $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."' AND points > 0")->limit(10)->whereHasPermission('r')->get()->getResultArray();
+        $this->where("place BETWEEN '".$user_row['place'] - $offset."' AND '".$user_row['place'] + $offset."' AND points > 0");
+        if(isset($data['user_only'])){
+            $this->where('user_id', session()->get('user_id')) ;
+        }
+        
+        $list = $this->limit(10)->whereHasPermission('r')->get()->getResultArray();
         if(empty($list)){
             return false;
         }

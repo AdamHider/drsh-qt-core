@@ -70,11 +70,13 @@ class Exercise extends BaseController
         $lesson_id = $this->request->getVar('lesson_id');
         $challenge_id = $this->request->getVar('challenge_id');
         $time_period = $this->request->getVar('time_period');
+        $user_only = $this->request->getVar('user_only');
         if($by_classroom && !$classroom_id){
             $classroom_id = session()->get('user_data')->profile->classroom_id;
         }
         $data = [
             'time_period' => $time_period,
+            'user_only' => $user_only,
             'classroom_id' => $classroom_id,
             'lesson_id' => $lesson_id,
             'order_by' => false
