@@ -39,8 +39,8 @@ return [
         'description.substract' => '%s decreased by %s',
     ],
     'user' => [
-        'statistics.total_exercises' => 'Exercises',
+        'statistics.total_exercises' => 'Planets',
         'statistics.total_points' => 'Points',
-        'statistics.total_classrooms' => 'Classrooms'
+        'statistics.total_skills' => 'Skills'
     ]
 ];

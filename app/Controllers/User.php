@@ -69,21 +69,20 @@ class User extends BaseController
 
     public function saveItemSettings()
     {
-        $UserSettingsModel = model('UserSettingsModel');
+        $SettingsModel = model('SettingsModel');
 
         $code = $this->request->getVar('code');
         $value = $this->request->getVar('value');
 
         $data = [
-            'user_id'   => session()->get('user_id'),
             'code'      => $code,
             'value'     => $value
         ];
 
-        $result = $UserSettingsModel->updateItem($data);
+        $result = $SettingsModel->updateUserItem(session()->get('user_id'), $data);
 
-        if($UserSettingsModel->errors()){
-            return $this->failValidationErrors(json_encode($UserSettingsModel->errors()));
+        if($SettingsModel->errors()){
+            return $this->failValidationErrors(json_encode($SettingsModel->errors()));
         }
 
         return $this->respond($result);

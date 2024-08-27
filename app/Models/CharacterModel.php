@@ -58,7 +58,8 @@ class CharacterModel extends Model
         
         $character = $this->where('characters.id', $data['character_id'])->get()->getRowArray();
         $modifiersConfig = json_decode($character['modifiers_config'], true);
-        $SettingsModel->updateUserItem($data['user_id'], ['code' => 'characterId', 'value' => $character['id']]);
+        $SettingsModel->updateUserItem($data['user_id'], ['code' => 'characterId', 'value' => $character['id']], true);
+        $SettingsModel->updateUserItem($data['user_id'], ['code' => 'avatarImage', 'value' => base_url('image/' . 'races/characters/'.$character['code'].rand(1,3).'.jpg')], true);
         return $SettingsModel->createModifierList($data['user_id'], $modifiersConfig);
     }
 }

@@ -276,7 +276,7 @@ class UserModel extends Model
     }
     public function getItemStatistics($user_id)
     {
-        $ClassroomUsermapModel = model('ClassroomUsermapModel');
+        $SkillUsermapModel = model('SkillUsermapModel');
         $ExerciseModel = model('ExerciseModel');
 
         $user_statistics = $ExerciseModel->where('user_id', $user_id)
@@ -292,9 +292,9 @@ class UserModel extends Model
                 'label' => lang('App.user.statistics.total_exercises'),
                 'value' => (int) $user_statistics['total_exercises']
             ],
-            'total_classrooms' =>  [
-                'label' => lang('App.user.statistics.total_classrooms'),
-                'value' => count($ClassroomUsermapModel->getList($user_id))
+            'total_skills' =>  [
+                'label' => lang('App.user.statistics.total_skills'),
+                'value' => count($SkillUsermapModel->where('user_id', $user_id)->get()->getResultArray())
             ]
         ];
 

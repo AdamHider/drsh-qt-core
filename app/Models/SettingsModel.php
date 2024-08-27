@@ -52,7 +52,10 @@ class SettingsModel extends Model
         $SettingsModifiersModel = model('SettingsModifiersModel');
         $modifiers = $SettingsModifiersModel ->where('settings_modifiers.setting_id = '.$setting_id.' AND settings_modifiers.user_id = '.$user_id)
         ->orderBy('FIELD(operand, "multiply", "divide", "add", "substract")')->get()->getResultArray();
-        $result = $value;
+        if(empty($modifiers)){
+            return $value;
+        }
+        $result = (int) $value;
         foreach($modifiers as $modifier){
             switch ($modifier['operand']){ 
                 case 'multiply' :
@@ -133,11 +136,18 @@ class SettingsModel extends Model
         $SettingsUsermapModel = model('SettingsUsermapModel');
         $SettingsUsermapModel->insert($data, true);
     }
-    public function updateUserItem($user_id, $data)
+    public function updateUserItem($user_id, $data, $force = false)
     {
         $SettingsUsermapModel = model('SettingsUsermapModel');
         $setting = $this->where('code', $data['code'])->get()->getRowArray();
-        $SettingsUsermapModel->set($data)->where(['item_id' => $setting['id'], 'user_id' => $user_id])->update();
+        
+        if(empty($setting)){
+            return false;
+        }
+        if($setting['user_editable'] || $force){
+            return $SettingsUsermapModel->set($data)->where(['item_id' => $setting['id'], 'user_id' => $user_id])->update();
+        }
+        return false;
     }
     
 
