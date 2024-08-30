@@ -5,11 +5,11 @@ trait PermissionTrait{
 
     public function userRole($item_id){
         $session = session();
-        /*
+        
         if( $this->isAdmin() ){
             return 'admin';
         }
-        */
+        
         $user_id = $session->get('user_id') ?? 0;
         if( $user_id == 0 ){
             return 'other';//unsigned user (guest)

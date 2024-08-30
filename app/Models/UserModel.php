@@ -102,8 +102,16 @@ class UserModel extends Model
         $UserGroupModel = model('UserGroupModel');
         $user['groups'] = $UserGroupModel->getList(['user_id' => $user['id']]);
         $user['group_ids'] = [];
+        $user['previleges'] = [];
         foreach($user['groups'] as $group){
             $user['group_ids'][] = $group['id'];
+            if($group['code'] == 'admin'){
+                $user['previleges']['is_admin'] = true;
+            }
+            if($group['code'] == 'editor'){
+                $user['previleges']['is_editor'] = true;
+            }
+
         } 
         
         $CharacterModel = model('CharacterModel');

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
+use App\Models\PermissionTrait;
 use CodeIgniter\Model;
 
-class CourseModel extends Model
+class CourseAdminModel extends Model
 {
     use PermissionTrait;
     protected $table      = 'courses';
@@ -38,8 +39,11 @@ class CourseModel extends Model
         }
         return $course;
     }
-    public function getList () 
+    public function getList ($filter) 
     {
+        if(!empty($filter['title'])){
+            $this->like('title', $filter['title'], 'both');
+        }
         $courses = $this->get()->getResultArray();
         foreach($courses as &$course){
             $course['image'] = base_url('image/' . $course['image']);
