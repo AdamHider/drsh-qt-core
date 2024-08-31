@@ -42,8 +42,7 @@ class LessonAdminModel extends Model
         $ResourceModel = model('ResourceModel');
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray();
+        ->select('lessons.*, exercises.id as exercise_id')->where('lessons.id', $lesson_id)->get()->getRowArray();
 
         if(!$lesson){
             return false;
@@ -56,7 +55,6 @@ class LessonAdminModel extends Model
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
-            
             $cost_config = json_decode($lesson['cost_config'], true);
             $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
             $lesson['reward_config'] = json_decode($lesson['reward_config']);
@@ -66,69 +64,34 @@ class LessonAdminModel extends Model
     }
     public function getList ($data) 
     {
-        $this->useSharedOf('courses', 'course_id');
+        //$this->useSharedOf('courses', 'course_id');
 
         $CourseSectionModel = model('CourseSectionModel');
-        $ExerciseModel = model('ExerciseModel');
-        $ResourceModel = model('ResourceModel');
         
-        $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
-        ->where('lessons.parent_id IS NULL')
-        ->whereHasPermission('r')
-        ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
+        $lessons = $this->join('courses', 'courses.id = lessons.course_id')->join('course_sections', 'course_sections.id = lessons.course_section_id')
+        ->select('lessons.*, courses.title as course_title, course_sections.title as course_section_title')
+        ->where('lessons.parent_id IS NULL')->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
 
         foreach($lessons as $key => &$lesson){
             if(isset($data['offset'])){
                 $lesson['order'] = $key + $data['offset'];
             }
-            $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
-            $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
+            $lesson['satellites'] = $this->getSatellites($lesson['id']);
             $lesson['image'] = base_url('image/' . $lesson['image']);
-            $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
-            $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
-            $lesson['is_explored'] = isset($lesson['exercise']['id']);
-            
-            $cost_config = json_decode($lesson['cost_config'], true);
-            $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
-
-            $lesson['reward_config'] = json_decode($lesson['reward_config']);
             unset($lesson['pages']);
         }
         return $lessons;
     }
-    public function getSatellites ($lesson_id, $mode) 
+    public function getSatellites ($lesson_id) 
     {
-        $this->useSharedOf('courses', 'course_id');
-
-        $ExerciseModel = model('ExerciseModel');
-        $ResourceModel = model('ResourceModel');
-
-        $result = [];
-        $result['preview_total'] = getenv('lesson.satellites.preview_total');
-
-        $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.parent_id', $lesson_id)
-        ->whereHasPermission('r')->orderBy('id')->get()->getResultArray();
+        //$this->useSharedOf('courses', 'course_id');
+        $satellites = $this->where('lessons.parent_id', $lesson_id)->orderBy('id')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
             $satellite['image'] = base_url('image/' . $satellite['image']);
-            if($mode == 'full'){
-                $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
-                $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
-                $cost_config = json_decode($satellite['cost_config'], true);
-                $satellite['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
-                $satellite['reward_config'] = json_decode($satellite['reward_config']);
-            }
             unset($satellite['pages']);
         }
-        $result['preview_list'] = $this->composeSatellitesPriview($satellites, $result['preview_total']);
-        if ($mode == 'full') {
-            $result['list'] = $satellites;
-        }
-        return $result;
+        return $satellites;
     }
     public function updateItem ($data)
     {

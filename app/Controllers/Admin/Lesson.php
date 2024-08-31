@@ -29,7 +29,7 @@ class Lesson extends BaseController
     }
     public function getList()
     {
-        $LessonModel = model('LessonModel');
+        $LessonModel = model('Admin/LessonAdminModel');
 
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
@@ -42,22 +42,7 @@ class Lesson extends BaseController
         $result = $LessonModel->getList($data);
         return $this->respond($result, 200);
     }
-    public function getSatellites()
-    {
-        $LessonModel = model('LessonModel');
-
-        $lesson_id = $this->request->getVar('lesson_id');
-        
-        if (!$lesson_id) {
-            return $this->failNotFound('not_found');
-        }
-        $satellites = $LessonModel->getSatellites($lesson_id, 'full');
-        
-        if (empty($satellites)) {
-            return $this->failNotFound('not_found');
-        }
-        return $this->respond($satellites);
-    }
+    
     public function getPage()
     {
         $LessonPageModel = model('LessonPageModel');
