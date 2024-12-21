@@ -58,8 +58,8 @@ class LessonAdminModel extends Model
             $cost_config = json_decode($lesson['cost_config'], true);
             $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
             $lesson['reward_config'] = json_decode($lesson['reward_config']);
+            $lesson['pages'] = json_decode($lesson['pages']);
         }
-        unset($lesson['pages']);
         return $lesson;
     }
     public function getList ($data) 

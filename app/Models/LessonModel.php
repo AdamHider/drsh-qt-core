@@ -119,7 +119,7 @@ class LessonModel extends Model
             }
             unset($satellite['pages']);
         }
-        $result['preview_list'] = $this->composeSatellitesPriview($satellites, $result['preview_total']);
+        $result['preview_list'] = $this->composeSatellitesPreview($satellites, $result['preview_total']);
         if ($mode == 'full') {
             $result['list'] = $satellites;
         }
@@ -127,11 +127,11 @@ class LessonModel extends Model
     }
 
     /**
-    * Method to beautify lesson object
+    * Method to compose sattelites for preview of Lesson Item
     *
-    * @return  assoc Array or false
+    * @return array Array or false
     **/
-    private function composeSatellitesPriview($satellites, $total)
+    private function composeSatellitesPreview($satellites, $total)
     {
         $result = [];
         foreach($satellites as $index => $satellite){
@@ -144,7 +144,6 @@ class LessonModel extends Model
             $satellite['delay'] = rand(1, 5);
             $result[] = $satellite;
         }
-        
         return $result;
     }
         
@@ -180,7 +179,6 @@ class LessonModel extends Model
     }
 
     
-
     public function composePages($pages, $lesson_type)
     {
         if($lesson_type == 'lexis'){
@@ -262,12 +260,6 @@ class LessonModel extends Model
             }
         }
         return $pages;
-    }
-    public function getUniqueRandomNumbersWithinRange($min, $max, $quantity, $excluded) {
-        $numbers = range($min, $max);
-        shuffle($numbers);
-        unset($numbers[array_search($excluded, $numbers)]);
-        return array_slice($numbers, 0, $quantity);
     }
     public function seedShuffle($array, $seed) {
         $tmp = array();

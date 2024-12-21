@@ -21,8 +21,12 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'cors'          => Cors::class,
+        'forcehttps'    => ForceHTTPS::class,
+        'pagecache'     => PageCache::class,
+        'performance'   => PerformanceMetrics::class,
+        'auth'          => \App\Filters\Auth::class,
     ];
-
     /**
      * List of filter aliases that are always
      * applied before and after every request.

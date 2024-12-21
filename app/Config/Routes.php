@@ -6,9 +6,23 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+$routes->group('auth', [], function($routes) {
+    $routes->get('login', 'Admin\Auth::login');
+    $routes->post('authenticate', 'Admin\Auth::authenticate');
+    $routes->get('logout', 'Admin\Auth::logout');
+    $routes->get('register', 'Admin\Auth::register');
+    $routes->post('store', 'Admin\Auth::store');
+});
+
+$routes->group('admin', ['filter' => 'auth'], function($routes) {
+    $routes->get('', 'Admin\Dashboard::index');
+});
 $routes->post('/Lesson/(:any)', 'Lesson::$1');
 $routes->post('/Exercise/(:any)', 'Exercise::$1');
+
 $routes->post('/User/(:any)', 'User::$1');
+$routes->post('/Auth/(:any)', 'Auth::$1');
+
 $routes->post('/Achievement/(:any)', 'Achievement::$1');
 $routes->post('/Quest/(:any)', 'Quest::$1');
 $routes->post('/Classroom/(:any)', 'Classroom::$1');

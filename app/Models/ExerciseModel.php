@@ -134,13 +134,11 @@ class ExerciseModel extends Model
     }
     public function redoItem($lesson_id)
     {
-        
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
         ->where('lesson_id', $lesson_id)->get()->getRowArray();
         if(!empty($exercise)){
             $exercise['lesson_pages'] = json_decode($exercise['lesson_pages'], true, JSON_UNESCAPED_UNICODE);
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
-    
             unset($exercise['exercise_pending']);
             unset($exercise['exercise_submitted']);
         } else {
@@ -153,23 +151,12 @@ class ExerciseModel extends Model
     public function getTotal($data, $mode = 'sum')
     {
         $this->where('exercises.user_id = '.session()->get('user_id'));
-        if($mode == 'sum'){
-            $this->select("COALESCE(sum(exercises.points), 0) as total");
-        }
-        if($mode == 'count'){
-            $this->select("COALESCE(count(exercises.points), 0) as total");
-        }
-        if($data['date_start']){
-            $this->where("exercises.finished_at > '".$data['date_start']."'");
-        }
-        if($data['date_end']){
-            $this->where("exercises.finished_at < '".$data['date_end']."'");
-        }
-        if($data['lesson_id']){
-            $this->where("exercises.lesson_id = '".$data['lesson_id']."'");
-        }
+        if($mode == 'sum')      $this->select("COALESCE(sum(exercises.points), 0) as total");
+        if($mode == 'count')    $this->select("COALESCE(count(exercises.points), 0) as total");
+        if($data['date_start']) $this->where("exercises.finished_at > '".$data['date_start']."'");
+        if($data['date_end'])   $this->where("exercises.finished_at < '".$data['date_end']."'");
+        if($data['lesson_id'])  $this->where("exercises.lesson_id = '".$data['lesson_id']."'");
         $exercise = $this->get()->getRowArray();
-
         return $exercise['total'];
     }
     private function calculateTotals($exercise)

@@ -155,6 +155,7 @@ trait PermissionTrait{
     }
 
     public function isAdmin(){
+        if(empty(session()->get('user_data')['groups'])) return false;
         foreach(session()->get('user_data')['groups'] as $group){
             if($group['code'] == 'admin'){
                return true;

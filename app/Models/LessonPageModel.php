@@ -15,7 +15,7 @@ class LessonPageModel extends LessonModel
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
-        
+        $lesson['pages'] = json_decode($lesson['pages'], true);
         $exercise = $ExerciseModel->getItem($lesson['exercise_id']);
         if(empty($exercise)){
             return false;
@@ -29,9 +29,8 @@ class LessonPageModel extends LessonModel
         } else {
             return $checked;
         }
-        
         if(!empty($exercise['lesson_pages'][$index])){
-            return $this->composePage($exercise, $index);
+            return $this->composePage($exercise, $lesson, $index);
         } 
         if($exercise['data']['total_pages'] == $index && !$exercise['finished_at']){
             $ExerciseModel = model('ExerciseModel');
@@ -41,10 +40,10 @@ class LessonPageModel extends LessonModel
         return false;
     }
 
-    private function composePage($exercise, $page_index)
+    private function composePage($exercise, $lesson, $page_index)
     {
         $page = [];
-        $page_data = $exercise['lesson_pages'][$page_index];
+        $page_data = $lesson['pages'][$page_index];
         $page['answers'] = [
             'is_finished' => false
         ];
@@ -52,7 +51,7 @@ class LessonPageModel extends LessonModel
             $page['answers'] = $exercise['data']['answers'][$page_index];
         }
         $page['exercise'] = $exercise['data'];
-        $page['data'] = $this->composeItemData($exercise['lesson_pages'][$page_index]);
+        $page['data'] = $this->composeItemData($lesson['pages'][$page_index]);
         $page['fields'] = $this->composeItemFields($page_data, $exercise);
         unset($page_data['template_config']);
         $page['header'] = $page_data;
@@ -120,8 +119,9 @@ class LessonPageModel extends LessonModel
         $ExerciseModel = model('ExerciseModel');
         $result = [];
         $result['available']  = true;
+        $current = $exercise['data']['current_page'];
         if($action == 'next'){
-            if($exercise['data']['current_page'] == $exercise['data']['total_pages']){            
+            if($current == $exercise['data']['total_pages']){            
                 $result['available'] = false;
                 return $result;
             }
@@ -142,8 +142,8 @@ class LessonPageModel extends LessonModel
                 $result['message']    = 'No again attempts left';
                 return $result;
             }
-            $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] - $exercise['data']['answers'][$exercise['data']['current_page']]['totals']['total'];
-            unset($exercise['data']['answers'][$exercise['data']['current_page']]);
+            $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] - $exercise['data']['answers'][$current]['totals']['total'];
+            unset($exercise['data']['answers'][$current]);
             $exercise['exercise_pending'] = $exercise['data'];
             $exercise['data']['again_attempts']--;
         }
