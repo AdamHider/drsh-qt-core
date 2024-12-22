@@ -58,7 +58,7 @@ class ExerciseAnswerModel extends ExerciseModel
         $exercise = $this->getItem($lesson['exercise_id']);
         
         $page_index = $exercise['data']['current_page'];
-        $page = $exercise['lesson_pages'][$page_index];
+        $page = json_decode($lesson['pages'], true)[$page_index];
         $fields = $page['template_config']['input_list'];
         
         if(!empty($exercise['data']['answers'][$page_index])){
@@ -89,7 +89,8 @@ class ExerciseAnswerModel extends ExerciseModel
             if($this->checkFinished($fields, $page_answers)){
                 $page_answers['is_finished'] = true;
             }
-        } 
+        }
+        
         if($page_answers['is_finished'] == true){
             $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] + $page_answers['totals']['total'];
         }

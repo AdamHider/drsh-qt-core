@@ -20,7 +20,6 @@ class ExerciseModel extends Model
     protected $allowedFields = [
         'lesson_id',
         'user_id',
-        'lesson_pages',
         'exercise_pending',
         'exercise_submitted',
         'points',
@@ -29,10 +28,12 @@ class ExerciseModel extends Model
         'finished_at'
     ];
     private $empty_data = [
-        'back_attempts'     => 3,
-        'again_attempts'    => 3,
         'current_page'      => 0,
         'answers'           => [],
+        'actions'           => [
+            'main'          => 'next',
+            'back_attempts' => 3
+        ],
         'totals'            => [
             'total'         => 0
         ]
@@ -50,15 +51,9 @@ class ExerciseModel extends Model
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
         ->where('id', $exercise_id)->get()->getRowArray();
         if(!empty($exercise)){
-            $exercise['lesson_pages'] = json_decode($exercise['lesson_pages'], true, JSON_UNESCAPED_UNICODE);
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
-    
-            $exercise['data']['progress_percentage'] = floor($exercise['data']['current_page'] * 100 / count($exercise['lesson_pages']));
             unset($exercise['exercise_pending']);
             unset($exercise['exercise_submitted']);
-            if($mode == 'lite'){
-                unset($exercise['lesson_pages']);
-            }
         }
         return $exercise;
     }
@@ -68,7 +63,6 @@ class ExerciseModel extends Model
         ->where('id', $exercise_id)->get()->getRowArray();
         if(!empty($exercise)){
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
-            $exercise['data']['progress_percentage'] = floor($exercise['data']['current_page'] * 100 / count($exercise['lesson_pages']));
             return $exercise;
         }
         return null;
@@ -84,16 +78,12 @@ class ExerciseModel extends Model
 
         $ResourceModel = model('ResourceModel');
         if(!$ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
-            return 'bad_request';
+            //return 'not_enough_resources';
         } 
-
-        $lesson['pages'] = (array) json_decode($lesson['pages'], true, JSON_UNESCAPED_UNICODE);
-        $lesson_pages = $LessonModel->composePages($lesson['pages'], $lesson['type']);
         $this->transBegin();
         $data = [
             'lesson_id' => $lesson_id,
             'user_id' => session()->get('user_id'),
-            'lesson_pages' => $lesson_pages,
             'exercise_pending' => $this->empty_data,
             'exercise_submitted' => NULL,
             'began_at' => date("Y-m-d H:i:s")
@@ -117,12 +107,12 @@ class ExerciseModel extends Model
                 $data['data']['totals']     = $this->calculateTotals($data);
                 $data['exercise_submitted'] = $this->chooseBestResult($data);
                 $data['points']             = $data['exercise_submitted']['totals']['total'];
+                unset($data['exercise_submitted']['answers']);
             }
         } else {
             $data['exercise_pending']   = $data['data'];
             $data['finished_at']        = NULL;
         }
-
         $this->transBegin();
         $this->set($data);
         $this->where('id', $data['id']);
@@ -135,9 +125,8 @@ class ExerciseModel extends Model
     public function redoItem($lesson_id)
     {
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
-        ->where('lesson_id', $lesson_id)->get()->getRowArray();
+        ->where('lesson_id', $lesson_id)->where('exercises.user_id = '.session()->get('user_id'))->get()->getRowArray();
         if(!empty($exercise)){
-            $exercise['lesson_pages'] = json_decode($exercise['lesson_pages'], true, JSON_UNESCAPED_UNICODE);
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
             unset($exercise['exercise_pending']);
             unset($exercise['exercise_submitted']);
@@ -147,6 +136,7 @@ class ExerciseModel extends Model
         $exercise['data'] = $this->empty_data;
         $exercise['attempts']++;
         return $this->updateItem($exercise, 'start');
+         
     }
     public function getTotal($data, $mode = 'sum')
     {
@@ -188,14 +178,7 @@ class ExerciseModel extends Model
     }
     private function calculateTotalTimePoints($exercise)
     {
-        $start_date = new \DateTime($exercise['began_at']);
-        $finish_date = new \DateTime($exercise['finished_at']);
-        //$difference_readable = $start_date->diff($finish_date)->format('%H:%I:%S');
         $difference = strtotime($exercise['finished_at']) - strtotime($exercise['began_at']);
-        $more_than_day = $difference/3600 > 24;
-        if($more_than_day){
-            $time_difference = 'More than a day';
-        }
         $time_points = 200 - ceil($difference/60*7);
         if($time_points < 0 || $difference < 0){
             $time_points = 10;
@@ -208,19 +191,17 @@ class ExerciseModel extends Model
 
     private function chooseBestResult ($exercise)
     {
+        $exercise_pending = $exercise['data'];
         $exercise_submitted = $this->select('exercise_submitted')->where('id', $exercise['id'])->get()->getRowArray()['exercise_submitted']; 
         $exercise_submitted = json_decode($exercise_submitted, true, JSON_UNESCAPED_UNICODE);
-        if(!empty($exercise_submitted) && $exercise_submitted['totals']['total'] > $exercise['data']['totals']['total']){
-            return $exercise_submitted['data'];
+        if(!empty($exercise_submitted) && $exercise_submitted['totals']['total'] > $exercise_pending['totals']['total']){
+            return $exercise_submitted;
         } else {
-            return $exercise['data'];
+            return $exercise_pending;
         }
     }
     protected function jsonPrepare (array $data)
     {
-        if ( isset($data['data']['lesson_pages']) ){
-            $data['data']['lesson_pages'] = json_encode($data['data']['lesson_pages'], JSON_UNESCAPED_UNICODE);
-        }
         if ( isset($data['data']['exercise_pending']) ){
             $data['data']['exercise_pending'] = json_encode($data['data']['exercise_pending'], JSON_UNESCAPED_UNICODE);
         }

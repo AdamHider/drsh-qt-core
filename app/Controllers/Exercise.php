@@ -7,7 +7,7 @@ class Exercise extends BaseController
 {
     use ResponseTrait;
 
-    public function addItem()
+    public function createItem()
     {
         $ExerciseModel = model('ExerciseModel');
 
@@ -15,13 +15,17 @@ class Exercise extends BaseController
         if (!$lesson_id) {
             return $this->fail('no_lesson');
         }
+        
         $exercise_id = $ExerciseModel->createItem($lesson_id);
         
+        if (!$exercise_id) {
+            return $this->fail('fail');
+        }
         if ($exercise_id == 'not_found') {
             return $this->failNotFound('not_found');
         }
-        if ($exercise_id == 'bad_request') {
-            return $this->fail('bad_request');
+        if ($exercise_id == 'not_enough_resources') {
+            return $this->fail('not_enough_resources');
         }
         if($ExerciseModel->errors()){
             return $this->failValidationErrors(json_encode($ExerciseModel->errors()));

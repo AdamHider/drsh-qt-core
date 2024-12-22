@@ -1,0 +1,52 @@
+{
+    "totals": {
+        "time": 173,
+        "total": 173,
+        "attempts": 0,
+        "exercises": 0,
+        "total_pages": 1,
+        "attempts_count": 1
+    },
+    "actions": {
+        "main": "next",
+        "back_attempts": 3
+    },
+    "answers": {
+        "1": {
+            "totals": {
+                "total": 0,
+                "answers": 4,
+                "correct": 0
+            },
+            "answers": [
+                {
+                    "value": "adam",
+                    "answer": "adım",
+                    "points": 0,
+                    "is_correct": false
+                },
+                {
+                    "value": "Meni",
+                    "answer": "Menim",
+                    "points": 0,
+                    "is_correct": false
+                },
+                {
+                    "value": "",
+                    "answer": "oldım",
+                    "points": 0,
+                    "is_correct": false
+                },
+                {
+                    "value": "",
+                    "answer": "memnün",
+                    "points": 0,
+                    "is_correct": false
+                }
+            ],
+            "is_finished": true
+        }
+    },
+    "total_pages": 2,
+    "current_page": 2
+}
