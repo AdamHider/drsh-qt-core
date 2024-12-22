@@ -64,7 +64,11 @@ class Lesson extends BaseController
         $lesson_id = $this->request->getVar('lesson_id');
         $action = $this->request->getVar('action');
         
-        $page = $LessonPageModel->getPage($lesson_id, $action);
+        $pageIndex = $LessonPageModel->getCurrentIndex($lesson_id, $action);
+        if(!$pageIndex['available']){
+            return $this->failNotFound('not_found');
+        }
+        $page = $LessonPageModel->getPage($lesson_id, $pageIndex['index']);
         
         if (empty($page)) {
             return $this->failNotFound('not_found');

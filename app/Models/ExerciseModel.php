@@ -57,6 +57,17 @@ class ExerciseModel extends Model
         }
         return $exercise;
     }
+    public function getItemByLesson ($lesson_id) 
+    {
+        $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
+        ->where('lesson_id', $lesson_id)->get()->getRowArray();
+        if(!empty($exercise)){
+            $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
+            unset($exercise['exercise_pending']);
+            unset($exercise['exercise_submitted']);
+        }
+        return $exercise;
+    }
     public function getItemData ($exercise_id) 
     {
         $exercise = $this->select('COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
