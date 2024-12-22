@@ -99,23 +99,22 @@ class LessonPageModel extends LessonModel
     }
     
 
-    public function getCurrentIndex($lesson_id, $action)
+    public function getCurrentIndex($lesson_id, $action = 'current')
     {
         $ExerciseModel = model('ExerciseModel');
-
-        $exercise = $ExerciseModel->getItemByLesson($lesson_id);
 
         $result = [
             'available' => true
         ];
-        $current = $exercise['data']['current_page'];
+
+        $exercise = $ExerciseModel->getItemByLesson($lesson_id);
+        if(empty($exercise)){
+            $result['available']  = false;
+            $result['message']    = 'No such exercise';
+            return $result;
+        } 
         if($action == 'next'){
             $exercise['data']['current_page']++;
-            /*
-            if($exercise['data']['total_pages'] == $this->currentPage && !$exercise['finished_at']){
-                $ExerciseModel->updateItem($exercise, 'finish');
-                return 'finish';
-            }*/
         }
         if($action == 'previous'){
             if($exercise['actions']['back_attempts'] == 0){               
@@ -125,6 +124,11 @@ class LessonPageModel extends LessonModel
             }
             $exercise['data']['current_page']--;
             $exercise['actions']['back_attempts']--;
+        }
+        if($action == 'finish'){
+            $exercise['data']['current_page']++;
+            $ExerciseModel->updateItem($exercise, 'finish');
+            return 'finish';
         }
         $result['exercise_data']  = $exercise['data'];
         $result['index']  = $exercise['data']['current_page'];

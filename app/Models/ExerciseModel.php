@@ -49,7 +49,7 @@ class ExerciseModel extends Model
     public function getItem ($exercise_id, $mode = 'default') 
     {
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
-        ->where('id', $exercise_id)->get()->getRowArray();
+        ->where('id', $exercise_id)->where('exercises.user_id', session()->get('user_id'))->get()->getRowArray();
         if(!empty($exercise)){
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
             unset($exercise['exercise_pending']);
@@ -60,7 +60,7 @@ class ExerciseModel extends Model
     public function getItemByLesson ($lesson_id) 
     {
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
-        ->where('lesson_id', $lesson_id)->get()->getRowArray();
+        ->where('lesson_id', $lesson_id)->where('exercises.user_id', session()->get('user_id'))->get()->getRowArray();
         if(!empty($exercise)){
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
             unset($exercise['exercise_pending']);

@@ -37,8 +37,14 @@ class ExerciseAnswerModel extends ExerciseModel
     public function saveAnswer($lesson_id, $data = [])
     {
         $LessonPageModel = model('LessonPageModel');
-        $this->checkAnswers($lesson_id, $data);
-        $page = $LessonPageModel->getPage($lesson_id);
+
+        $lesson = $this->join('lessons', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
+        ->select('lessons.*, exercises.id as exercise_id')
+        ->where('lessons.id', $lesson_id)->get()->getRowArray();
+
+        $exercise = $this->getItem($lesson['exercise_id']);
+        $this->checkAnswers($exercise, $lesson, $data);
+        $page = $LessonPageModel->getPage($lesson_id, $exercise['data']['current_page']);
         return $page;
     }
     
@@ -49,13 +55,8 @@ class ExerciseAnswerModel extends ExerciseModel
     *
     * @since   3.4
     **/
-    public function checkAnswers($lesson_id, $income_answers)
+    public function checkAnswers($exercise, $lesson, $income_answers)
     {
-        $lesson = $this->join('lessons', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray();
-
-        $exercise = $this->getItem($lesson['exercise_id']);
         
         $page_index = $exercise['data']['current_page'];
         $page = json_decode($lesson['pages'], true)[$page_index];
@@ -95,7 +96,7 @@ class ExerciseAnswerModel extends ExerciseModel
             $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] + $page_answers['totals']['total'];
         }
         $exercise['data']['answers'][$page_index] = $page_answers;
-        $this->updateItem($exercise);
+        return $this->updateItem($exercise);
     } 
     
     private function composeAnswer($field, $user_input, $total_fields, $existing_answer)
