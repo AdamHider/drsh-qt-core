@@ -30,6 +30,7 @@ class ExerciseModel extends Model
     private $empty_data = [
         'current_page'      => 0,
         'answers'           => [],
+        'total_pages'       => 0,
         'actions'           => [
             'main'          => 'next',
             'back_attempts' => 3
@@ -49,7 +50,7 @@ class ExerciseModel extends Model
     public function getItem ($exercise_id, $mode = 'default') 
     {
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
-        ->where('id', $exercise_id)->get()->getRowArray();
+        ->where('id', $exercise_id)->where('exercises.user_id', session()->get('user_id'))->get()->getRowArray();
         if(!empty($exercise)){
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
             unset($exercise['exercise_pending']);
@@ -60,7 +61,7 @@ class ExerciseModel extends Model
     public function getItemByLesson ($lesson_id) 
     {
         $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
-        ->where('lesson_id', $lesson_id)->get()->getRowArray();
+        ->where('lesson_id', $lesson_id)->where('exercises.user_id', session()->get('user_id'))->get()->getRowArray();
         if(!empty($exercise)){
             $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
             unset($exercise['exercise_pending']);
@@ -91,6 +92,8 @@ class ExerciseModel extends Model
         if(!$ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
             //return 'not_enough_resources';
         } 
+        $this->empty_data['total_pages'] = count(json_decode($lesson['pages'], true));
+
         $this->transBegin();
         $data = [
             'lesson_id' => $lesson_id,
@@ -145,6 +148,8 @@ class ExerciseModel extends Model
             return false;
         }
         $exercise['data'] = $this->empty_data;
+        
+        $exercise['data']['total_pages'] = $this->select('JSON_LENGTH(lessons.pages) as total_pages')->where('lessons.id', $lesson_id)->get()->getRowArray()['total_pages'];
         $exercise['attempts']++;
         return $this->updateItem($exercise, 'start');
          
@@ -165,7 +170,6 @@ class ExerciseModel extends Model
         $data = [];
         $data['total'] = $exercise['data']['totals']['total'];
         $data['exercises'] = $exercise['data']['totals']['total'];
-        $data['total_pages'] = count($exercise['data']['answers']);
         if(!empty($exercise['finished_at'])){
             $time_points = $this->calculateTotalTimePoints($exercise);
             $data['total'] += $time_points;
