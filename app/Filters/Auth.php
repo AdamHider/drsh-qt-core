@@ -11,7 +11,7 @@ class Auth implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         // Проверка аутентификации пользователя
-        if (!session()->get('logged_in')) {
+        if (!session()->get('user_data')) {
             return redirect()->to('/auth/login');
         }
     }

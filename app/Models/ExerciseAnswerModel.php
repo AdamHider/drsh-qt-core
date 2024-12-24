@@ -42,11 +42,12 @@ class ExerciseAnswerModel extends ExerciseModel
 
         $page_index = $exercise['data']['current_page'];
 
-        $fields = $this->select('JSON_EXTRACT(lessons.pages, "$['.$page_index.'].template_config.input_list") as input_list')
+        $fields = $LessonPageModel->select('JSON_EXTRACT(lessons.pages, "$['.$page_index.'].template_config.input_list") as input_list')
         ->where('lessons.id', $lesson_id)->get()->getRowArray()['input_list'];
-
+        $fields = json_decode($fields, true);
+        
         $page_answers = $this->default_answers;
-        $exercise_answers = $exercise['data']['answers'][$page_index];
+        $exercise_answers = $exercise['data']['answers'][$page_index] ?? null;
         
         if(!empty($exercise_answers)) $page_answers = $exercise_answers[$page_index];
 

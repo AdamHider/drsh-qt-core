@@ -138,21 +138,14 @@ class ExerciseModel extends Model
     }
     public function redoItem($lesson_id)
     {
-        $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
+        $exercise_old = $this->select('exercises.id, JSON_EXTRACT(exercises.exercise_submitted, "$.total_pages") as total_pages, exercises.attempts')
         ->where('lesson_id', $lesson_id)->where('exercises.user_id = '.session()->get('user_id'))->get()->getRowArray();
-        if(!empty($exercise)){
-            $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
-            unset($exercise['exercise_pending']);
-            unset($exercise['exercise_submitted']);
-        } else {
-            return false;
-        }
+        $exercise = [];
+        $exercise['id'] = $exercise_old['id'];
         $exercise['data'] = $this->empty_data;
-        
-        $exercise['data']['total_pages'] = $this->select('JSON_LENGTH(lessons.pages) as total_pages')->where('lessons.id', $lesson_id)->get()->getRowArray()['total_pages'];
-        $exercise['attempts']++;
+        $exercise['data']['total_pages'] = (int) $exercise_old['total_pages'];
+        $exercise['attempts'] = $exercise_old['attempts'] + 1;
         return $this->updateItem($exercise, 'start');
-         
     }
     public function getTotal($data, $mode = 'sum')
     {

@@ -11,10 +11,8 @@ class LessonPageModel extends LessonModel
     public function getPage($lesson_id, $index)
     {
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as exercise_data')
-        ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page')
+        ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as exercise_data')
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
-
 
         if(!empty($lesson['page'])){
             $lesson['page'] = json_decode($lesson['page'], true);
@@ -110,22 +108,29 @@ class LessonPageModel extends LessonModel
             $result['message']    = 'No such exercise';
             return $result;
         }
+        if($exercise['finished_at']){
+            $result['available']  = false;
+            $result['message']    = 'finish';
+            return $result;
+        }
         if($action == 'next'){
             $exercise['data']['current_page']++;
         }
         if($action == 'previous'){
-            if($exercise['actions']['back_attempts'] == 0){               
+            if($exercise['data']['actions']['back_attempts'] == 0){               
                 $result['available']  = false;
                 $result['message']    = 'No back attempts left';
                 return $result;
             }
             $exercise['data']['current_page']--;
-            $exercise['actions']['back_attempts']--;
+            $exercise['data']['actions']['back_attempts']--;
         }
         if($action == 'finish'){
             $exercise['data']['current_page']++;
             $ExerciseModel->updateItem($exercise, 'finish');
-            return 'finish';
+            $result['available']  = false;
+            $result['message']    = 'finish';
+            return $result;
         }
         $result['index']  = $exercise['data']['current_page'];
         $ExerciseModel->updateItem($exercise);

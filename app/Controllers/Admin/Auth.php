@@ -11,7 +11,7 @@ class Auth extends BaseController
     public function login()
     {
 
-        $this->data['settings'] = [
+        $data['settings'] = [
             'layout' => 'default',
             'menu' => [
                 'id' => 2
@@ -19,7 +19,7 @@ class Auth extends BaseController
             'title' => 'Dashboard',
             'path' => '/admin/dashboard'
         ];
-        return view('auth/login', $this->data);
+        return view('auth/login', $data);
     }
     public function authenticate()
     {
@@ -53,7 +53,7 @@ class Auth extends BaseController
             return redirect()->to('/auth/login');
         }
         session()->set('user_data',$user);
-        return redirect()->to('/admin/dashboard');
+        return redirect()->to('/admin/lessons');
     }
 
     public function logout()

@@ -16,6 +16,16 @@ $routes->group('auth', [], function($routes) {
 
 $routes->group('admin', ['filter' => 'auth'], function($routes) {
     $routes->get('', 'Admin\Dashboard::index');
+
+    $routes->group('lessons', [], function($routes) {
+        $routes->get('', 'Admin\Lessons::index');
+        $routes->get('form/(:num)', 'Admin\Lessons::form/$1');
+        $routes->get('form', 'Admin\Lessons::form');
+        $routes->post('save/(:num)', 'Admin\Lessons::save/$1');
+        $routes->post('save', 'Admin\Lessons::save');
+        $routes->get('delete/(:num)', 'Admin\Lessons::delete/$1');
+
+    });
 });
 $routes->post('/Lesson/(:any)', 'Lesson::$1');
 $routes->post('/Exercise/(:any)', 'Exercise::$1');
