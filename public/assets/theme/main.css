@@ -1,0 +1,8 @@
+.btn{
+    --bs-btn-border-radius: 8px;
+    box-shadow: var(--bs-box-shadow-sm);
+    border-bottom: 3px solid #0000004d;
+}
+.btn:hover{
+    border-bottom: 3px solid #00000021;
+}

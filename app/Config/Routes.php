@@ -24,9 +24,42 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
         $routes->post('save/(:num)', 'Admin\Lessons::save/$1');
         $routes->post('save', 'Admin\Lessons::save');
         $routes->get('delete/(:num)', 'Admin\Lessons::delete/$1');
+    });
+    $routes->group('courses', [], function($routes) {
+        $routes->get('', 'Admin\Courses::index');
+        $routes->get('form/(:num)', 'Admin\Courses::form/$1');
+        $routes->get('form', 'Admin\Courses::form');
+        $routes->post('save/(:num)', 'Admin\Courses::save/$1');
+        $routes->post('save', 'Admin\Courses::save');
+        $routes->get('delete/(:num)', 'Admin\Courses::delete/$1');
+    });
+    $routes->group('course_sections', [], function($routes) {
+        $routes->get('form/(:num)/(:num)', 'Admin\CourseSections::form/$1/$2');
+        $routes->get('form/(:num)', 'Admin\CourseSections::form/$1');
+        $routes->post('create/(:num)', 'Admin\CourseSections::save/$1');
+        $routes->post('save/(:num)/(:num)', 'Admin\CourseSections::save/$1/$2');
+        $routes->get('delete/(:num)/(:num)', 'Admin\CourseSections::delete/$1/$2');
+    });
 
+$routes->get('image/(:any)', 'Image::index/$1');    $routes->group('languages', function($routes) {
+        $routes->get('', 'Admin\Language::index');
+        $routes->get('create', 'Admin\Language::create');
+        $routes->post('store', 'Admin\Language::store');
+        $routes->get('edit/(:num)', 'Admin\Language::edit/$1');
+        $routes->post('update/(:num)', 'Admin\Language::update/$1');
+        $routes->get('delete/(:num)', 'Admin\Language::delete/$1');
+    });
+    $routes->group('media', function($routes) {
+        $routes->get('', 'Admin\Media::index');
+        $routes->get('list', 'Admin\Media::getData');
+        $routes->post('upload', 'Admin\Media::upload');
+        $routes->post('create-directory', 'Admin\Media::createDirectory');
+        $routes->post('rename', 'Admin\Media::rename');
+        $routes->post('delete', 'Admin\Media::delete');
     });
 });
+$routes->get('image/(:any)', 'Image::index/$1');
+
 $routes->post('/Lesson/(:any)', 'Lesson::$1');
 $routes->post('/Exercise/(:any)', 'Exercise::$1');
 

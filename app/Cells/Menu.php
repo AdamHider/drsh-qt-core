@@ -23,13 +23,19 @@ class Menu extends Cell
                 'type'  => 'menu'
             ],
             [
-                'title' => 'Menus',
-                'link'  => '/admin/menus',
+                'title' => 'Courses',
+                'link'  => '/admin/courses',
                 'icon'  => 'list-nested',
                 'type'  => 'menu'
             ],
             [
                 'type'  => 'separator'
+            ],
+            [
+                'title' => 'Media',
+                'link'  => '/admin/media',
+                'icon'  => 'translate',
+                'type'  => 'menu'
             ],
             [
                 'title' => 'Languages',
