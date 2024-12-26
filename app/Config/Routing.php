@@ -98,6 +98,13 @@ class Routing extends BaseRouting
     public bool $prioritize = false;
 
     /**
+     * For Defined Routes.
+     * If TRUE, matched multiple URI segments will be passed as one parameter.
+     *
+     * Default: false
+     */
+    public bool $multipleSegmentsOneParam = true;
+    /**
      * Map of URI segments and namespaces. For Auto Routing (Improved).
      *
      * The key is the first URI segment. The value is the controller namespace.

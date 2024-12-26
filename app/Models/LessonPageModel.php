@@ -11,23 +11,20 @@ class LessonPageModel extends LessonModel
     public function getPage($lesson_id, $index)
     {
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as exercise_data')
-        ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page, JSON_LENGTH(lessons.pages) as total_pages')
+        ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as exercise_data')
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
-
 
         if(!empty($lesson['page'])){
             $lesson['page'] = json_decode($lesson['page'], true);
             $lesson['exercise_data'] = json_decode($lesson['exercise_data'], true);
-
             $this->currentPage = $lesson['exercise_data']['current_page'];
-    
-            $lesson['exercise_data']['total_pages'] = $lesson['total_pages'];
-
             $page['data']       = $this->composeItemData($lesson['page']);
             $page['fields']     = $this->composeItemFields($lesson['page'], $lesson['exercise_data']);
             $page['actions']    = $this->composeItemActions($lesson['page'], $lesson['exercise_data']);
             $page['answer']     = $lesson['exercise_data']['answers'][$this->currentPage]['totals'] ?? [];
+            $page['current']    = $lesson['exercise_data']['current_page'];
+            $page['total']      = $lesson['exercise_data']['total_pages'];
+            $page['points']     = $lesson['exercise_data']['totals']['total'] ?? 0;
     
             unset($lesson['page']['template_config']);
             $page['header']     = $lesson['page'];
@@ -103,32 +100,35 @@ class LessonPageModel extends LessonModel
     {
         $ExerciseModel = model('ExerciseModel');
 
+        $exercise = $ExerciseModel->getItemByLesson($lesson_id);
+
         $result = [
             'available' => true
         ];
-
-        $exercise = $ExerciseModel->getItemByLesson($lesson_id);
-        if(empty($exercise)){
-            $result['available']  = false;
-            $result['message']    = 'No such exercise';
-            return $result;
-        } 
+        $current = $exercise['data']['current_page'];
         if($action == 'next'){
             $exercise['data']['current_page']++;
+            /*
+            if($exercise['data']['total_pages'] == $this->currentPage && !$exercise['finished_at']){
+                $ExerciseModel->updateItem($exercise, 'finish');
+                return 'finish';
+            }*/
         }
         if($action == 'previous'){
-            if($exercise['actions']['back_attempts'] == 0){               
+            if($exercise['data']['actions']['back_attempts'] == 0){               
                 $result['available']  = false;
                 $result['message']    = 'No back attempts left';
                 return $result;
             }
             $exercise['data']['current_page']--;
-            $exercise['actions']['back_attempts']--;
+            $exercise['data']['actions']['back_attempts']--;
         }
         if($action == 'finish'){
             $exercise['data']['current_page']++;
             $ExerciseModel->updateItem($exercise, 'finish');
-            return 'finish';
+            $result['available']  = false;
+            $result['message']    = 'finish';
+            return $result;
         }
         $result['exercise_data']  = $exercise['data'];
         $result['index']  = $exercise['data']['current_page'];

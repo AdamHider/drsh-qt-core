@@ -66,6 +66,9 @@ class Lesson extends BaseController
         
         $pageIndex = $LessonPageModel->getCurrentIndex($lesson_id, $action);
         if(!$pageIndex['available']){
+            if($pageIndex['message'] == 'finish'){
+                return $this->failNotFound('finish');
+            } 
             return $this->failNotFound('not_found');
         }
         $page = $LessonPageModel->getPage($lesson_id, $pageIndex['index']);

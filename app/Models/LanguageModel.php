@@ -12,60 +12,19 @@ class LanguageModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType = 'array';
-    protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'user_id',
-        'character_id', 
-        'classroom_id', 
-        'course_id'
+        'code', 'title', 'image'
     ];
     
     protected $useTimestamps = false;
 
     public function getItem ($language_id) 
     {
-        $language = $this->where('id', $language_id)->get()->getRowArray();
-
-        return $language;
+        return $this->where('id', $language_id)->get()->getRowArray();
     }
     public function getList () 
     {
-        $languages = $this->get()->getResultArray();
-
-        return $languages;
+        return $this->get()->getResultArray();
     }
-        
-    public function createItem ($user_id)
-    {
-        $this->transBegin();
-        
-        $data = [
-            'user_id'       => $user_id,
-            'character_id'  => getenv('user_settings.character_id'),
-            'classroom_id'  => NULL,
-            'course_id'     => NULL
-            
-        ];
-        $user_settings_id = $this->insert($data, true);
-
-        $this->transCommit();
-
-        return $user_settings_id;        
-    }
-    public function updateItem ($data)
-    {
-        $this->transBegin();
-
-        $this->set($data);
-        $this->where('user_id', $data['user_id']);
-        $result = $this->update();
-
-        $this->transCommit();
-
-        return $result;        
-    }
-
-
-
 }

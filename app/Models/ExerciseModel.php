@@ -30,6 +30,7 @@ class ExerciseModel extends Model
     private $empty_data = [
         'current_page'      => 0,
         'answers'           => [],
+        'total_pages'       => 0,
         'actions'           => [
             'main'          => 'next',
             'back_attempts' => 3
@@ -91,6 +92,8 @@ class ExerciseModel extends Model
         if(!$ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
             //return 'not_enough_resources';
         } 
+        $this->empty_data['total_pages'] = count(json_decode($lesson['pages'], true));
+
         $this->transBegin();
         $data = [
             'lesson_id' => $lesson_id,
@@ -135,19 +138,14 @@ class ExerciseModel extends Model
     }
     public function redoItem($lesson_id)
     {
-        $exercise = $this->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
+        $exercise_old = $this->select('exercises.id, JSON_EXTRACT(exercises.exercise_submitted, "$.total_pages") as total_pages, exercises.attempts')
         ->where('lesson_id', $lesson_id)->where('exercises.user_id = '.session()->get('user_id'))->get()->getRowArray();
-        if(!empty($exercise)){
-            $exercise['data'] = json_decode($exercise['data'], true, JSON_UNESCAPED_UNICODE);
-            unset($exercise['exercise_pending']);
-            unset($exercise['exercise_submitted']);
-        } else {
-            return false;
-        }
+        $exercise = [];
+        $exercise['id'] = $exercise_old['id'];
         $exercise['data'] = $this->empty_data;
-        $exercise['attempts']++;
+        $exercise['data']['total_pages'] = (int) $exercise_old['total_pages'];
+        $exercise['attempts'] = $exercise_old['attempts'] + 1;
         return $this->updateItem($exercise, 'start');
-         
     }
     public function getTotal($data, $mode = 'sum')
     {
@@ -165,7 +163,6 @@ class ExerciseModel extends Model
         $data = [];
         $data['total'] = $exercise['data']['totals']['total'];
         $data['exercises'] = $exercise['data']['totals']['total'];
-        $data['total_pages'] = count($exercise['data']['answers']);
         if(!empty($exercise['finished_at'])){
             $time_points = $this->calculateTotalTimePoints($exercise);
             $data['total'] += $time_points;

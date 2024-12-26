@@ -34,17 +34,11 @@ class ExerciseAnswerModel extends ExerciseModel
     *
     * @since   3.4
     **/
-    public function saveAnswer($lesson_id, $data = [])
+    public function saveAnswer($lesson_id, $income_answers = [])
     {
         $LessonPageModel = model('LessonPageModel');
-
-        $lesson = $this->join('lessons', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray();
-
-        $exercise = $this->getItem($lesson['exercise_id']);
-        $this->checkAnswers($exercise, $lesson, $data);
-        $page = $LessonPageModel->getPage($lesson_id, $exercise['data']['current_page']);
+        $this->checkAnswers($lesson_id, $data);
+        $page = $LessonPageModel->getPage($lesson_id);
         return $page;
     }
     
@@ -55,8 +49,13 @@ class ExerciseAnswerModel extends ExerciseModel
     *
     * @since   3.4
     **/
-    public function checkAnswers($exercise, $lesson, $income_answers)
+    public function checkAnswers($lesson_id, $income_answers)
     {
+        $lesson = $this->join('lessons', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
+        ->select('lessons.*, exercises.id as exercise_id')
+        ->where('lessons.id', $lesson_id)->get()->getRowArray();
+
+        $exercise = $this->getItem($lesson['exercise_id']);
         
         $page_index = $exercise['data']['current_page'];
         $page = json_decode($lesson['pages'], true)[$page_index];
@@ -86,17 +85,20 @@ class ExerciseAnswerModel extends ExerciseModel
                     $page_answers['totals']['answers']++;
                     $page_answers['totals']['total'] += $page_answers['answers'][$input_index]['points']; 
                 }
-            }
-            if($this->checkFinished($fields, $page_answers)){
-                $page_answers['is_finished'] = true;
+                $existing_answers['totals']['answers']++;
+                $existing_answers['totals']['total'] += $existing_answers['answers'][$input_index]['points']; 
             }
         }
+        if($this->checkFinished($fields, $existing_answers)){
+            $existing_answers['is_finished'] = true;
+        }
+        return $existing_answers;
         
         if($page_answers['is_finished'] == true){
             $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] + $page_answers['totals']['total'];
         }
         $exercise['data']['answers'][$page_index] = $page_answers;
-        return $this->updateItem($exercise);
+        $this->updateItem($exercise);
     } 
     
     private function composeAnswer($field, $user_input, $total_fields, $existing_answer)
@@ -211,20 +213,18 @@ class ExerciseAnswerModel extends ExerciseModel
         }
         return 100 / ($total / ($total - $mistakes));
     }
-    
     public function refreshAnswer($exercise)
     {
         $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] - $exercise['data']['answers'][$exercise['data']['current_page']]['totals']['total'];
         unset($exercise['data']['answers'][$exercise['data']['current_page']]);
         $exercise['exercise_pending'] = $exercise['data'];
         return $exercise;
-    } 
-    
+    }
     public function simplifySpecialChars($str)
     {
         $str = mb_strtolower($str);
-        $findArray = ['ı', 'ğ', 'ü', 'ş', 'ö', 'ç', 'â', 'ñ'];
-        $replaceArray = ['i', 'g', 'u', 's', 'o', 'c', 'a', 'n'];
+        $findArray      = ['ı', 'ğ', 'ü', 'ş', 'ö', 'ç', 'â', 'ñ'];
+        $replaceArray   = ['i', 'g', 'u', 's', 'o', 'c', 'a', 'n'];
         return str_replace($findArray, $replaceArray, $str);
     }
     

@@ -16,7 +16,7 @@ class CourseModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'image'
+        'title', 'description', 'image', 'background_image', 'language_id', 'published', 'is_private'
     ];
     
     protected $useTimestamps = false;
