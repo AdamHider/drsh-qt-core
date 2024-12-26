@@ -8,7 +8,7 @@
         <ul class="list-group">
             <?php foreach ($courses as $course): ?>
                 <li class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-start">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div class="me-auto">
                             <h5><?= $course['title'] ?></h5>
                             <p><?= $course['description'] ?></p>
@@ -21,7 +21,7 @@
                     <h6>Секции:</h6>
                     <ul class="list-group mt-2">
                         <?php foreach ($course['sections'] as $section): ?>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div class="me-auto">
                                     <h6><?= $section['title'] ?></h6>
                                     <p><?= $section['description'] ?></p>

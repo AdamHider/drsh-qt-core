@@ -15,7 +15,6 @@ class LessonPageModel extends LessonModel
         ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page')
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
 
-
         if(!empty($lesson['page'])){
             $lesson['page'] = json_decode($lesson['page'], true);
             $lesson['exercise_data'] = json_decode($lesson['exercise_data'], true);

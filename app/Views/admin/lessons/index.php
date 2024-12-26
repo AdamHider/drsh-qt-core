@@ -7,7 +7,7 @@
     <div class="">
         <ul class="list-group rounded-3 shadow-sm bg-white">
             <?php foreach ($lessons as $lesson): ?>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="me-auto">
                         <h5><?= $lesson['title'] ?></h5>
                         <p><?= $lesson['description'] ?></p>
