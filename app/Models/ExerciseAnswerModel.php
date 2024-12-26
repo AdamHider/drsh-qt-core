@@ -37,9 +37,33 @@ class ExerciseAnswerModel extends ExerciseModel
     public function saveAnswer($lesson_id, $income_answers = [])
     {
         $LessonPageModel = model('LessonPageModel');
-        $this->checkAnswers($lesson_id, $data);
-        $page = $LessonPageModel->getPage($lesson_id);
-        return $page;
+
+        $exercise = $this->getItemByLesson($lesson_id);
+
+        $page_index = $exercise['data']['current_page'];
+
+        $fields = $LessonPageModel->select('JSON_EXTRACT(lessons.pages, "$['.$page_index.'].template_config.input_list") as input_list')
+        ->where('lessons.id', $lesson_id)->get()->getRowArray()['input_list'];
+        $fields = json_decode($fields, true);
+        
+        $page_answers = $this->default_answers;
+        $exercise_answers = $exercise['data']['answers'][$page_index] ?? null;
+        
+        if(!empty($exercise_answers)) $page_answers = $exercise_answers[$page_index];
+
+        if(!isset($page_answers['is_finished'])) $page_answers['is_finished'] = false;
+
+        if($page_answers['is_finished'] == false){
+            $page_answers = $this->checkPageAnswers($fields, $page_answers, $income_answers);
+        }
+        if($page_answers['is_finished'] == true){
+            $exercise['data']['totals']['total'] += $page_answers['totals']['total'];
+        }
+        $exercise['data']['answers'][$page_index] = $page_answers;
+
+        $this->updateItem($exercise);
+
+        return $LessonPageModel->getPage($lesson_id, $page_index);
     }
     
     /**
@@ -49,41 +73,19 @@ class ExerciseAnswerModel extends ExerciseModel
     *
     * @since   3.4
     **/
-    public function checkAnswers($lesson_id, $income_answers)
+    public function checkPageAnswers($fields, $existing_answers, $income_answers)
     {
-        $lesson = $this->join('lessons', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray();
-
-        $exercise = $this->getItem($lesson['exercise_id']);
-        
-        $page_index = $exercise['data']['current_page'];
-        $page = json_decode($lesson['pages'], true)[$page_index];
-        $fields = $page['template_config']['input_list'];
-        
-        if(!empty($exercise['data']['answers'][$page_index])){
-            $page_answers = $exercise['data']['answers'][$page_index];
-        } else {
-            $page_answers = $this->default_answers;
-        }
-        if(!isset($page_answers['is_finished'])){
-            $page_answers['is_finished'] = false;
-        }
-        if($page_answers['is_finished'] == false){
-            $total_fields = count($fields);
-            foreach($fields as $input_index => $field){
-                if(!empty($field) && isset($income_answers[$input_index])){
-                    $user_input = $income_answers[$input_index];
-                    $existing_answer = [];
-                    if(!empty($page_answers['answers'][$input_index])){
-                        $existing_answer = $page_answers['answers'][$input_index];
-                    }
-                    $page_answers['answers'][$input_index] = $this->composeAnswer($field, $user_input, $total_fields, $existing_answer);
-                    if($page_answers['answers'][$input_index]['is_correct']){
-                        $page_answers['totals']['correct']++;
-                    }
-                    $page_answers['totals']['answers']++;
-                    $page_answers['totals']['total'] += $page_answers['answers'][$input_index]['points']; 
+        $total_fields = count($fields);
+        foreach($fields as $input_index => $field){
+            if(!empty($field) && isset($income_answers[$input_index])){
+                $user_input = $income_answers[$input_index];
+                $existing_answer = [];
+                if(!empty($existing_answers['answers'][$input_index])){
+                    $existing_answer = $existing_answers['answers'][$input_index];
+                }
+                $existing_answers['answers'][$input_index] = $this->composeAnswer($field, $user_input, $total_fields, $existing_answer);
+                if($existing_answers['answers'][$input_index]['is_correct']){
+                    $existing_answers['totals']['correct']++;
                 }
                 $existing_answers['totals']['answers']++;
                 $existing_answers['totals']['total'] += $existing_answers['answers'][$input_index]['points']; 
@@ -94,11 +96,6 @@ class ExerciseAnswerModel extends ExerciseModel
         }
         return $existing_answers;
         
-        if($page_answers['is_finished'] == true){
-            $exercise['data']['totals']['total'] = $exercise['data']['totals']['total'] + $page_answers['totals']['total'];
-        }
-        $exercise['data']['answers'][$page_index] = $page_answers;
-        $this->updateItem($exercise);
     } 
     
     private function composeAnswer($field, $user_input, $total_fields, $existing_answer)
