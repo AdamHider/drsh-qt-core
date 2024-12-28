@@ -1,12 +1,4 @@
-let defaultPage = {
-    audio: 'no',
-    index: 0,
-    title: '',
-    subtitle: '',
-    page_template: '',
-    form_template: '',
-    template_config: {}
-};
+
 
 $('#addPageBtn').click(function(e) {
     e.preventDefault();
@@ -14,46 +6,43 @@ $('#addPageBtn').click(function(e) {
     renderPagesList(pages);
     updatePagesInput();
 });
-
+function init(){
+    initControls();
+    renderPagesList(pages);
+}
 function updatePagesInput() {
     $('#pagesInput').val(JSON.stringify(pages));
 }
+function initControls(){
+    $(document).off('input', '.page-input');
+    $(document).on('input', '.page-input', function(e) {
+        const index = $(e.target).data('index');
+        const field = $(e.target).attr('name');
+        pages[index][field] = $(e.target).val();
+        updatePagesInput();
+    });
+    $(document).off('change', '.page-select');
+    $(document).on('change', '.page-select', function(e) {
+        const index = $(e.target).data('index');
+        const field = $(e.target).attr('name');
+        pages[index][field] = $(this).val();
+        if (field === 'page_template' && pages[index][field]) {
+            pages[index].template_config = { ...defaultTemplateConfigs[pages[index][field]] };
+        }
 
-$(document).on('input', '.page-input', function() {
-    const index = $(this).data('index');
-    const field = $(this).attr('name');
-    pages[index][field] = $(this).val();
-    updatePagesInput();
-});
+        if (field === 'form_template' && pages[index][field]) {
+            pages[index].template_config.input_list = [{ ...defaulFormConfigs[pages[index][field]] }];
+        }
+        renderPageForm(pages[index], index)
 
-$(document).on('change', '.page-select', function() {
-    const index = $(this).data('index');
-    const field = $(this).attr('name');
-    pages[index][field] = $(this).val();
-    updatePagesInput();
-});
+        updatePagesInput();
+    });
+    $(document).off('input', '.template-config')
+    $(document).on('input', '.template-config', function(e) {
+        const index = $(e.target).data('index');
+        pages[index].template_config = JSON.parse($(this).val());
+        updatePagesInput();
+    });
+}
 
-$(document).on('input', '.template-config', function() {
-    const index = $(this).data('index');
-    pages[index].template_config = JSON.parse($(this).val());
-    updatePagesInput();
-});
-
-$(document).on('click', '.deletePageBtn', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const index = $(this).data('index');
-    pages.splice(index, 1);
-    renderPagesList(pages);
-    $('#pageFormContainer').empty();
-    updatePagesInput();
-});
-
-$(document).on('click', '.list-group-item', function() {
-    const index = $(this).data('index');
-    renderPageForm(pages[index], index);
-});
-
-// Initial render
-renderPagesList(pages);
+init()

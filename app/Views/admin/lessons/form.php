@@ -105,9 +105,9 @@
                     </div>
                     <div class="form-group mt-2">
                         <label for="pages">Страницы</label>
-                        <textarea type="text" name="pages" id="pages" class="form-control" value="<?= esc($lesson['pages']) ?? '' ?>"><?= esc($lesson['pages']) ?></textarea>
+                        <input type="hidden" name="pages" id="pages" class="form-control" value="<?= esc($lesson['pages']) ?? '' ?>"/>
                     </div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Launch demo modal
                     </button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
