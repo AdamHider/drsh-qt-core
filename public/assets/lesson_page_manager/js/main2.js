@@ -28,26 +28,26 @@ function createField(fieldConfig, object, key, parentObject) {
     if(fieldConfig.nolabel){
         fieldDiv.addClass(`mt-3`);
     } else {
-        label = $('<label>').text(key).addClass('form-label');
+        label = $('<label>').text(fieldConfig.label ?? key).addClass('form-label-sm');
     }
     let input;
     if (fieldConfig.type === 'input') {
-        input = $('<input>').attr('type', 'text').val(object[key] || fieldConfig.default).addClass('form-control form-control-sm').attr('placeholder', key);
+        input = $('<input>').attr('type', 'text').val(object[key] || fieldConfig.default).addClass('form-control form-control-sm').attr('placeholder', fieldConfig.label ?? key);
     } else if (fieldConfig.type === 'textarea') {
-        input = $('<textarea>').attr('type', 'text').val(object[key] || fieldConfig.default).html(object[key] || fieldConfig.default).addClass('form-control form-control-sm').attr('placeholder', key);
+        input = $('<textarea>').attr('type', 'text').val(object[key] || fieldConfig.default).html(object[key] || fieldConfig.default).addClass('form-control form-control-sm').attr('placeholder', fieldConfig.label ?? key);
     } else if (fieldConfig.type === 'number') {
-        input = $('<input>').attr('type', 'number').val(object[key] || fieldConfig.default).addClass('form-control form-control-sm').attr('placeholder', key);;
+        input = $('<input>').attr('type', 'number').val(object[key] || fieldConfig.default).addClass('form-control form-control-sm').attr('placeholder', fieldConfig.label ?? key);;
     } else if (fieldConfig.type === 'checkbox') {
-        input = $('<input>').attr('type', 'checkbox').prop('checked', object[key] !== undefined ? object[key] : fieldConfig.default).addClass('form-check-input form-check-input-sm me-2');
+        input = $('<input>').attr('type', 'checkbox').prop('checked', object[key] !== undefined ? object[key] : fieldConfig.default).addClass('form-check-input form-check-input-sm ms-2');
     } else if (fieldConfig.type === 'select') {
         input = $('<select>').addClass('form-select form-select-sm');
         fieldConfig.options.forEach(option => {
-            const optionElement = $('<option>').attr('value', option).text(option);
+            const optionElement = $('<option>').attr('value', option.value).text(option.label);
             input.append(optionElement);
         });
         input.val(object[key] || fieldConfig.default);
     }  else if (fieldConfig.type === 'image') {
-        input = $('<div>').append($('<input>').attr('type', 'hidden').val(object[key] || fieldConfig.default), $('<img>', {src: (object[key] || fieldConfig.default), class: 'card-img'}));
+        input = $('<div>').addClass('image-input ratio ratio-1x1  rounded').append($('<input>').attr('type', 'hidden').val(object[key] || fieldConfig.default), $('<img>', {src: (object[key] || fieldConfig.default), class: 'card-img'}));
         input.on('click', (e) => { 
             let container = $(e.delegateTarget);
             let modal = new bootstrap.Modal(document.getElementById('pickerModal'), {})
@@ -104,10 +104,16 @@ function createField(fieldConfig, object, key, parentObject) {
         const value = (fieldConfig.type === 'checkbox') ? $(this).prop('checked') : $(this).val();
         parentObject[key] = value; // Обновляем поле в родительском объекте (template_config)
         if (key === 'page_template') {
+            if(value === 'none'){
+                if (parentObject.template_config.replica_list) parentObject.template_config.replica_list = []
+                if (parentObject.template_config.column_list) parentObject.template_config.column_list = []
+                if (parentObject.template_config.block_list) parentObject.template_config.block_list = []
+            }
             updatePageData(); // Обновляем данные в pages
             loadPage(selectedPageIndex); // Re-render the page when page_template changes
         }
         if (key === 'form_template') {
+            if(value === 'none') parentObject.template_config.input_list = []
             updatePageData(); // Обновляем данные в pages
             updateInputListConfig(); // Update input_list config based on form_template
             loadPage(selectedPageIndex); // Re-render the page
@@ -115,11 +121,7 @@ function createField(fieldConfig, object, key, parentObject) {
         if(fieldConfig.onchange) fieldConfig.onchange(e)
         updatePageData(); // Обновляем данные в pages
     });
-
-
     fieldDiv.append(label, input);
-    
-
     return fieldDiv;
 }
 
@@ -139,7 +141,7 @@ function createFieldGroup(fieldConfig, object, parentObject) {
             }
         }).append('<i class="ms-2 bi bi-chevron-down"></i>');
         groupDiv.append(label)
-        groupContent.addClass('collapse show').prop('id', `collapse_${id}`)
+        groupContent.addClass('collapse').prop('id', `collapse_${id}`)
     } 
 
     Object.keys(fieldConfig.fields).forEach(key => {
@@ -194,7 +196,7 @@ function createArrayField(fieldConfig, object, key) {
                 $(e.delegateTarget).find('i').addClass('bi-chevron-up').removeClass('bi-chevron-down')
             }
         }).append('<i class="ms-2 bi bi-chevron-down"></i>');
-        listDiv.addClass('collapse show')
+        listDiv.addClass('collapse')
     } 
     fieldDiv.append(listDiv);
     // Render existing items
@@ -217,16 +219,15 @@ function createArrayField(fieldConfig, object, key) {
             listDiv.append(itemDiv);
             
             if(fieldConfig.itemConfig.render) {
-                console.log(itemDiv)
                 fieldConfig.itemConfig.render(itemDiv)
             }
         });
     }
     const addButton = $('<div>').append($('<button>', {
-        text: `Add ${fieldConfig.itemConfig.label}`,
-        class: 'btn btn-success',
+        html: `<b>Добавить "${fieldConfig.itemConfig.label}"</b>`,
+        class: 'btn btn-sm btn-success',
         click: (event) => addItem(event, key, fieldConfig.itemConfig, id)
-    }).append($('<i>').addClass('bi bi-plus'))).addClass('text-center rounded bg-light p-2 my-2');
+    }).prepend($('<i>').addClass('bi bi-plus-lg me-2'))).addClass('text-center rounded border bg-light p-2 my-2');
 
     fieldDiv.append(addButton);
 
@@ -262,10 +263,9 @@ function addItem(event, arrayKey, itemConfig, id) {
     newItemDiv.append(deleteButton);
     $(`#${arrayKey}List${(id !== null) ? '_'+id : ''}`).append(newItemDiv);
     updatePageData(); // Обновляем данные в pages
+    initControls()
 }
 function deleteArrayItem(arrayKey, index) {
-    console.log(arrayKey)
-    console.log(index)
     objectToEdit.template_config[arrayKey].splice(index, 1); // Удаляем элемент по индексу
     updatePageData(); // Обновляем данные в pages
     loadPage(selectedPageIndex); // Перезагружаем страницу, чтобы отобразить изменения
@@ -297,6 +297,7 @@ function loadPage(index) {
     $('<div>', { id: 'templateConfigEditor', class:'row' }).appendTo('#editor');
     updateTemplateConfig();
     updateInputListConfig(); // Обновляем input_list конфигурацию на основе form_template
+    initPageControls()
 }
 
 function updatePageData() {
@@ -304,8 +305,15 @@ function updatePageData() {
 }
 
 $(document).ready(function() {
-    $('#addReplica').on('click', (event) => {
-        event.preventDefault();
-        addItem(event, 'replica_list', replicaItemConfig);
-    });
+    initPageControls()
 });
+function initPageControls(){
+    $('textarea').each((i, el) => {
+        $(el).height(`${el.scrollHeight+5}px`)
+    })
+    $('textarea').off('input')
+    $('textarea').on('input', (e) => {
+        $(e.delegateTarget).height(`5px`)
+        $(e.delegateTarget).height(`${e.delegateTarget.scrollHeight+5}px`)
+    })
+}

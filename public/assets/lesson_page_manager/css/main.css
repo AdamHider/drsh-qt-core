@@ -1,7 +1,5 @@
-.editor {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.form-label-sm {
+    font-size: .875rem;
 }
 .field {
     display: flex;
@@ -41,11 +39,14 @@
 .chat-message.right{
     margin-left: 25%;
 }
-.chat-avatar img{
+.chat-avatar .image-input{
     width: 80px;
     height: 80px;
-    border-radius: 50%;
-    margin-right: 10px;
+    border-radius: 50% !important;
+    min-height: unset;
+    min-width: unset;
+    border: 1px solid #d7d7d7;
+
 }
 .chat-content {
     padding: 10px;
@@ -90,4 +91,11 @@
 }
 .array-item:hover > .delete-array-item{
     display: block;
+}
+.image-input{
+    background-image: url('/image/placeholder.jpg');
+    background-size: cover;
+    background-position: center;
+    max-width: 300px;
+    overflow: hidden;
 }

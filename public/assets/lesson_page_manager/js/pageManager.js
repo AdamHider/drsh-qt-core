@@ -2,8 +2,8 @@ function renderPageList() {
     $('#pageList').empty();
     pages.forEach((page, index) => {
         const listItem = $('<li>', {
-            class: 'list-group-item  d-flex justify-content-between align-items-start',
-            text: page.title,
+            class: 'list-group-item  d-flex justify-content-between align-items-center list-group-item-action ',
+            html: `<div class="ms-2 me-auto"><div class="fw-bold">${page.index}. ${page.title}</div>${page.subtitle}</div>`,
             click: () => loadPage(index)
         });
         const deleteButton = $('<button>').addClass('btn btn-danger btn-sm ms-2').html('<i class="bi bi-trash"></i>').on('click', (e) => {
@@ -21,7 +21,7 @@ function addPage(event) {
         icon: "listen",
         audio: true,
         index: pages.length + 1,
-        title: "New Page",
+        title: "Новая страница",
         subtitle: "",
         page_template: "none",
         form_template: "none",

@@ -68,7 +68,7 @@
                     <div class="row mt-2">
                         <div class="form-group col-4">
                             <label for="image">Изображение</label>
-                            <div class="card ficker-image text-center">
+                            <div class="card ficker-image text-center image-input">
                                 <img src="<?= $lesson['image'] ?? '' ?>" class="card-img">
                                 <div class="card-footer">
                                     <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
@@ -85,21 +85,21 @@
                         <select class="form-select" name="type" id="type" required>
                             <option disabled value selected>---Не выбрано---</option>
                             <?php if(!empty($lesson['type']) && $lesson['type'] == 'common') : ?>
-                                <option value="common" selected>Common</option>
-                                <option value="lexis">Lexis</option>
-                                <option value="grammar">Grammar</option>
+                                <option value="common" selected>Общий</option>
+                                <option value="lexis">Лексика</option>
+                                <option value="grammar">Грамматика</option>
                             <?php elseif(!empty($lesson['type']) && $lesson['type'] == 'lexis') : ?>   
-                                <option value="common">Common</option>
-                                <option value="lexis" selected>Lexis</option>
-                                <option value="grammar">Grammar</option>
+                                <option value="common">Общий</option>
+                                <option value="lexis" selected>Лексика</option>
+                                <option value="grammar">Грамматика</option>
                             <?php elseif(!empty($lesson['type']) && $lesson['type'] == 'grammar') : ?>   
-                                <option value="common">Common</option>
-                                <option value="lexis">Lexis</option>
-                                <option value="grammar" selected>Grammar</option>
+                                <option value="common">Общий</option>
+                                <option value="lexis">Лексика</option>
+                                <option value="grammar" selected>Грамматика</option>
                             <?php else : ?>   
-                                <option value="common">Common</option>
-                                <option value="lexis">Lexis</option>
-                                <option value="grammar">Grammar</option>
+                                <option value="common">Общий</option>
+                                <option value="lexis">Лексика</option>
+                                <option value="grammar">Грамматика</option>
                             <?php endif; ?> 
                         </select>
                     </div>
@@ -107,14 +107,14 @@
                         <label for="pages">Страницы</label>
                         <input type="hidden" name="pages" id="pages" class="form-control" value="<?= esc($lesson['pages']) ?? '' ?>"/>
                     </div>
-                    <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Launch demo modal
+                    <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#pagesModal">
+                        Редактор страниц
                     </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="pagesModal" tabindex="-1" aria-labelledby="pagesModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-fullscreen">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="pagesModalLabel">Редактор страниц</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body p-0">
@@ -139,7 +139,7 @@
                     
                 <div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
                     <div class="form-group mt-2">
-                        <label for="parent_id">Родительский ID</label>
+                        <label for="parent_id">Родительский урок</label>
                         <select name="parent_id" class="form-select" id="parent_id" value="<?= $lesson['parent_id'] ?? '' ?>">
                             <option disabled value selected>---Не выбрано---</option>
                             <?php foreach($parent_lessons as $parent_lesson) : ?>
@@ -165,14 +165,14 @@
                         </select>
                     </div>
                     <div class="form-group mt-2">
-                        <label for="published">Опубликовано</label>
+                        <label for="published">Опубликован</label>
                         <select class="form-select" name="published" id="published" required>
                             <?php if(!empty($lesson['published']) && $lesson['published'] == 1) : ?>
-                                <option value="0">No</option>
-                                <option value="1" selected>Yes</option>
+                                <option value="0">Нет</option>
+                                <option value="1" selected>Да</option>
                             <?php else: ?>   
-                                <option value="0" selected>No</option>
-                                <option value="1">Yes</option>
+                                <option value="0" selected>Нет</option>
+                                <option value="1">Да</option>
                             <?php endif; ?> 
                         </select>
                     </div>
@@ -180,11 +180,11 @@
                         <label for="is_private">Приватный</label>
                         <select class="form-select" name="is_private" id="is_private">
                             <?php if(!empty($lesson['published']) && $lesson['published'] == 1) : ?>
-                                <option value="0">No</option>
-                                <option value="1" selected>Yes</option>
+                                <option value="0">Нет</option>
+                                <option value="1" selected>Да</option>
                             <?php else: ?>   
-                                <option value="0" selected>No</option>
-                                <option value="1">Yes</option>
+                                <option value="0" selected>Нет</option>
+                                <option value="1">Да</option>
                             <?php endif; ?> 
                         </select>
                     </div>
@@ -207,6 +207,7 @@
 
     });*/
 </script>
+<link rel="stylesheet" href="<?=base_url('/assets/lesson_page_manager/css/main.css')?>" type="text/css">
 
 <?= view('misc/filepicker') ?>
 

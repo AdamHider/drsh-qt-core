@@ -1,13 +1,16 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 border-end pt-2 sticky-top sticky-offset">   
-            <h5>Pages</h5>
-            <ul id="pageList" class="list-group"></ul>
-            <button id="addPage" class="btn btn-secondary mt-2">Add Page</button>
-       
+        <div class="col-3 border-end">  
+            <div class="sticky-top sticky-offset pt-2">
+                <h5>Страницы</h5>
+                <ul id="pageList" class="list-group"></ul>
+                <div class="d-flex justify-content-center">   
+                    <button id="addPage" class="btn btn-success mt-2"><i class="bi bi-plus-lg me-2"></i>Новая страница</button>
+                </div>
+            </div>
         </div>
         <div class="col-9 pt-2">
-            <div id="editor" class="editor"></div>
+            <div id="editor" class="editor row"></div>
         </div>
     </div>
 </div>
@@ -15,8 +18,6 @@
 <script>
 let pages = <?= isset($pages) ? $pages : '[]' ?>;
 </script>
-
-<link rel="stylesheet" href="<?=base_url('/assets/lesson_page_manager/css/main.css')?>" type="text/css">
 
 <script src="<?=base_url('/assets/lesson_page_manager/js/defaults2.js')?>"></script>
 <script src="<?=base_url('/assets/lesson_page_manager/js/renderer.js')?>"></script>
