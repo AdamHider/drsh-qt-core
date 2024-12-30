@@ -101,9 +101,19 @@ const formTemplates = {
 
 
 const config = {
-    
-    title: { type: 'input', class: '', default: 'Diñleyik, tekrarlayıq' },
+    title: { label: 'Заголовок', type: 'input', class: '', default: 'Diñleyik, tekrarlayıq' },
     subtitle: { type: 'input', class: '', default: '' },
+    image: {
+        label: 'Изображение',
+        type: 'fieldGroup',
+        contentclass:"row",
+        class: '',
+        tag: 'div',
+        collapsible: true,
+        fields: {
+            image: { type: 'image', class: 'main-image', nolabel: true, default: '' },
+        }
+    },
     other: {
         label: 'Прочее',
         type: 'fieldGroup',
@@ -123,13 +133,14 @@ const config = {
         class: '',
         tag: 'div',
         fields: {
-            page_template: { type: 'select', class: 'col-8', options: ['dialogue', 'grid'], default: 'dialogue' },
-            form_template: { type: 'select', class: 'col-4', options: ['none', 'variant', 'match'], default: 'none' },
+            page_template: { type: 'select', class: 'col-8', options: ['none','dialogue','grid'], default: 'none' },
+            form_template: { type: 'select', class: 'col-4', options: ['none','variant','match'], default: 'none' },
         }
     },
     template_config: {
         type: 'dynamic',
         fields: {
+            none: null,
             dialogue: {
                 replica_list: { label: 'Replicas', type: 'array', class: 'col-8', contentclass:"row ms-2", collapsible: true, itemConfig: replicaItemConfig },
                 input_list: { label: 'Fields',type: 'array', class: 'col-4', contentclass:"", collapsible: true, itemConfig: null }

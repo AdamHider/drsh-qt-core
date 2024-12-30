@@ -117,7 +117,7 @@
                                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body p-0">
                                     <?= view('admin/lessons/page_manager', ['pages' => $lesson['pages']]) ?>
                                 </div>
                             </div>

@@ -1,12 +1,12 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2">   
+        <div class="col-3 border-end pt-2 sticky-top sticky-offset">   
             <h5>Pages</h5>
             <ul id="pageList" class="list-group"></ul>
             <button id="addPage" class="btn btn-secondary mt-2">Add Page</button>
        
         </div>
-        <div class="col-10">
+        <div class="col-9 pt-2">
             <div id="editor" class="editor"></div>
         </div>
     </div>
