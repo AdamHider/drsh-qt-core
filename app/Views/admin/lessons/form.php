@@ -81,7 +81,7 @@
                         <div class="form-group col-4">
                             <label for="image">Изображение</label>
                             <div class="card ficker-image text-center image-input">
-                                <img src="<?= $lesson['image'] ?? '' ?>" class="card-img">
+                                <img src="<?= $lesson['image'] ?? '' ?>" class="ratio ratio-1x1 card-img">
                                 <div class="card-footer">
                                     <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
                                 </div>

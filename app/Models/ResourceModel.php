@@ -112,7 +112,7 @@ class ResourceModel extends Model
 
     public function proccessItemCost ($user_id, $cost_config)
     {   
-        if(!$cost_config) return false;
+        if(!$cost_config) return [];
         $DescriptionModel = model('DescriptionModel');
         $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
         ->whereIn('code', array_keys($cost_config))->get()->getResultArray();
@@ -147,6 +147,7 @@ class ResourceModel extends Model
 
     public function checkListQuantity($user_id, $resources)
     {
+        if(empty($resources)) return true;
         $list = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
         ->whereIn('code', array_keys($resources))->get()->getResultArray();
         foreach($list as &$item){

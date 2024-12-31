@@ -95,7 +95,7 @@ function createField(fieldConfig, object, key, parentObject) {
             });
             modal.show()})
     } else if (fieldConfig.type === 'array') {
-        input = createArrayField(fieldConfig, object, key);
+        return createArrayField(fieldConfig, object, key);
     }
 
     if (!input) return null;
@@ -118,6 +118,9 @@ function createField(fieldConfig, object, key, parentObject) {
             updateInputListConfig(); // Update input_list config based on form_template
             loadPage(selectedPageIndex); // Re-render the page
         }
+        console.log(parentObject)
+        console.log(key)
+        console.log(value)
         if(fieldConfig.onchange) fieldConfig.onchange(e)
         updatePageData(); // Обновляем данные в pages
     });
@@ -176,57 +179,59 @@ function createObjectField(fieldConfig, object, key, parentObject) {
     updatePageData(); // Обновляем данные в pages
     return fieldDiv;
 }
-
 function createArrayField(fieldConfig, object, key) {
     const fieldDiv = $('<div>').addClass(fieldConfig.class);
     
-    if(!fieldConfig.itemConfig) return fieldDiv
+    if (!fieldConfig.itemConfig) return fieldDiv;
 
     const label = $('<label>').text(`${fieldConfig.label ?? key}`).addClass('form-label w-75');
     
     const id = Math.floor(Math.random() * 10000);
     fieldDiv.append(label);
     const listDiv = $('<div>', { id: `${key}List_${id}` }).addClass(fieldConfig.contentclass);
-    if(fieldConfig.collapsible){
+    if (fieldConfig.collapsible) {
         label.addClass('btn-link').attr('data-bs-toggle', 'collapse').attr('data-bs-target', `#${key}List_${id}`).on('click', (e) => {
-            e.preventDefault()
-            if($(e.delegateTarget).hasClass('collapsed')){
-                $(e.delegateTarget).find('i').addClass('bi-chevron-down').removeClass('bi-chevron-up')
+            e.preventDefault();
+            if ($(e.delegateTarget).hasClass('collapsed')) {
+                $(e.delegateTarget).find('i').addClass('bi-chevron-down').removeClass('bi-chevron-up');
             } else {
-                $(e.delegateTarget).find('i').addClass('bi-chevron-up').removeClass('bi-chevron-down')
+                $(e.delegateTarget).find('i').addClass('bi-chevron-up').removeClass('bi-chevron-down');
             }
         }).append('<i class="ms-2 bi bi-chevron-down"></i>');
-        listDiv.addClass('collapse')
+        listDiv.addClass('collapse');
     } 
     fieldDiv.append(listDiv);
-    // Render existing items
+
     if (object[key]) {
         object[key].forEach((item, index) => {
             let itemDiv = $(`<${fieldConfig.itemConfig.tag}>`).addClass(`${fieldConfig.itemConfig.class} array-item`);
             Object.keys(fieldConfig.itemConfig.fields).forEach(subKey => {
                 const subFieldConfig = fieldConfig.itemConfig.fields[subKey];
-                const subFieldDiv = createField(subFieldConfig, item, subKey, item);
+                const subFieldDiv = createField(subFieldConfig, item, subKey, object);
                 if (subFieldDiv) {
                     itemDiv.append(subFieldDiv);
                 }
             });
             const deleteButton = $('<button>').addClass('delete-array-item btn btn-danger btn-sm position-absolute top-0 start-100 w-auto translate-middle').html('<i class="bi bi-trash"></i>')
             .on('click', (e) => {
-                e.preventDefault()
-                if(confirm(`Вы точно хотите удалить элемент ${fieldConfig.itemConfig.label}?`)) deleteArrayItem(key, index)
+                e.preventDefault();
+                if (confirm(`Вы точно хотите удалить элемент ${fieldConfig.itemConfig.label}?`)){
+                    deleteArrayItem(key, index, object);
+                    $(e.delegateTarget).parent().remove()
+                } 
             });
             itemDiv.append(deleteButton);
             listDiv.append(itemDiv);
             
-            if(fieldConfig.itemConfig.render) {
-                fieldConfig.itemConfig.render(itemDiv)
+            if (fieldConfig.itemConfig.render) {
+                fieldConfig.itemConfig.render(itemDiv);
             }
         });
     }
     const addButton = $('<div>').append($('<button>', {
         html: `<b>Добавить "${fieldConfig.itemConfig.label}"</b>`,
         class: 'btn btn-sm btn-success',
-        click: (event) => addItem(event, key, fieldConfig.itemConfig, id)
+        click: (event) => addItem(event, key, fieldConfig.itemConfig, id, object)
     }).prepend($('<i>').addClass('bi bi-plus-lg me-2'))).addClass('text-center rounded border bg-light p-2 my-2');
 
     fieldDiv.append(addButton);
@@ -234,18 +239,17 @@ function createArrayField(fieldConfig, object, key) {
     return fieldDiv;
 }
 
-function addItem(event, arrayKey, itemConfig, id) {
+function addItem(event, arrayKey, itemConfig, id, parent) {
     event.preventDefault();
-
-    if (!objectToEdit.template_config[arrayKey]) {
-        objectToEdit.template_config[arrayKey] = [];
-    }
     const newItem = {};
-    Object.keys(itemConfig).forEach(subKey => {
-        newItem[subKey] = itemConfig[subKey].default;
+    Object.keys(itemConfig.fields).forEach(subKey => {
+        newItem[subKey] = itemConfig.fields[subKey].default;
     });
-    var index = objectToEdit.template_config[arrayKey].length;
-    objectToEdit.template_config[arrayKey].push(newItem);
+    if (!parent[arrayKey]) {
+        parent[arrayKey] = [];
+    }
+    var index = parent[arrayKey].length;
+    parent[arrayKey].push(newItem);
 
     let newItemDiv = $(`<${itemConfig.tag}>`).addClass(`${itemConfig.class} array-item`);
     Object.keys(itemConfig.fields).forEach(subKey => {
@@ -257,19 +261,27 @@ function addItem(event, arrayKey, itemConfig, id) {
     });
     const deleteButton = $('<button>').addClass('delete-array-item btn btn-danger btn-sm position-absolute top-0 start-100 w-auto translate-middle').html('<i class="bi bi-trash"></i>')
     .on('click', (e) => {
-        e.preventDefault()
-        if(confirm(`Вы точно хотите удалить элемент ${itemConfig.label}?`)) deleteArrayItem(arrayKey, index)
+        e.preventDefault();
+        if (confirm(`Вы точно хотите удалить элемент ${itemConfig.label}?`)){
+            deleteArrayItem(arrayKey, index, parent);
+            $(e.delegateTarget).parent().remove()
+        } 
     });
     newItemDiv.append(deleteButton);
     $(`#${arrayKey}List${(id !== null) ? '_'+id : ''}`).append(newItemDiv);
     updatePageData(); // Обновляем данные в pages
-    initControls()
+    initControls();
 }
-function deleteArrayItem(arrayKey, index) {
-    objectToEdit.template_config[arrayKey].splice(index, 1); // Удаляем элемент по индексу
-    updatePageData(); // Обновляем данные в pages
-    loadPage(selectedPageIndex); // Перезагружаем страницу, чтобы отобразить изменения
+
+function deleteArrayItem(arrayKey, index, parent) {
+    objectToEdit.template_config[arrayKey].splice(index, 1);
+    if (parent[arrayKey]) {
+        parent[arrayKey].splice(index, 1);
+    }
+    updatePageData();
+    initControls();
 }
+
 function initializeEditor(config, object, parent) {
     if(!config) return
     Object.keys(config).forEach(key => {
@@ -287,9 +299,10 @@ function initializeEditor(config, object, parent) {
         }
     });
 }
-
+let activePageIndex = 0;
 function loadPage(index) {
     selectedPageIndex = index;
+    activePageIndex = index
     objectToEdit = JSON.parse(JSON.stringify(pages[selectedPageIndex])); // Глубокое клонирование объекта
     updateInputListConfig(); // Обновляем input_list конфигурацию на основе form_template
     $('#editor').empty();
@@ -302,6 +315,7 @@ function loadPage(index) {
 
 function updatePageData() {
     pages[selectedPageIndex] = JSON.parse(JSON.stringify(objectToEdit)); // Обновляем данные в pages
+    $('[name="pages"]').val(JSON.stringify(pages))
 }
 
 $(document).ready(function() {

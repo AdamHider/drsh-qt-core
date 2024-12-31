@@ -105,7 +105,7 @@ const chatOptionConfig = {
     class: '',
     tag: 'div',
     fields: {
-        text: { label: 'Вариант ответа',  type: 'input', class: '', nolabel: true, default: '' },
+        text: { label: 'Вариант ответа',  type: 'textarea', class: '', nolabel: true, default: '' },
     }
 };
 const variantItemConfig = {
@@ -117,7 +117,7 @@ const variantItemConfig = {
         type:  { type: 'hidden', class: '', nolabel: true, default: 'input' },
         index: { label: 'Номер', type: 'number',  class: '', default: 1 },
         answer: { label: 'Правильный ответ', type: 'input', class: '', default: '' },
-        variants: { label: 'Варианты ответа', type: 'array', class: '', contentclass:"", nolabel: true, collapsible: true, itemConfig: variantOptionConfig }
+        variants: { label: 'Варианты ответа', type: 'array', class: '', default: [], contentclass:"", nolabel: true, collapsible: true, itemConfig: variantOptionConfig }
     }
 };
 const matchItemConfig = {

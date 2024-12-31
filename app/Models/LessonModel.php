@@ -45,7 +45,7 @@ class LessonModel extends Model
         }
         if ($lesson) {
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
-            $lesson['image']            = base_url('image/' . $lesson['image']);
+            $lesson['image']            = base_url($lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked']       = $this->checkBlocked($lesson['unblock_after']);
             
@@ -82,7 +82,7 @@ class LessonModel extends Model
             }
             $lesson['course_section'] = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
-            $lesson['image'] = base_url('image/' . $lesson['image']);
+            $lesson['image'] = base_url($lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
