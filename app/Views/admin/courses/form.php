@@ -4,7 +4,7 @@
     <?php if(isset($course['id'])) : ?>
     <form action="/admin/courses/save<?= $course ? '/' . $course['id'] : '' ?>" method="post">
     <?php else : ?>
-    <form action="/admin/courses/create" method="post">
+    <form action="/admin/courses/save" method="post">
     <?php endif ?>
         <div class="d-flex justify-content-start mb-3">
             <a class="btn btn-danger rounded-3 me-2" href="/admin/courses"><i class="bi bi-x-lg"></i> Закрыть</a>
@@ -22,7 +22,7 @@
         <div class="row rounded-3 shadow-sm border bg-white p-2  pb-3">
             <div class="form-group mt-2">
                 <label for="title">Название</label>
-                <input type="text" name="title" id="title" class="form-control" value="<?= $course['title'] ?? '' ?>">
+                <input type="text" name="title" id="title" class="form-control" value="<?= $course['title'] ?? '' ?>" required>
             </div>
             <div class="form-group mt-2">
                 <label for="description">Описание</label>
@@ -36,7 +36,7 @@
                         <div class="card-footer">
                             <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
                         </div>
-                        <input type="hidden" name="image" class="form-control" value="<?= $course['image'] ?? '' ?>">
+                        <input type="hidden" name="image" class="form-control" value="<?= $course['image'] ?? '' ?>" required>
                     </div>
                 </div>
                 <div class="form-group col-4">
@@ -46,7 +46,7 @@
                         <div class="card-footer">
                             <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
                         </div>
-                        <input type="hidden" name="background_image" class="form-control" value="<?= $course['background_image'] ?? '' ?>">
+                        <input type="hidden" name="background_image" class="form-control" value="<?= $course['background_image'] ?? '' ?>" required>
                     </div>
                 </div>
             </div>
@@ -65,14 +65,14 @@
                 </select>
             </div>
             <div class="form-group mt-2">
-                <label for="published">Опубликовано</label>
+                <label for="published">Опубликован</label>
                 <select class="form-select" name="published" id="published">
                     <?php if(!empty($course['published']) && $course['published'] == 1) : ?>
-                        <option value="0" selected>No</option>
-                        <option value="1">Yes</option>
+                        <option value="0" selected>Нет</option>
+                        <option value="1">Да</option>
                     <?php else: ?>   
-                        <option value="0">No</option>
-                        <option value="1" selected>Yes</option>
+                        <option value="0">Нет</option>
+                        <option value="1" selected>Да</option>
                     <?php endif; ?> 
                 </select>
             </div>
@@ -80,11 +80,11 @@
                 <label for="is_private">Приватный</label>
                 <select class="form-select" name="is_private" id="is_private">
                     <?php if(!empty($course['published']) && $course['published'] == 1) : ?>
-                        <option value="0">No</option>
-                        <option value="1" selected>Yes</option>
+                        <option value="0">Нет</option>
+                        <option value="1" selected>Да</option>
                     <?php else: ?>   
-                        <option value="0" selected>No</option>
-                        <option value="1">Yes</option>
+                        <option value="0" selected>Нет</option>
+                        <option value="1">Да</option>
                     <?php endif; ?> 
                 </select>
             </div>

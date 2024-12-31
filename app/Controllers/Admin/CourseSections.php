@@ -50,10 +50,8 @@ class CourseSections extends Controller
             if (!$model->insert($sectionData)) {
                 return redirect()->back()->withInput()->with('errors', $model->errors());
             }
-            return redirect()->to('/admin/course_sections/form/'.$courseId.'/'. $model->insertID());
+            return redirect()->back()->withInput()->with('status', 'Course section saved successfully');
         }
-
-
         return redirect()->back()->withInput()->with('status', 'Course section saved successfully');
     }
 

@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\LessonModel;
 use App\Models\CourseSectionModel;
 use App\Models\CourseModel;
+use App\Models\ResourceModel;
 use App\Models\LanguageModel;
 use CodeIgniter\Controller;
 
@@ -27,6 +28,7 @@ class Lessons extends Controller
     {
         $LanguageModel = new LanguageModel();
         $CourseModel = new CourseModel();
+        $ResourceModel = new ResourceModel();
         $CourseSectionModel = new CourseSectionModel();
         $LessonModel = new LessonModel();
         $data['settings'] = [
@@ -37,6 +39,7 @@ class Lessons extends Controller
         $data['languages'] = $LanguageModel->findAll();
         $data['lesson'] = $id ? $LessonModel->find($id) : null;
         $data['courses'] = $CourseModel->findAll();
+        $data['resources'] = $ResourceModel->findAll();
         $lessons = $LessonModel->orderBy('created_at', 'ASC')->findAll();
         $data['parent_lessons'] = array_filter($lessons, function($p) use ($id) {
             return $p['id'] !== $id && !$p['parent_id'] && $p['type'] == 'common';
@@ -55,10 +58,11 @@ class Lessons extends Controller
         if ($id) {
             $model->update($id, $lessonData);
         } else {
-            $model->save($lessonData);
+            if (!$model->save($lessonData)) {
+                return redirect()->back()->withInput()->with('errors', $model->errors());
+            }
         }
-
-        return redirect()->to('/admin/lessons');
+        return redirect()->back()->withInput()->with('status', 'Lesson saved successfully');
     }
 
     public function delete($id)

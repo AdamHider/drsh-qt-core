@@ -17,7 +17,7 @@ class LessonModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'image'
+        'course_id', 'course_section_id', 'language_id', 'title', 'description', 'type', 'pages', 'cost_config', 'reward_config', 'image', 'published', 'parent_id', 'unblock_after', 'is_private'
     ];
     
     protected $useTimestamps = false;
