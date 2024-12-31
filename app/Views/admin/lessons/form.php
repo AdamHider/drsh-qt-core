@@ -5,6 +5,20 @@
         <div class="d-flex justify-content-end mb-3">
             <button type="submit" class="btn btn-primary rounded-3">Сохранить</button>
         </div>
+        <?php if (session()->getFlashdata('status')): ?>
+            <div class="alert alert-success">
+                <?= session()->getFlashdata('status') ?>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('errors')): ?>
+            <div class="alert alert-danger">
+                <ul>
+                    <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                        <li><?= $error ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="row">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -14,8 +28,6 @@
                     <button class="nav-link" id="nav-other-tab" data-bs-toggle="tab" data-bs-target="#nav-other" type="button" role="tab" aria-controls="nav-other" aria-selected="false">Прочее</button>
                 </div>
             </nav>
-
-
             <div class="tab-content rounded-3 shadow-sm border bg-white p-4 ">
                 <div class="tab-pane fade show active" id="nav-common" role="tabpanel" aria-labelledby="nav-common-tab">
                     <div class="form-group mt-2">
@@ -105,7 +117,7 @@
                     </div>
                     <div class="form-group mt-2">
                         <label for="pages">Страницы</label>
-                        <input type="hidden" name="pages" id="pages" class="form-control" value="<?= esc($lesson['pages']) ?? '' ?>"/>
+                        <input type="hidden" name="pages" id="pages" class="form-control" value="<?= esc($lesson['pages']) ?? '' ?>" required/>
                     </div>
                     <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#pagesModal">
                         Редактор страниц
@@ -127,13 +139,27 @@
                 </div>
 
                 <div class="tab-pane fade" id="nav-cost" role="tabpanel" aria-labelledby="nav-cost-tab">
-                    <div class="form-group mt-2">
-                        <label for="cost_config">Конфигурация стоимости</label>
-                        <input type="text" name="cost_config" id="cost_config" class="form-control" value="<?= esc($lesson['cost_config']) ?? '' ?>">
-                    </div>
-                    <div class="form-group mt-2">
-                        <label for="reward_config">Конфигурация наград</label>
-                        <input type="text" name="reward_config" id="reward_config" class="form-control" value="<?= esc($lesson['reward_config']) ?? '' ?>">
+                    <div class="row">
+                        <div class="col-6 form-group mt-2">
+                            <label for="cost_resource_config" class="mb-2">Конфигурация стоимости</label>
+                            <input type="hidden" name="cost_config" id="cost_resource_config" class="form-control" value="<?= esc($lesson['cost_config']) ?? '' ?>">
+                            <?php foreach($resources as $resource) : ?>
+                                <div class="mb-2 cost-resources resource">
+                                    <label for="costResouce<?=$resource['code']?>" class="form-label"><?= $resource['code'] ?></label>
+                                    <input type="text" class="form-control" data-code="<?=$resource['code']?>" id="costResouce<?=$resource['code']?>" value="<?=json_decode($lesson['cost_config'], true)[$resource['code']] ?? 0?>">
+                                </div>
+                            <?php endforeach; ?> 
+                        </div>
+                        <div class="col-6  form-group mt-2">
+                            <label for="reward_resource_config" class="mb-2">Конфигурация наград</label>
+                            <input type="hidden" name="reward_config" id="reward_resource_config" class="form-control" value="<?= esc($lesson['reward_config']) ?? '' ?>">
+                            <?php foreach($resources as $resource) : ?>
+                                <div class="mb-2 reward-resources resource">
+                                    <label for="rewardResouce<?=$resource['code']?>" class="form-label"><?= $resource['code'] ?></label>
+                                    <input type="text" class="form-control" data-code="<?=$resource['code']?>" id="rewardResouce<?=$resource['code']?>" value="<?=json_decode($lesson['reward_config'], true)[$resource['code']] ?? 0?>">
+                                </div>
+                            <?php endforeach; ?> 
+                        </div>
                     </div>
                 </div>
                     
@@ -193,25 +219,13 @@
         </div>
     </form>
 </div>
-<script>
-    /*
-    $(".nav-tabs").find("button").last().click();
-
-    $(".nav-tabs").find("button").each(function(key, val) {
-        if ( location.hash == $(val).attr('data-bs-target')) {
-            $(val).click();
-        }
-        $(val).click(function(ky, vl) {
-            location.hash = $(this).attr('data-bs-target');
-        });
-
-    });*/
-</script>
 <link rel="stylesheet" href="<?=base_url('/assets/lesson_page_manager/css/main.css')?>" type="text/css">
 
 <?= view('misc/filepicker') ?>
 
 <script>
+//$(document).ready(() => {
+        
     $('.pick-image').on('click', (e) => {
         let input = $(e.delegateTarget).closest('.input-group').find('input')
         let container = $(e.delegateTarget).closest('.form-group');
@@ -228,5 +242,79 @@
         });
         modal.show()
     })
+
+    const sections = <?= !empty($course_sections) ? json_encode($course_sections) : '[]' ?>
+
+    $('[name="course_id"]').on('change', (e) => {
+        let value = $(e.delegateTarget).val()
+        let sectionsFiltered = sections.filter((section) => section.course_id == value)
+        $('[name="course_section_id"]').empty()
+        $('[name="course_section_id"]').attr('value', 0)
+        $('[name="course_section_id"]').append($(`<option>`).prop('disabled', true).prop('selected', 'selected').val('0').text('---Не выбрано---'))
+        sectionsFiltered.forEach((section) => {
+            let option = $(`<option>`).val(section.id).text(section.title)
+            $('[name="course_section_id"]').append(option)
+        })
+    })
+    $('[name="course_id"]').trigger('change')
+
+
+    var costConfig = <?= !empty($lesson['cost_config']) ? $lesson['cost_config'] : '[]' ?> 
+    var rewardConfig = <?= !empty($lesson['reward_config']) ? $lesson['reward_config'] : '[]' ?> 
+
+    $('.cost-resources input').on('change', (e) => {
+        let code = $(e.delegateTarget).attr('data-code')
+        let quantity = $(e.delegateTarget).val()
+        costConfig[code] = quantity
+        if(quantity == 0){
+            delete costConfig[code]
+        }
+        $('[name="cost_config"]').val(JSON.stringify(costConfig))
+        renderResources()
+    })
+    $('.reward-resources input').on('change', (e) => {
+        let code = $(e.delegateTarget).attr('data-code')
+        let quantity = $(e.delegateTarget).val()
+        rewardConfig[code] = quantity
+        if(quantity == 0){
+            delete rewardConfig[code]
+        }
+        $('[name="reward_config"]').val(JSON.stringify(rewardConfig))
+        renderResources()
+    })
+    function renderResources(){
+        $('.cost-resources input, .reward-resources input').each((index, el) => {
+            if($(el).val()*1 > 0){
+                $(el).closest('.resource').addClass('positive')
+            } else {
+                $(el).closest('.resource').removeClass('positive')
+            }
+        })
+    }
+    renderResources()
+//})
 </script>
+<style>
+.cost-resources.resource, .reward-resources.resource{
+    color: gray;
+}
+.resource label{
+    text-transform: capitalize;
+}
+.cost-resources.resource.positive{
+    color: red;
+    font-weight: bold;
+}
+.cost-resources.resource.positive input{
+    color: red;
+}
+.reward-resources.resource.positive{
+    color: green;
+    font-weight: bold;
+}
+.reward-resources.resource.positive input{
+    color: green;
+}
+
+</style>
 <?= $this->endSection() ?>

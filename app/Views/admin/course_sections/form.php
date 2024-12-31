@@ -19,6 +19,11 @@
                 </ul>
             </div>
         <?php endif; ?>
+        <?php if (session()->getFlashdata('status')): ?>
+            <div class="alert alert-success">
+                <?= session()->getFlashdata('status') ?>
+            </div>
+        <?php endif; ?>
         <div class="row rounded-3 shadow-sm border bg-white p-2  pb-3">
             <div class="form-group mt-2">
                 <label for="description">Курс</label>
@@ -65,11 +70,11 @@
                 <label for="published">Опубликовано</label>
                 <select class="form-select" name="published" id="published">
                     <?php if(!empty($section['published']) && $section['published'] == 1) : ?>
-                        <option value="0">No</option>
-                        <option value="1" selected>Yes</option>
+                        <option value="0">Нет</option>
+                        <option value="1" selected>Да</option>
                     <?php else: ?>   
-                        <option value="0" selected>No</option>
-                        <option value="1">Yes</option>
+                        <option value="0" selected>Нет</option>
+                        <option value="1">Да</option>
                     <?php endif; ?> 
                 </select>
             </div>
@@ -77,11 +82,11 @@
                 <label for="is_private">Приватный</label>
                 <select class="form-select" name="is_private" id="is_private">
                     <?php if(!empty($section['published']) && $section['published'] == 1) : ?>
-                        <option value="0">No</option>
-                        <option value="1" selected>Yes</option>
+                        <option value="0">Нет</option>
+                        <option value="1" selected>Да</option>
                     <?php else: ?>   
-                        <option value="0" selected>No</option>
-                        <option value="1">Yes</option>
+                        <option value="0" selected>Нет</option>
+                        <option value="1">Да</option>
                     <?php endif; ?> 
                 </select>
             </div>

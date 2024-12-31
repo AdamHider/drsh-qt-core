@@ -19,7 +19,6 @@
 let pages = <?= isset($pages) ? $pages : '[]' ?>;
 </script>
 
-<script src="<?=base_url('/assets/lesson_page_manager/js/defaults2.js')?>"></script>
-<script src="<?=base_url('/assets/lesson_page_manager/js/renderer.js')?>"></script>
-<script src="<?=base_url('/assets/lesson_page_manager/js/main2.js')?>"></script>
+<script src="<?=base_url('/assets/lesson_page_manager/js/defaults.js')?>"></script>
+<script src="<?=base_url('/assets/lesson_page_manager/js/main.js')?>"></script>
 <script src="<?=base_url('/assets/lesson_page_manager/js/pageManager.js')?>"></script>

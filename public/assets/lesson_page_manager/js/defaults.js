@@ -10,7 +10,7 @@ const replicaItemConfig = {
             tag: 'div',
             nolabel: true,
             fields: {
-                image: { type: 'image', class: 'chat-avatar', nolabel: true, default: '' },
+                image: { type: 'image', class: 'answer-block-avatar', nolabel: true, default: '' },
             }
         },
         name: {
@@ -30,7 +30,9 @@ const replicaItemConfig = {
                     fields: {
                         animation: { type: 'input', class: ' chat-animation col-4', nolabel: true, default: '' },
                         audio_link: { type: 'audio', class: ' chat-audio col-4', nolabel: true, default: '' },
-                        float: { type: 'select', class: 'col-4 float-select', options: ['left', 'right'], nolabel: true, default: 'left', onchange: (e) => $(e.delegateTarget).closest('.chat-message').removeClass('left right').addClass($(e.delegateTarget).val()) },
+                        float: { type: 'select', class: 'col-4 float-select', options: [
+                            {value: 'left', label: 'Слева'}, {value: 'right', label: 'Справа'}
+                        ], nolabel: true, default: 'left', onchange: (e) => $(e.delegateTarget).closest('.chat-message').removeClass('left right').addClass($(e.delegateTarget).val()) },
                     }
                 },
             }
@@ -38,9 +40,49 @@ const replicaItemConfig = {
     }
 };
 
+const answerQuestionItemConfig = {
+    label: 'Вопрос-ответ',
+    class: 'answer-question-block border mt-2 p-2 row rounded w-75',
+    render: (e) => {$(e).removeClass('left right').addClass($(e).find('.float-select select').val())},
+    tag: 'div',
+    fields: {
+        image: {
+            type: 'fieldGroup',
+            class: 'field-group col-3',
+            tag: 'div',
+            nolabel: true,
+            fields: {
+                image: { type: 'image', class: 'chat-avatar', nolabel: true, default: '' },
+            }
+        },
+        name: {
+            type: 'fieldGroup',
+            class: 'field-group col-9',
+            tag: 'div',
+            nolabel: true,
+            fields: {
+                text: { type: 'textarea', class: ' chat-text', nolabel: true, default: '' },
+                other: {
+                    type: 'fieldGroup',
+                    class: 'field-group',
+                    contentclass: "row",
+                    tag: 'div',
+                    nolabel: true,
+                    fields: {
+                        animation: { type: 'input', class: ' chat-animation col-4', nolabel: true, default: '' },
+                        float: { type: 'select', class: 'col-4 float-select', options: [
+                            {value: 'left', label: 'Слева'}, {value: 'right', label: 'Справа'}
+                        ], nolabel: true, default: 'left', onchange: (e) => $(e.delegateTarget).closest('.answer-question-block').removeClass('left right').addClass($(e.delegateTarget).val()) },
+                    }
+                },
+            }
+        },
+    }
+}
+
 const gridItemConfig = {
     label: 'Блок',
-    class: 'col column-item',
+    class: 'col column-item border rounded',
     render: (e) => {$(e).parent().removeClass('row-cols-1 row-cols-2 row-cols-3 row-cols-4 row-cols-5').addClass('row-cols-'+$('.editor').find('.grid-columns-count select').val())},
     tag: 'div',
     fields: {
@@ -51,6 +93,14 @@ const gridItemConfig = {
 };
 
 const variantOptionConfig = {
+    label: 'Вариант ответа',
+    class: '',
+    tag: 'div',
+    fields: {
+        text: { label: 'Вариант ответа',  type: 'textarea', class: '', nolabel: true, default: '' },
+    }
+};
+const chatOptionConfig = {
     label: 'Вариант ответа',
     class: '',
     tag: 'div',
@@ -81,12 +131,26 @@ const matchItemConfig = {
         answer: { label: 'Ответ', type: 'input', class: '', default: '' }
     }
 };
+const chatItemConfig = {
+    label: 'Ответ в чате',
+    class: 'card p-2 mt-2',
+    tag: 'div',
+    fields: {
+        mode: { type: 'hidden', class: '', nolabel: true, default: 'chat' },
+        type:  { type: 'hidden', class: '', nolabel: true, default: 'chat_textbox' },
+        index: { label: 'Номер', type: 'number',  class: '', default: 1 },
+        tip: { label: 'Подсказка', type: 'input', class: '', default: '' },
+        answer: { label: 'Правильный ответ', type: 'input', class: '', default: '' },
+        variants: { label: 'Варианты ответа', type: 'array', class: '', contentclass:"", nolabel: true, collapsible: true, itemConfig: chatOptionConfig }
+    }
+}
 
 
 const formTemplates = {
     none: null,
     variant: variantItemConfig,
-    match: matchItemConfig
+    match: matchItemConfig,
+    chat: chatItemConfig
 };
 
 
@@ -124,10 +188,17 @@ const config = {
         tag: 'div',
         fields: {
             page_template: { label: 'Тип страницы', type: 'select', class: 'col-8', options: [
-                {value: 'none', label: 'Не выбран'}, {value: 'dialogue', label: 'Диалог'}, {value: 'grid', label: 'Блоки'}
+                {value: 'none', label: 'Не выбран'}, 
+                {value: 'dialogue', label: 'Диалог'}, 
+                {value: 'grid', label: 'Блоки'}, 
+                {value: 'answerQuestion', label: 'Вопросы-ответы'}, 
+                {value: 'chat', label: 'Чат'}
             ], default: 'none' },
             form_template: { label: 'Тип полей', type: 'select', class: 'col-4', options: [
-                {value: 'none', label: 'Без полей'}, {value: 'variant', label: 'Варианты ответа'}, {value: 'match', label: 'Сопоставление'}
+                {value: 'none', label: 'Без полей'}, 
+                {value: 'variant', label: 'Варианты ответа'}, 
+                {value: 'match', label: 'Сопоставление'}, 
+                {value: 'chat', label: 'Ответ в чате'}
             ], default: 'none' },
         }
     },
@@ -145,7 +216,15 @@ const config = {
                 ], default: 3, onchange: (e) => $(e.delegateTarget).closest('.editor').find('.column-item').parent().removeClass('row-cols-1 row-cols-2 row-cols-3 row-cols-4 row-cols-5').addClass('row-cols-'+$(e.delegateTarget).val())  },
                 column_list: { label: 'Блоки', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: gridItemConfig },
                 input_list: { label: 'Поля', type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
-            }
+            },
+            answerQuestion: {
+                block_list: { label: 'Блоки', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: answerQuestionItemConfig },
+                input_list: { label: 'Поля', type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
+            },
+            chat: {
+                replica_list: { label: 'Реплики', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: replicaItemConfig },
+                input_list: { label: 'Поля',type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
+            },
         }
     }
 };

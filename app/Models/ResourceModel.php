@@ -23,16 +23,12 @@ class ResourceModel extends Model
     protected $useTimestamps = false;
 
     private $settings;
-    public function __construct()
-    {
-        if(session()->get('user_id')){
-            $SettingsModel = model('SettingsModel');
-            $this->settings = $SettingsModel->getList(['user_id' => session()->get('user_id')]);
-            $this->recalculateRestoration(session()->get('user_id'));
-        }
-    }
     public function getList ($data) 
     {
+        $SettingsModel = model('SettingsModel');
+        $this->settings = $SettingsModel->getList(['user_id' => $data['user_id']]);
+        $this->recalculateRestoration($data['user_id']);
+
         $DescriptionModel = model('DescriptionModel');
         $resources = $this->select('resources.*, COALESCE(resources_usermap.quantity, 0) quantity, resources_usermap.consumed_at')
         ->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$data['user_id'], 'left')->get()->getResultArray();
@@ -56,6 +52,9 @@ class ResourceModel extends Model
     
     public function getItem ($code, $user_id, $item_id) 
     {
+        $SettingsModel = model('SettingsModel');
+        $this->settings = $SettingsModel->getList(['user_id' => $user_id]);
+        $this->recalculateRestoration($user_id);
         return $this->where('user_id', $user_id)->where('item_id', $item_id)->where('code', $code)->get()->getResultArray();
     }
 
