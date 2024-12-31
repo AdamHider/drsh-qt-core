@@ -34,8 +34,26 @@ class Lessons extends Controller
             'title' => 'Edit Lesson',
             'path' => '/admin/lessons'
         ];
-        $data['languages'] = $LanguageModel->findAll();
         $data['lesson'] = $id ? $LessonModel->find($id) : null;
+        if(empty($data['lesson'])){
+            $data['lesson'] = [
+                'course_id'         => null, 
+                'course_section_id' => null, 
+                'language_id'       => null, 
+                'title'             => 'Новый урок', 
+                'description'       => '', 
+                'type'              => 'common', 
+                'pages'             => '[]', 
+                'cost_config'       => '{}', 
+                'reward_config'     => '{}', 
+                'image'             => '', 
+                'published'         => false, 
+                'parent_id'         => null, 
+                'unblock_after'     => null, 
+                'is_private'        => false
+            ];
+        }
+        $data['languages'] = $LanguageModel->findAll();
         $data['courses'] = $CourseModel->findAll();
         $lessons = $LessonModel->orderBy('created_at', 'ASC')->findAll();
         $data['parent_lessons'] = array_filter($lessons, function($p) use ($id) {

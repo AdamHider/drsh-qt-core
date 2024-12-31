@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/'.$settings['layout']) ?>
 <?= $this->section('content') ?>
 <div class="container pb-3">
-    <form action="/admin/lessons/save<?= $lesson ? '/' . $lesson['id'] : '' ?>" method="post">
+    <form action="/admin/lessons/save<?= isset($lesson['id']) ? '/' . $lesson['id'] : '' ?>" method="post">
         <div class="d-flex justify-content-end mb-3">
             <button type="submit" class="btn btn-primary rounded-3">Сохранить</button>
         </div>
