@@ -124,7 +124,9 @@ class LessonPageModel extends LessonModel
         if($action == 'finish'){
             $exercise['data']['current_page']++;
             $ExerciseModel->updateItem($exercise, 'finish');
-            return 'finish';
+            $result['available']  = false;
+            $result['message']    = 'finish';
+            return $result;
         }
         $result['index']  = $exercise['data']['current_page'];
         $ExerciseModel->updateItem($exercise);

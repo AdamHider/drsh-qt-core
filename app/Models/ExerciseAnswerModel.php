@@ -78,7 +78,7 @@ class ExerciseAnswerModel extends ExerciseModel
         $total_fields = count($fields);
         foreach($fields as $input_index => $field){
             if(!empty($field) && isset($income_answers[$input_index])){
-                $user_input = $income_answers[$input_index];
+                $user_input = $income_answers[$input_index]->text;
                 $existing_answer = [];
                 if(!empty($existing_answers['answers'][$input_index])){
                     $existing_answer = $existing_answers['answers'][$input_index];

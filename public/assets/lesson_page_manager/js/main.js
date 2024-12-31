@@ -118,9 +118,6 @@ function createField(fieldConfig, object, key, parentObject) {
             updateInputListConfig(); // Update input_list config based on form_template
             loadPage(selectedPageIndex); // Re-render the page
         }
-        console.log(parentObject)
-        console.log(key)
-        console.log(value)
         if(fieldConfig.onchange) fieldConfig.onchange(e)
         updatePageData(); // Обновляем данные в pages
     });
@@ -207,7 +204,7 @@ function createArrayField(fieldConfig, object, key) {
             let itemDiv = $(`<${fieldConfig.itemConfig.tag}>`).addClass(`${fieldConfig.itemConfig.class} array-item`);
             Object.keys(fieldConfig.itemConfig.fields).forEach(subKey => {
                 const subFieldConfig = fieldConfig.itemConfig.fields[subKey];
-                const subFieldDiv = createField(subFieldConfig, item, subKey, object);
+                const subFieldDiv = createField(subFieldConfig, item, subKey, item);
                 if (subFieldDiv) {
                     itemDiv.append(subFieldDiv);
                 }
