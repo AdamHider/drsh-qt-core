@@ -58,7 +58,7 @@ $routes->get('image/(:any)', 'Image::index/$1');    $routes->group('languages', 
         $routes->post('delete', 'Admin\Media::delete');
     });
 });
-$routes->get('image/(:any)', 'Image::index/$1');
+$routes->get('/image/(:any)', 'Image::index/$1');
 
 $routes->post('/Lesson/(:any)', 'Lesson::$1');
 $routes->post('/Exercise/(:any)', 'Exercise::$1');

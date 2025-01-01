@@ -6,6 +6,21 @@
 .btn:hover{
     border-bottom: 3px solid #00000021;
 }
+.image-input{
+    max-width: 300px;
+    overflow: hidden;
+    height: inherit;
+}
 .image-input.card img{
     height: 300px;
+}
+.image-input input{
+    width: 1px;
+    height: 1px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+.cursor-pointer{
+    cursor: pointer;
 }

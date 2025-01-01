@@ -47,22 +47,15 @@ function createField(fieldConfig, object, key, parentObject) {
         });
         input.val(object[key] || fieldConfig.default);
     }  else if (fieldConfig.type === 'image') {
-        input = $('<div>').addClass('image-input ratio ratio-1x1  rounded').append($('<input>').attr('type', 'hidden').val(object[key] || fieldConfig.default), $('<img>', {src: (object[key] || fieldConfig.default), class: 'card-img'}));
-        input.on('click', (e) => { 
-            let container = $(e.delegateTarget);
-            let modal = new bootstrap.Modal(document.getElementById('pickerModal'), {})
-            initFileExplorer({
-                filePickerElement: '#file_picker',
-                multipleMode: false,
-                pickerMode: true,
-                onPicked: (value) => {
-                    $(container).find('input').val(value);
-                    $(container).find('img').prop('src', value)
-                    $(input).val(value).trigger('input')
-                    modal.hide()
-                }
-            });
-            modal.show()})
+        input = $('<div>').addClass('card ficker-image text-center image-input position-relative bg-transparent border-0').append(
+            $('<img>', {src: (object[key] || fieldConfig.default), class: 'ratio ratio-1x1 ms-auto me-auto card-img'}),
+            $('<div class="btn-group start-0 bottom-0 w-100 p-2"  role="group">').append(
+                $('<button class="btn btn-primary btn-sm pick-image" type="button">').html('<i class="bi bi-image"></i>'),
+                $('<button class="btn btn-secondary btn-sm clear-input" type="button">').html('<i class="bi bi-x"></i>')
+            ),
+            $('<input>').attr('type', 'text').val(object[key] || fieldConfig.default)
+        );
+        initImagePicker(input)
     } else if (fieldConfig.type === 'audio') {
         input = $('<div>').append($('<input class="form-control form-control-sm">').attr('type', 'text').val(object[key] || fieldConfig.default), $('<audio>', {src: (object[key] || fieldConfig.default)})).addClass('input-group input-group-sm audio-container');
         const playButton = $('<button>').on('click', (e) => {
@@ -297,6 +290,7 @@ function initializeEditor(config, object, parent) {
     });
 }
 let activePageIndex = 0;
+
 function loadPage(index) {
     selectedPageIndex = index;
     activePageIndex = index
@@ -313,6 +307,11 @@ function loadPage(index) {
 function updatePageData() {
     pages[selectedPageIndex] = JSON.parse(JSON.stringify(objectToEdit)); // Обновляем данные в pages
     $('[name="pages"]').val(JSON.stringify(pages))
+    dataChanged = true
+    $(window).off('beforeunload');
+    $(window).on('beforeunload', function(){
+        return 'Are you sure you want to leave?';
+    });
 }
 
 $(document).ready(function() {
@@ -327,4 +326,5 @@ function initPageControls(){
         $(e.delegateTarget).height(`5px`)
         $(e.delegateTarget).height(`${e.delegateTarget.scrollHeight+5}px`)
     })
+    initImagePicker()
 }

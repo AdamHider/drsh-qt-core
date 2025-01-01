@@ -44,17 +44,22 @@
     flex-direction: row-reverse;
 }
 .chat-avatar .image-input{
+    min-height: unset;
+    min-width: unset;
+}
+.chat-avatar .image-input img{
     width: 80px;
     height: 80px;
     border-radius: 50% !important;
-    min-height: unset;
-    min-width: unset;
-    border: 1px solid #d7d7d7;
 }
 .answer-block-avatar{
     width: 100px;
     height: 100px;
     border: 1px solid #d7d7d7;
+}
+.answer-block-avatar img{
+    width: 100px;
+    height: 100px;
 }
 
 .chat-content {
@@ -100,11 +105,4 @@
 }
 .array-item:hover > .delete-array-item{
     display: block;
-}
-.image-input{
-    background-image: url('/image/placeholder.jpg');
-    background-size: cover;
-    background-position: center;
-    max-width: 300px;
-    overflow: hidden;
 }

@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group mt-2">
                         <label for="description">Описание</label>
-                        <textarea type="text" name="description" id="description" class="form-control" value="<?= $lesson['description'] ?? '' ?>" required><?= $lesson['description'] ?? '' ?></textarea>
+                        <textarea type="text" name="description" id="description" class="form-control" value="<?= $lesson['description'] ?? '' ?>"><?= $lesson['description'] ?? '' ?></textarea>
                     </div>
                     <div class="form-group mt-2">
                         <label for="course_id">Курс</label>
@@ -54,7 +54,7 @@
                     <div class="form-group mt-2">
                         <label for="course_section_id">Раздел курса</label>
                         <select name="course_section_id" class="form-select" id="course_section_id" value="<?= $lesson['course_section_id'] ?? '' ?>" required>
-                            <option disabled value selected>---Не выбрано---</option>
+                            <option disabled selected>---Не выбрано---</option>
                             <?php foreach($course_sections as $course_section) : ?>
                                 <?php if(!empty($lesson['course_section_id']) && $course_section['id'] == $lesson['course_section_id']) : ?>
                                     <option value="<?= $course_section['id'] ?>" selected><?= $course_section['title'] ?></option>
@@ -80,12 +80,13 @@
                     <div class="row mt-2">
                         <div class="form-group col-4">
                             <label for="image">Изображение</label>
-                            <div class="card ficker-image text-center image-input">
-                                <img src="<?= $lesson['image'] ?? '' ?>" class="ratio ratio-1x1 card-img">
-                                <div class="card-footer">
-                                    <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
-                                </div>
-                                <input type="hidden" name="image" class="form-control" value="<?= $lesson['image'] ?? '' ?>" required>
+                            <div class="card ficker-image text-center image-input position-relative bg-transparent border-0">
+                                <img src="<?= $lesson['image'] ?? '' ?>" class="ratio ratio-1x1 ms-auto me-auto card-img">
+                                    <div class="btn-group start-0 bottom-0 w-100 p-2"  role="group">
+                                        <button class="btn btn-primary btn-sm pick-image" type="button"><i class="bi bi-image"></i></button>
+                                        <button class="btn btn-secondary btn-sm clear-input" type="button"><i class="bi bi-x"></i></button>
+                                    </div>
+                                <input type="text" name="image"  class="form-control" value="<?= $lesson['image'] ?? '' ?>" required>
                             </div>
                         </div>
                     </div>
@@ -193,7 +194,7 @@
                     <div class="form-group mt-2">
                         <label for="published">Опубликован</label>
                         <select class="form-select" name="published" id="published" required>
-                            <?php if(!empty($lesson['published']) && $lesson['published'] == 1) : ?>
+                            <?php if(isset($lesson['published']) && $lesson['published'] == '1') : ?>
                                 <option value="0">Нет</option>
                                 <option value="1" selected>Да</option>
                             <?php else: ?>   
@@ -205,7 +206,7 @@
                     <div class="form-group mt-2">
                         <label for="is_private">Приватный</label>
                         <select class="form-select" name="is_private" id="is_private">
-                            <?php if(!empty($lesson['published']) && $lesson['published'] == 1) : ?>
+                            <?php if(isset($lesson['is_private']) && $lesson['is_private'] == '1') : ?>
                                 <option value="0">Нет</option>
                                 <option value="1" selected>Да</option>
                             <?php else: ?>   
@@ -226,33 +227,54 @@
 <script>
 //$(document).ready(() => {
         
-    $('.pick-image').on('click', (e) => {
-        let input = $(e.delegateTarget).closest('.input-group').find('input')
-        let container = $(e.delegateTarget).closest('.form-group');
-        let modal = new bootstrap.Modal(document.getElementById('pickerModal'), {})
-        initFileExplorer({
-            filePickerElement: '#file_picker',
-            multipleMode: false,
-            pickerMode: true,
-            onPicked: (url) => {
-                $(container).find('input').val(url).trigger("input");
-                $(container).find('img').prop('src', url)
-                modal.hide()
-            }
-        });
-        modal.show()
+    let dataChanged = false;
+    $('form button[type="submit"]').on('click', () => {
+        dataChanged = false;
+        $(window).off('beforeunload');
     })
+    function initImagePicker(element){
+        $(element).find('.pick-image').off('click')
+        $(element).find('.pick-image').on('click', (e) => {
+            let input = $(e.delegateTarget).closest('.image-input').find('input')
+            let container = $(e.delegateTarget).closest('.image-input');
+            let modal = new bootstrap.Modal(document.getElementById('pickerModal'), {})
+            initFileExplorer({
+                filePickerElement: '#file_picker',
+                multipleMode: false,
+                pickerMode: true,
+                onPicked: (url) => {
+                    $(container).find('input').val(url).trigger("change");
+                    $(container).find('img').prop('src', url)
+                    $(element).val(url).trigger("change");
+                    modal.hide()
+                }
+            });
+            modal.show()
+        })
+        $(element).find('input').each((index, el) => {
+            if($(el).val() == ''){
+                $(el).closest('.image-input').find('img').prop('src', '/image/placeholder.jpg')
+            }
+        })
+        $(element).find('.clear-input').off('click')
+        $(element).find('.clear-input').on('click', (e) => {
+            e.preventDefault()
+            $(e.delegateTarget).closest('.image-input').find('input').val('')
+            $(e.delegateTarget).closest('.image-input').find('img').prop('src', '/image/placeholder.jpg')
+        })
+    }
 
     const sections = <?= !empty($course_sections) ? json_encode($course_sections) : '[]' ?>
 
     $('[name="course_id"]').on('change', (e) => {
-        let value = $(e.delegateTarget).val()
-        let sectionsFiltered = sections.filter((section) => section.course_id == value)
+        let course_id = $(e.delegateTarget).val()
+        let sectionsFiltered = sections.filter((section) => section.course_id == course_id)
         $('[name="course_section_id"]').empty()
-        $('[name="course_section_id"]').attr('value', 0)
-        $('[name="course_section_id"]').append($(`<option>`).prop('disabled', true).prop('selected', 'selected').val('0').text('---Не выбрано---'))
+        $('[name="course_section_id"]').attr('value', null)
+        $('[name="course_section_id"]').append($(`<option>`).prop('disabled', true).prop('selected', 'selected').val(null).text('---Не выбрано---'))
         sectionsFiltered.forEach((section) => {
             let option = $(`<option>`).val(section.id).text(section.title)
+            if(course_id == section.course_id) option.prop('selected', 'selected')
             $('[name="course_section_id"]').append(option)
         })
     })
@@ -292,6 +314,7 @@
         })
     }
     renderResources()
+    initImagePicker($('.image-input'))
 //})
 </script>
 <style>

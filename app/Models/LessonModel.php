@@ -38,7 +38,7 @@ class LessonModel extends Model
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray();
+        ->where('lessons.id', $lesson_id)->where('lessons.published', 1)->get()->getRowArray();
 
         if(!$lesson){
             return false;
@@ -72,7 +72,7 @@ class LessonModel extends Model
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
-        ->where('lessons.parent_id IS NULL')
+        ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)
         ->whereHasPermission('r')
         ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
 
@@ -107,11 +107,11 @@ class LessonModel extends Model
 
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.parent_id', $lesson_id)
+        ->where('lessons.parent_id', $lesson_id)->where('lessons.published', 1)
         ->whereHasPermission('r')->orderBy('id')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
-            $satellite['image'] = base_url('image/' . $satellite['image']);
+            $satellite['image'] = base_url($satellite['image']);
             if($mode == 'full'){
                 $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
@@ -168,19 +168,6 @@ class LessonModel extends Model
         ->where('lessons.id', $lesson_id)->get()->getResult();
         return !empty($exercise);
     }
-    public function itemCreate ($image)
-    {
-        $this->transBegin();
-        $data = [
-            'image' => $image
-        ];
-        $character_id = $this->insert($data, true);
-        $this->transCommit();
-
-        return $character_id;        
-    }
-
-    
     public function composePages($pages, $lesson_type)
     {
         if($lesson_type == 'lexis'){

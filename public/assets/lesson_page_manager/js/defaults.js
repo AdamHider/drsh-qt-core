@@ -10,7 +10,7 @@ const replicaItemConfig = {
             tag: 'div',
             nolabel: true,
             fields: {
-                image: { type: 'image', class: 'answer-block-avatar', nolabel: true, default: '' },
+                image: { type: 'image', class: 'chat-avatar', nolabel: true, default: '' },
             }
         },
         name: {

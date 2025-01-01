@@ -15,7 +15,7 @@ class CourseSectionModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'course_id', 'title', 'description', 'image', 'background_image', 'background_gradient', 'language_id', 'published', 'is_private'
+        'course_id', 'title', 'description', 'background_image', 'background_gradient', 'language_id', 'published', 'is_private'
     ];
     
     protected $useTimestamps = false;
@@ -30,26 +30,10 @@ class CourseSectionModel extends Model
         }
         $course_section = $this->where('id', $course_section_id)->get()->getRowArray();
         if ($course_section) {
-            $course_section['image'] = base_url('image/' . $course_section['image']);
-            $course_section['background_image'] = base_url('image/' . $course_section['background_image']);
+            $course_section['background_image'] = base_url($course_section['background_image']);
         } else {
             return 'not_found';
         }
         return $course_section;
     }
-        
-    public function itemCreate ($image)
-    {
-        $this->transBegin();
-        $data = [
-            'image' => $image
-        ];
-        $character_id = $this->insert($data, true);
-        $this->transCommit();
-
-        return $character_id;        
-    }
-
-
-
 }

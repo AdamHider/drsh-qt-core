@@ -52,8 +52,9 @@ class LessonPageModel extends LessonModel
 
         if(!$isAnswered && $hasInput)   $exercise['actions']['main'] = 'confirm';
         if($isAnswered && $isEnd)       $exercise['actions']['main'] = 'finish';
+        if(!$hasInput && $isEnd)        $exercise['actions']['main'] = 'finish';
         if($isStart)                    $exercise['actions']['back_attempts'] = 0;
-
+        
         return $exercise['actions'];
     }
     private function composeItemFields($page_data, $exercise)
@@ -113,13 +114,13 @@ class LessonPageModel extends LessonModel
             $exercise['data']['current_page']++;
         }
         if($action == 'previous'){
-            if($exercise['actions']['back_attempts'] == 0){               
+            if($exercise['data']['actions']['back_attempts'] == 0){               
                 $result['available']  = false;
                 $result['message']    = 'No back attempts left';
                 return $result;
             }
             $exercise['data']['current_page']--;
-            $exercise['actions']['back_attempts']--;
+            $exercise['data']['actions']['back_attempts']--;
         }
         if($action == 'finish'){
             $exercise['data']['current_page']++;

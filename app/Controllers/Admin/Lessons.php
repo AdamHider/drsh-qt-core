@@ -18,8 +18,8 @@ class Lessons extends Controller
             'title' => 'Lessons',
             'path' => '/admin/lessons'
         ];
-        $model = new LessonModel();
-        $data['lessons'] = $model->findAll();
+        $LessonModel = new LessonModel();
+        $data['lessons'] = $LessonModel->findAll();
         return view('admin/lessons/index', $data);
     }
 
@@ -73,6 +73,10 @@ class Lessons extends Controller
     {
         $model = new LessonModel();
         $lessonData = $this->request->getPost();
+        $validation = $this->validateLesson($lessonData);
+        if(!$validation['status']){
+            return redirect()->back()->withInput()->with('errors', $validation['errors']);
+        }
         if ($id) {
             $model->update($id, $lessonData);
         } else {
@@ -80,7 +84,7 @@ class Lessons extends Controller
                 return redirect()->back()->withInput()->with('errors', $model->errors());
             }
         }
-        return redirect()->back()->withInput()->with('status', 'Lesson saved successfully');
+        return redirect()->to('/admin/lessons')->with('status', 'Lesson saved successfully');
     }
 
     public function delete($id)
@@ -88,6 +92,19 @@ class Lessons extends Controller
         $model = new LessonModel();
         $model->delete($id);
         return redirect()->to('/admin/lessons');
+    }
+
+    protected function validateLesson($lesson){
+        $result = [
+            'status' => true,
+            'errors' => []
+        ];
+        $pages = json_decode($lesson['pages'], true);
+        if(empty($pages)){
+            $result['status'] = false;
+            $result['errors'][] = 'Empty pages!';
+        } 
+        return $result;
     }
 
 }

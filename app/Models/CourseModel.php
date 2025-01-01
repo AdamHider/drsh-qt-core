@@ -31,26 +31,31 @@ class CourseModel extends Model
         }
         $course = $this->where('id', $course_id)->get()->getRowArray();
         if(!empty($course)){
-            $course['image'] = base_url('image/' . $course['image']);
-            $course['background_image'] = base_url('image/' . $course['background_image']);
+            $course['image'] = base_url($course['image']);
+            $course['background_image'] = base_url($course['background_image']);
             $course['progress'] = $this->getProgress($course['id']);
-            $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
+            if($course['progress']['total_lessons'] > 0){
+                $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
+            }
         }
         return $course;
     }
     public function getList () 
     {
+        $result = [];
         $courses = $this->get()->getResultArray();
         foreach($courses as &$course){
-            $course['image'] = base_url('image/' . $course['image']);
-            $course['background_image'] = base_url('image/' . $course['background_image']);
+            $course['image'] = base_url($course['image']);
+            $course['background_image'] = base_url($course['background_image']);
             $course['progress'] = $this->getProgress($course['id']);
-            if($course['progress']['total_lessons'] != 0){
-                $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
+            if($course['progress']['total_lessons'] == 0){
+                continue;
             }
+            $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
             $course['is_active'] = session()->get('user_data')['settings']['courseId']['value'] == $course['id'];
+            $result[] = $course;
         }
-        return $courses;
+        return $result;
     }
     private function getProgress($course_id)
     {
@@ -61,17 +66,6 @@ class CourseModel extends Model
         ->get()->getRowArray();
 
         return $progress;
-    }
-    public function itemCreate ($image)
-    {
-        $this->transBegin();
-        $data = [
-            'image' => $image
-        ];
-        $course_id = $this->insert($data, true);
-        $this->transCommit();
-
-        return $course_id;        
     }
     public function linkItem ($data) 
     {
