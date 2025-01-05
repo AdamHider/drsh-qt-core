@@ -15,22 +15,6 @@
 .details {
     display: none;
 }
-.toggle-details {
-    margin-top: 10px;
-    cursor: pointer;
-    color: blue;
-}
-.template-container {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-.template-left {
-    flex: 70%;
-}
-.template-right {
-    flex: 30%;
-}
 .chat-message {
     display: flex;
     align-items: center;

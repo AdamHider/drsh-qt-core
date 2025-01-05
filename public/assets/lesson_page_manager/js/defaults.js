@@ -79,6 +79,31 @@ const answerQuestionItemConfig = {
         },
     }
 }
+const tableCellConfig = {
+    label: 'Ячейка',
+    class: 'border p-2 rounded',
+    tag: 'div',
+    fields: {
+        text: { type: 'textarea', class: '', nolabel: true, default: '' },
+        audio_link: { type: 'audio', class: ' col-4', nolabel: true, default: '' },
+    }
+}
+const tableHeaderCellConfig = {
+    label: 'Ячейка',
+    class: 'border p-2 rounded',
+    tag: 'div',
+    fields: {
+        text: { type: 'textarea', class: '', nolabel: true, default: '' },
+    }
+}
+const tableRowConfig = {
+    label: 'Строка',
+    class: 'border mt-2 p-2 rounded',
+    tag: 'div',
+    fields: {
+        column_list: { label: 'Ячейки', type: 'array', class: 'mt-2', contentclass:"d-flex show", collapsible: true, itemConfig: tableCellConfig },
+    }
+}
 
 const gridItemConfig = {
     label: 'Блок',
@@ -192,7 +217,8 @@ const config = {
                 {value: 'dialogue', label: 'Диалог'}, 
                 {value: 'grid', label: 'Блоки'}, 
                 {value: 'answerQuestion', label: 'Вопросы-ответы'}, 
-                {value: 'chat', label: 'Чат'}
+                {value: 'chat', label: 'Чат'}, 
+                {value: 'table', label: 'Таблица'}
             ], default: 'none' },
             form_template: { label: 'Тип полей', type: 'select', class: 'col-4', options: [
                 {value: 'none', label: 'Без полей'}, 
@@ -225,6 +251,24 @@ const config = {
                 replica_list: { label: 'Реплики', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: replicaItemConfig },
                 input_list: { label: 'Поля',type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
             },
+            table:{
+                table_header: { 
+                    type: 'fieldGroup',
+                    label: 'Строка заголовка',
+                    class: 'field-group mt-2 p-2 rounded col-8',
+                    tag: 'div',
+                    fields: {
+                        table_header: { label: 'Ячейки заголовка', type: 'array', class: 'col-12 mt-2', contentclass:"d-flex show", collapsible: true, itemConfig: tableCellConfig },
+                    } 
+                },
+                row_list: { label: 'Строки', type: 'array', class: 'col-8 mt-2', contentclass:"show", collapsible: true, itemConfig: tableRowConfig },
+                input_list: { label: 'Поля',type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
+            },
+            checkboxes: {
+                checkboxes_list: { label: 'Блоки', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: answerQuestionItemConfig },
+                input_list: { label: 'Поля', type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
+            },
+            
         }
     }
 };

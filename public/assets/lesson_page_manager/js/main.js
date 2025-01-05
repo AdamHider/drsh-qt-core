@@ -17,6 +17,9 @@ function updateInputListConfig() {
     const formTemplateType = objectToEdit.form_template;
     config.template_config.fields.dialogue.input_list.itemConfig = formTemplates[formTemplateType];
     config.template_config.fields.grid.input_list.itemConfig = formTemplates[formTemplateType];
+    config.template_config.fields.answerQuestion.input_list.itemConfig = formTemplates[formTemplateType];
+    config.template_config.fields.chat.input_list.itemConfig = formTemplates[formTemplateType];
+    config.template_config.fields.table.input_list.itemConfig = formTemplates[formTemplateType];
 }
 
 function createField(fieldConfig, object, key, parentObject) {
@@ -101,6 +104,8 @@ function createField(fieldConfig, object, key, parentObject) {
                 if (parentObject.template_config.replica_list) parentObject.template_config.replica_list = []
                 if (parentObject.template_config.column_list) parentObject.template_config.column_list = []
                 if (parentObject.template_config.block_list) parentObject.template_config.block_list = []
+                if (parentObject.template_config.row_list) parentObject.template_config.row_list = []
+                if (parentObject.template_config.table_header) parentObject.template_config.table_header = []
             }
             updatePageData(); // Обновляем данные в pages
             loadPage(selectedPageIndex); // Re-render the page when page_template changes

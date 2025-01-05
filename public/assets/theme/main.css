@@ -12,7 +12,8 @@
     height: inherit;
 }
 .image-input.card img{
-    height: 300px;
+    max-height: 300px;
+    max-width: 300px;
 }
 .image-input input{
     width: 1px;
