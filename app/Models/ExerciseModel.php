@@ -32,7 +32,7 @@ class ExerciseModel extends Model
         'answers'           => [],
         'total_pages'       => 0,
         'actions'           => [
-            'main'          => 'next',
+            'main'          => 'confirm',
             'back_attempts' => 3
         ],
         'totals'            => [

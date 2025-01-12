@@ -9,11 +9,19 @@ class ExerciseAnswerModel extends ExerciseModel
 {
     
     private $points_config = [
+        'none' => 20,
         'variant' => 100,
         'match' => 120,
         'simple' => 50,
         'image' => 70,
         'chat' => 140
+    ];
+
+    private $empty_answer = [
+        "mode" => "none", 
+        "type" => "input", 
+        "index" => 0, 
+        "answer" => true
     ];
     
     private $default_answers = [
@@ -46,6 +54,10 @@ class ExerciseAnswerModel extends ExerciseModel
         ->where('lessons.id', $lesson_id)->get()->getRowArray()['input_list'];
         $fields = json_decode($fields, true);
         
+        if(empty($fields)){
+            $fields = [$this->empty_answer];
+            $income_answers = [true];
+        }
         $page_answers = $this->default_answers;
         $exercise_answers = $exercise['data']['answers'][$page_index] ?? null;
         
@@ -75,21 +87,23 @@ class ExerciseAnswerModel extends ExerciseModel
     **/
     public function checkPageAnswers($fields, $existing_answers, $income_answers)
     {
+        
         $total_fields = count($fields);
         foreach($fields as $input_index => $field){
-            if(!empty($field) && isset($income_answers[$input_index])){
-                $user_input = $income_answers[$input_index]->text;
+            if(isset($income_answers[$input_index])){
+                $user_input = $income_answers[$input_index]->text ?? true;
                 $existing_answer = [];
                 if(!empty($existing_answers['answers'][$input_index])){
                     $existing_answer = $existing_answers['answers'][$input_index];
                 }
                 $existing_answers['answers'][$input_index] = $this->composeAnswer($field, $user_input, $total_fields, $existing_answer);
+                
                 if($existing_answers['answers'][$input_index]['is_correct']){
                     $existing_answers['totals']['correct']++;
                 }
                 $existing_answers['totals']['answers']++;
                 $existing_answers['totals']['total'] += $existing_answers['answers'][$input_index]['points']; 
-            }
+            } 
         }
         if($this->checkFinished($fields, $existing_answers)){
             $existing_answers['is_finished'] = true;
@@ -147,7 +161,7 @@ class ExerciseAnswerModel extends ExerciseModel
     {
         $points_default = $this->points_config[$field['mode']];
         $field_points = ceil($points_default/$total_fields);
-        if($field['mode'] == 'variant' || $field['mode'] == 'match' || $field['mode'] == 'simple' || $field['mode'] == 'image'){
+        if($field['mode'] == 'variant' || $field['mode'] == 'match' || $field['mode'] == 'simple' || $field['mode'] == 'image' || $field['mode'] == 'none'){
             $points = $this->calculateInputPoints($field, $user_input, $field_points);
         } else 
         if($field['mode'] == 'chat'){
