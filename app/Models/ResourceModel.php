@@ -19,7 +19,6 @@ class ResourceModel extends Model
         'code', 
         'is_restorable'
     ];
-    
     protected $useTimestamps = false;
 
     private $settings;
@@ -125,13 +124,18 @@ class ResourceModel extends Model
     }
     public function proccessItemReward ($user_id, $reward_config)
     {
+        if(!$reward_config) return [];
         $DescriptionModel = model('DescriptionModel');
-        $resources = $this->whereIn('code', array_keys($reward_config))->get()->getResultArray();
-        foreach($resources as &$resource){
-            $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
-            $resource['quantity'] = (int) $reward_config[$resource['code']];
+        $result = [];
+        foreach ($reward_config as $starQuantity => $resourceGroup){
+            $resources = $this->whereIn('code', array_keys($resourceGroup))->get()->getResultArray();
+            foreach($resources as &$resource){
+                $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
+                $resource['quantity'] = (int) $resourceGroup[$resource['code']];
+            }
+            $result[$starQuantity] = $resources;
         }
-        return $resources;
+        return $result;
     }
 
     public function enrollUserList ($user_id, $resources, $mode = 'add')

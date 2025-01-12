@@ -52,12 +52,11 @@ class LessonModel extends Model
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
-            
-            $cost_config = json_decode($lesson['cost_config'], true);
-
-            $lesson['cost']             = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
-            $lesson['reward_config']    = json_decode($lesson['reward_config']);
+            $lesson['cost']             = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($lesson['cost_config'], true));
+            $lesson['reward']           = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($lesson['reward_config'], true));
         }
+        unset($lesson['cost_config']);
+        unset($lesson['reward_config']);
         unset($lesson['pages']);
         return $lesson;
     }
@@ -87,10 +86,10 @@ class LessonModel extends Model
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
             
-            $cost_config = json_decode($lesson['cost_config'], true);
-            $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
-
-            $lesson['reward_config'] = json_decode($lesson['reward_config']);
+            $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($lesson['cost_config'], true));
+            $lesson['reward'] = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($lesson['reward_config'], true));
+            unset($lesson['cost_config']);
+            unset($lesson['reward_config']);
             unset($lesson['pages']);
         }
         return $lessons;
@@ -113,12 +112,13 @@ class LessonModel extends Model
         foreach($satellites as $key => &$satellite){
             $satellite['image'] = base_url($satellite['image']);
             if($mode == 'full'){
-                $satellite['exercise'] = $ExerciseModel->getItem($satellite['exercise_id']);
-                $satellite['is_blocked'] = $this->checkBlocked($satellite['unblock_after']);
-                $cost_config = json_decode($satellite['cost_config'], true);
-                $satellite['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), $cost_config);
-                $satellite['reward_config'] = json_decode($satellite['reward_config']);
+                $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
+                $satellite['is_blocked']    = $this->checkBlocked($satellite['unblock_after']);
+                $satellite['cost']          = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($satellite['cost_config'], true));
+                $satellite['reward']        = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($satellite['reward_config'], true));
             }
+            unset($satellite['cost_config']);
+            unset($satellite['reward_config']);
             unset($satellite['pages']);
         }
         $result['preview_list'] = $this->composeSatellitesPreview($satellites, $result['preview_total']);
