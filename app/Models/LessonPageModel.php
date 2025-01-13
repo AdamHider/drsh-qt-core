@@ -22,10 +22,9 @@ class LessonPageModel extends LessonModel
             $page['data']       = $this->composeItemData($lesson['page']);
             $page['fields']     = $this->composeItemFields($lesson['page'], $lesson['exercise_data']);
             $page['actions']    = $this->composeItemActions($lesson['page'], $lesson['exercise_data']);
+            $page['totals']     = $lesson['exercise_data']['totals'];
             $page['answer']     = $lesson['exercise_data']['answers'][$this->currentPage]['totals'] ?? [];
             $page['current']    = $lesson['exercise_data']['current_page'];
-            $page['total']      = $lesson['exercise_data']['total_pages'];
-            $page['points']     = $lesson['exercise_data']['totals']['total'] ?? 0;
     
             unset($lesson['page']['template_config']);
             $page['header']     = $lesson['page'];
@@ -47,7 +46,7 @@ class LessonPageModel extends LessonModel
     {
         $isStart    = $this->currentPage == 0;
         $isEnd      = $exercise['total_pages']-1 == $this->currentPage;
-        $isAnswered = isset($exercise['answers'][$this->currentPage]) && $exercise['answers'][$this->currentPage]['is_finished'];
+        $isAnswered = isset($exercise['answers'][$this->currentPage]);
         $hasInput   = isset($page_data['template_config']['input_list']);
 
         if(!$isAnswered && $hasInput)   $exercise['actions']['main'] = 'confirm';
@@ -60,10 +59,8 @@ class LessonPageModel extends LessonModel
     private function composeItemFields($page_data, $exercise)
     {
         $result = [];
-        if(empty($page_data['template_config']['input_list'])){
-            return false;
-        }
-        $user_answers = false;
+        $user_answers = [];
+        if(empty($page_data['template_config']['input_list'])) return false;
         if(!empty($exercise['answers'][$this->currentPage])){
             $user_answers = $exercise['answers'][$this->currentPage]['answers'];
         }
@@ -72,10 +69,9 @@ class LessonPageModel extends LessonModel
                 'index'     => $input['index'],
                 'mode'      => $input['mode'],
             ];
-
-            if(isset($input['variants']))   $field['variants'] = $input['variants'];
-            if(isset($input['label']))      $field['label'] = $input['label'];
-            if(isset($user_answers[$key]))  $field['answer'] = $user_answers[$key];
+            if(isset($input['variants']))   $field['variants']  = $input['variants'];
+            if(isset($input['label']))      $field['label']     = $input['label'];
+            if(isset($user_answers[$key]))  $field['answer']    = $user_answers[$key];
 
             $result[] = $field;
         }
@@ -85,7 +81,6 @@ class LessonPageModel extends LessonModel
     private function composeMatchVariants($input_list)
     {
         $result = [];
-        if(empty($input_list)) return false;
         foreach($input_list as $key => $input){
             $match_variant = [
                 'index'     => $input['index'],
@@ -96,8 +91,6 @@ class LessonPageModel extends LessonModel
         shuffle($result);
         return $result;
     }
-    
-
     public function getCurrentIndex($lesson_id, $action)
     {
         $ExerciseModel = model('ExerciseModel');
@@ -110,21 +103,18 @@ class LessonPageModel extends LessonModel
             $result['message']    = 'No such exercise';
             return $result;
         }
+        
         if($action == 'next'){
             $exercise['data']['current_page']++;
-        }
-        if($action == 'previous'){
-            if($exercise['data']['actions']['back_attempts'] == 0){               
-                $result['available']  = false;
-                $result['message']    = 'No back attempts left';
-                return $result;
-            }
-            $exercise['data']['current_page']--;
-            $exercise['data']['actions']['back_attempts']--;
+            $exercise['data']['totals']['points'] = (int) $exercise['data']['totals']['points'] + 20;
         }
         if($action == 'finish'){
-            $exercise['data']['current_page']++;
+            $exercise['data']['totals']['points'] = (int) $exercise['data']['totals']['points'] + 20;
+            $exercise['data']['totals']['correctness'] = $ExerciseModel->calculateTotalCorrectnessClass($exercise['data']['totals']);
+            print_r($exercise['data']['totals']);
+            die;
             $ExerciseModel->updateItem($exercise, 'finish');
+            
             $result['available']  = false;
             $result['message']    = 'finish';
             return $result;

@@ -32,12 +32,19 @@ class ExerciseModel extends Model
         'answers'           => [],
         'total_pages'       => 0,
         'actions'           => [
-            'main'          => 'confirm',
+            'main'          => 'next',
             'back_attempts' => 3
         ],
         'totals'            => [
-            'total'         => 0
+            'total'         => 0,
+            'points'        => 0,
+            'correctness'   => 0
         ]
+    ];
+    protected $correctnessGradation = [
+        "1" => [0, 50],
+        "2" => [51, 80],
+        "3" => [81, 100]
     ];
     
     protected $useTimestamps = false;
@@ -92,7 +99,11 @@ class ExerciseModel extends Model
         if(!$ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
             //return 'not_enough_resources';
         } 
-        $this->empty_data['total_pages'] = count(json_decode($lesson['pages'], true));
+        
+        $pages = json_decode($lesson['pages'], true);
+        $this->empty_data['total_pages'] = count($pages);
+        $this->empty_data['totals']['total'] = $this->calculateTotalPoints($pages);
+
 
         $this->transBegin();
         $data = [
@@ -118,9 +129,9 @@ class ExerciseModel extends Model
             if($action == 'finish'){
                 $data['exercise_pending']   = NULL;
                 $data['finished_at']        = date("Y-m-d H:i:s");
-                $data['data']['totals']     = $this->calculateTotals($data);
                 $data['exercise_submitted'] = $this->chooseBestResult($data);
-                $data['points']             = $data['exercise_submitted']['totals']['total'];
+                $data['points']             = $data['exercise_submitted']['totals']['points'];
+               
                 unset($data['exercise_submitted']['answers']);
             }
         } else {
@@ -131,18 +142,17 @@ class ExerciseModel extends Model
         $this->set($data);
         $this->where('id', $data['id']);
         $result = $this->update();
-
         $this->transCommit();
-
         return $result;        
     }
     public function redoItem($lesson_id)
     {
-        $exercise_old = $this->select('exercises.id, JSON_EXTRACT(exercises.exercise_submitted, "$.total_pages") as total_pages, exercises.attempts')
+        $exercise_old = $this->select('exercises.id, JSON_UNQUOTE(JSON_EXTRACT(exercises.exercise_submitted, "$.total_pages")) as total_pages, exercises.attempts, JSON_UNQUOTE(JSON_EXTRACT(exercises.exercise_submitted, "$.totals.total")) as total_points')
         ->where('lesson_id', $lesson_id)->where('exercises.user_id = '.session()->get('user_id'))->get()->getRowArray();
         $exercise = [];
         $exercise['id'] = $exercise_old['id'];
         $exercise['data'] = $this->empty_data;
+        $exercise['data']['totals']['total'] = (int) $exercise_old['total_points'];
         $exercise['data']['total_pages'] = (int) $exercise_old['total_pages'];
         $exercise['attempts'] = $exercise_old['attempts'] + 1;
         return $this->updateItem($exercise, 'start');
@@ -158,45 +168,20 @@ class ExerciseModel extends Model
         $exercise = $this->get()->getRowArray();
         return $exercise['total'];
     }
-    private function calculateTotals($exercise)
+    public function calculateTotalPoints($pages)
     {
-        $data = [];
-        $data['total'] = $exercise['data']['totals']['total'];
-        $data['exercises'] = $exercise['data']['totals']['total'];
-        if(!empty($exercise['finished_at'])){
-            $time_points = $this->calculateTotalTimePoints($exercise);
-            $data['total'] += $time_points;
-            $data['time'] = $time_points;
-        } else {
-            $data['time'] = 0;
-        }
-        if(!empty($exercise['attempts']) && $exercise['attempts'] !== 0){
-            $attempts_points = $exercise['attempts']*10;
-            if($attempts_points > 50){
-                $attempts_points = 50;
+        $ExerciseAnswerModel = model('ExerciseAnswerModel');
+        $points_config = $ExerciseAnswerModel->points_config;
+        $result = 0;
+        foreach($pages as $page){
+            $page_total_points = $points_config['none'];
+            if(!empty($page['template_config']['input_list'])){
+                $page_total_points += count($page['template_config']['input_list'])*$points_config[$page['form_template']];
             }
-            $data['total'] += $attempts_points;
-            $data['attempts'] = $attempts_points;
-            $data['attempts_count'] = $exercise['attempts'];
-        } else {
-            $data['attempts'] = 0;
-            $data['attempts_count'] = 1;
+            $result += $page_total_points;
         }
-        return $data;
+        return $result;
     }
-    private function calculateTotalTimePoints($exercise)
-    {
-        $difference = strtotime($exercise['finished_at']) - strtotime($exercise['began_at']);
-        $time_points = 200 - ceil($difference/60*7);
-        if($time_points < 0 || $difference < 0){
-            $time_points = 10;
-        }
-        if($time_points > 200){
-            $time_points = 200;
-        }
-        return $time_points;
-    }
-
     private function chooseBestResult ($exercise)
     {
         $exercise_pending = $exercise['data'];
@@ -204,10 +189,19 @@ class ExerciseModel extends Model
         $exercise_submitted = json_decode($exercise_submitted, true, JSON_UNESCAPED_UNICODE);
         if(!empty($exercise_submitted) && $exercise_submitted['totals']['total'] > $exercise_pending['totals']['total']){
             return $exercise_submitted;
-        } else {
-            return $exercise_pending;
-        }
+        } 
+        return $exercise_pending;
     }
+
+    public function calculateTotalCorrectnessClass($totals)
+    {
+        $correctness = $totals['points'] / $totals['total'] * 100;
+        foreach($this->correctnessGradation as $class => $range){
+            if(($range[0] <= $correctness) && ($correctness <= $range[1])) return $class;
+        }
+        return false;
+    }
+
     protected function jsonPrepare (array $data)
     {
         if ( isset($data['data']['exercise_pending']) ){
