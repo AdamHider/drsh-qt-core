@@ -47,6 +47,7 @@ class LessonModel extends Model
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['image']            = base_url($lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
+            $lesson['progress']         = $this->getProgress($lesson['exercise']);
             $lesson['is_blocked']       = $this->checkBlocked($lesson['unblock_after']);
             
             if($lesson['parent_id']){
@@ -83,6 +84,7 @@ class LessonModel extends Model
             $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
             $lesson['image'] = base_url($lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
+            $lesson['progress'] = $this->getProgress($lesson['exercise']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
             
@@ -113,6 +115,7 @@ class LessonModel extends Model
             $satellite['image'] = base_url($satellite['image']);
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
+                $satellite['progress']      = $this->getProgress($satellite['exercise']);
                 $satellite['is_blocked']    = $this->checkBlocked($satellite['unblock_after']);
                 $satellite['cost']          = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($satellite['cost_config'], true));
                 $satellite['reward']        = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($satellite['reward_config'], true));
@@ -123,6 +126,7 @@ class LessonModel extends Model
         }
         $result['preview_list'] = $this->composeSatellitesPreview($satellites, $result['preview_total']);
         if ($mode == 'full') {
+            $result['progress'] = $this->composeSatellitesProgress($satellites);
             $result['list'] = $satellites;
         }
         return $result;
@@ -148,6 +152,16 @@ class LessonModel extends Model
         }
         return $result;
     }
+    private function composeSatellitesProgress($satellites)
+    {
+        if(empty($satellites)) return 0;
+        $totalPoints = array_reduce($satellites, function($points, $item){
+            return $points + $item['progress'] ?? 0;
+        });
+        
+        return ceil($totalPoints / (count($satellites)*100) * 100);
+    }
+    
         
     public function checkBlocked ($lesson_id) 
     {
@@ -175,6 +189,13 @@ class LessonModel extends Model
         } else {
             return $pages;
         }
+    }
+    private function getProgress($exercise)
+    {
+        if(isset($exercise['data']['totals'])){
+            return ceil($exercise['data']['totals']['points'] / $exercise['data']['totals']['total'] * 100);
+        }
+        return 0;
     }
     
     private function parseLexis($page_config)
