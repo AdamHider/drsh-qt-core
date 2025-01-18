@@ -141,9 +141,7 @@ class ResourceModel extends Model
     public function enrollUserList ($user_id, $resources, $mode = 'add')
     {
         foreach($resources as $code => &$quantity){
-            if($mode == 'substract'){
-                $quantity = $quantity * -1;
-            }
+            if($mode == 'substract') $quantity = $quantity * -1;
         }
         if(!$this->checkListQuantity($user_id, $resources)) return false;
         return $this->saveUserList($user_id, $resources);

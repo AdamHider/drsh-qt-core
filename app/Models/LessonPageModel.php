@@ -110,11 +110,15 @@ class LessonPageModel extends LessonModel
         }
         if($action == 'finish'){
             $exercise['data']['totals']['points'] = (int) $exercise['data']['totals']['points'] + 20;
-            $exercise['data']['totals']['correctness'] = $ExerciseModel->calculateTotalCorrectnessClass($exercise['data']['totals']);
-            print_r($exercise['data']['totals']);
-            die;
-            $ExerciseModel->updateItem($exercise, 'finish');
             
+            $updated = 1;//$ExerciseModel->updateItem($exercise, 'finish');
+            if($updated){
+                $reward = $ExerciseModel->calculateItemReward($lesson_id, $exercise);
+                if($reward){
+                    $ResourceModel = model('ResourceModel');
+                    $ResourceModel->enrollUserList(session()->get('user_id'), $reward);
+                }
+            }
             $result['available']  = false;
             $result['message']    = 'finish';
             return $result;

@@ -42,9 +42,10 @@ class ExerciseModel extends Model
         ]
     ];
     protected $correctnessGradation = [
-        "1" => [0, 50],
-        "2" => [51, 80],
-        "3" => [81, 100]
+        "0" => [0, 40],
+        "1" => [40, 80],
+        "2" => [80, 99],
+        "3" => [99, 100]
     ];
     
     protected $useTimestamps = false;
@@ -200,6 +201,17 @@ class ExerciseModel extends Model
             if(($range[0] <= $correctness) && ($correctness <= $range[1])) return $class;
         }
         return false;
+    }
+
+    public function calculateItemReward($lesson_id, $exercise)
+    {
+        $correctness_class = $this->calculateTotalCorrectnessClass($exercise['data']['totals']);
+        $LessonModel = model('LessonModel');
+        $rewardConfig = json_decode($LessonModel->find($lesson_id)['reward_config'] ?? '[]', true);
+        if($correctness_class > 0){
+            $reward = $rewardConfig[$correctness_class];
+            return $reward;
+        }
     }
 
     protected function jsonPrepare (array $data)
