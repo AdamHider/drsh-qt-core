@@ -47,14 +47,14 @@ class LessonModel extends Model
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['image']            = base_url($lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
-            $lesson['progress']         = $this->getProgress($lesson['exercise']);
+            $lesson['progress']         = $this->getProgress($lesson['exercise']['data'] ?? []);
             $lesson['is_blocked']       = $this->checkBlocked($lesson['unblock_after']);
             
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
             $lesson['cost']             = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($lesson['cost_config'], true));
-            $lesson['reward']           = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($lesson['reward_config'], true));
+            $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
         }
         unset($lesson['cost_config']);
         unset($lesson['reward_config']);
@@ -84,12 +84,12 @@ class LessonModel extends Model
             $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
             $lesson['image'] = base_url($lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
-            $lesson['progress'] = $this->getProgress($lesson['exercise']);
+            $lesson['progress'] = $this->getProgress($lesson['exercise']['data'] ?? []);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
             
             $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($lesson['cost_config'], true));
-            $lesson['reward'] = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($lesson['reward_config'], true));
+            $lesson['reward'] = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
             unset($lesson['cost_config']);
             unset($lesson['reward_config']);
             unset($lesson['pages']);
@@ -115,10 +115,10 @@ class LessonModel extends Model
             $satellite['image'] = base_url($satellite['image']);
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
-                $satellite['progress']      = $this->getProgress($satellite['exercise']);
+                $satellite['progress']      = $this->getProgress($satellite['exercise']['data'] ?? []);
                 $satellite['is_blocked']    = $this->checkBlocked($satellite['unblock_after']);
                 $satellite['cost']          = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($satellite['cost_config'], true));
-                $satellite['reward']        = $ResourceModel->proccessItemReward(session()->get('user_id'), json_decode($satellite['reward_config'], true));
+                $satellite['reward']        = $ResourceModel->proccessItemGroupReward(json_decode($satellite['reward_config'], true));
             }
             unset($satellite['cost_config']);
             unset($satellite['reward_config']);
@@ -190,10 +190,10 @@ class LessonModel extends Model
             return $pages;
         }
     }
-    private function getProgress($exercise)
+    public function getProgress($exercise = [])
     {
-        if(isset($exercise['data']['totals'])){
-            return ceil($exercise['data']['totals']['points'] / $exercise['data']['totals']['total'] * 100);
+        if(isset($exercise['totals'])){
+            return ceil($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
         }
         return 0;
     }

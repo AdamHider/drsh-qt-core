@@ -122,20 +122,25 @@ class ResourceModel extends Model
         }
         return $resources;
     }
-    public function proccessItemReward ($user_id, $reward_config)
+    public function proccessItemGroupReward ($reward_config)
     {
         if(!$reward_config) return [];
-        $DescriptionModel = model('DescriptionModel');
         $result = [];
         foreach ($reward_config as $starQuantity => $resourceGroup){
-            $resources = $this->whereIn('code', array_keys($resourceGroup))->get()->getResultArray();
-            foreach($resources as &$resource){
-                $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
-                $resource['quantity'] = (int) $resourceGroup[$resource['code']];
-            }
+            $resources = $this->proccessItemReward($resourceGroup);
             $result[$starQuantity] = $resources;
         }
         return $result;
+    }
+    public function proccessItemReward ($resourceGroup)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $resources = $this->whereIn('code', array_keys($resourceGroup))->get()->getResultArray();
+        foreach($resources as &$resource){
+            $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
+            $resource['quantity'] = (int) $resourceGroup[$resource['code']];
+        }
+        return $resources;
     }
 
     public function enrollUserList ($user_id, $resources, $mode = 'add')
