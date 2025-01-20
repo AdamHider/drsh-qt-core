@@ -10,7 +10,6 @@ class LessonPageModel extends LessonModel
     private $currentPage = 0;
     public function getPage($lesson_id, $index)
     {
-        $LessonModel = model('LessonModel');
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as exercise_data')
         ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page')
@@ -19,7 +18,7 @@ class LessonPageModel extends LessonModel
         if(!empty($lesson['page'])){
             $lesson['page'] = json_decode($lesson['page'], true);
             $lesson['exercise_data'] = json_decode($lesson['exercise_data'], true);
-            $this->currentPage = $lesson['exercise_data']['current_page'];
+            $this->currentPage  = $lesson['exercise_data']['current_page'];
             $page['data']       = $this->composeItemData($lesson['page']);
             $page['fields']     = $this->composeItemFields($lesson['page'], $lesson['exercise_data']);
             $page['actions']    = $this->composeItemActions($lesson['page'], $lesson['exercise_data']);
@@ -111,14 +110,7 @@ class LessonPageModel extends LessonModel
             $exercise['data']['totals']['points'] = (int) $exercise['data']['totals']['points'] + 20;
         }
         if($action == 'finish'){
-            $exercise['data']['totals']['difference'] = $ExerciseModel->calculateItemDifference($exercise);
-            $exercise['data']['totals']['reward_level'] = $ExerciseModel->calculateRewardLevel($exercise['data']['totals']['points'], $exercise['data']['totals']['total']);
-            $exercise['data']['totals']['reward'] = $ExerciseModel->calculateItemReward($lesson_id, $exercise['data']['totals']);
-            $updated = $ExerciseModel->updateItem($exercise, 'finish');
-            if($updated){
-                $ResourceModel = model('ResourceModel');
-                $ResourceModel->enrollUserList(session()->get('user_id'), $exercise['data']['totals']['reward']);
-            }
+            $ExerciseModel->updateItem($exercise, 'finish');
             $result['available']  = false;
             $result['message']    = 'finish';
             return $result;

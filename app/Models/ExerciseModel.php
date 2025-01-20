@@ -45,8 +45,8 @@ class ExerciseModel extends Model
         ]
     ];
     protected $correctnessGradation = [
-        '0' => [0, 40],
-        '1' => [40, 80],
+        '0' => [0, 39],
+        '1' => [40, 79],
         '2' => [80, 99],
         '3' => [99, 100]
     ];
@@ -137,8 +137,8 @@ class ExerciseModel extends Model
             if($action == 'finish'){
                 $data['exercise_pending']   = NULL;
                 $data['finished_at']        = date("Y-m-d H:i:s");
-                $data['exercise_submitted'] = $data['data'];
-                $data['points']             = $data['data']['totals']['points'];
+                $data['exercise_submitted'] = $this->chooseBestResult($data);
+                $data['points']             = $data['exercise_submitted']['totals']['points'];
                 unset($data['exercise_submitted']['answers']);
             }
         } else {
@@ -150,16 +150,22 @@ class ExerciseModel extends Model
         $this->where('id', $data['id']);
         $result = $this->update();
         $this->transCommit();
+        if($result && $action == 'finish') {
+            $ResourceModel = model('ResourceModel');
+            $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward']);
+        }
         return $result;        
     }
     public function redoItem($lesson_id)
     {
-        $exercise_old = $this->select('exercises.id, JSON_UNQUOTE(JSON_EXTRACT(exercises.exercise_submitted, "$.total_pages")) as total_pages, exercises.attempts, JSON_UNQUOTE(JSON_EXTRACT(exercises.exercise_submitted, "$.totals.total")) as total_points')
+        $exercise_old = $this->select('exercises.id, JSON_UNQUOTE(JSON_EXTRACT(exercises.exercise_submitted, "$.total_pages")) as total_pages, exercises.attempts, JSON_UNQUOTE(JSON_EXTRACT(exercises.exercise_submitted, "$.totals")) as totals')
         ->where('lesson_id', $lesson_id)->where('exercises.user_id = '.session()->get('user_id'))->get()->getRowArray();
         $exercise = [];
+        $exercise_old['totals'] = json_decode($exercise_old['totals'], true);
         $exercise['id'] = $exercise_old['id'];
         $exercise['data'] = $this->empty_data;
-        $exercise['data']['totals']['total'] = (int) $exercise_old['total_points'];
+        $exercise['data']['totals']['total'] = (int) $exercise_old['totals']['total'];
+        $exercise['data']['totals']['prev_points'] = (int) $exercise_old['totals']['points'];
         $exercise['data']['total_pages'] = (int) $exercise_old['total_pages'];
         $exercise['attempts'] = $exercise_old['attempts'] + 1;
         return $this->updateItem($exercise, 'start');
@@ -183,37 +189,48 @@ class ExerciseModel extends Model
         foreach($pages as $page){
             $page_total_points = $points_config['none'];
             if(!empty($page['template_config']['input_list'])){
-                $page_total_points += count($page['template_config']['input_list'])*$points_config[$page['form_template']];
+                $page_total_points += $points_config[$page['form_template']];
             }
             $result += $page_total_points;
         }
         $result -= $points_config['none'];
         return $result;
     }
-    public function calculateItemDifference ($exercise)
+    public function chooseBestResult ($exercise)
     {
         $exercise_submitted = json_decode($this->where('id',$exercise['id'])->get()->getRowArray()['exercise_submitted'] ?? '[]', true, JSON_UNESCAPED_UNICODE); 
-        if(!empty($exercise_submitted)) return $exercise['data']['totals']['points'] - $exercise_submitted['totals']['points'];
-        return $exercise['data']['totals']['points'];
+        $difference = $exercise['data']['totals']['points'];
+        if(!empty($exercise_submitted)) {
+            $difference = $exercise['data']['totals']['points'] - $exercise_submitted['totals']['points'];
+        }
+        if($difference <= 0){
+            $exercise['data'] = $exercise_submitted;
+            $exercise['data']['totals']['reward_level'] = 0;
+        } else {
+            $exercise['data']['totals']['reward_level'] = $this->calculateRewardLevel($exercise['data']['totals']['points'], $exercise['data']['totals']['total']);
+        }
+        $exercise['data']['totals']['is_maximum'] = $exercise['data']['totals']['points']-$difference == $exercise['data']['totals']['total'];
+        $exercise['data']['totals']['difference'] = $difference;
+        $exercise['data']['totals']['reward'] = $this->calculateItemReward($exercise['lesson_id'], $exercise['data']['totals']);
+       
+        return $exercise['data'];
     }
     public function calculateItemReward($lesson_id, $totals)
     {
+        if($totals['reward_level'] == 0){
+            return $this->emptyReward;
+        } 
         $LessonModel = model('LessonModel');
         $prev_reward_level = $this->calculateRewardLevel($totals['points']-$totals['difference'], $totals['total']);
         $reward_config = json_decode($LessonModel->find($lesson_id)['reward_config'] ?? '[]', true);
-        $level_diff = $totals['reward_level'] - $prev_reward_level;
-        if($level_diff <= 0){
-            return $this->emptyReward;
-        } else {
-            $reward = $reward_config[$totals['reward_level']];
-            if(isset($reward_config[$prev_reward_level])){
-                $reward_old = $reward_config[$prev_reward_level];
-                foreach($reward as $resource => &$quantity){
-                    $quantity -= $reward_old[$resource] ?? 0;
-                }
+        $reward = $reward_config[$totals['reward_level']];
+        if(isset($reward_config[$prev_reward_level])){
+            $reward_old = $reward_config[$prev_reward_level];
+            foreach($reward as $resource => &$quantity){
+                $quantity -= $reward_old[$resource] ?? 0;
             }
-            return $reward;
         }
+        return $reward;
     }
     public function calculateRewardLevel($points, $total)
     {
