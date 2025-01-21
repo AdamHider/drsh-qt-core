@@ -153,13 +153,51 @@
                         </div>
                         <div class="col-6  form-group mt-2">
                             <label for="reward_resource_config" class="mb-2">Конфигурация наград</label>
-                            <input type="hidden" name="reward_config" id="reward_resource_config" class="form-control" value="<?= esc($lesson['reward_config']) ?? '' ?>">
-                            <?php foreach($resources as $resource) : ?>
-                                <div class="mb-2 reward-resources resource">
-                                    <label for="rewardResouce<?=$resource['code']?>" class="form-label"><?= $resource['code'] ?></label>
-                                    <input type="text" class="form-control" data-code="<?=$resource['code']?>" id="rewardResouce<?=$resource['code']?>" value="<?=json_decode($lesson['reward_config'], true)[$resource['code']] ?? 0?>">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="onestar-tab" data-bs-toggle="tab" data-bs-target="#onestar" type="button" role="tab" aria-controls="onestar" aria-selected="true">I</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="twostars-tab" data-bs-toggle="tab" data-bs-target="#twostars" type="button" role="tab" aria-controls="twostars" aria-selected="false">II</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="threestars-tab" data-bs-toggle="tab" data-bs-target="#threestars" type="button" role="tab" aria-controls="threestars" aria-selected="false">III</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" >
+                                <div class="tab-pane fade show active" id="onestar" role="tabpanel" aria-labelledby="onestar-tab">
+                                    <?php foreach($resources as $resource) : ?>
+                                        <div class="mb-2 reward-resources resource">
+                                            <label for="rewardResouce<?=$resource['code']?>" class="form-label mt-2"><?= $resource['code'] ?>
+                                                <button class="btn btn-primary btn-xs ms-2 rounded-circle" type="button"><i class="bi bi-plus-lg"></i></button>
+                                            </label>
+                                            <input type="text" class="form-control" data-level="1" data-code="<?=$resource['code']?>" id="rewardResouce<?=$resource['code']?>" value="<?=json_decode($lesson['reward_config'], true)['1'][$resource['code']] ?? 0?>">
+                                        </div>
+                                    <?php endforeach; ?> 
                                 </div>
-                            <?php endforeach; ?> 
+                                <div class="tab-pane fade" id="twostars" role="tabpanel" aria-labelledby="twostars-tab">
+                                    <?php foreach($resources as $resource) : ?>
+                                        <div class="mb-2 reward-resources resource">
+                                            <label for="rewardResouce<?=$resource['code']?>" class="form-label mt-2"><?= $resource['code'] ?>
+                                                <button class="btn btn-primary btn-xs ms-2 rounded-circle" type="button"><i class="bi bi-plus-lg"></i></button>
+                                            </label>
+                                            <input type="text" class="form-control" data-level="2" data-code="<?=$resource['code']?>" id="rewardResouce<?=$resource['code']?>" value="<?=json_decode($lesson['reward_config'], true)['2'][$resource['code']] ?? 0?>">
+                                        </div>
+                                    <?php endforeach; ?> 
+                                </div>
+                                <div class="tab-pane fade" id="threestars" role="tabpanel" aria-labelledby="threestars-tab">
+                                    <?php foreach($resources as $resource) : ?>
+                                        <div class="mb-2 reward-resources resource">
+                                            <label for="rewardResouce<?=$resource['code']?>" class="form-label mt-2"><?= $resource['code'] ?>
+                                                <button class="btn btn-primary btn-xs ms-2 rounded-circle" type="button"><i class="bi bi-plus-lg"></i></button>
+                                            </label>
+                                            <input type="text" class="form-control" data-level="3" data-code="<?=$resource['code']?>" id="rewardResouce<?=$resource['code']?>" value="<?=json_decode($lesson['reward_config'], true)['3'][$resource['code']] ?? 0?>">
+                                        </div>
+                                    <?php endforeach; ?> 
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="reward_config" id="reward_resource_config" class="form-control" value="<?= esc($lesson['reward_config']) ?? '' ?>">
                         </div>
                     </div>
                 </div>
@@ -294,12 +332,32 @@
         $('[name="cost_config"]').val(JSON.stringify(costConfig))
         renderResources()
     })
+    $('.reward-resources .btn').on('click', (e) => {
+        let action = $(e.delegateTarget).attr('data-action')
+        if(action == 'open'){
+            $(e.delegateTarget).closest('.resource').removeClass('positive').addClass('is-open')
+            $(e.delegateTarget).attr('data-action', 'close').html('<i class="bi bi-x-lg"></i>').removeClass('btn-primary').addClass('btn-danger')
+        } else {
+            $(e.delegateTarget).closest('.resource').removeClass('positive').removeClass('is-open')
+            $(e.delegateTarget).attr('data-action', 'open').html('<i class="bi bi-plus-lg"></i>').removeClass('btn-danger').addClass('btn-primary')
+            $(e.delegateTarget).closest('.resource').find('input').val('').trigger('change')
+        }
+        
+    })
     $('.reward-resources input').on('change', (e) => {
+        let level = $(e.delegateTarget).attr('data-level')
         let code = $(e.delegateTarget).attr('data-code')
         let quantity = $(e.delegateTarget).val()
-        rewardConfig[code] = quantity
+        if(/^-?\d+$/.test(quantity) === false){
+            $(e.delegateTarget).val(0); 
+            setTimeout(() => {
+                $(e.delegateTarget).focus()
+            }, 50)
+        }
+        if(!rewardConfig[level]) rewardConfig[level] = {}
+        rewardConfig[level][code] = quantity
         if(quantity == 0){
-            delete rewardConfig[code]
+            delete rewardConfig[level][code]
         }
         $('[name="reward_config"]').val(JSON.stringify(rewardConfig))
         renderResources()
@@ -307,9 +365,11 @@
     function renderResources(){
         $('.cost-resources input, .reward-resources input').each((index, el) => {
             if($(el).val()*1 > 0){
-                $(el).closest('.resource').addClass('positive')
+                $(el).closest('.resource').addClass('positive').addClass('is-open')
+                $(el).closest('.resource').find('.btn').attr('data-action', 'close').html('<i class="bi bi-x-lg"></i>').removeClass('btn-primary').addClass('btn-danger')
             } else {
-                $(el).closest('.resource').removeClass('positive')
+                $(el).closest('.resource').removeClass('positive').removeClass('is-open')
+                $(el).closest('.resource').find('.btn').attr('data-action', 'open').html('<i class="bi bi-plus-lg"></i>').removeClass('btn-danger').addClass('btn-primary')
             }
         })
     }
@@ -337,6 +397,12 @@
 }
 .reward-resources.resource.positive input{
     color: green;
+}
+.resource input{
+    display: none;
+}
+.resource.is-open input{
+    display: block;
 }
 
 </style>

@@ -104,7 +104,6 @@ const tableRowConfig = {
         column_list: { label: 'Ячейки', type: 'array', class: 'mt-2', contentclass:"d-flex show", collapsible: true, itemConfig: tableCellConfig },
     }
 }
-
 const gridItemConfig = {
     label: 'Блок',
     class: 'col column-item border rounded',
@@ -112,6 +111,35 @@ const gridItemConfig = {
     tag: 'div',
     fields: {
         image: { type: 'image', class: '', nolabel: true, default: '' },
+        text: { type: 'textarea', class: ' ', nolabel: true, default: '' },
+        animation: { type: 'input', class: ' ', nolabel: true, default: '' },
+    }
+};
+
+const checkboxListItemConfig = {
+    label: 'Галочка',
+    class: 'col-12 column-item border rounded',
+    tag: 'div',
+    fields: {
+        text: { type: 'textarea', class: ' ', nolabel: true, default: '' },
+        animation: { type: 'input', class: ' ', nolabel: true, default: '' },
+    }
+};
+const radioListItemConfig = {
+    label: 'Вопрос-блок',
+    class: 'col-12 column-item border rounded',
+    tag: 'div',
+    fields: {
+        title: { type: 'input', class: ' ', nolabel: true, default: '' },
+        text: { type: 'textarea', class: ' ', nolabel: true, default: '' },
+        animation: { type: 'input', class: ' ', nolabel: true, default: '' },
+    }
+};
+const listItemConfig = {
+    label: 'Строка',
+    class: 'col-12 pb-2',
+    tag: 'div',
+    fields: {
         text: { type: 'textarea', class: ' ', nolabel: true, default: '' },
         animation: { type: 'input', class: ' ', nolabel: true, default: '' },
     }
@@ -169,13 +197,53 @@ const chatItemConfig = {
         variants: { label: 'Варианты ответа', type: 'array', class: '', contentclass:"", nolabel: true, collapsible: true, itemConfig: chatOptionConfig }
     }
 }
-
+const checkboxItemConfig = {
+    label: 'Галочка',
+    class: 'card p-2 mt-2',
+    tag: 'div',
+    fields: {
+        mode: { type: 'hidden', class: '', nolabel: true, default: 'simple' },
+        type:  { type: 'hidden', class: '', nolabel: true, default: 'checkbox' },
+        index: { label: 'Номер', type: 'number',  class: '', default: 1 },
+        label: { label: 'Лейбл', type: 'input', class: '', default: '' },
+        answer: { label: 'Правильный ответ', type: 'input', class: '', default: true },
+    }
+}
+const radioItemConfig = {
+    label: 'Ответ для теста',
+    class: 'card p-2 mt-2',
+    tag: 'div',
+    fields: {
+        index: { label: 'Номер', type: 'number',  class: '', default: 1 },
+        type:  { type: 'hidden', class: '', nolabel: true, default: 'radio' },
+        answer: { label: 'Правильный ответ', type: 'input', class: '', default: "" },
+        mode:  { label: 'Режим', type: 'select', class: 'col-8', options: [
+            {value: 'variant', label: 'Горизонтально'}, 
+            {value: 'match', label: 'Вертикально'}
+        ], default: 'variant' },
+        variants: { label: 'Варианты ответа', type: 'array', class: '', contentclass:"", nolabel: true, collapsible: true, itemConfig: chatOptionConfig }
+    }
+}
+const radioTestItemConfig = {
+    label: 'Ответ для теста',
+    class: 'card p-2 mt-2',
+    tag: 'div',
+    fields: {
+        index: { label: 'Номер', type: 'number',  class: '', default: 1 },
+        type:  { type: 'hidden', class: '', nolabel: true, default: 'radio' },
+        answer: { label: 'Правильный ответ', type: 'input', class: '', default: "" },
+        mode: { type: 'hidden', class: '', nolabel: true, default: 'match' },
+        variants: { label: 'Варианты ответа', type: 'array', class: '', contentclass:"", nolabel: true, collapsible: true, itemConfig: chatOptionConfig }
+    }
+}
 
 const formTemplates = {
     none: null,
     variant: variantItemConfig,
     match: matchItemConfig,
-    chat: chatItemConfig
+    chat: chatItemConfig,
+    checkbox: checkboxItemConfig,
+    radio: radioItemConfig
 };
 
 
@@ -214,17 +282,22 @@ const config = {
         fields: {
             page_template: { label: 'Тип страницы', type: 'select', class: 'col-8', options: [
                 {value: 'none', label: 'Не выбран'}, 
+                {value: 'listSimple', label: 'Простой список'},
                 {value: 'dialogue', label: 'Диалог'}, 
                 {value: 'grid', label: 'Блоки'}, 
                 {value: 'answerQuestion', label: 'Вопросы-ответы'}, 
                 {value: 'chat', label: 'Чат'}, 
-                {value: 'table', label: 'Таблица'}
+                {value: 'table', label: 'Таблица'}, 
+                {value: 'checkboxes', label: 'Галочки'}, 
+                {value: 'radio', label: 'Вопрос-блок'}
             ], default: 'none' },
             form_template: { label: 'Тип полей', type: 'select', class: 'col-4', options: [
                 {value: 'none', label: 'Без полей'}, 
                 {value: 'variant', label: 'Варианты ответа'}, 
                 {value: 'match', label: 'Сопоставление'}, 
-                {value: 'chat', label: 'Ответ в чате'}
+                {value: 'chat', label: 'Ответ в чате'}, 
+                {value: 'checkbox', label: 'Галочки (А и Б)'}, 
+                {value: 'radio', label: 'Галочки (А или Б)'}, 
             ], default: 'none' },
         }
     },
@@ -265,10 +338,17 @@ const config = {
                 input_list: { label: 'Поля',type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
             },
             checkboxes: {
-                checkboxes_list: { label: 'Блоки', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: answerQuestionItemConfig },
+                checkboxes_list: { label: 'Галочки', type: 'array', class: 'col-8 mt-2', contentclass:"row ms-2 show", collapsible: true, itemConfig: checkboxListItemConfig },
                 input_list: { label: 'Поля', type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
             },
-            
+            radio: {
+                radio_list: { label: 'Вопросы', type: 'array', class: 'col-8 mt-2', contentclass:"row show", collapsible: true, itemConfig: radioListItemConfig },
+                input_list: { label: 'Поля', type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
+            },
+            listSimple: {
+                item_list: { label: 'Элементы списка', type: 'array', class: 'col-8 mt-2', contentclass:"row show", collapsible: true, itemConfig: listItemConfig },
+                input_list: { label: 'Поля', type: 'array', class: 'col-4 mt-2', contentclass:"show", collapsible: true, itemConfig: null }
+            }
         }
     }
 };

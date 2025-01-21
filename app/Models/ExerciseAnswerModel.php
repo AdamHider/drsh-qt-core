@@ -13,6 +13,8 @@ class ExerciseAnswerModel extends ExerciseModel
         'variant' => 100,
         'match' => 120,
         'simple' => 50,
+        'radio' => 100,
+        'checkbox' => 100,
         'image' => 70,
         'chat' => 140
     ];

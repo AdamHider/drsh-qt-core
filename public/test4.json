@@ -1,0 +1,516 @@
+{
+    "start_page":{
+        "number": "9",
+        "type": "control",
+        "title": "Знакомство",
+        "subtitle": "Контрольный урок",
+        "description_header": "Kontrol dersi",
+        "description_text": "В этом уроке Вы закрепите знания, полученные в юните.",
+        "background_image": "../../images/lessons/1LEXIS/brother_back.jpg",
+        "future_abilities" : [
+            {
+                "type": "writing",
+                "animation": {
+                    "enabled": true,
+                    "type": "fadeInFromRight",
+                    "sort_order": 6
+                }
+            }
+        ]
+    }, 
+    "finish_page":{
+        "number": "9",
+        "title": "Знакомство",
+        "subtitle": "Контрольный урок",
+        "description_header": "Kontrol dersi",
+        "description_text": "В этом уроке Вы закрепите знания, полученные в юните.",
+        "background_image": "../../images/lessons/1LEXIS/brother_back.jpg"
+    },
+    "pages": [
+        {
+            "index": 1,
+            "title": "Yañlışnı tapayıq",
+            "title_translation": "Найдите неправильные ответы",
+            "icon": "write",
+            "page_container_class": "one-column",
+            "page_template": "radio",
+            "template_config": {
+                "radio_list": [
+                    {
+                        "title": "Meraba",
+                        "text": "{{input1}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        }
+                    },
+                    {
+                        "title": "Ne yerlisiñız?",
+                        "text": "{{input2}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        }
+                    },
+                    {
+                        "title": "Selâmlaşuv",
+                        "text": "{{input3}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        }
+                    }
+                ],
+                "input_list":[
+                    {
+                        "index": 1,
+                        "type": "radio", 
+                        "answer": "— Menim adım Mustafa. — Men de memnün oldım.", 
+                        "mode": "match", 
+                        "variants": [
+                            "— Meraba. — Ya meraba.", 
+                            "— Nasılsıñız? — Teşekkür etem, yahşım.", 
+                            "— Siz nasılsıñız? — Teşekkür etem, men de yahşım.", 
+                            "— Menim adım Mustafa. — Men de memnün oldım."
+                        ]
+                    },
+                    {
+                        "index": 2,
+                        "type": "radio", 
+                        "answer": "— Ya siz ne yerlisiñiz? — Men Türkiyege.", 
+                        "mode": "match", 
+                        "variants": [
+                            "— Meraba. — Meraba.", 
+                            "— Ne yerlisiñ? — Men Qırımlım.", 
+                            "— Ya siz ne yerlisiñiz? — Men Türkiyege.", 
+                            "— Memnün oldım. — Men de memnün oldım."
+                        ]
+                    },
+                    {
+                        "index": 3,
+                        "type": "radio", 
+                        "answer": "— Nasılsıñız? — Afiyetler olsun!", 
+                        "mode": "match", 
+                        "variants": [
+                            "— Hayırlı künler. — Hayırlı künler.", 
+                            "— Nasılsıñız? — Afiyetler olsun!", 
+                            "— Tanışqanımızdan memnün oldım. — Men de memnün oldım.", 
+                            "— Sağlıqnen qal. — Sağlıqnen bar."
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "index": 2,
+            "title": "Qaysı birisi doğru? İşaret eteyik",
+            "title_translation": "Какой вариант - правильный? Отметьте",
+            "icon": "write",
+            "page_container_class": "one-column",
+            "page_template": "radio",
+            "template_config": {
+                "radio_list": [
+                    {
+                        "title": "Adıñız ne?",
+                        "text": "{{input1}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        }
+                    },
+                    {
+                        "title": "Ne yerlisiñız?",
+                        "text": "{{input2}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        }
+                    },
+                    {
+                        "title": "Sualler",
+                        "text": "{{input3}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        }
+                    }
+                ],
+                "input_list":[
+                    {
+                        "index": 1,
+                        "type": "radio", 
+                        "answer": "Menim adım Dilâra", 
+                        "mode": "match", 
+                        "variants": [
+                            "Menım adım Alim", 
+                            "Menim adım Dilâra", 
+                            "Menim adim Adile", 
+                            "Menım adim Murat"
+                        ]
+                    },
+                    {
+                        "index": 2,
+                        "type": "radio", 
+                        "answer": "Qırımlım", 
+                        "mode": "match", 
+                        "variants": [
+                            "Türkiyede", 
+                            "Qazahstanğa", 
+                            "Qırımlım", 
+                            "Azerbaycandan"
+                        ]
+                    },
+                    {
+                        "index": 3,
+                        "type": "radio", 
+                        "answer": "O, ocamı?", 
+                        "mode": "match", 
+                        "variants": [
+                            "Bu, doğrumu?", 
+                            "O, silgiçmı?", 
+                            "Şu, kitap mı?", 
+                            "O, ocamı?"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "index": 3,
+            "title": "Qaysı çezim doğrudır?",
+            "title_translation": "Какой вариант - правильный?",
+            "icon": "write",
+            "page_container_class": "one-column",
+            "page_template": "answer_question",
+            "template_config": {
+                "additional_container": true,
+                "grid_columns_count": "four",
+                "grid_columns": "one",
+                "block_list": [
+                    {
+                        "image": "../../images/lessons/1FINAL/apple1.jpg",
+                        "image_uppertext": "Alma",
+                        "image_subtext": "{{input1}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        }
+                    },
+                    {
+                        "image": "../../images/lessons/1FINAL/dinya.jpg",
+                        "image_uppertext": "Qarpız",
+                        "image_subtext": "{{input2}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        }
+                    },
+                    {
+                        "image": "../../images/lessons/1FINAL/grape.jpg",
+                        "image_uppertext": "Muz",
+                        "image_subtext": "{{input3}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        }
+                    },
+                    {
+                        "image": "../../images/lessons/1FINAL/cilek.jpg",
+                        "image_uppertext": "Cilek",
+                        "image_subtext": "{{input4}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 4
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 4
+                        }
+                    }
+                ],
+                "input_list":[
+                    {
+                        "index": 1, "type":"radio", "answer":"Doğru", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    },
+                    {
+                        "index": 2, "type":"radio", "answer":"Yañlış", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    },
+                    {
+                        "index": 3, "type":"radio", "answer":"Yañlış", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    },
+                    {
+                        "index": 4, "type":"radio", "answer":"Doğru", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    }
+                ]
+            }
+        },
+        {
+            "index": 4,
+            "title": "Qaysı çezim doğrudır?",
+            "title_translation": "Какой вариант - правильный?",
+            "icon": "write",
+            "page_container_class": "one-column",
+            "page_template": "answer_question",
+            "template_config": {
+                "additional_container": true,
+                "grid_columns_count": "four",
+                "grid_columns": "one",
+                "block_list": [
+                    {
+                        "image": "../../images/lessons/1C/good_day1.jpg",
+                        "image_uppertext": "Hayırlı künler!",
+                        "image_subtext": "{{input1}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        } 
+                    },
+                    {
+                        "image": "../../images/lessons/1C/afiyet1.jpg",
+                        "image_uppertext": "Aş tatlı olsun!",
+                        "image_subtext": "{{input2}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        }
+                    },
+                    {
+                        "image": "../../images/lessons/1C/good_night.jpg",
+                        "image_uppertext": "Hoş keldik!",
+                        "image_subtext": "{{input3}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        }
+                    },
+                    {
+                        "image": "../../images/lessons/1C/hosh1.jpg",
+                        "image_uppertext": "Elvida!",
+                        "image_subtext": "{{input4}}",
+                        "text": "",
+                        "animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 4
+                        },
+                        "image_animation": {
+                            "enabled": true,
+                            "type": "fadeInFromRight",
+                            "sort_order": 4
+                        }
+                    }
+                ],
+                "input_list":[
+                    {
+                        "index": 1, "type":"radio", "answer":"Doğru", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    },
+                    {
+                        "index": 2, "type":"radio", "answer":"Doğru", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    },
+                    {
+                        "index": 3, "type":"radio", "answer":"Yañlış", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    },
+                    {
+                        "index": 4, "type":"radio", "answer":"Yañlış", "mode":"variant", "variants":["Doğru", "Yañlış"]
+                    }
+                ]
+            }
+        },
+        
+        {
+            "index": 5,
+            "title": "Qaysı birisi doğru? İşaret eteyik",
+            "title_translation": "Какой вариант - правильный? Отметьте",
+            "icon": "write",
+            "page_container_class": "one-column",
+            "page_template": "radio",
+            "template_config": {
+                "radio_list": [
+                    {
+                        "title": "Şeftali ne yerde?",
+                        "text": "{{input1}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        }
+                    },
+                    {
+                        "title": "Sınıfta defter barmı?",
+                        "text": "{{input2}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        }
+                    },
+                    {
+                        "title": "yedi + beş = ...",
+                        "text": "{{input3}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        }
+                    }
+                ],
+                "input_list":[
+                    {
+                        "index": 1,
+                        "type": "radio", 
+                        "answer": "Şeftali o yerde", 
+                        "mode": "match", 
+                        "variants": [
+                            "Şeftali o yerde", 
+                            "Şeftalidir", 
+                            "Şeftali şu yerden", 
+                            "Şeftali bu yerge"
+                        ]
+                    },
+                    {
+                        "index": 2,
+                        "type": "radio", 
+                        "answer": "Ebet, sınıfta defter bar", 
+                        "mode": "match", 
+                        "variants": [
+                            "Yoq, sınıfta defter bar", 
+                            "Ebet, sınıfta qalem yoq", 
+                            "Ebet, sınıfta defter bar", 
+                            "Ebet, sınıfta defter yoq"
+                        ]
+                    },
+                    {
+                        "index": 3,
+                        "type": "radio", 
+                        "answer": "on eki", 
+                        "mode": "match", 
+                        "variants": [
+                            "doquz", 
+                            "on", 
+                            "on bir", 
+                            "on eki"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "index": 6,
+            "title": "Cevabını tapayıq",
+            "title_translation": "Найдите ответ",
+            "icon": "write",
+            "page_container_class": "one-column",
+            "page_template": "radio",
+            "template_config": {
+                "radio_list": [
+                    {
+                        "title": "Vatanıñ ne?",
+                        "text": "{{input1}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 1
+                        }
+                    },
+                    {
+                        "title": "Bu kim?",
+                        "text": "{{input2}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 2
+                        }
+                    },
+                    {
+                        "title": "Bu ne?",
+                        "text": "{{input3}}",
+                        "animation": {
+                            "type": "fadeInFromRight",
+                            "sort_order": 3
+                        }
+                    }
+                ],
+                "input_list":[
+                    {
+                        "index": 1,
+                        "type": "radio", 
+                        "answer": "Qırım", 
+                        "mode": "match", 
+                        "variants": [
+                            "Qırım", 
+                            "İnglizce", 
+                            "Frantsiyada", 
+                            "Qirim"
+                        ]
+                    },
+                    {
+                        "index": 2,
+                        "type": "radio", 
+                        "answer": "Bu oca", 
+                        "mode": "match", 
+                        "variants": [
+                            "Bu defter", 
+                            "Bu silgi", 
+                            "Bu kitap", 
+                            "Bu oca"
+                        ]
+                    },
+                    {
+                        "index": 3,
+                        "type": "radio", 
+                        "answer": "Bu Aqmesçit", 
+                        "mode": "match", 
+                        "variants": [
+                            "Bu Fatime", 
+                            "Bu Aqmesçit", 
+                            "Bu Ali", 
+                            "Bu Kerim"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
+
+

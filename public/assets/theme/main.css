@@ -25,3 +25,8 @@
 .cursor-pointer{
     cursor: pointer;
 }
+.btn.btn-xs{
+    --bs-btn-padding-y: 0.1rem;
+    --bs-btn-padding-x: 0.32rem;
+    --bs-btn-font-size: 0.8rem;
+}

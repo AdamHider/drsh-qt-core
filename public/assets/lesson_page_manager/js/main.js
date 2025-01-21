@@ -20,6 +20,10 @@ function updateInputListConfig() {
     config.template_config.fields.answerQuestion.input_list.itemConfig = formTemplates[formTemplateType];
     config.template_config.fields.chat.input_list.itemConfig = formTemplates[formTemplateType];
     config.template_config.fields.table.input_list.itemConfig = formTemplates[formTemplateType];
+    config.template_config.fields.checkboxes.input_list.itemConfig = formTemplates[formTemplateType];
+    config.template_config.fields.radio.input_list.itemConfig = formTemplates[formTemplateType];
+    config.template_config.fields.listSimple.input_list.itemConfig = formTemplates[formTemplateType];
+    
 }
 
 function createField(fieldConfig, object, key, parentObject) {
@@ -104,8 +108,11 @@ function createField(fieldConfig, object, key, parentObject) {
                 if (parentObject.template_config.replica_list) parentObject.template_config.replica_list = []
                 if (parentObject.template_config.column_list) parentObject.template_config.column_list = []
                 if (parentObject.template_config.block_list) parentObject.template_config.block_list = []
+                if (parentObject.template_config.checkboxes_list) parentObject.template_config.checkboxes_list = []
+                if (parentObject.template_config.radio_list) parentObject.template_config.radio_list = []
                 if (parentObject.template_config.row_list) parentObject.template_config.row_list = []
                 if (parentObject.template_config.table_header) parentObject.template_config.table_header = []
+                if (parentObject.template_config.item_list) parentObject.template_config.item_list = []
             }
             updatePageData(); // Обновляем данные в pages
             loadPage(selectedPageIndex); // Re-render the page when page_template changes
@@ -226,7 +233,9 @@ function createArrayField(fieldConfig, object, key) {
     const addButton = $('<div>').append($('<button>', {
         html: `<b>Добавить "${fieldConfig.itemConfig.label}"</b>`,
         class: 'btn btn-sm btn-success',
-        click: (event) => addItem(event, key, fieldConfig.itemConfig, id, object)
+        click: (event) => {
+            addItem(event, key, fieldConfig.itemConfig, id, object)
+        }
     }).prepend($('<i>').addClass('bi bi-plus-lg me-2'))).addClass('text-center rounded border bg-light p-2 my-2');
 
     fieldDiv.append(addButton);
