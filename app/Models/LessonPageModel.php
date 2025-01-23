@@ -12,7 +12,7 @@ class LessonPageModel extends LessonModel
     {
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('exercises.*, COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as exercise_data')
-        ->select('JSON_EXTRACT(lessons.pages, "$['.$index.']") as page')
+        ->select('JSON_EXTRACT(exercises.pages, "$['.$index.']") as page')
         ->where('lessons.id', $lesson_id)->get()->getRowArray();
 
         if(!empty($lesson['page'])){

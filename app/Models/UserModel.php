@@ -282,7 +282,7 @@ class UserModel extends Model
         }
         return $user['auth_key'];
     }
-    public function getItemStatistics($user_id)
+    public function getItemStatistics($user_id )
     {
         $SkillUsermapModel = model('SkillUsermapModel');
         $ExerciseModel = model('ExerciseModel');

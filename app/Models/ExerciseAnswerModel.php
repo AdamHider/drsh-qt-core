@@ -42,16 +42,12 @@ class ExerciseAnswerModel extends ExerciseModel
         $exercise = $this->getItemByLesson($lesson_id);
         $page_index = $exercise['data']['current_page'];
 
-        $fields = $LessonPageModel->select('JSON_EXTRACT(lessons.pages, "$['.$page_index.'].template_config.input_list") as input_list')
-        ->where('lessons.id', $lesson_id)->get()->getRowArray()['input_list'];
-        
-        $fields = json_decode($fields, true);
+        $fields = $exercise['pages'][$page_index]['template_config']['input_list'];
         
         $answers = $this->checkPageAnswers($fields, $income_answers);
 
         $exercise['data']['totals']['points'] += $answers['totals']['points'];
         $exercise['data']['answers'][$page_index] = $answers;
-
         $this->updateItem($exercise);
 
         return $LessonPageModel->getPage($lesson_id, $page_index);
@@ -60,6 +56,7 @@ class ExerciseAnswerModel extends ExerciseModel
     public function checkPageAnswers($fields, $income_answers)
     {
         $answers = $this->default_answers;
+        
         $total_fields = count($fields);
         foreach($fields as $input_index => $field){
             if(isset($income_answers[$input_index])){
