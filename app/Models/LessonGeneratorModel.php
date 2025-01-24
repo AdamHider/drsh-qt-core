@@ -18,6 +18,9 @@ class LessonGeneratorModel extends LessonModel
         } else 
         if($lesson['type'] == 'lexis') {
             return $this->generateLexisItem($pages);
+        } else 
+        if($lesson['type'] == 'chat') {
+            return [$pages];
         }
     }
 
@@ -52,28 +55,28 @@ class LessonGeneratorModel extends LessonModel
                     $pages[] = $page;
                 } else {
                     $page = $page_config['template']['quiz_page'];
-                    $image_list = [];
-                    $image_list[] = [
+                    $variants = [];
+                    $variants[] = [
                         'image' => $word_object['image'],
                         'text' => $word_object['text']
                     ];
                     $word_list_randomized = $this->seedShuffle($word_list, $key);
                     foreach($word_list_randomized as $key => $word){
                         if($word['index'] !== $word_object['index']){
-                            $image_list[] = [
+                            $variants[] = [
                                 'image' => $word['image'],
                                 'text' => $word['text']
                             ];
                         }
-                        if(count($image_list) == 4){
-                            shuffle($image_list);
+                        if(count($variants) == 4){
+                            shuffle($variants);
                             break;
                         }
                     }
                     $input_object = [
                         'index' => $word_object['index'],
                         'answer' => $word_object['text'],
-                        'variants' => $image_list,
+                        'variants' => $variants,
                         'mode' => 'variant',
                         'type' => 'input'
                     ];

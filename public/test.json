@@ -134,5 +134,66 @@
                 }
             ]
         }
+    },
+    {
+        "index": 5,
+        "title": "Сопоставление",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "singleSentence",
+        "template_config": {
+            "text": "How {{input1}} you {{input2}}?",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "are",
+                    "variants": [
+                        {
+                            "text": "e"
+                        },
+                        {
+                            "text": "a"
+                        },
+                        {
+                            "text": "r"
+                        },
+                        {
+                            "text": "t"
+                        }
+                    ]
+                },
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": "2",
+                    "answer": "today",
+                    "variants": [
+                        {
+                            "text": "t"
+                        },
+                        {
+                            "text": "y"
+                        },
+                        {
+                            "text": "a"
+                        },
+                        {
+                            "text": "m"
+                        },
+                        {
+                            "text": "n"
+                        },
+                        {
+                            "text": "d"
+                        },
+                        {
+                            "text": "o"
+                        }
+                    ]
+                }
+            ]
+        }
     }
 ]

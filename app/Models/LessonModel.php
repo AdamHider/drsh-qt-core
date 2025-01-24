@@ -74,7 +74,7 @@ class LessonModel extends Model
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
         ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)
         ->whereHasPermission('r')
-        ->limit($data['limit'], $data['offset'])->orderBy('id')->get()->getResultArray();
+        ->limit($data['limit'], $data['offset'])->orderBy('lessons.order ASC')->get()->getResultArray();
 
         foreach($lessons as $key => &$lesson){
             if(isset($data['offset'])){
@@ -84,7 +84,7 @@ class LessonModel extends Model
             $lesson['satellites'] = $this->getSatellites($lesson['id'], 'lite');
             $lesson['image'] = base_url($lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
-            $lesson['progress'] = $this->getProgress($lesson['exercise']['data'] ?? []);
+            $lesson['progress'] = $this->getOverallProgress($lesson['id']);
             $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
             
@@ -126,7 +126,6 @@ class LessonModel extends Model
         }
         $result['preview_list'] = $this->composeSatellitesPreview($satellites, $result['preview_total']);
         if ($mode == 'full') {
-            $result['progress'] = $this->composeSatellitesProgress($satellites);
             $result['list'] = $satellites;
         }
         return $result;
@@ -192,8 +191,25 @@ class LessonModel extends Model
     }
     public function getProgress($exercise = [])
     {
-        if(isset($exercise['totals'])){
+        if(isset($exercise['totals']) && $exercise['totals']['total'] > 0){
             return ceil($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
+        }
+        return 0;
+    }
+    public function getOverallProgress($lesson_id)
+    {
+        $exercises  = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
+        ->select('COALESCE(exercises.exercise_pending, exercises.exercise_submitted) as data')
+        ->where('(lessons.id = '.$lesson_id.' OR lessons.parent_id = '.$lesson_id.') AND lessons.published = 1')->get()->getResultArray();
+        $overal_points = 0;
+        if(!empty($exercises)){
+            foreach($exercises as $exercise){
+                $exercise = json_decode($exercise['data'], true);
+                if(!empty($exercise)){
+                    $overal_points += ceil($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
+                }
+            }
+            return floor($overal_points / count($exercises));
         }
         return 0;
     }

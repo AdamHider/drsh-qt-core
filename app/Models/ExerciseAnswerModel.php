@@ -11,11 +11,12 @@ class ExerciseAnswerModel extends ExerciseModel
     public $points_config = [
         'none' => 20,
         'variant' => 100,
+        'puzzle' => 100,
         'match' => 120,
         'simple' => 50,
         'radio' => 100,
         'checkbox' => 100,
-        'image' => 70,
+        'image' => 20,
         'chat' => 140
     ];
 

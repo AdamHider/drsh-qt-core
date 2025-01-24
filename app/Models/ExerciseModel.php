@@ -169,14 +169,13 @@ class ExerciseModel extends Model
         $exercise = [];
         $exercise_old['totals'] = json_decode($exercise_old['totals'], true);
         $exercise['id'] = $exercise_old['id'];
-        $pages = $LessonGeneratorModel->generateList($exercise_old['lesson_id']);
-        if(empty($pages)){
+        $exercise['pages'] = $LessonGeneratorModel->generateList($exercise_old['lesson_id']);
+        if(empty($exercise['pages'])){
             return false;
         }
         $exercise['data'] = $this->empty_data;
-        $exercise['pages'] = $pages;
-        $exercise['data']['total_pages'] = count($pages);
-        $exercise['data']['totals']['total'] = $this->calculateTotalPoints($pages);
+        $exercise['data']['total_pages'] = count($exercise['pages']);
+        $exercise['data']['totals']['total'] = $this->calculateTotalPoints($exercise['pages']);
         $exercise['data']['totals']['prev_points'] = (int) $exercise_old['totals']['points'];
         $exercise['attempts'] = $exercise_old['attempts'] + 1;
         return $this->updateItem($exercise, 'start');
