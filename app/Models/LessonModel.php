@@ -35,6 +35,7 @@ class LessonModel extends Model
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
         $ResourceModel = model('ResourceModel');
+        $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
@@ -48,7 +49,7 @@ class LessonModel extends Model
             $lesson['image']            = base_url($lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['progress']         = $this->getProgress($lesson['exercise']['data'] ?? []);
-            $lesson['is_blocked']       = $this->checkBlocked($lesson['unblock_after']);
+            $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], $lesson['unblock_after']);
             
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
@@ -68,6 +69,7 @@ class LessonModel extends Model
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
         $ResourceModel = model('ResourceModel');
+        $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
         
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
@@ -85,7 +87,7 @@ class LessonModel extends Model
             $lesson['image'] = base_url($lesson['image']);
             $lesson['exercise'] = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['progress'] = $this->getOverallProgress($lesson['id']);
-            $lesson['is_blocked'] = $this->checkBlocked($lesson['unblock_after']);
+            $lesson['is_blocked'] = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], $lesson['unblock_after'], 'group');
             $lesson['is_explored'] = isset($lesson['exercise']['id']);
             
             $lesson['cost'] = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($lesson['cost_config'], true));
@@ -102,6 +104,7 @@ class LessonModel extends Model
 
         $ExerciseModel = model('ExerciseModel');
         $ResourceModel = model('ResourceModel');
+        $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
 
         $result = [];
         $result['preview_total'] = getenv('lesson.satellites.preview_total');
@@ -116,7 +119,7 @@ class LessonModel extends Model
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['progress']      = $this->getProgress($satellite['exercise']['data'] ?? []);
-                $satellite['is_blocked']    = $this->checkBlocked($satellite['unblock_after']);
+                $satellite['is_blocked']    = $LessonUnblockUsermapModel->checkBlocked($satellite['id'], $satellite['unblock_after']);
                 $satellite['cost']          = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($satellite['cost_config'], true));
                 $satellite['reward']        = $ResourceModel->proccessItemGroupReward(json_decode($satellite['reward_config'], true));
             }
@@ -161,16 +164,6 @@ class LessonModel extends Model
         return ceil($totalPoints / (count($satellites)*100) * 100);
     }
     
-        
-    public function checkBlocked ($lesson_id) 
-    {
-        if (!$lesson_id) {
-            return false;
-        }
-        $exercise  = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'))
-        ->where('lessons.id', $lesson_id)->where('exercises.exercise_submitted IS NOT NULL')->get()->getResult();
-        return empty($exercise);
-    }
     public function checkExplored ($lesson_id) 
     {
         if (!$lesson_id) {
