@@ -156,6 +156,10 @@ class ExerciseModel extends Model
         $result = $this->update();
         $this->transCommit();
         if($result && $action == 'finish') {
+            $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
+            if($data['exercise_submitted']['totals']['reward_level'] > 0){
+                $unlocked = $LessonUnblockUsermapModel->unblockNext($data['lesson_id']);
+            }
             $ResourceModel = model('ResourceModel');
             $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward']);
         }

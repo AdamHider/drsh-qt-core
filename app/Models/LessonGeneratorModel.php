@@ -77,7 +77,7 @@ class LessonGeneratorModel extends LessonModel
                         'index' => $word_object['index'],
                         'answer' => $word_object['text'],
                         'variants' => $variants,
-                        'mode' => 'variant',
+                        'mode' => 'image',
                         'type' => 'input'
                     ];
                     $page['title'] = sprintf($page['title'], "<b>".$word_object['label']."</b>");

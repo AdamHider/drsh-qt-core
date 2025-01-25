@@ -112,7 +112,7 @@ class LessonModel extends Model
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.parent_id', $lesson_id)->where('lessons.published', 1)
-        ->whereHasPermission('r')->orderBy('id')->get()->getResultArray();
+        ->whereHasPermission('r')->orderBy('lessons.order ASC')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
             $satellite['image'] = base_url($satellite['image']);
