@@ -9,7 +9,8 @@ class QuestGroupsModel extends Model
     protected $allowedFields = [
         'code',
         'level',
-        'image',
+        'image_avatar',
+        'image_full',
         'unclock_after'
     ];
 
@@ -19,7 +20,8 @@ class QuestGroupsModel extends Model
         $group = $this->where('quest_groups.id', $group_id)->get()->getRowArray();
         if ($group) {
             $group = array_merge($group, $DescriptionModel->getItem('quest_group', $group['id']));
-            $group['image'] = base_url('image/' . $group['image']);
+            $group['image_avatar'] = base_url('image/' . $group['image_avatar']);
+            $group['image_full'] = base_url('image/' . $group['image_full']);
         }
         return $group;
     }
