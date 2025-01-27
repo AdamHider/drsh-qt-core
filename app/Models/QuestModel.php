@@ -61,7 +61,7 @@ class QuestModel extends Model
         $quest['is_owner'] = $quest['owner_id'] == $data['user_id'];
 
         $reward_config = json_decode($quest['reward_config'], true);
-        $quest['reward'] = $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
+        $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
         
         $quest['progress'] = $this->getItemProgress($quest, $data['user_id']);
         $quest['is_completed'] = $this->checkItemCompleted($quest);
@@ -104,7 +104,7 @@ class QuestModel extends Model
             $quest['image'] = base_url('image/' . $quest['image']);
             
             $reward_config = json_decode($quest['reward_config'], true);
-            $quest['reward'] = $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
+            $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
 
             $quest['progress'] = $this->getItemProgress($quest, $data['user_id']);
             $quest['is_completed'] = $this->checkItemCompleted($quest);
@@ -220,7 +220,7 @@ class QuestModel extends Model
         if($this->checkItemCompleted($quest) && !$this->checkItemOutdated($quest)){
             if($ResourceModel->enrollUserList($data['user_id'], $reward_config)){
                 $QuestsUsermapModel->insert(['item_id' => $quest['id'], 'user_id' => $data['user_id']], true);
-                return $ResourceModel->proccessItemReward($data['user_id'], $reward_config);
+                return $ResourceModel->proccessItemReward($reward_config);
             };
             return 'forbidden';
         } else {
