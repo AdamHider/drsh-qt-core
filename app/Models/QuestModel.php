@@ -88,8 +88,9 @@ class QuestModel extends Model
         $ResourceModel = model('ResourceModel');
 
         if(isset($data['active_only'])){
-            $this->where('IF(quests.date_end, quests.date_end > NOW(), 1)');
-            $this->whereIn('id', $this->getActiveIDs($data['user_id']));
+            $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
+            ->select('quests.*, quests_usermap.status')
+            ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status IN ("created", "active")');
         }
 
         $quests = $this->orderBy('group_id')->get()->getResultArray();
@@ -105,6 +106,13 @@ class QuestModel extends Model
             
             $reward_config = json_decode($quest['reward_config'], true);
             $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
+
+            $quest['pages'] = json_decode($quest['pages'], true);
+            if(!empty($quest['pages'])){
+                foreach($quest['pages'] as &$page){
+                    $page['image'] = base_url('image/' . $page['image']);
+                }
+            }
 
             $quest['progress'] = $this->getItemProgress($quest, $data['user_id']);
             $quest['is_completed'] = $this->checkItemCompleted($quest);

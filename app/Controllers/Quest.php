@@ -81,6 +81,31 @@ class Quest extends BaseController
         }
         return $this->respond($result);
     }
+    public function startItem()
+    {
+        $QuestModel = model('QuestModel');
+        $QuestsUsermapModel = model('QuestsUsermapModel');
+
+        $quest_id = $this->request->getVar('quest_id');
+
+        $data = [
+            'item_id' => $quest_id,
+            'user_id' => session()->get('user_id'),
+            'status' => 'active'
+        ];
+        $result = $QuestsUsermapModel->save($data);
+        
+        if ($result == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+        if ($result == 'forbidden') {
+            return $this->failForbidden();
+        }
+        if($QuestModel->errors()){
+            return $this->failValidationErrors($QuestModel->errors());
+        }
+        return $this->respond($result);
+    }
     public function saveItem()
     {
         $QuestModel = model('QuestModel');
