@@ -87,7 +87,7 @@ class QuestModel extends Model
 
         $quests = $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
         ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status = "active"')
-        ->where('quests.code = "'.$code.'"')->where('quests.target = "'.$target_id.'"')->get()->getResultArray();;
+        ->where('quests.code = "'.$code.'"')->where('find_in_set("'.$target_id.'", quests.target) <> 0')->get()->getResultArray();
         foreach($quests as $quest){
             $QuestsUsermapModel->set('progress', 'progress+'.$progress, false)->where(['item_id' => $quest['id'], 'user_id' => session()->get('user_id')])->update();
         }
