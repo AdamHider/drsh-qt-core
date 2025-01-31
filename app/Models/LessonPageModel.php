@@ -25,7 +25,7 @@ class LessonPageModel extends LessonModel
             $page['totals']     = $lesson['exercise_data']['totals'];
             $page['answer']     = $lesson['exercise_data']['answers'][$this->currentPage]['totals'] ?? [];
             $page['current']    = $lesson['exercise_data']['current_page'];
-            $page['progress']   = $this->getProgress($lesson['exercise_data']);
+            $page['progress']   = $this->getItemProgress($lesson['exercise_data']);
     
             unset($lesson['page']['template_config']);
             $page['header']     = $lesson['page'];

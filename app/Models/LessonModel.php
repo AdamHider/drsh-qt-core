@@ -48,7 +48,7 @@ class LessonModel extends Model
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['image']            = base_url($lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
-            $lesson['progress']         = $this->getProgress($lesson['exercise']['data'] ?? []);
+            $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], $lesson['unblock_after']);
             
             if($lesson['parent_id']){
@@ -118,7 +118,7 @@ class LessonModel extends Model
             $satellite['image'] = base_url($satellite['image']);
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
-                $satellite['progress']      = $this->getProgress($satellite['exercise']['data'] ?? []);
+                $satellite['progress']      = $this->getItemProgress($satellite['exercise']['data'] ?? []);
                 $satellite['is_blocked']    = $LessonUnblockUsermapModel->checkBlocked($satellite['id'], $satellite['unblock_after']);
                 $satellite['cost']          = $ResourceModel->proccessItemCost(session()->get('user_id'), json_decode($satellite['cost_config'], true));
                 $satellite['reward']        = $ResourceModel->proccessItemGroupReward(json_decode($satellite['reward_config'], true));
@@ -182,7 +182,7 @@ class LessonModel extends Model
             return $pages;
         }
     }
-    public function getProgress($exercise = [])
+    public function getItemProgress($exercise = [])
     {
         if(isset($exercise['totals']) && $exercise['totals']['total'] > 0){
             return ceil($exercise['totals']['points'] / $exercise['totals']['total'] * 100);

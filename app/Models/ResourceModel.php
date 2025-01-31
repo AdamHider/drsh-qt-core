@@ -4,6 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Events\Events;
 
 class ResourceModel extends Model
 {
@@ -149,7 +150,8 @@ class ResourceModel extends Model
             if($mode == 'substract') $quantity = $quantity * -1;
         }
         if(!$this->checkListQuantity($user_id, $resources)) return false;
-        return $this->saveUserList($user_id, $resources);
+        $ok = $this->saveUserList($user_id, $resources);
+        return $ok;
     }
 
     public function checkListQuantity($user_id, $resources)
@@ -207,7 +209,11 @@ class ResourceModel extends Model
         if($resource['quantity'] < 0){
             $ResourceUsermapModel->set('consumed_at', Time::now()->toDateTimeString(), false);
         }
-        return $ResourceUsermapModel->where(['item_id' => $resource['id'], 'user_id' => $data['user_id']])->update(); 
+        $ok = $ResourceUsermapModel->where(['item_id' => $resource['id'], 'user_id' => $data['user_id']])->update(); 
+        if($ok){
+            Events::trigger('resourceEnrolled', $resource['id'], $data['quantity']);
+        }
+        return $ok;
     }
     
 

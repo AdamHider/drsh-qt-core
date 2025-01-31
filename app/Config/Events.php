@@ -34,6 +34,19 @@ Events::on('signUp', static function ($user_id) {
     $UserGroupModel->createUserItem($user_id, 'registered');
 });
 
+Events::on('resourceEnrolled', static function ($target_id, $progress) {
+    $QuestModel = new \App\Models\QuestModel();
+    $QuestModel->addActiveProgress('resource', $target_id, $progress);
+});
+Events::on('lessonFinished', static function ($target_id) {
+    $QuestModel = new \App\Models\QuestModel();
+    $QuestModel->addActiveProgress('lesson', $target_id, 1);
+});
+Events::on('skillGained', static function ($target_id) {
+    $QuestModel = new \App\Models\QuestModel();
+    $QuestModel->addActiveProgress('skill', $target_id, 1);
+});
+
 Events::on('pre_system', static function () {
     if (ENVIRONMENT !== 'testing') {
         if (ini_get('zlib.output_compression')) {

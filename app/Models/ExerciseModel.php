@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use CodeIgniter\I18n\Time;
-
 use App\Models\LessonModel;
+use CodeIgniter\Events\Events;
 
 class ExerciseModel extends Model
 {
@@ -162,6 +161,7 @@ class ExerciseModel extends Model
             }
             $ResourceModel = model('ResourceModel');
             $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward']);
+            Events::trigger('lessonFinished', $data['lesson_id']);
         }
         return $result;        
     }
@@ -236,6 +236,9 @@ class ExerciseModel extends Model
         } 
         $LessonModel = model('LessonModel');
         $prev_reward_level = $this->calculateRewardLevel($totals['points']-$totals['difference'], $totals['total']);
+        if($prev_reward_level == $totals['reward_level']){
+            return $this->emptyReward;
+        }
         $reward_config = json_decode($LessonModel->find($lesson_id)['reward_config'] ?? '[]', true);
         $reward = $reward_config[$totals['reward_level']];
         if(isset($reward_config[$prev_reward_level])){

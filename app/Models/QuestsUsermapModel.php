@@ -8,7 +8,8 @@ class QuestsUsermapModel extends Model
     protected $allowedFields = [
         'item_id', 
         'user_id',
-        'status'
+        'status',
+        'progress'
     ];
 
     private $statuses = [

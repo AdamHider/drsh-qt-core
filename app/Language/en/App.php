@@ -22,6 +22,7 @@ return [
         'progress.total_points_first.percentage_text' => '{1, number}/{2, number}',
         'progress.lesson.percentage_text' => '{1, number}/{2, number}',
         'progress.total_lessons.percentage_text' => '{1, number}/{2, number}',
+        'progress.resource.percentage_text' => '{1, number}/{2, number}',
         'progress.skill.percentage_text' => '{1, number}/{2, number}',
         'progress.total_skills.percentage_text' => '{1, number}/{2, number}'
     ],

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use CodeIgniter\I18n\Time;
+use CodeIgniter\Events\Events;
 
 class SkillModel extends Model
 {
@@ -163,7 +163,10 @@ class SkillModel extends Model
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
             if($ResourceModel->enrollUserList($user_id, $cost_config, 'substract')){
                 $SettingsModel->createModifierList($user_id, $modifiers_config);
-                $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
+                $ok = $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
+                if($ok){
+                    Events::trigger('skillGained', $skill['id']);
+                }
                 return 'success';
             };
             return 'forbidden';
