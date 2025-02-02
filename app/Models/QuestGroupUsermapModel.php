@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 use CodeIgniter\Model;
-class QuestGroupsUsermapModel extends Model
+class QuestGroupUsermapModel extends Model
 {
     protected $table      = 'quest_groups';
     protected $primaryKey = 'id';

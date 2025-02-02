@@ -14,6 +14,10 @@ $routes->group('auth', [], function($routes) {
     $routes->post('store', 'Admin\Auth::store');
 });
 
+  /*--------------*/
+ /* ADMIN ROUTES */
+/*--------------*/
+
 $routes->group('admin', ['filter' => 'auth'], function($routes) {
     $routes->get('', 'Admin\Dashboard::index');
 
@@ -40,8 +44,23 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
         $routes->post('save/(:num)/(:num)', 'Admin\CourseSections::save/$1/$2');
         $routes->get('delete/(:num)/(:num)', 'Admin\CourseSections::delete/$1/$2');
     });
-
-$routes->get('image/(:any)', 'Image::index/$1');    $routes->group('languages', function($routes) {
+    $routes->group('quest_groups', [], function($routes) {
+        $routes->get('', 'Admin\QuestGroups::index');
+        $routes->get('form/(:num)', 'Admin\QuestGroups::form/$1');
+        $routes->get('form', 'Admin\QuestGroups::form');
+        $routes->post('save/(:num)', 'Admin\QuestGroups::save/$1');
+        $routes->post('save', 'Admin\QuestGroups::save');
+        $routes->get('delete/(:num)', 'Admin\QuestGroups::delete/$1');
+    });
+    $routes->group('quests', [], function($routes) {
+        $routes->get('', 'Admin\Quests::index');
+        $routes->get('form/(:num)', 'Admin\Quests::form/$1');
+        $routes->get('form', 'Admin\Quests::form');
+        $routes->post('save/(:num)', 'Admin\Quests::save/$1');
+        $routes->post('save', 'Admin\Quests::save');
+        $routes->get('delete/(:num)', 'Admin\Quests::delete/$1');
+    });
+    $routes->get('image/(:any)', 'Image::index/$1');    $routes->group('languages', function($routes) {
         $routes->get('', 'Admin\Language::index');
         $routes->get('create', 'Admin\Language::create');
         $routes->post('store', 'Admin\Language::store');
@@ -58,7 +77,12 @@ $routes->get('image/(:any)', 'Image::index/$1');    $routes->group('languages', 
         $routes->post('delete', 'Admin\Media::delete');
     });
 });
+
 $routes->get('/image/(:any)', 'Image::index/$1');
+
+  /*---------------*/
+ /* CLIENT ROUTES */
+/*---------------*/
 
 $routes->post('/Lesson/(:any)', 'Lesson::$1');
 $routes->post('/Exercise/(:any)', 'Exercise::$1');

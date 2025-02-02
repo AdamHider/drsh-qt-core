@@ -29,6 +29,18 @@ class Menu extends Cell
                 'type'  => 'menu'
             ],
             [
+                'title' => 'Quest Groups',
+                'link'  => '/admin/quest_groups',
+                'icon'  => 'list-task',
+                'type'  => 'menu'
+            ],
+            [
+                'title' => 'Quests',
+                'link'  => '/admin/quests',
+                'icon'  => 'bullseye',
+                'type'  => 'menu'
+            ],
+            [
                 'type'  => 'separator'
             ],
             [

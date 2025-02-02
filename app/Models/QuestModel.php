@@ -31,7 +31,7 @@ class QuestModel extends Model
     public function getList ($data) 
     {
         $DescriptionModel = model('DescriptionModel');
-        $QuestGroupsModel = model('QuestGroupsModel');
+        $QuestGroupModel = model('QuestGroupModel');
         $ResourceModel = model('ResourceModel');
 
         if($data['active_only']){
@@ -48,7 +48,7 @@ class QuestModel extends Model
 
         foreach($quests as &$quest){
             $quest = array_merge($quest, $DescriptionModel->getItem('quest', $quest['id']));
-            $quest['group'] = $QuestGroupsModel->getItem($quest['group_id']);
+            $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
             
             $reward_config = json_decode($quest['reward_config'], true);
             $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);

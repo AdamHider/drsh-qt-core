@@ -2,7 +2,7 @@
 namespace App\Models;
 use CodeIgniter\Model;
 use CodeIgniter\Database\BaseBuilder;
-class QuestGroupsModel extends Model
+class QuestGroupModel extends Model
 {
     protected $table      = 'quest_groups';
     protected $primaryKey = 'id';
@@ -24,14 +24,5 @@ class QuestGroupsModel extends Model
             $group['image_full'] = base_url('image/' . $group['image_full']);
         }
         return $group;
-    }
-    public function getActiveList()
-    {
-        $this->whereIn('quest_groups.id',  static function (BaseBuilder $builder) {
-            $builder->from('quest_groups q')->join('quest_groups_usermap', 'q.id = quest_groups_usermap.item_id', 'left')
-            ->join('quest_groups q1', 'q1.unblock_after = quest_groups_usermap.item_id', 'left')
-            ->select('COALESCE(q1.id, q.id)')->orderBy('q.level');
-        });
-        return $this->get()->getResultArray();
     }
 }
