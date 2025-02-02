@@ -16,7 +16,12 @@ class DescriptionModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'image'
+        'item_id',
+        'code',
+        'language_id',
+        'title',
+        'description',
+        'data'
     ];
     
     protected $useTimestamps = false;
