@@ -14,7 +14,7 @@ class QuestModel extends Model
     protected $allowedFields = [
         'code', 
         'value', 
-        'image', 
+        'pages', 
         'date_start', 
         'date_end', 
         'reward', 

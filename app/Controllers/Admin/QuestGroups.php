@@ -12,9 +12,10 @@ class QuestGroups extends Controller
 {
     public function index()
     {
-        $QuestGroup = new QuestGroupModel();
+        $QuestGroupModel = new QuestGroupModel();
+        $QuestModel = new QuestModel();
         $DescriptionModel = new DescriptionModel();
-        $quest_groups = $QuestGroup->findAll();
+        $quest_groups = $QuestGroupModel->findAll();
         
         $data['settings'] = [
             'layout' => 'admin',
@@ -34,6 +35,8 @@ class QuestGroups extends Controller
                 ];
             }
             $quest_group['description'] = $description;
+            $quest_group['quests'] = $QuestModel->select('descriptions.title, descriptions.description, quests.id')
+            ->join('descriptions', 'descriptions.code = "quest" AND  descriptions.item_id = quests.id AND descriptions.language_id = 1')->where('quests.group_id', $quest_group['id'])->get()->getResultArray();
         }
 
         $data['quest_groups'] = $quest_groups;
@@ -59,7 +62,8 @@ class QuestGroups extends Controller
                 'pages' => []
             ]
         ];
-        $quest_groups = $QuestGroupModel->select('descriptions.title, quest_groups.id')->join('descriptions', 'code = "quest_group" AND  item_id = quest_groups.id AND language_id = 1')->get()->getResultArray();
+        $quest_groups = $QuestGroupModel->select('descriptions.title, quest_groups.id')
+        ->join('descriptions', 'code = "quest_group" AND  item_id = quest_groups.id AND language_id = 1')->get()->getResultArray();
         if($id){
             $description = $DescriptionModel->where('code', 'quest_group')->where('item_id', $id)->where('language_id', 1)->get()->getRowArray();
         }

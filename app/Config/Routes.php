@@ -53,12 +53,11 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
         $routes->get('delete/(:num)', 'Admin\QuestGroups::delete/$1');
     });
     $routes->group('quests', [], function($routes) {
-        $routes->get('', 'Admin\Quests::index');
-        $routes->get('form/(:num)', 'Admin\Quests::form/$1');
+        $routes->get('form/(:num)/(:num)', 'Admin\Quests::form/$1/$2');
         $routes->get('form', 'Admin\Quests::form');
         $routes->post('save/(:num)', 'Admin\Quests::save/$1');
-        $routes->post('save', 'Admin\Quests::save');
-        $routes->get('delete/(:num)', 'Admin\Quests::delete/$1');
+        $routes->post('save/(:num)/(:num)', 'Admin\Quests::save/$1/$2');
+        $routes->get('delete/(:num)/(:num)', 'Admin\Quests::delete/$1/$2');
     });
     $routes->get('image/(:any)', 'Image::index/$1');    $routes->group('languages', function($routes) {
         $routes->get('', 'Admin\Language::index');

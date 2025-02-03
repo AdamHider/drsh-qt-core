@@ -15,7 +15,7 @@ function initFileExplorer(config){
     }
     loadFiles();
 }
-function initControls(){
+function initPickerControls(){
     $(filePickerElement).find('.button-back').off('click')
     $(filePickerElement).find('.button-back').on('click', (e) => {
         e.preventDefault();
@@ -69,7 +69,7 @@ function loadFiles(dir = '') {
         $(filePickerElement).empty()
         $(filePickerElement).html(html);
         renderSelected()
-        initControls()
+        initPickerControls()
     });
 }
 function upload(formData){
