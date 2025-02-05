@@ -21,8 +21,8 @@ class QuestGroupModel extends Model
         $group = $this->where('quest_groups.id', $group_id)->get()->getRowArray();
         if ($group) {
             $group = array_merge($group, $DescriptionModel->getItem('quest_group', $group['id']));
-            $group['image_avatar'] = base_url($group['image_avatar']);
-            $group['image_full'] = base_url($group['image_full']);
+            $group['image_avatar'] = base_url($group['image_avatar'] ?? '');
+            $group['image_full'] = base_url($group['image_full'] ?? '');
         }
         return $group;
     }
