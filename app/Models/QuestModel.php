@@ -14,7 +14,7 @@ class QuestModel extends Model
     protected $allowedFields = [
         'code', 
         'value', 
-        'image', 
+        'pages', 
         'date_start', 
         'date_end', 
         'reward', 
@@ -76,7 +76,7 @@ class QuestModel extends Model
         $result = json_decode($pages, true);
         if(!empty($result)){
             foreach($result as &$page){
-                $page['image'] = base_url('image/' . $page['image']);
+                $page['image'] = base_url($page['image'] ?? '');
             }
         }
         return $result;

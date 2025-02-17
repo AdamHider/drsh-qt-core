@@ -1,13 +1,13 @@
 <?= $this->extend('layouts/'.$settings['layout']) ?>
 <?= $this->section('content') ?>
 <div class="container pb-3">
-    <?php if(isset($course['id'])) : ?>
-    <form action="/admin/courses/save<?= $course ? '/' . $course['id'] : '' ?>" method="post">
+    <?php if(isset($quest_group['id'])) : ?>
+    <form action="/admin/quest_groups/save<?= $quest_group ? '/' . $quest_group['id'] : '' ?>" method="post">
     <?php else : ?>
-    <form action="/admin/courses/save" method="post">
+    <form action="/admin/quest_groups/save" method="post">
     <?php endif ?>
         <div class="d-flex justify-content-start mb-3">
-            <a class="btn btn-danger rounded-3 me-2" href="/admin/courses"><i class="bi bi-x-lg"></i> Закрыть</a>
+            <a class="btn btn-danger rounded-3 me-2" href="/admin/quest_groups"><i class="bi bi-x-lg"></i> Закрыть</a>
             <button type="submit" class="btn btn-primary rounded-3"><i class="bi bi-floppy"></i> Сохранить</button>
         </div>
         <?php if (session()->getFlashdata('errors')): ?>
@@ -22,44 +22,47 @@
         <div class="row rounded-3 shadow-sm border bg-white p-2  pb-3">
             <div class="form-group mt-2">
                 <label for="title">Название</label>
-                <input type="text" name="title" id="title" class="form-control" value="<?= $course['title'] ?? '' ?>" required>
+                <input type="text" name="description[title]" id="title" class="form-control" value="<?= $quest_group['description']['title'] ?? '' ?>" required>
             </div>
             <div class="form-group mt-2">
                 <label for="description">Описание</label>
-                <textarea type="text" name="description" id="description" class="form-control"><?= $course['description'] ?? '' ?></textarea>
+                <textarea type="text" name="description[description]" id="description" class="form-control"><?= $quest_group['description']['description'] ?? '' ?></textarea>
+            </div>
+            <div class="form-group mt-2">
+                <label for="description">Цвет</label>
+                <input type="text" name="color" id="color" class="form-control" value="<?= $quest_group['color'] ?? '' ?>" required>
             </div>
             <div class="row mt-2">
                 <div class="form-group col-4">
                     <label for="image">Изображение</label>
                     <div class="card ficker-image text-center">
-                        <img src="<?= $course['image'] ?? '' ?>" class="card-img">
+                        <img src="<?= $quest_group['image_avatar'] ?? '' ?>" class="card-img">
                         <div class="card-footer">
                             <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
                         </div>
-                        <input type="hidden" name="image" class="form-control" value="<?= $course['image'] ?? '' ?>" required>
+                        <input type="hidden" name="image_avatar" class="form-control" value="<?= $quest_group['image_avatar'] ?? '' ?>" required>
                     </div>
                 </div>
                 <div class="form-group col-4">
                     <label for="background_image">Фоновое изображение</label>
                     <div class="card ficker-image text-center">
-                        <img src="<?= $course['background_image'] ?? '' ?>" class="card-img">
+                        <img src="<?= $quest_group['image_full'] ?? '' ?>" class="card-img">
                         <div class="card-footer">
                             <button class="btn btn-outline-secondary pick-image" type="button">Choose</button>
                         </div>
-                        <input type="hidden" name="background_image" class="form-control" value="<?= $course['background_image'] ?? '' ?>" required>
+                        <input type="hidden" name="image_full" class="form-control" value="<?= $quest_group['image_full'] ?? '' ?>" required>
                     </div>
                 </div>
             </div>
-            
             <div class="form-group mt-2">
-                <label for="language_id">Язык</label>
-                <select name="language_id" class="form-select" id="language_id" value="<?= $course['language_id'] ?? '' ?>" required>
-                    <option disabled value>---Не выбрано---</option>
-                    <?php foreach($languages as $language) : ?>
-                        <?php if(!empty($course['language_id']) && $language['id'] == $course['language_id']) : ?>
-                            <option value="<?= $language['id'] ?>" selected><?= $language['title'] ?></option>
+                <label for="unblock_after">Разблокировать после</label>
+                <select name="unblock_after" class="form-select" id="unblock_after" value="<?= $quest_group['unblock_after'] ?? '' ?>">
+                    <option value="0" selected>---Не выбрано---</option>
+                    <?php foreach($unblock_quest_groups as $unblock_quest_group) : ?>
+                        <?php if(!empty($quest_group['unblock_after']) && $unblock_quest_group['id'] == $quest_group['unblock_after']) : ?>
+                            <option value="<?= $unblock_quest_group['id'] ?>" selected><?= $unblock_quest_group['title'] ?></option>
                         <?php else: ?>   
-                            <option value="<?= $language['id'] ?>"><?= $language['title'] ?></option>
+                            <option value="<?= $unblock_quest_group['id'] ?>"><?= $unblock_quest_group['title'] ?></option>
                         <?php endif; ?>   
                     <?php endforeach; ?>    
                 </select>
@@ -67,7 +70,7 @@
             <div class="form-group mt-2">
                 <label for="published">Опубликован</label>
                 <select class="form-select" name="published" id="published">
-                    <?php if(!empty($course['published']) && $course['published'] == 1) : ?>
+                    <?php if(empty($quest_group['published']) || $quest_group['published'] == 0) : ?>
                         <option value="0" selected>Нет</option>
                         <option value="1">Да</option>
                     <?php else: ?>   
@@ -79,7 +82,7 @@
             <div class="form-group mt-2">
                 <label for="is_private">Приватный</label>
                 <select class="form-select" name="is_private" id="is_private">
-                    <?php if(!empty($course['published']) && $course['published'] == 1) : ?>
+                    <?php if(empty($quest_group['published']) || $quest_group['published'] == 0) : ?>
                         <option value="0">Нет</option>
                         <option value="1" selected>Да</option>
                     <?php else: ?>   

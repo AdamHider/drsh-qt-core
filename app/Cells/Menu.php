@@ -35,12 +35,6 @@ class Menu extends Cell
                 'type'  => 'menu'
             ],
             [
-                'title' => 'Quests',
-                'link'  => '/admin/quests',
-                'icon'  => 'bullseye',
-                'type'  => 'menu'
-            ],
-            [
                 'type'  => 'separator'
             ],
             [

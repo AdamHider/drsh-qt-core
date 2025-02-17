@@ -7,11 +7,12 @@ class QuestGroupModel extends Model
     protected $table      = 'quest_groups';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'code',
-        'level',
+        'color',
         'image_avatar',
         'image_full',
-        'unclock_after'
+        'unblock_after',
+        'published',
+        'is_private'
     ];
 
     public function getItem ($group_id) 
@@ -20,8 +21,8 @@ class QuestGroupModel extends Model
         $group = $this->where('quest_groups.id', $group_id)->get()->getRowArray();
         if ($group) {
             $group = array_merge($group, $DescriptionModel->getItem('quest_group', $group['id']));
-            $group['image_avatar'] = base_url('image/' . $group['image_avatar']);
-            $group['image_full'] = base_url('image/' . $group['image_full']);
+            $group['image_avatar'] = base_url($group['image_avatar'] ?? '');
+            $group['image_full'] = base_url($group['image_full'] ?? '');
         }
         return $group;
     }
