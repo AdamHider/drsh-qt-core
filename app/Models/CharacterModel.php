@@ -14,10 +14,6 @@ class CharacterModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = [
-        'image'
-    ];
-    
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -29,10 +25,7 @@ class CharacterModel extends Model
         $character = $this->where('characters.id', $character_id)->get()->getRowArray();
         if ($character) {
             $character = array_merge($character, $DescriptionModel->getItem('character', $character['id']));
-            $character['character_image'] = base_url('image/' . $character['character_image']);
-            $character['planet_image'] = base_url('image/' . $character['planet_image']);
-            $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
-            $character['background_image'] = base_url('image/' . $character['background_image']);
+            $character['image'] = base_url('image/' . $character['image']);
         }
         return $character;
     }
@@ -45,21 +38,19 @@ class CharacterModel extends Model
         $characters = $this->get()->getResultArray();
         foreach($characters as &$character){
             $character = array_merge($character, $DescriptionModel->getItem('character', $character['id']));
-            $character['character_image'] = base_url('image/' . $character['character_image']);
+            $character['image'] = base_url('image/' . $character['character_image']);
             $character['planet_image'] = base_url('image/' . $character['planet_image']);
             $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
             $character['background_image'] = base_url('image/' . $character['background_image']);
         }
         return $characters;
     }
-    public function linkItem ($data) 
+    public function linkItemToUser ($item_id, $user_id) 
     {
         $SettingsModel = model('SettingsModel');
-        
-        $character = $this->where('characters.id', $data['character_id'])->get()->getRowArray();
+        $character = $this->where('characters.id', $item_id)->get()->getRowArray();
         $modifiersConfig = json_decode($character['modifiers_config'], true);
-        $SettingsModel->updateUserItem($data['user_id'], ['code' => 'characterId', 'value' => $character['id']], true);
-        $SettingsModel->updateUserItem($data['user_id'], ['code' => 'avatarImage', 'value' => base_url('image/' . 'races/characters/'.$character['code'].rand(1,getenv('userDefaults.maxAvatarCount')).'.jpg')], true);
-        return $SettingsModel->createModifierList($data['user_id'], $modifiersConfig);
+        $SettingsModel->updateUserItem($user_id, ['code' => 'characterId', 'value' => $character['id']], true);
+        return $SettingsModel->createModifierList($user_id, $modifiersConfig, 'character');
     }
 }

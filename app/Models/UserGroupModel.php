@@ -18,11 +18,6 @@ class UserGroupModel extends Model
     
     protected $useTimestamps = false;
 
-    public function getItem ($user_id, $classroom_id) 
-    {
-        $user_classroom = $this->where('user_id = '.$user_id.' AND classroom_id = '.$classroom_id)->get()->getRowArray(0);
-        return $user_classroom;
-    }
     public function getList ($user_id = false) 
     {
         $DescriptionModel = model('DescriptionModel');
@@ -48,8 +43,5 @@ class UserGroupModel extends Model
         $this->transCommit();
         return;        
     }
-
-
-
 
 }

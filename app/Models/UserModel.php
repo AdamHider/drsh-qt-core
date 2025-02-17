@@ -102,23 +102,18 @@ class UserModel extends Model
         $UserGroupModel = model('UserGroupModel');
         $user['groups'] = $UserGroupModel->getList(['user_id' => $user['id']]);
         $user['group_ids'] = [];
-        $user['previleges'] = [];
         foreach($user['groups'] as $group){
             $user['group_ids'][] = $group['id'];
-            if($group['code'] == 'admin'){
-                $user['previleges']['is_admin'] = true;
-            }
-            if($group['code'] == 'editor'){
-                $user['previleges']['is_editor'] = true;
-            }
-
         } 
         
         $CharacterModel = model('CharacterModel');
         $user['character'] = $CharacterModel->getItem($user['settings']['characterId']['value']);
         
         $UserLevelModel = model('UserLevelModel');
-        $user['level'] = $UserLevelModel->getItem($user['id']);
+        $user['level'] = $UserLevelModel->getCurrentItem($user['id']);
+
+        $SettingsModifiersModel = model('SettingsModifiersModel');
+        $user['modifiers'] = $SettingsModifiersModel->getList();
         
         $ResourceModel = model('ResourceModel');
         $user['resources'] = $ResourceModel->getList(['user_id' => $user['id']]);

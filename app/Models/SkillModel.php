@@ -162,7 +162,7 @@ class SkillModel extends Model
 
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
             if($ResourceModel->enrollUserList($user_id, $cost_config, 'substract')){
-                $SettingsModel->createModifierList($user_id, $modifiers_config);
+                $SettingsModel->createModifierList($user_id, $modifiers_config, 'code');
                 $ok = $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
                 if($ok){
                     Events::trigger('skillGained', $skill['id']);
@@ -174,34 +174,4 @@ class SkillModel extends Model
             return 'forbidden';
         }
     }
-    
-    public function createItem ($user_id)
-    {
-        $this->transBegin();
-        
-        $data = [
-            'user_id'       => $user_id,
-            'character_id'  => getenv('user_resources.character_id'),
-            'classroom_id'  => NULL,
-            'course_id'     => NULL
-            
-        ];
-        $user_resources_id = $this->insert($data, true);
-
-        $this->transCommit();
-
-        return $user_resources_id;        
-    }
-    public function updateItem ($data)
-    {
-        $this->transBegin();
-
-        $result = $this->update(['id'=>$data['id']], $data);
-
-        $this->transCommit();
-
-        return $result;        
-    }
-
-
 }

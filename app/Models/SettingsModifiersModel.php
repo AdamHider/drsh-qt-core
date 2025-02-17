@@ -8,8 +8,17 @@ class SettingsModifiersModel extends Model
     protected $allowedFields = [
         'setting_id', 
         'user_id', 
+        'source_id',
+        'source_code',
         'value', 
         'operand',
         'expires_at'
     ];
+
+    public function getList()
+    {
+        $result = $this->where('settings_modifiers.user_id = '.session()->get('user_id'))
+        ->get()->getResultArray();
+        return $result;
+    }
 }

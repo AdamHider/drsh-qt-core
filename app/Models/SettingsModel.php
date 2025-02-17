@@ -33,16 +33,14 @@ class SettingsModel extends Model
             if(empty($setting['item_id'])){
                 $this->createUserItem(['item_id' => $setting['id'], 'user_id' => $data['user_id'], 'value' => $setting['default_value']]);
             }
-            if (isset($data['user_id'])){
-                $setting['value'] = $this->getItemValue($data['user_id'], $setting['id'], $setting['value']);
-            }
-            $effect = ($setting['value'] >= $setting['default_value']) ? ($setting['value'] == $setting['default_value']) ? 'neutral' : 'positive' : 'negative';
+            $setting['value'] = $this->getItemValue($data['user_id'], $setting['id'], $setting['value']);
             $setting = array_merge($setting, $DescriptionModel->getItem('setting', $setting['id']));
             $result[$setting['code']] = [
                 'value'         => $setting['value'],
                 'title'         => $setting['title'],
                 'description'   => $setting['description'],
-                'color'         => $effect
+                'difference'    => $setting['default_value'] - $setting['value'],
+                'status'        => ($setting['value'] >= $setting['default_value']) ? ($setting['value'] == $setting['default_value']) ? 'neutral' : 'positive' : 'negative'
             ];
         }
         return $result;
@@ -50,7 +48,7 @@ class SettingsModel extends Model
     private function getItemValue ($user_id, $setting_id, $value) 
     {
         $SettingsModifiersModel = model('SettingsModifiersModel');
-        $modifiers = $SettingsModifiersModel ->where('settings_modifiers.setting_id = '.$setting_id.' AND settings_modifiers.user_id = '.$user_id)
+        $modifiers = $SettingsModifiersModel->where('settings_modifiers.setting_id = '.$setting_id.' AND settings_modifiers.user_id = '.$user_id)
         ->orderBy('FIELD(operand, "multiply", "divide", "add", "substract")')->get()->getResultArray();
         if(empty($modifiers)){
             return $value;
@@ -177,13 +175,14 @@ class SettingsModel extends Model
         return $data;        
     }
 
-    public function createModifierList ($user_id, $data)
+    public function createModifierList ($user_id, $data, $code)
     {
         foreach($data as $item){
             $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id, 'left')->where('settings.code', $item['code'])->get()->getRowArray();
             $this->createModifierItem([
                 'setting_id' => $setting['id'], 
                 'user_id' => $user_id, 
+                'code' => $code, 
                 'value' => $item['value'], 
                 'operand' => $item['operand'], 
                 'expires_at' => $item['expires_at'] ?? null
@@ -196,7 +195,5 @@ class SettingsModel extends Model
         $SettingsModifiersModel = model('SettingsModifiersModel');
         $SettingsModifiersModel->insert($data, true);
     }
-
-    
 
 }
