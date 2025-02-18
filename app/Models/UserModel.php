@@ -30,7 +30,7 @@ class UserModel extends Model
     protected $validationRules    = [
         'name'     => [
             'label' =>'name',
-            'rules' =>'required|min_length[3]|is_unique[users.username,id,{id}]',
+            'rules' =>'required|min_length[3]',
             'errors'=>[
                 'required'=>'required',
                 'min_length'=>'short',
@@ -39,7 +39,7 @@ class UserModel extends Model
         ],
         'username'     => [
             'label' =>'username',
-            'rules' =>'required|min_length[3]|is_unique[users.username,id,{id}]',
+            'rules' =>'required|min_length[3]',
             'errors'=>[
                 'required'=>'required',
                 'min_length'=>'short',
@@ -62,14 +62,14 @@ class UserModel extends Model
             ]
         ],
         'email'    => [
-            'rules' =>'permit_empty|valid_email|is_unique[users.email,id,{id}]',
+            'rules' =>'permit_empty|valid_email',
             'errors'=>[
                 'valid_email'=>'invalid',
                 'is_unique'=>'notunique'
             ]
         ],
         'phone'    => [
-            'rules' =>'permit_empty|numeric|exact_length[11]|is_unique[users.phone,id,{id}]',
+            'rules' =>'permit_empty|numeric|exact_length[11]',
             'errors'=>[
                 'numeric'=>'invalid',
                 'exact_length'=>'short',
@@ -206,13 +206,13 @@ class UserModel extends Model
         return $auth_key;
     }
     
-    private function generateUsername($name)
+    public function generateUsername($name)
     {
+        if(empty($name)) return 'not_found';
+        $name = str_replace(' ', '\_', $name);
         $prefix = convert_accented_characters($name);
         $affix = $this->getUsernameAffix($prefix);
-        $result = $name.$affix;
-        print_r($result);
-        die;
+        $result = strtolower($prefix.$affix);
         return $result;
     }
     public function checkUsername($username)
@@ -235,9 +235,9 @@ class UserModel extends Model
     }
     private function getUsernameAffix($username)
     {
-        $lastUsername = $this->like('username', $username, 'after')->selectMax('id')->get()->getRow();
+        $lastUsername = $this->where('username REGEXP "'.$username.'[0-9]+" OR username = "'.$username.'"')->select('MAX(id) as id')->get()->getRow();
         if ($lastUsername->id > 0) {
-            return $lastUsername->id++;
+            return $lastUsername->id++.rand(10, 99);
         }
         return '';
     }

@@ -38,10 +38,14 @@ class User extends BaseController
     {
         $UserModel = model('UserModel');
 
+        $name = $this->request->getVar('name');
         $username = $this->request->getVar('username');
         $email    = $this->request->getVar('email');
         $phone    = $this->request->getVar('phone');
         
+        if(!$name){
+            $name = session()->get('user_data')['name'];
+        }
         if(!$username){
             $username = session()->get('user_data')['username'];
         }
@@ -52,6 +56,7 @@ class User extends BaseController
             $phone = session()->get('user_data')['phone'];
         }
         $data = [
+            'name'  => $name,
             'username'  => $username,
             'email'     => $email,
             'phone'     => $phone
@@ -145,4 +150,17 @@ class User extends BaseController
         } 
         return $this->fail('email_in_use'); 
     }
+    public function generateUsername()
+    {
+        $UserModel = model('UserModel');
+
+        $name = $this->request->getVar('name');
+
+        $result = $UserModel->generateUsername($name);
+        if ($result == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($result);
+    }
+    
 }
