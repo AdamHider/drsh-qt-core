@@ -11,14 +11,18 @@ class Auth extends BaseController
     {
         $UserModel = model('UserModel');
 
+        $name               = $this->request->getVar('name') ?? null;
         $username           = $this->request->getVar('username') ?? null;
         $password           = $this->request->getVar('password');
         $password_confirm   = $this->request->getVar('passwordConfirm');
+        $gender             = $this->request->getVar('gender') ?? null;
 
         $data = [
+            'name'              => $name,
             'username'          => $username,
             'password'          => $password,
             'password_confirm'  => $password_confirm,
+            'gender'            => $gender,
             'blocked'           => 0
         ];
 

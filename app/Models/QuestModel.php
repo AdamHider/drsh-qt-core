@@ -123,7 +123,7 @@ class QuestModel extends Model
             if($ResourceModel->enrollUserList(session()->get('user_id'), $reward_config)){
                 $finished = $this->updateUserItem(['item_id' => $quest['id'], 'user_id' => session()->get('user_id'), 'status' => 'finished']);
                 if($finished){
-                    $this->assignNextItem($quest['id']);
+                    $this->linkItemToUser($quest['id'], session()->get('user_id'));
                     return $ResourceModel->proccessItemReward($reward_config);
                 }
             };
@@ -132,13 +132,13 @@ class QuestModel extends Model
             return 'forbidden';
         }
     }
-    private function assignNextItem ($quest_id) 
+    public function linkItemToUser ($quest_id, $user_id) 
     {
-        $next_quest = $this->where('unblock_after', $quest_id)->get()->getRowArray();
-        if(!empty($next_quest)){
+        $quest = $this->where('unblock_after', $quest_id)->get()->getRowArray();
+        if(!empty($quest)){
             $data = [
-                'item_id' => $next_quest['id'],
-                'user_id' => session()->get('user_id'),
+                'item_id' => $quest['id'],
+                'user_id' => $user_id,
                 'status' => 'created',
                 'progress' => 0
             ];

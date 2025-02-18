@@ -17,15 +17,26 @@ class UserModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
+        'name',
         'username', 
         'password', 
         'auth_key',
         'email', 
         'phone', 
+        'gender',
         'blocked'
     ];
     
     protected $validationRules    = [
+        'name'     => [
+            'label' =>'name',
+            'rules' =>'required|min_length[3]|is_unique[users.username,id,{id}]',
+            'errors'=>[
+                'required'=>'required',
+                'min_length'=>'short',
+                'is_unique'=>'notunique'
+            ]
+        ],
         'username'     => [
             'label' =>'username',
             'rules' =>'required|min_length[3]|is_unique[users.username,id,{id}]',
@@ -136,7 +147,7 @@ class UserModel extends Model
     public function createItem ($data)
     {
         if (empty($data['username'])) {
-            $data['username'] = $this->generateUsername();
+            $data['username'] = $this->generateUsername($data['name']);
         }
 
         $this->transBegin();
@@ -145,6 +156,7 @@ class UserModel extends Model
         
         $auth_key = md5($user_id.$data['password']);
         $ok = $this->update(['id' => $user_id], ['auth_key' => $auth_key]);
+    
         $this->transCommit();
 
         Events::trigger('signUp', $user_id);
@@ -165,12 +177,6 @@ class UserModel extends Model
         if($user['deleted_at']){
             return 'is_deleted';
         }
-        /*
-        $PermissionModel=model('PermissionModel');
-        $PermissionModel->listFillSession();
-        $this->protect(false)
-                ->update($user->id,['signed_in_at'=>\CodeIgniter\I18n\Time::now()]);
-        $this->protect(true);*/
         session()->set('user_id', $user['id']);
         return 'success' ;
     }
@@ -200,11 +206,13 @@ class UserModel extends Model
         return $auth_key;
     }
     
-    private function generateUsername()
+    private function generateUsername($name)
     {
-        $usernamePrefix = $this->usernameSamples[array_rand($this->usernameSamples)];
-        $affix = $this->getUsernameAffix($usernamePrefix);
-        $result = $usernamePrefix.$affix;
+        $prefix = convert_accented_characters($name);
+        $affix = $this->getUsernameAffix($prefix);
+        $result = $name.$affix;
+        print_r($result);
+        die;
         return $result;
     }
     public function checkUsername($username)
@@ -259,7 +267,6 @@ class UserModel extends Model
         }
         return $data;
     }
-    
     public function getItemAuth($username, $password){
         
         $user = $this->where('username', $username)->get()->getRowArray();

@@ -37,6 +37,9 @@ Events::on('signUp', static function ($user_id) {
     $character_id = $SettingsModel->where('code', 'characterId')->get()->getRowArray()['default_value'];
     $CharacterModel->linkItemToUser($character_id, $user_id);
 
+    $QuestModel = new \App\Models\QuestModel();
+    $initials = parse_ini_file(ROOTPATH.'/defaults.ini')['initials'];
+    $QuestModel->linkItemToUser($initials['quest_id'], $user_id);
 });
 
 Events::on('resourceEnrolled', static function ($target_id, $progress) {
