@@ -34,14 +34,14 @@ return [
         'feed.challenge.title' => 'New challenge added'
     ],
     'modifier' => [
-        'description.multiply.increase' => '%s increased by %s%%',
-        'description.multiply.decrease' => '%s decreased by %s%%',
-        'description.add' => '%s increased by %s',
-        'description.substract' => '%s decreased by %s',
+        'description.multiply.increase' => 'Параметр "%s" увеличен на %s%%',
+        'description.multiply.decrease' => 'Параметр "%s" снижен на %s%%',
+        'description.add' => 'Параметр "%s" увеличен на %s',
+        'description.substract' => 'Параметр "%s" снижен на %s',
     ],
     'user' => [
-        'statistics.total_exercises' => 'Planets',
-        'statistics.total_points' => 'Points',
-        'statistics.total_skills' => 'Skills'
+        'statistics.total_exercises' => 'Планеты',
+        'statistics.total_points' => 'Баллы',
+        'statistics.total_skills' => 'Технологии'
     ]
 ];

@@ -45,7 +45,7 @@ class Achievement extends BaseController
         if(!$result){
             return $this->failNotFound('not_found');
         }
-        return $this->respond(array_group_by($result, ['code']), 200);
+        return $this->respond($result, 200);
     }
 
 }
