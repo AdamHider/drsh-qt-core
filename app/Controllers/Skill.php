@@ -52,6 +52,9 @@ class Skill extends BaseController
             return $this->failNotFound('not_found');
         }
 
+        $notificationModel = model('NotificationModel');
+        $notificationModel->notify(['message' => 'Уровень пользователя']);
+
         return $this->respond($skills);
     }
     public function saveItem()
