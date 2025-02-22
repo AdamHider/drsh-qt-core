@@ -3,9 +3,12 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use WebSocket\Client;
 class Skill extends BaseController
 {
     use ResponseTrait;
+
+    
 
     public function getItem()
     {
@@ -54,7 +57,11 @@ class Skill extends BaseController
 
         $notificationModel = model('NotificationModel');
         $notificationModel->notify(['message' => 'Уровень пользователя']);
-
+        /*
+        $ws = new Client('ws://mektepium-app.local:8080');
+        
+        $ws->send(json_encode(['message' => 'Уровень пользователя повышен!']));*/
+    
         return $this->respond($skills);
     }
     public function saveItem()

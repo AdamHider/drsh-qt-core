@@ -4,32 +4,50 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
+use CodeIgniter\API\ResponseTrait;
+
 class SSE extends Controller
 {
-    public function index($session_id)
+    use ResponseTrait;
+    private $clients = [];
+    private $queue = [];
+
+    public function index()
     {
-        //Auth
-        if( $session_id && strlen($session_id) > 30 ){
-            //session_id must be valid string not 'null'
-            session_id($session_id);
+        // Отключение буферизации вывода
+        ini_set('output_buffering', 'off');
+        ini_set('zlib.output_compression', 'off');
+        ini_set('implicit_flush', 'on');
+        for ($i = 0; $i < ob_get_level(); $i++) {
+            ob_end_flush();
         }
-        session();
-        // Устанавливаем заголовки для SSE
+        ob_implicit_flush(1);
+
+        // Установка заголовков для SSE
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
-        
-        // Чтение сообщений из очереди
-        $data = $this->getMessageFromQueue(112);
-        echo 'data' . "\n\n";
-        if ($data) {
-            foreach($data as $item){
-                echo "data: " . json_encode($item['data']). "\n\n";
+
+        // Идентификатор клиента
+        $clientId = uniqid();
+        $this->clients[$clientId] = $this->response->getBody();
+
+        while (true) {
+            // Отправка данных клиентам
+            $messages = $this->getMessageFromQueue(112);
+            if(!empty($messages)){
+            $this->sendMessage($messages);
             }
-            ob_flush();
-            flush();
+            sleep(1); // Интервал между проверками
         }
     }
+
+    public function sendMessage($message)
+    {
+        echo json_encode($message);
+        ob_flush();
+        flush();
+    }
+
 
     private function getMessageFromQueue($user_id)
     {

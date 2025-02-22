@@ -47,6 +47,12 @@ Options All -Indexes
 	ErrorDocument 404 index.php
 </IfModule>
 
+<IfModule mod_php7.c>
+    php_flag output_buffering off
+    php_value zlib.output_compression off
+    php_value implicit_flush on
+</IfModule>
+
 
 
 # Disable server signature start
