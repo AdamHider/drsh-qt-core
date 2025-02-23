@@ -14,32 +14,34 @@ class SSE extends Controller
             $user_id = session()->get('user_id');
             session_write_close();
         }
+        ini_set('max_execution_time', 0);
         header("Cache-Control: no-cache");
         header('Connection: keep-alive');
         header("Content-Type: text/event-stream");
-        while ($user_id !== 0) {
-            $message = $this->getMessageFromQueue($user_id);
-            if(!empty($message)){
-                echo "event:ping\n";
-                echo "data:".json_encode($message)."\n\n";
-                echo str_pad('',65536)."\n";
-                ob_end_flush();
-                flush();
+        $i = 0;
+        while (1) {
+            $i++;
+            $UserUpdatesModel = model('UserUpdatesModel');
+            $updates = $this->getUpdates($user_id);
+            if(!empty($updates)){
+                foreach($updates as $update){
+                    echo "event:".$update['code']."\n";
+                    echo "data:".json_encode($update['data'])."\n\n";
+                }
+                $UserUpdatesModel->where('user_id', $user_id)->delete();
             }
+            echo str_pad('',65536)."\n";
+            ob_get_flush();
+            flush();
             if (connection_aborted()){
                 exit();
             }
             sleep(1);
         }
     }
-    private function getMessageFromQueue($user_id)
+    private function getUpdates($user_id)
     {
         $UserUpdatesModel = model('UserUpdatesModel');
-        $updates = $UserUpdatesModel->where('user_id', $user_id)->get()->getResultArray();
-        if (!empty($updates)) {
-            $UserUpdatesModel->where('user_id', $user_id)->delete();
-            return $updates;
-        }
-        return null;
+        return $UserUpdatesModel->where('user_id', $user_id)->get()->getResultArray();
     }
 }

@@ -9,9 +9,11 @@ class NotificationModel extends Model
     public function notify($data)
     {
         $UserUpdatesModel = model('UserUpdatesModel');
-        $UserUpdatesModel->insert([
+        $data = [
             'user_id' => session()->get('user_id'),
-            'data' => json_encode($data)
-        ]);
+            'code' => $data['code'],
+            'data' => json_encode($data['data'])
+        ];
+        $UserUpdatesModel->set($data)->insert();
     }
 }

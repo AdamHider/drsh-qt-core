@@ -58,19 +58,24 @@ class Skill extends BaseController
         
         $notificationModel = model('NotificationModel');
         $notification = [
-            'title' => 'Новый уровень!', 
-            'description' => 'Вы достигли уровня 2!',
-            'image' => base_url('image/quests_rocket.png'),
-            'link' => '/user'
+            'code' => 'level', 
+            'data' => [
+                'title' => 'Новый уровень!', 
+                'description' => 'Вы достигли уровня 2!',
+                'image' => base_url('image/quests_rocket.png'),
+                'link' => '/user'
+            ]
         ];
         $notificationModel->notify($notification);
-
         
         $notification = [
-            'title' => 'Новое достижение!', 
-            'description' => 'Новая ачивка!',
-            'image' => base_url('image/quests_research.png'),
-            'link' => '/user'
+            'code' => 'achievement', 
+            'data' => [
+                'title' => 'Новое достижение!', 
+                'description' => 'Новая ачивка!',
+                'image' => base_url('image/quests_research.png'),
+                'link' => '/user'
+            ]
         ];
         $notificationModel->notify($notification);
         /*
