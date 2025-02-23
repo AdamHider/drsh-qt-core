@@ -4,51 +4,34 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
-use CodeIgniter\API\ResponseTrait;
-
 class SSE extends Controller
 {
-    use ResponseTrait;
-    private $clients = [];
-    private $queue = [];
-
-    public function index()
+    public function index($session_id)
     {
-        // Отключение буферизации вывода
-        ini_set('output_buffering', 'off');
-        ini_set('zlib.output_compression', 'off');
-        ini_set('implicit_flush', 'on');
-        for ($i = 0; $i < ob_get_level(); $i++) {
-            ob_end_flush();
+        $user_id = 0;
+        if( $session_id && strlen($session_id) > 30 ){
+            session_id($session_id);
+            $user_id = session()->get('user_id');
+            session_write_close();
         }
-        ob_implicit_flush(1);
-
-        // Установка заголовков для SSE
-        header('Content-Type: text/event-stream');
-        header('Cache-Control: no-cache');
-
-        // Идентификатор клиента
-        $clientId = uniqid();
-        $this->clients[$clientId] = $this->response->getBody();
-
-        while (true) {
-            // Отправка данных клиентам
-            $messages = $this->getMessageFromQueue(112);
-            if(!empty($messages)){
-            $this->sendMessage($messages);
+        header("Cache-Control: no-cache");
+        header('Connection: keep-alive');
+        header("Content-Type: text/event-stream");
+        while ($user_id !== 0) {
+            $message = $this->getMessageFromQueue($user_id);
+            if(!empty($message)){
+                echo "event:ping\n";
+                echo "data:".json_encode($message)."\n\n";
+                echo str_pad('',65536)."\n";
+                ob_end_flush();
+                flush();
             }
-            sleep(1); // Интервал между проверками
+            if (connection_aborted()){
+                exit();
+            }
+            sleep(1);
         }
     }
-
-    public function sendMessage($message)
-    {
-        echo json_encode($message);
-        ob_flush();
-        flush();
-    }
-
-
     private function getMessageFromQueue($user_id)
     {
         $UserUpdatesModel = model('UserUpdatesModel');

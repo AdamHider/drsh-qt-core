@@ -55,8 +55,24 @@ class Skill extends BaseController
             return $this->failNotFound('not_found');
         }
 
+        
         $notificationModel = model('NotificationModel');
-        $notificationModel->notify(['message' => 'Уровень пользователя']);
+        $notification = [
+            'title' => 'Новый уровень!', 
+            'description' => 'Вы достигли уровня 2!',
+            'image' => base_url('image/quests_rocket.png'),
+            'link' => '/user'
+        ];
+        $notificationModel->notify($notification);
+
+        
+        $notification = [
+            'title' => 'Новое достижение!', 
+            'description' => 'Новая ачивка!',
+            'image' => base_url('image/quests_research.png'),
+            'link' => '/user'
+        ];
+        $notificationModel->notify($notification);
         /*
         $ws = new Client('ws://mektepium-app.local:8080');
         
@@ -82,7 +98,6 @@ class Skill extends BaseController
     public function createItem()
     {
         $SkillModel = model('SkillModel');
-        //$ClassroomUsermapModel = model('ClassroomUsermapModel');
 
         $classroom_id = $this->request->getVar('classroom_id');
 
@@ -99,7 +114,6 @@ class Skill extends BaseController
         if($SkillModel->errors()){
             return $this->failValidationErrors($SkillModel->errors());
         }
-        //$ClassroomUsermapModel->itemCreate(session()->get('user_id'), $quest_id);
 
         return $this->respond($quest_id);
     }
