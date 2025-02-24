@@ -78,6 +78,17 @@ class Skill extends BaseController
             ]
         ];
         $notificationModel->notify($notification);
+
+        $notification = [
+            'code' => 'skill', 
+            'data' => [
+                'title' => 'Новая технология!', 
+                'description' => 'Новая технология!',
+                'image' => base_url('image/quests_research.png'),
+                'link' => '/user'
+            ]
+        ];
+        $notificationModel->notify($notification);
         /*
         $ws = new Client('ws://mektepium-app.local:8080');
         

@@ -25,8 +25,11 @@ class SSE extends Controller
             $updates = $this->getUpdates($user_id);
             if(!empty($updates)){
                 foreach($updates as $update){
+                    $data = json_decode($update['data'], true);
+                    $data['id'] = $update['id'];
+                    $data['code'] = $update['code'];
                     echo "event:".$update['code']."\n";
-                    echo "data:".json_encode($update['data'])."\n\n";
+                    echo "data:".json_encode($data)."\n\n";
                 }
                 $UserUpdatesModel->where('user_id', $user_id)->delete();
             }
