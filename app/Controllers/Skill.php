@@ -56,17 +56,8 @@ class Skill extends BaseController
         }
 
         
+        /*
         $notificationModel = model('NotificationModel');
-        $notification = [
-            'code' => 'level', 
-            'data' => [
-                'title' => 'Новый уровень!', 
-                'description' => 'Вы достигли уровня 2!',
-                'image' => base_url('image/quests_rocket.png'),
-                'link' => '/user'
-            ]
-        ];
-        $notificationModel->notify($notification);
         
         $notification = [
             'code' => 'achievement', 
@@ -89,10 +80,7 @@ class Skill extends BaseController
             ]
         ];
         $notificationModel->notify($notification);
-        /*
-        $ws = new Client('ws://mektepium-app.local:8080');
-        
-        $ws->send(json_encode(['message' => 'Уровень пользователя повышен!']));*/
+        */
     
         return $this->respond($skills);
     }

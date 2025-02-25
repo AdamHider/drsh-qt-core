@@ -85,9 +85,6 @@ class UserModel extends Model
     protected $beforeInsert = ['hashPassword'];
     protected $beforeUpdate = ['hashPassword'];
 
-    private $usernameSamples = [
-        'misiq', 'arslan', 'qaplan'
-    ];
     private $usernameAffixes = [
         'qirim',
         'qirimli',
@@ -121,7 +118,7 @@ class UserModel extends Model
         $user['character'] = $CharacterModel->getItem($user['settings']['characterId']['value']);
         
         $UserLevelModel = model('UserLevelModel');
-        $user['level'] = $UserLevelModel->getCurrentItem($user['id']);
+        $user['level'] = $UserLevelModel->getCurrentItem();
 
         $SettingsModifiersModel = model('SettingsModifiersModel');
         $user['modifiers'] = $SettingsModifiersModel->getList();

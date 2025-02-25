@@ -42,9 +42,14 @@ Events::on('signUp', static function ($user_id) {
     $QuestModel->linkItemToUser($initials['quest_id'], $user_id);
 });
 
-Events::on('resourceEnrolled', static function ($target_id, $progress) {
+Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('resource', $target_id, $progress);
+
+    $UserLevelModel = new \App\Models\UserLevelModel();
+    if($code == 'experience'){
+        $UserLevelModel->checkIfCurrentItemChanged($progress);
+    }
 });
 Events::on('lessonFinished', static function ($target_id) {
     $QuestModel = new \App\Models\QuestModel();
@@ -55,6 +60,20 @@ Events::on('skillGained', static function ($target_id) {
     $QuestModel->addActiveProgress('skill', $target_id, 1);
 });
 
+Events::on('levelUp', static function ($level_data) {
+    $NotificationModel = new \App\Models\NotificationModel();
+    $notification = [
+        'code' => 'level', 
+        'data' => [
+            'title' => 'Новый уровень!', 
+            'description' => 'Вы достигли уровня '.$level_data['level'].'!',
+            'image' => base_url('image/quests_rocket.png'),
+            'data' => ['reward' => $level_data['reward']],
+            'link' => '/user'
+        ]
+    ];
+    $NotificationModel->notify($notification);
+});
 Events::on('pre_system', static function () {
     if (ENVIRONMENT !== 'testing') {
         if (ini_get('zlib.output_compression')) {

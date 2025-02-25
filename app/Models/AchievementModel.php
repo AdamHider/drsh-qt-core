@@ -12,12 +12,10 @@ class AchievementModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType = 'array';
-    protected $useSoftDeletes = true;
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
 
     public function getList ($data) 
     {
@@ -41,7 +39,7 @@ class AchievementModel extends Model
         }
         return $achievements;
     }
-    public function calculateProgress($data)
+    public function calculateProgress ($data)
     {
         $ExerciseModel = model('ExerciseModel');
         $statistics = $ExerciseModel->where('user_id', session()->get('user_id'))
@@ -63,33 +61,35 @@ class AchievementModel extends Model
             'is_done' => $current_progress >=  $data['value']
         ];
     }
-
-    private function total_points_Compose($value = false){
+    private function total_points_Compose ($value = false){
         $StatisticModel = $this->getModel('Statistic');
         $student_statistic = $StatisticModel->getByFilter(false, "content");
         return $student_statistic['total_points'];
     }
-    private function total_lessons_Compose($value = false){
+    private function total_lessons_Compose ($value = false){
         $StatisticModel = $this->getModel('Statistic');
         $student_statistic = $StatisticModel->getByFilter(false, "content");
         return $student_statistic['total_exercises'];
     }
-    private function total_courses_Compose($value = false){
+    private function total_courses_Compose ($value = false){
         
     }
-    private function total_classrooms_Compose(){       
+    private function total_classrooms_Compose ()
+    {       
         $UserModel = $this->getModel('User');
         $student_total_classrooms = $UserModel->getTotalClassrooms();
         return $student_total_classrooms;
     }
-    private function total_level_Compose(){
+    private function total_level_Compose ()
+    {
         $StatisticModel = $this->getModel('Statistic');
         $student_statistic = $StatisticModel->getByFilter(false, "content");
         $UserModel = $this->getModel('User');
         $level_data = $UserModel->getLevel($student_statistic['total_points']);
         return $level_data['id'];
     }
-    private function total_achievements_Compose(){
+    private function total_achievements_Compose ()
+    {
         $AchievementModel = $this->getModel('Achievement');
         $total_achievements = $AchievementModel->getList();
         return count($total_achievements);

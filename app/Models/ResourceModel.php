@@ -211,7 +211,7 @@ class ResourceModel extends Model
         }
         $ok = $ResourceUsermapModel->where(['item_id' => $resource['id'], 'user_id' => $data['user_id']])->update(); 
         if($ok){
-            Events::trigger('resourceEnrolled', $resource['id'], $data['quantity']);
+            Events::trigger('resourceEnrolled', $resource['id'], $resource['code'], $data['quantity']);
         }
         return $ok;
     }
