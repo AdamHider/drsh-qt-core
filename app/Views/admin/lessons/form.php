@@ -136,7 +136,17 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div>
+                        <label for="pages_text">Страницы (текст)</label>
+                        <textarea  name="pages" id="pages_text" class="form-control"></textarea>
+                        <script src="<?=base_url('/assets/trumbowyg/trumbowyg.min.js')?>" referrerpolicy="origin"></script>
+                        <link rel="stylesheet" href="<?=base_url('/assets/trumbowyg/ui/trumbowyg.min.css')?>">
+                        <script>
+                            $('#pages_text').trumbowyg({
+                                autogrow: true
+                            });
+                        </script>
+                    </div>
                 </div>
 
                 <div class="tab-pane fade" id="nav-cost" role="tabpanel" aria-labelledby="nav-cost-tab">
