@@ -1,0 +1,93 @@
+{
+    "template": {
+        "quiz_page": {
+            "title": "Где здесь \"%s\"?",
+            "form_template": "image",
+            "page_template": "imageSelection"
+        },
+        "read_page": {
+            "title": "Выучите слово \"%s\"",
+            "page_template": "imageSelection"
+        }
+    },
+    "word_list": [
+        {
+            "text": "çiçek",
+            "image": "/image/1LEXIS/hello.jpg",
+            "index": 1,
+            "label": "цветок"
+        },
+        {
+            "text": "mışıq",
+            "image": "/image/1LEXIS/me.jpg",
+            "index": 2,
+            "label": "кошка"
+        },
+        {
+            "text": "köpek",
+            "image": "/image/1LEXIS/name.jpg",
+            "index": 3,
+            "label": "собака"
+        },
+        {
+            "text": "terek",
+            "image": "/image/1LEXIS/glad.jpg",
+            "index": 4,
+            "label": "дерево"
+        },
+        {
+            "text": "kök",
+            "image": "/image/1LEXIS/how_are_you.jpg",
+            "index": 5,
+            "label": "небо"
+        },
+        {
+            "text": "oğlan",
+            "image": "/image/1LEXIS/thank_you1.jpg",
+            "index": 6,
+            "label": "мальчик"
+        },
+        {
+            "text": "küneş",
+            "image": "/image/1LEXIS/good.jpg",
+            "index": 7,
+            "label": "солнце"
+        },
+        {
+            "text": "yol",
+            "image": "/image/1LEXIS/to_acquaint.jpg",
+            "index": 8,
+            "label": "дорога"
+        },
+        {
+            "text": "çanta",
+            "image": "/image/1LEXIS/fellow.jpg",
+            "index": 9,
+            "label": "рюкзак"
+        },
+        {
+            "text": "el",
+            "image": "/image/1LEXIS/bu.jpg",
+            "index": 10,
+            "label": "рука"
+        },
+        {
+            "text": "ayaq",
+            "image": "/image/1LEXIS/su.jpg",
+            "index": 11,
+            "label": "нога"
+        },
+        {
+            "text": "qız",
+            "image": "/image/1LEXIS/o.jpg",
+            "index": 12,
+            "label": "девочка"
+        }
+    ],
+    "input_object": {
+        "mode": "variant",
+        "type": "input",
+        "answer": "",
+        "variants": []
+    }
+}

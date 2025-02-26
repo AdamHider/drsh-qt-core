@@ -1,0 +1,477 @@
+[
+    {
+        "index": 1,
+        "title": "Как будет <i>Дом</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "e{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "v",
+                    "variants": [
+                        { "text": "k" },
+                        { "text": "v" },
+                        { "text": "ñ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 2,
+        "title": "Как будет <i>Дерево</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "t{{input1}}re{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "e",
+                    "variants": [
+                        { "text": "r" },
+                        { "text": "e" },
+                        { "text": "o" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "k",
+                    "variants": [
+                        { "text": "n" },
+                        { "text": "ç" },
+                        { "text": "k" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 3,
+        "title": "Как будет <i>Книга</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "k{{input1}}ta{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "i",
+                    "variants": [
+                        { "text": "e" },
+                        { "text": "a" },
+                        { "text": "i" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "p",
+                    "variants": [
+                        { "text": "p" },
+                        { "text": "b" },
+                        { "text": "r" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Как будет <i>Дверь</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}ap{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "q",
+                    "variants": [
+                        { "text": "h" },
+                        { "text": "k" },
+                        { "text": "q" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "ı",
+                    "variants": [
+                        { "text": "u" },
+                        { "text": "ı" },
+                        { "text": "i" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Как будет <i>Нога</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "a{{input1}}a{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "y",
+                    "variants": [
+                        { "text": "b" },
+                        { "text": "y" },
+                        { "text": "i" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "q",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "ğ" },
+                        { "text": "k" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Как будет <i>Небо</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}{{input2}}k",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "k",
+                    "variants": [
+                        { "text": "k" },
+                        { "text": "g" },
+                        { "text": "h" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "ö",
+                    "variants": [
+                        { "text": "e" },
+                        { "text": "ö" },
+                        { "text": "a" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Как будет <i>Дорога</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}{{input2}}l",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "y",
+                    "variants": [
+                        { "text": "y" },
+                        { "text": "c" },
+                        { "text": "ç" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "o",
+                    "variants": [
+                        { "text": "u" },
+                        { "text": "ö" },
+                        { "text": "o" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Как будет <i>Девочка</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}{{input2}}{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "q",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "k" },
+                        { "text": "h" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "ı",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "i" },
+                        { "text": "ı" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "z",
+                    "variants": [
+                        { "text": "s" },
+                        { "text": "ş" },
+                        { "text": "z" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Как будет <i>Хлеб</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}t{{input2}}e{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ö",
+                    "variants": [
+                        { "text": "e" },
+                        { "text": "ö" },
+                        { "text": "i" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "m",
+                    "variants": [
+                        { "text": "t" },
+                        { "text": "n" },
+                        { "text": "m" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "k",
+                    "variants": [
+                        { "text": "s" },
+                        { "text": "k" },
+                        { "text": "ğ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Как будет <i>Ребёнок</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "b{{input1}}{{input2}}{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "a",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "e" },
+                        { "text": "o" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "l",
+                    "variants": [
+                        { "text": "n" },
+                        { "text": "b" },
+                        { "text": "l" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "a",
+                    "variants": [
+                        { "text": "i" },
+                        { "text": "a" },
+                        { "text": "e" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 11,
+        "title": "Как будет <i>Машина</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "a{{input1}}a{{input2}}{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "r",
+                    "variants": [
+                        { "text": "r" },
+                        { "text": "p" },
+                        { "text": "b" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "b",
+                    "variants": [
+                        { "text": "s" },
+                        { "text": "c" },
+                        { "text": "b" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "a",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "ı" },
+                        { "text": "ğ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Как будет <i>Рюкзак</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}a{{input2}}{{input3}}{{input4}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ç",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "ş" },
+                        { "text": "ç" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "n",
+                    "variants": [
+                        { "text": "n" },
+                        { "text": "m" },
+                        { "text": "ğ" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "t",
+                    "variants": [
+                        { "text": "r" },
+                        { "text": "d" },
+                        { "text": "t" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "a",
+                    "variants": [
+                        { "text": "e" },
+                        { "text": "a" },
+                        { "text": "ı" }
+                    ]
+                }
+            ]
+        }
+    }
+]
