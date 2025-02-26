@@ -45,7 +45,6 @@ class QuestGroups extends Controller
 
     public function form($id = null)
     {
-        $LanguageModel = new LanguageModel();
         $QuestGroupModel = new QuestGroupModel();
         $DescriptionModel = new DescriptionModel();
 
@@ -63,7 +62,7 @@ class QuestGroups extends Controller
             ]
         ];
         $quest_groups = $QuestGroupModel->select('descriptions.title, quest_groups.id')
-        ->join('descriptions', 'code = "quest_group" AND  item_id = quest_groups.id AND language_id = 1')->get()->getResultArray();
+        ->join('descriptions', 'descriptions.code = "quest_group" AND  item_id = quest_groups.id AND language_id = 1')->get()->getResultArray();
         if($id){
             $description = $DescriptionModel->where('code', 'quest_group')->where('item_id', $id)->where('language_id', 1)->get()->getRowArray();
         }
