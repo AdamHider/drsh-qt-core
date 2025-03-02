@@ -9,23 +9,23 @@
             "replica_list": [
                 {
                     "name": "Ali",
-                    "text": "Selâm aleykum, menim adım Ali. Seniñ adıñ ne?",
+                    "text": "Selam aleykum! Men Ali.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Murat",
-                    "text": "Aleykum selâm. Menim adım Murat.",
+                    "name": "Ayşe",
+                    "text": "Aleykum selam Ali! Men Ayşe. İşleriñ nasıl?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
                     "name": "Ali",
-                    "text": "Memnün oldım.",
+                    "text": "Yahşı, sağ ol. Seniñ işleriñ nasıl?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Murat",
-                    "text": "Men de memnün oldım.",
+                    "name": "Ayşe",
+                    "text": "Menim de yahşı, sen de sağ ol.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -42,23 +42,23 @@
             "replica_list": [
                 {
                     "name": "Ali",
-                    "text": "{{input1}}, menim adım Ali. Seniñ adıñ ne?",
+                    "text": "Selam aleykum! {{input1}} Ali.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Murat",
-                    "text": "{{input2}}. Menim adım Murat.",
+                    "name": "Ayşe",
+                    "text": "{{input2}} Ali! Men Ayşe. İşleriñ nasıl?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
                     "name": "Ali",
-                    "text": "Memnün oldım.",
+                    "text": "Yahşı, {{input3}}. Seniñ işleriñ nasıl?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Murat",
-                    "text": "Men de {{input3}}.",
+                    "name": "Ayşe",
+                    "text": "Menim de yahşı, {{input4}} sağ ol.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -68,33 +68,44 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Selâm aleykum",
+                    "answer": "Men",
                     "variants": [
-                        { "text": "Aleykum selâm" },
-                        { "text": "Selâm aleykum" },
-                        { "text": "Memnun oldım" }
+                        { "text": "Sen" },
+                        { "text": "Men" },
+                        { "text": "Sağ" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Aleykum selâm",
+                    "answer": "Aleykum selam",
                     "variants": [
                         { "text": "Aleykum selâm" },
-                        { "text": "Sağ ol" },
-                        { "text": "Adıñ ne" }
+                        { "text": "İşleriñ" },
+                        { "text": "Selâm aleykum" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "memnün oldım",
+                    "answer": "sağ ol",
                     "variants": [
-                        { "text": "Yahşı" },
-                        { "text": "Selâm aleykum" },
-                        { "text": "memnün oldım" }
+                        { "text": "seniñ de" },
+                        { "text": "sen de" },
+                        { "text": "sağ ol" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "sen de",
+                    "variants": [
+                        { "text": "saña da" },
+                        { "text": "sen de" },
+                        { "text": "sağa da" }
                     ]
                 }
             ]

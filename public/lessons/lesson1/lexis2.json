@@ -12,76 +12,76 @@
     },
     "word_list": [
         {
-            "text": "soğan",
+            "text": "çiçek",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "лук"
+            "label": "цветок"
         },
         {
-            "text": "muz",
+            "text": "mışıq",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "банан"
+            "label": "кошка"
         },
         {
-            "text": "saba",
+            "text": "köpek",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "утро"
+            "label": "собака"
         },
         {
-            "text": "gece",
+            "text": "terek",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "вечер"
+            "label": "дерево"
         },
         {
-            "text": "yaramay",
+            "text": "kök",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "плохо"
+            "label": "небо"
         },
         {
-            "text": "sofra",
+            "text": "oğlan",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "стол"
+            "label": "мальчик"
         },
         {
-            "text": "saat",
+            "text": "küneş",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "часы"
+            "label": "солнце"
         },
         {
-            "text": "balıq",
+            "text": "yol",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "рыба"
+            "label": "дорога"
         },
         {
-            "text": "quş",
+            "text": "çanta",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "птица"
+            "label": "рюкзак"
         },
         {
-            "text": "ay",
+            "text": "el",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "луна"
+            "label": "рука"
         },
         {
-            "text": "kün",
+            "text": "ayaq",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "день"
+            "label": "нога"
         },
         {
-            "text": "yıldız",
+            "text": "qız",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "звезда"
+            "label": "девочка"
         }
     ],
     "input_object": {

@@ -1,0 +1,329 @@
+[
+    {
+        "index": 1,
+        "title": "Как будет <i>Дом</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ev",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "v" },
+                        { "text": "k" },
+                        { "text": "e" },
+                        { "text": "a" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 2,
+        "title": "Как будет <i>Машина</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "araba",
+                    "variants": [
+                        { "text": "b" },
+                        { "text": "r" },
+                        { "text": "a" },
+                        { "text": "a" },
+                        { "text": "q" },
+                        { "text": "a" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 3,
+        "title": "Как будет <i>Нога</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ayaq",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "y" },
+                        { "text": "l" },
+                        { "text": "a" },
+                        { "text": "a" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Как будет <i>Ручка</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "qalem",
+                    "variants": [
+                        { "text": "e" },
+                        { "text": "l" },
+                        { "text": "r" },
+                        { "text": "m" },
+                        { "text": "a" },
+                        { "text": "q" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Как будет <i>Собака</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "köpek",
+                    "variants": [
+                        { "text": "o" },
+                        { "text": "p" },
+                        { "text": "k" },
+                        { "text": "a" },
+                        { "text": "k" },
+                        { "text": "m" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Как будет <i>Солнце</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "küneş",
+                    "variants": [
+                        { "text": "ş" },
+                        { "text": "v" },
+                        { "text": "ü" },
+                        { "text": "n" },
+                        { "text": "k" },
+                        { "text": "e" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Как будет <i>Яблоко</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "alma",
+                    "variants": [
+                        { "text": "l" },
+                        { "text": "i" },
+                        { "text": "m" },
+                        { "text": "a" },
+                        { "text": "a" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Как будет <i>Вода</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "suv",
+                    "variants": [
+                        { "text": "t" },
+                        { "text": "v" },
+                        { "text": "u" },
+                        { "text": "r" },
+                        { "text": "s" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Как будет <i>Мальчик</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "oğlan",
+                    "variants": [
+                        { "text": "l" },
+                        { "text": "o" },
+                        { "text": "r" },
+                        { "text": "n" },
+                        { "text": "ğ" },
+                        { "text": "a" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Как будет <i>Школа</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "mektep",
+                    "variants": [
+                        { "text": "p" },
+                        { "text": "a" },
+                        { "text": "n" },
+                        { "text": "k" },
+                        { "text": "t" },
+                        { "text": "e" },
+                        { "text": "e" },
+                        { "text": "m" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 11,
+        "title": "Как будет <i>Цветок</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "çiçek",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "k" },
+                        { "text": "i" },
+                        { "text": "y" },
+                        { "text": "ç" },
+                        { "text": "ç" },
+                        { "text": "b" },
+                        { "text": "e" },
+                        { "text": "l" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Как будет <i>Кошка</i>?",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "mışıq",
+                    "variants": [
+                        { "text": "ı" },
+                        { "text": "q" },
+                        { "text": "e" },
+                        { "text": "ı" },
+                        { "text": "m" },
+                        { "text": "a" },
+                        { "text": "ş" },
+                        { "text": "i" }
+                    ]
+                }
+            ]
+        }
+    }
+]
