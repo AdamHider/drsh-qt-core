@@ -1,23 +1,67 @@
 [
     {
         "index": 1,
-        "title": "Как будет <i>Дом</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "dialogue",
         "template_config": {
-            "text": "e{{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "replica_list": [
+                {
+                    "name": "Ali",
+                    "text": "Selâm aleykum! Menim adım Ali. Seniñ {{input1}} ne?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "{{input2}}! Menim adım Can. İşleriñ nasıl?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "{{input3}}! Seniñ işleriñ nasıl?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "Menim de yahşı.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "v",
+                    "answer": "adıñ",
                     "variants": [
-                        { "text": "k" },
-                        { "text": "v" },
-                        { "text": "ñ" }
+                        { "text": "Sen" },
+                        { "text": "Men" },
+                        { "text": "Sağ" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Aleykum selam",
+                    "variants": [
+                        { "text": "Aleykum selâm" },
+                        { "text": "İşleriñ" },
+                        { "text": "Selâm aleykum" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "yahşı",
+                    "variants": [
+                        { "text": "yahşi" },
+                        { "text": "yahşı" },
+                        { "text": "araba" }
                     ]
                 }
             ]
@@ -25,69 +69,85 @@
     },
     {
         "index": 2,
-        "title": "Как будет <i>Дерево</i>?",
+        "title": "Сопоставьте пары",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "match",
+        "page_template": "listSimple",
         "template_config": {
-            "text": "t{{input1}}re{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
-            "input_list": [
+            "item_list": [
                 {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 1,
-                    "answer": "e",
-                    "variants": [
-                        { "text": "r" },
-                        { "text": "e" },
-                        { "text": "o" }
-                    ]
+                    "text": "Sağlıqnen qal - {{input1}}"
                 },
                 {
-                    "mode": "variant",
+                    "text": "İşleriñ nasıl? - {{input2}}"
+                },
+                {
+                    "text": "Selâm aleykum - {{input3}}"
+                },
+                {
+                    "text": "Sağ ol - {{input4}}"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Sağlıqnen bar"
+                },
+                {
+                    "mode": "match",
                     "type": "input",
                     "index": 2,
-                    "answer": "k",
-                    "variants": [
-                        { "text": "n" },
-                        { "text": "ç" },
-                        { "text": "k" }
-                    ]
+                    "answer": "Yahşı"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "Aleykum selâm"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "Sen de sağ ol"
                 }
             ]
         }
     },
     {
         "index": 3,
-        "title": "Как будет <i>Книга</i>?",
+        "title": "Найдите лишнее слово",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "radio",
+        "page_template": "radio",
         "template_config": {
-            "text": "k{{input1}}ta{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
-                    "type": "input",
+                    "mode": "match",
+                    "type": "radio",
                     "index": 1,
-                    "answer": "i",
+                    "answer": "Çanta",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "a" },
-                        { "text": "i" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "p",
-                    "variants": [
-                        { "text": "p" },
-                        { "text": "b" },
-                        { "text": "r" }
+                        {
+                            "text": "Meraba"
+                        },
+                        {
+                            "text": "Selâm aleykum"
+                        },
+                        {
+                            "text": "Hayırlı sabalar"
+                        },
+                        {
+                            "text": "Çanta"
+                        }
                     ]
                 }
             ]
@@ -95,34 +155,67 @@
     },
     {
         "index": 4,
-        "title": "Как будет <i>Дверь</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "dialogue",
         "template_config": {
-            "text": "{{input1}}ap{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "replica_list": [
+                {
+                    "name": "Ayşe",
+                    "text": "Meraba! Men Ayşe. Seniñ adıñ {{input1}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "Meraba Ayşe! Menim adım Ali.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Ayşe",
+                    "text": "{{input2}} oldım.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "Men de memnün {{input3}}.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "q",
+                    "answer": "ne",
                     "variants": [
-                        { "text": "h" },
-                        { "text": "k" },
-                        { "text": "q" }
+                        { "text": "nasıl" },
+                        { "text": "ne" },
+                        { "text": "de" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ı",
+                    "answer": "Memnün",
                     "variants": [
-                        { "text": "u" },
-                        { "text": "ı" },
-                        { "text": "i" }
+                        { "text": "Memnün" },
+                        { "text": "İşleriñ" },
+                        { "text": "Yahşı" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "oldım",
+                    "variants": [
+                        { "text": "oldum" },
+                        { "text": "oldım" },
+                        { "text": "adım" }
                     ]
                 }
             ]
@@ -130,34 +223,33 @@
     },
     {
         "index": 5,
-        "title": "Как будет <i>Нога</i>?",
+        "title": "Где ошибка?",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "radio",
+        "page_template": "radio",
         "template_config": {
-            "text": "a{{input1}}a{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
-                    "type": "input",
+                    "mode": "match",
+                    "type": "radio",
                     "index": 1,
-                    "answer": "y",
+                    "answer": "Seniñ adıñ nasıl?",
                     "variants": [
-                        { "text": "b" },
-                        { "text": "y" },
-                        { "text": "i" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "q",
-                    "variants": [
-                        { "text": "q" },
-                        { "text": "ğ" },
-                        { "text": "k" }
+                        {
+                            "text": "Seniñ adıñ nasıl?"
+                        },
+                        {
+                            "text": "Menim adım Ali."
+                        },
+                        {
+                            "text": "Memnün oldım."
+                        }
                     ]
                 }
             ]
@@ -165,34 +257,78 @@
     },
     {
         "index": 6,
-        "title": "Как будет <i>Небо</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "dialogue",
         "template_config": {
-            "text": "{{input1}}{{input2}}k",
-            "image": "/image/1LEXIS/hello.jpg",
+            "replica_list": [
+                {
+                    "name": "Ali",
+                    "text": "Hayırlı {{input1}} Ayşe.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "Hayırlı aqşamlar Ali. {{input2}} nasıl?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "Yahşı, {{input3}} ol. Seniñ işleriñ nasıl?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "Menim de yahşı, {{input4}} de sağ ol.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "k",
+                    "answer": "aqşamlar",
                     "variants": [
-                        { "text": "k" },
-                        { "text": "g" },
-                        { "text": "h" }
+                        { "text": "aqşamlar" },
+                        { "text": "sabalar" },
+                        { "text": "adamlar" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ö",
+                    "answer": "İşleriñ",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "ö" },
-                        { "text": "a" }
+                        { "text": "Memnün" },
+                        { "text": "İşleriñ" },
+                        { "text": "Yahşı" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "sağ",
+                    "variants": [
+                        { "text": "sağ" },
+                        { "text": "yahşı" },
+                        { "text": "sen" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "sen",
+                    "variants": [
+                        { "text": "sen" },
+                        { "text": "mel" },
+                        { "text": "mışıq" }
                     ]
                 }
             ]
@@ -200,126 +336,140 @@
     },
     {
         "index": 7,
-        "title": "Как будет <i>Дорога</i>?",
+        "title": "Расположите в правильном порядке",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "match",
+        "page_template": "listSimple",
         "template_config": {
-            "text": "{{input1}}{{input2}}l",
-            "image": "/image/1LEXIS/hello.jpg",
+            "item_list": [
+                {
+                    "text": "{{input1}} {{input2}} {{input3}} {{input4}} {{input5}}"
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "y",
-                    "variants": [
-                        { "text": "y" },
-                        { "text": "c" },
-                        { "text": "ç" }
-                    ]
+                    "answer": "men"
                 },
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 2,
-                    "answer": "o",
-                    "variants": [
-                        { "text": "u" },
-                        { "text": "ö" },
-                        { "text": "o" }
-                    ]
+                    "answer": "de"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "memnün"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "oldım"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "."
                 }
             ]
         }
     },
     {
         "index": 8,
-        "title": "Как будет <i>Девочка</i>?",
+        "title": "Расположите в правильном порядке",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "match",
+        "page_template": "listSimple",
         "template_config": {
-            "text": "{{input1}}{{input2}}{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "item_list": [
+                {
+                    "text": "Menim  {{input1}} {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "q",
-                    "variants": [
-                        { "text": "q" },
-                        { "text": "k" },
-                        { "text": "h" }
-                    ]
+                    "answer": "adım"
                 },
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 2,
-                    "answer": "ı",
-                    "variants": [
-                        { "text": "a" },
-                        { "text": "i" },
-                        { "text": "ı" }
-                    ]
+                    "answer": "Ayşe"
                 },
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 3,
-                    "answer": "z",
-                    "variants": [
-                        { "text": "s" },
-                        { "text": "ş" },
-                        { "text": "z" }
-                    ]
+                    "answer": "."
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "Seniñ"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "adıñ"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "ne"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "?"
                 }
             ]
         }
     },
     {
         "index": 9,
-        "title": "Как будет <i>Хлеб</i>?",
+        "title": "Найдите лишнее слово",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "radio",
+        "page_template": "radio",
         "template_config": {
-            "text": "{{input1}}t{{input2}}e{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
-                    "type": "input",
+                    "mode": "match",
+                    "type": "radio",
                     "index": 1,
-                    "answer": "ö",
+                    "answer": "Çanta",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "ö" },
-                        { "text": "i" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "m",
-                    "variants": [
-                        { "text": "t" },
-                        { "text": "n" },
-                        { "text": "m" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "k",
-                    "variants": [
-                        { "text": "s" },
-                        { "text": "k" },
-                        { "text": "ğ" }
+                        {
+                            "text": "Memnün oldım"
+                        },
+                        {
+                            "text": "Sağ ol"
+                        },
+                        {
+                            "text": "Kün"
+                        },
+                        {
+                            "text": "İşleriñ nasıl"
+                        }
                     ]
                 }
             ]
@@ -327,91 +477,94 @@
     },
     {
         "index": 10,
-        "title": "Как будет <i>Ребёнок</i>?",
+        "title": "Расположите в правильном порядке",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "match",
+        "page_template": "listSimple",
         "template_config": {
-            "text": "b{{input1}}{{input2}}{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "item_list": [
+                {
+                    "text": "{{input1}} de {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "a",
-                    "variants": [
-                        { "text": "a" },
-                        { "text": "e" },
-                        { "text": "o" }
-                    ]
+                    "answer": "men"
                 },
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 2,
-                    "answer": "l",
-                    "variants": [
-                        { "text": "n" },
-                        { "text": "b" },
-                        { "text": "l" }
-                    ]
+                    "answer": "memnün"
                 },
                 {
-                    "mode": "variant",
+                    "mode": "match",
                     "type": "input",
                     "index": 3,
-                    "answer": "a",
-                    "variants": [
-                        { "text": "i" },
-                        { "text": "a" },
-                        { "text": "e" }
-                    ]
+                    "answer": "oldım"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "."
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "İşleriñ"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "nasıl"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "?"
                 }
             ]
         }
     },
     {
-        "index": 11,
-        "title": "Как будет <i>Машина</i>?",
+        "index": 5,
+        "title": "Где ошибка?",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "imageSelection",
+        "form_template": "radio",
+        "page_template": "radio",
         "template_config": {
-            "text": "a{{input1}}a{{input2}}{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
             "input_list": [
                 {
-                    "mode": "variant",
-                    "type": "input",
+                    "mode": "match",
+                    "type": "radio",
                     "index": 1,
-                    "answer": "r",
+                    "answer": "Saña da sağ ol.",
                     "variants": [
-                        { "text": "r" },
-                        { "text": "p" },
-                        { "text": "b" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "b",
-                    "variants": [
-                        { "text": "s" },
-                        { "text": "c" },
-                        { "text": "b" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "a",
-                    "variants": [
-                        { "text": "a" },
-                        { "text": "ı" },
-                        { "text": "ğ" }
+                        {
+                            "text": "Seniñ adın ne?"
+                        },
+                        {
+                            "text": "Saña da sağ ol."
+                        },
+                        {
+                            "text": "Memnün oldım."
+                        },
+                        {
+                            "text": "Sen de sağ ol."
+                        }
                     ]
                 }
             ]
@@ -419,56 +572,151 @@
     },
     {
         "index": 12,
-        "title": "Как будет <i>Рюкзак</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "dialogue",
         "template_config": {
-            "text": "{{input1}}a{{input2}}{{input3}}{{input4}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "replica_list": [
+                {
+                    "name": "Emre",
+                    "text": "Hayırlı sabalar!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Hayırlı sabalar!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "{{input1}} adım Emre. Seniñ adıñ {{input2}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Memnün {{input3}}. Menim adım Leyla.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "Men de {{input4}} oldım. İşleriñ {{input5}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Yahşı, sağ ol. {{input6}} işleriñ nasıl?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "{{input7}} sağ ol, menim {{input8}} yahşı.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Sağlıqnen {{input9}}, Emre.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "Sağlıqnen bar.",
+                    "image": "/image/2.jpg"
+                }
+            ],
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "ç",
+                    "answer": "Menim",
                     "variants": [
-                        { "text": "q" },
-                        { "text": "ş" },
-                        { "text": "ç" }
+                        { "text": "Menim" },
+                        { "text": "Menım" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "n",
+                    "answer": "ne",
                     "variants": [
-                        { "text": "n" },
-                        { "text": "m" },
-                        { "text": "ğ" }
+                        { "text": "nasıl" },
+                        { "text": "ne" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "t",
+                    "answer": "oldım",
                     "variants": [
-                        { "text": "r" },
-                        { "text": "d" },
-                        { "text": "t" }
+                        { "text": "oldım" },
+                        { "text": "oldum" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "a",
+                    "answer": "memnün",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "a" },
-                        { "text": "ı" }
+                        { "text": "memnun" },
+                        { "text": "memnün" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "nasıl",
+                    "variants": [
+                        { "text": "nasıl" },
+                        { "text": "ne" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "Seniñ",
+                    "variants": [
+                        { "text": "Seniñ" },
+                        { "text": "Senin" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "Sen de",
+                    "variants": [
+                        { "text": "Saña da" },
+                        { "text": "Sen de" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 8,
+                    "answer": "de",
+                    "variants": [
+                        { "text": "de" },
+                        { "text": "ne" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 9,
+                    "answer": "qal",
+                    "variants": [
+                        { "text": "qal" },
+                        { "text": "bar" }
                     ]
                 }
             ]

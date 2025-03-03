@@ -1,1 +1,323 @@
-{"template": {"quiz_page": {"title": "Где здесь \"%s\"?", "form_template": "image", "page_template": "imageSelection"}, "read_page": {"title": "Выучите слово \"%s\"", "page_template": "imageSelection"}}, "word_list": [{"text": "Selâm aleyküm!", "image": "/image/1LEXIS/hello.jpg", "index": 1, "label": "Привет!"}, {"text": "men", "image": "/image/1LEXIS/me.jpg", "index": 2, "label": "я"}, {"text": "ad", "image": "/image/1LEXIS/name.jpg", "index": 3, "label": "имя"}, {"text": "memnün", "image": "/image/1LEXIS/glad.jpg", "index": 4, "label": "приятно"}, {"text": "nasılsıñız?", "image": "/image/1LEXIS/how_are_you.jpg", "index": 5, "label": "как вы?"}, {"text": "Teşekkür etem!", "image": "/image/1LEXIS/thank_you1.jpg", "index": 6, "label": "Спасибо!"}, {"text": "yahşı", "image": "/image/1LEXIS/good.jpg", "index": 7, "label": "хорошо"}, {"text": "yahşı", "image": "/image/1LEXIS/good.jpg", "index": 8, "label": "хорошо"}], "input_object": {"mode": "variant", "type": "input", "answer": "", "variants": []}}
+[
+    {
+        "audio": true,
+        "image": "/image/34nkka3w4lz7c33lxl0rc3p47k86e882.jpg",
+        "index": 1,
+        "title": "страница 1",
+        "subtitle": "qwewqewqe",
+        "form_template": "variant",
+        "page_template": "answerQuestion",
+        "template_config": {
+            "block_list": [
+                {
+                    "text": "Text {{input1}}",
+                    "image": "/image/1677165773_8a7f41aeae9734896528.jpg"
+                },
+                {
+                    "text": "Text {{input2}}",
+                    "float": "right",
+                    "image": "/image/ach_total_courses_3.png"
+                },
+                {
+                    "text": "asdsad {{input3}}",
+                    "image": "/image/ach_total_lessons_3.png"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "aaa",
+                    "variants": [
+                        {
+                            "text": "aaa"
+                        },
+                        {
+                            "text": "bbb"
+                        }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": "2",
+                    "answer": "eee",
+                    "variants": [
+                        {
+                            "text": "eee"
+                        },
+                        {
+                            "text": "ddd"
+                        }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": "3",
+                    "answer": "ccc",
+                    "variants": [
+                        {
+                            "text": "ttt"
+                        },
+                        {
+                            "text": "ccc"
+                        }
+                    ]
+                }
+            ],
+            "grid_columns_count": 3
+        }
+    },
+    {
+        "audio": true,
+        "index": 2,
+        "title": "страница 2",
+        "subtitle": "sssssssss",
+        "form_template": "match",
+        "page_template": "table",
+        "template_config": {
+            "row_list": [
+                {
+                    "column_list": [
+                        {
+                            "text": "aaa",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "bbb",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "{{input1}}",
+                            "audio_link": ""
+                        }
+                    ]
+                },
+                {
+                    "column_list": [
+                        {
+                            "text": "ddd",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "vvv",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "{{input2}}",
+                            "audio_link": ""
+                        }
+                    ]
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ccc"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": "2",
+                    "answer": "eee"
+                }
+            ],
+            "replica_list": [],
+            "table_header": [
+                {
+                    "text": "AAA",
+                    "audio_link": ""
+                },
+                {
+                    "text": "BBB",
+                    "audio_link": ""
+                },
+                {
+                    "text": "CCC",
+                    "audio_link": ""
+                }
+            ]
+        }
+    },
+    {
+        "audio": true,
+        "index": 3,
+        "title": "страница 3",
+        "subtitle": "ыыыыыыыыыыы",
+        "form_template": "radio",
+        "page_template": "grid",
+        "template_config": {
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "radio",
+                    "index": 1,
+                    "answer": "ыыыы",
+                    "variants": [
+                        {
+                            "text": "ййй"
+                        },
+                        {
+                            "text": "ыыы"
+                        }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "radio",
+                    "index": "2",
+                    "answer": "ффф",
+                    "variants": [
+                        {
+                            "text": "ффф"
+                        },
+                        {
+                            "text": "ыыы"
+                        }
+                    ]
+                }
+            ],
+            "column_list": [
+                {
+                    "text": "sss",
+                    "image": "/image/ach_total_points_5.png",
+                    "animation": ""
+                },
+                {
+                    "text": "{{input1}}",
+                    "image": "/image/ach_total_lessons_3.png",
+                    "animation": ""
+                },
+                {
+                    "text": "ddd",
+                    "image": "",
+                    "animation": ""
+                },
+                {
+                    "text": "{{input2}}",
+                    "image": "",
+                    "animation": ""
+                },
+                {
+                    "text": "qqq",
+                    "image": "",
+                    "animation": ""
+                },
+                {
+                    "text": "aaa",
+                    "image": "/image/1677165773_8a7f41aeae9734896528.jpg",
+                    "animation": ""
+                }
+            ],
+            "grid_columns_count": "3"
+        }
+    },
+    {
+        "audio": true,
+        "index": 4,
+        "title": "Новая страница",
+        "subtitle": "",
+        "form_template": "radio",
+        "page_template": "radio",
+        "template_config": {
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "radio",
+                    "index": 1,
+                    "answer": "There",
+                    "variants": [
+                        {
+                            "text": "Three"
+                        },
+                        {
+                            "text": "There"
+                        },
+                        {
+                            "text": "Thoug"
+                        },
+                        {
+                            "text": "Thouse"
+                        }
+                    ]
+                }
+            ],
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": "How is?",
+                    "animation": ""
+                }
+            ]
+        }
+    },
+    {
+        "audio": true,
+        "image": "/image/34nkka3w4lz7c33lxl0rc3p47k86e882.jpg",
+        "index": 5,
+        "title": "Новая страница",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "listSimple",
+        "template_config": {
+            "item_list": [
+                {
+                    "text": "Как я должен это {{input1}}? Очень просто {{input2}}!",
+                    "animation": ""
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "сделать",
+                    "variants": [
+                        {
+                            "text": "сделать"
+                        },
+                        {
+                            "text": "сделал"
+                        },
+                        {
+                            "text": "сделать"
+                        },
+                        {
+                            "text": "сделаю"
+                        },
+                        {
+                            "text": "сделаем"
+                        }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": "2",
+                    "answer": "сделать",
+                    "variants": [
+                        {
+                            "text": "сделать"
+                        },
+                        {
+                            "text": "сделал"
+                        },
+                        {
+                            "text": "сделать"
+                        },
+                        {
+                            "text": "сделаю"
+                        },
+                        {
+                            "text": "сделаем"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
