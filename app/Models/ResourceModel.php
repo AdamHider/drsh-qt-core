@@ -169,6 +169,9 @@ class ResourceModel extends Model
     {
         $ResourceUsermapModel = model('ResourceUsermapModel');
         $resource = $this->where('code', $data['code'])->get()->getRowArray();
+        if(empty($resource)){
+            return false;
+        }
         $data = [
             'item_id' => $resource['id'],
             'user_id' => $data['user_id'],

@@ -3,7 +3,7 @@
         "index": 1,
         "title": "Как будет <i>Дом</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -29,7 +29,7 @@
         "index": 2,
         "title": "Как будет <i>Машина</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -56,7 +56,7 @@
         "index": 3,
         "title": "Как будет <i>Нога</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -82,7 +82,7 @@
         "index": 4,
         "title": "Как будет <i>Ручка</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -109,7 +109,7 @@
         "index": 5,
         "title": "Как будет <i>Собака</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -136,7 +136,7 @@
         "index": 6,
         "title": "Как будет <i>Солнце</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -163,7 +163,7 @@
         "index": 7,
         "title": "Как будет <i>Яблоко</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -189,7 +189,7 @@
         "index": 8,
         "title": "Как будет <i>Вода</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -215,7 +215,7 @@
         "index": 9,
         "title": "Как будет <i>Мальчик</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -242,7 +242,7 @@
         "index": 10,
         "title": "Как будет <i>Школа</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -271,7 +271,7 @@
         "index": 11,
         "title": "Как будет <i>Цветок</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
@@ -301,7 +301,7 @@
         "index": 12,
         "title": "Как будет <i>Кошка</i>?",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": "puzzle",
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}}",
