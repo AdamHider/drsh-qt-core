@@ -48,9 +48,9 @@ class LessonModel extends Model
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['image']            = base_url($lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
+            $lesson['next_lessons']     = $this->getNextItems($lesson['id']);
             $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], $lesson['unblock_after']);
-            
             if($lesson['parent_id']){
                 $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
@@ -205,5 +205,13 @@ class LessonModel extends Model
             return floor($overal_points / count($exercises));
         }
         return 0;
+    }
+    private function getNextItems($lesson_id)
+    {
+        $lessons = $this->select('title, description, image')->where('unblock_after', $lesson_id)->get()->getResultArray();
+        foreach($lessons as &$lesson){
+            $lesson['image'] = base_url($lesson['image']);
+        }
+        return $lessons;
     }
 }

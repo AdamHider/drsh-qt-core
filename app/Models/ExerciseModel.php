@@ -70,6 +70,7 @@ class ExerciseModel extends Model
             }
             unset($exercise['exercise_pending']);
             unset($exercise['exercise_submitted']);
+            unset($exercise['pages']);
         }
         return $exercise;
     }
@@ -245,6 +246,7 @@ class ExerciseModel extends Model
             $reward_old = $reward_config[$prev_reward_level];
             foreach($reward as $resource => &$quantity){
                 $quantity -= $reward_old[$resource] ?? 0;
+                if($quantity < 0) $quantity = 0;
             }
         }
         return $reward;

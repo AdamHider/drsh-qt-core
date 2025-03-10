@@ -35,7 +35,10 @@ class LessonUnblockUsermapModel extends Model
     {
         $LessonModel = model('LessonModel');
         $data = $LessonModel->where('unblock_after', $lesson_id)->select('id as item_id, '.session()->get('user_id').' as user_id')->get()->getResultArray();
-        return $this->ignore(true)->insertBatch($data);
+        if(!empty($data)){
+            return $this->ignore(true)->insertBatch($data);
+        }
+        return false;
     }
     
 }

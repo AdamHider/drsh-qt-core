@@ -35,16 +35,15 @@ class SettingsModel extends Model
             }
             $setting['value'] = $this->getItemValue($data['user_id'], $setting['id'], $setting['value']);
             $setting = array_merge($setting, $DescriptionModel->getItem('setting', $setting['id']));
-            $difference = $setting['default_value'] - $setting['value'];
             $percentage = 0;
-            if($setting['default_value'] > 0){
+            if(!$setting['is_private'] && $setting['default_value'] > 0){
                 $percentage = ceil($setting['value'] * 100 / $setting['default_value']) - 100;
             }
             $result[$setting['code']] = [
                 'value'         => $setting['value'],
                 'title'         => $setting['title'],
                 'description'   => $setting['description'],
-                'difference'    => $setting['default_value'] - $setting['value'],
+                'difference'    => (!$setting['is_private']) ? $setting['default_value'] - $setting['value'] : 0,
                 'percentage'    => $percentage,
                 'status'        => ($setting['value'] >= $setting['default_value']) ? (($setting['value'] == $setting['default_value']) ? 'neutral' : 'positive') : 'negative'
             ];

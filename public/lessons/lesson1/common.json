@@ -1,12 +1,12 @@
 [
     {
         "index": 1,
-        "title": "Как будет <i>Дом</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "e{{input1}}",
+            "text": "Дом - e{{input1}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -25,12 +25,12 @@
     },
     {
         "index": 2,
-        "title": "Как будет <i>Дерево</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "t{{input1}}re{{input2}}",
+            "text": "Дерево - t{{input1}}re{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -60,12 +60,12 @@
     },
     {
         "index": 3,
-        "title": "Как будет <i>Книга</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "k{{input1}}ta{{input2}}",
+            "text": "Книга - k{{input1}}ta{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -95,12 +95,12 @@
     },
     {
         "index": 4,
-        "title": "Как будет <i>Дверь</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}}ap{{input2}}",
+            "text": "Дверь - {{input1}}ap{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -130,12 +130,12 @@
     },
     {
         "index": 5,
-        "title": "Как будет <i>Нога</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "a{{input1}}a{{input2}}",
+            "text": "Нога - a{{input1}}a{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -165,12 +165,12 @@
     },
     {
         "index": 6,
-        "title": "Как будет <i>Небо</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}}{{input2}}k",
+            "text": "Небо - {{input1}}{{input2}}k",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -200,12 +200,12 @@
     },
     {
         "index": 7,
-        "title": "Как будет <i>Дорога</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}}{{input2}}l",
+            "text": "Дорога - {{input1}}{{input2}}l",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -235,12 +235,12 @@
     },
     {
         "index": 8,
-        "title": "Как будет <i>Девочка</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}}{{input2}}{{input3}}",
+            "text": "Девочка - {{input1}}{{input2}}{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -281,12 +281,12 @@
     },
     {
         "index": 9,
-        "title": "Как будет <i>Хлеб</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}}t{{input2}}e{{input3}}",
+            "text": "Хлеб - {{input1}}t{{input2}}e{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -327,12 +327,12 @@
     },
     {
         "index": 10,
-        "title": "Как будет <i>Ребёнок</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "b{{input1}}{{input2}}{{input3}}",
+            "text": "Ребёнок - b{{input1}}{{input2}}{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -373,12 +373,12 @@
     },
     {
         "index": 11,
-        "title": "Как будет <i>Машина</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "a{{input1}}a{{input2}}{{input3}}",
+            "text": "Машина - a{{input1}}a{{input2}}{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -419,12 +419,12 @@
     },
     {
         "index": 12,
-        "title": "Как будет <i>Рюкзак</i>?",
+        "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}}a{{input2}}{{input3}}{{input4}}",
+            "text": "Рюкзак - {{input1}}a{{input2}}{{input3}}{{input4}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {

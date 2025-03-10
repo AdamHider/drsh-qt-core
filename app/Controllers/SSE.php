@@ -34,7 +34,7 @@ class SSE extends Controller
                 $UserUpdatesModel->where('user_id', $user_id)->delete();
             }
             echo str_pad('',65536)."\n";
-            ob_get_flush();
+            if (ob_get_contents()) ob_get_flush();
             flush();
             if (connection_aborted()){
                 exit();
