@@ -208,7 +208,7 @@ class LessonModel extends Model
     }
     private function getNextItems($lesson_id)
     {
-        $lessons = $this->select('title, description, image')->where('unblock_after', $lesson_id)->get()->getResultArray();
+        $lessons = $this->select('id, parent_id, title, description, image')->where('unblock_after', $lesson_id)->get()->getResultArray();
         foreach($lessons as &$lesson){
             $lesson['image'] = base_url($lesson['image']);
         }

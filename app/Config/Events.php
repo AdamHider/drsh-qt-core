@@ -54,26 +54,56 @@ Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
 Events::on('lessonFinished', static function ($target_id) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('lesson', $target_id, 1);
+
+    $AchievementModel = new \App\Models\AchievementModel();
+    $NotificationModel = new \App\Models\NotificationModel();
+
+    $achievementsTotalLessons = $AchievementModel->getListToLink('total_lessons');
+    if(!empty($achievementsTotalLessons)){
+        foreach($achievementsTotalLessons as $achievement){
+            $AchievementModel->linkItemToUser($achievement);
+            $NotificationModel->notifyAchievement($achievement);
+        }
+    }
+    $achievementsTotalPoints = $AchievementModel->getListToLink('total_points');
+    if(!empty($achievementsTotalPoints)){
+        foreach($achievementsTotalPoints as $achievement){
+            $AchievementModel->linkItemToUser($achievement);
+            $NotificationModel->notifyAchievement($achievement);
+        }
+    }
 });
 Events::on('skillGained', static function ($target_id) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('skill', $target_id, 1);
 });
-
 Events::on('levelUp', static function ($level_data) {
     $NotificationModel = new \App\Models\NotificationModel();
-    $notification = [
-        'code' => 'level', 
-        'data' => [
-            'title' => 'Новый уровень!', 
-            'description' => 'Вы достигли уровня '.$level_data['level'].'!',
-            'image' => base_url('image/quests_rocket.png'),
-            'data' => ['reward' => $level_data['reward']],
-            'link' => '/user'
-        ]
-    ];
-    $NotificationModel->notify($notification);
+    $NotificationModel->notifyLevel($level_data);
+    
+    $AchievementModel = new \App\Models\AchievementModel();
+    $achievements = $AchievementModel->getListToLink('total_level');
+    if(!empty($achievements)){
+        $NotificationModel = new \App\Models\NotificationModel();
+        foreach($achievements as $achievement){
+            $AchievementModel->linkItemToUser($achievement);
+            $NotificationModel->notifyAchievement($achievement);
+        }
+    }
 });
+Events::on('achievementGained', static function ($target_id) {
+    $AchievementModel = new \App\Models\AchievementModel();
+    $NotificationModel = new \App\Models\NotificationModel();
+    $achievementsTotalAchievements = $AchievementModel->getListToLink('total_achievements');
+    if(!empty($achievementsTotalAchievements)){
+        foreach($achievementsTotalAchievements as $achievement){
+            $AchievementModel->linkItemToUser($achievement);
+            $NotificationModel->notifyAchievement($achievement);
+        }
+    }
+});
+
+
 Events::on('pre_system', static function () {
     if (ENVIRONMENT !== 'testing') {
         if (ini_get('zlib.output_compression')) {

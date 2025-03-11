@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Events\Events;
 
 class AchievementModel extends Model
 {
@@ -21,7 +22,7 @@ class AchievementModel extends Model
     {
         $DescriptionModel = model('DescriptionModel');
         
-        $this->join('achievement_groups', 'achievement_groups.id = achievements.group_id');
+        $this->join('achievement_groups', 'achievement_groups.id = achievements.group_id AND achievement_groups.is_published = 1');
         if($data['user_id']){
             $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id')
             ->where('achievements_usermap.user_id', $data['user_id']);
@@ -36,7 +37,7 @@ class AchievementModel extends Model
             $achievement['group'] = $DescriptionModel->getItem('achievement_group', $achievement['group_id']);
             $achievement['image'] = base_url('image/' . $achievement['image']);
             $achievement['progress'] = $this->calculateProgress($achievement);
-        }
+        } 
         return $achievements;
     }
     public function calculateProgress ($data)
@@ -54,47 +55,58 @@ class AchievementModel extends Model
         } else {
             $current_progress = 0;
         }
+        $percentage = ceil($current_progress * 100 / $data['value']);
+        if($percentage > 100){
+            $percentage = 100;
+        }
         return [
             'current' => $current_progress,
             'target' => $data['value'],
-            'percentage' => ceil($current_progress * 100 / $data['value']),
+            'percentage' => $percentage,
             'is_done' => $current_progress >=  $data['value']
         ];
     }
-    private function total_points_Compose ($value = false){
-        $StatisticModel = $this->getModel('Statistic');
-        $student_statistic = $StatisticModel->getByFilter(false, "content");
-        return $student_statistic['total_points'];
-    }
-    private function total_lessons_Compose ($value = false){
-        $StatisticModel = $this->getModel('Statistic');
-        $student_statistic = $StatisticModel->getByFilter(false, "content");
-        return $student_statistic['total_exercises'];
-    }
-    private function total_courses_Compose ($value = false){
-        
-    }
-    private function total_classrooms_Compose ()
-    {       
-        $UserModel = $this->getModel('User');
-        $student_total_classrooms = $UserModel->getTotalClassrooms();
-        return $student_total_classrooms;
-    }
-    private function total_level_Compose ()
+
+    public function getListToLink ($code) 
     {
-        $StatisticModel = $this->getModel('Statistic');
-        $student_statistic = $StatisticModel->getByFilter(false, "content");
-        $UserModel = $this->getModel('User');
-        $level_data = $UserModel->getLevel($student_statistic['total_points']);
-        return $level_data['id'];
+        $ExerciseModel = model('ExerciseModel');
+        $AchievementUsermapModel = model('AchievementUsermapModel');
+        $UserLevelModel = model('UserLevelModel');
+        $DescriptionModel = model('DescriptionModel');
+
+        $this->select('achievements.*, achievement_groups.code')->join('achievement_groups', 'achievement_groups.id = achievements.group_id')
+        ->join('achievements_usermap', 'achievements.id = achievements_usermap.item_id AND achievements_usermap.user_id = '.session()->get('user_id'), 'left')
+        ->where('code', $code)->where('achievements_usermap.item_id IS NULL');
+
+        if($code == 'total_lessons'){
+            $statistics = $ExerciseModel->where('user_id', session()->get('user_id'))->select("COALESCE(COUNT(points), 0) as total_lessons")->get()->getRowArray();
+            $this->where('value <= '.$statistics['total_lessons']);
+        }
+        if($code == 'total_points'){
+            $statistics = $ExerciseModel->where('user_id', session()->get('user_id'))->select("COALESCE(SUM(points), 0) as total_points")->get()->getRowArray();
+            $this->where('value <= '.$statistics['total_points']);
+        }
+        if($code == 'total_achievements'){
+            $statistics = $AchievementUsermapModel->where('user_id', session()->get('user_id'))->select("COALESCE(COUNT(item_id), 0) as total_achievements")->get()->getRowArray();
+            $this->where('value <= '.$statistics['total_achievements']);
+        }
+
+        if($code == 'total_level'){
+            $user_level = $UserLevelModel->getCurrentItem();
+            $this->where('value <= '.$user_level['id']);
+        }
+        $achievements = $this->get()->getResultArray();
+
+        foreach($achievements as &$achievement){
+            $achievement = array_merge($achievement, $DescriptionModel->getItem('achievement', $achievement['id']));
+        }
+        return $achievements;
     }
-    private function total_achievements_Compose ()
+
+    public function linkItemToUser($achievement)
     {
-        $AchievementModel = $this->getModel('Achievement');
-        $total_achievements = $AchievementModel->getList();
-        return count($total_achievements);
+        $AchievementUsermapModel = model('AchievementUsermapModel');
+        $AchievementUsermapModel->ignore()->insert(['item_id' => $achievement['id'], 'user_id' => session()->get('user_id')]);
+        Events::trigger('achievementGained', $achievement['id']);
     }
-
-
-
 }
