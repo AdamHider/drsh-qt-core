@@ -45,7 +45,10 @@ class Auth extends BaseController
         $password = $this->request->getVar('password');
 
         $result = $UserModel->getItemAuth($username, $password);
-
+        $next_attempt = $this->checkAttemptsExpired();
+        if($next_attempt){
+            return $this->fail('too_many_attempts');
+        }
         if($result === 'not_found'){
             return $this->failNotFound('not_found');
         }
@@ -84,6 +87,7 @@ class Auth extends BaseController
                 return $this->fail('fetch_error');
             }
             session()->set('user_data',$user);
+            session()->set('login_attempts', []);
             return $this->respond($user_id);
         }
         return $this->fail($result);
@@ -98,5 +102,29 @@ class Auth extends BaseController
     public function signOutUser()
     {
         session_unset();
+    }
+
+    private function checkAttemptsExpired () 
+    {
+        $login_attempts = session()->get('login_attempts') ?? [];
+        if(!empty($login_attempts)){
+            $last_attempt = end($login_attempts);
+            $now = date('Y-m-d H:i:s');
+            $differenceInSeconds = strtotime($now) - strtotime($last_attempt);
+            if($differenceInSeconds > 600){
+                $login_attempts = [];
+            }
+            if(count($login_attempts) >= 5) {
+                $next_attempt = date('Y-m-d H:i:s', strtotime($last_attempt) + 120);
+                if($differenceInSeconds < 120){
+                    return $next_attempt;
+                } else {
+                    array_shift($login_attempts);
+                }
+            }
+        }
+        $login_attempts[] = $now;
+        session()->set('login_attempts', $login_attempts);
+        return false;
     }
 }

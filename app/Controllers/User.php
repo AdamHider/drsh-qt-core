@@ -139,6 +139,17 @@ class User extends BaseController
         } 
         return $this->respond(false);
     }
+    public function checkUsernameAuth()
+    {
+        $UserModel = model('UserModel');
+
+        $username = $this->request->getVar('username');
+        $result = $UserModel->checkUsername($username);
+        if($result){
+            return $this->respond($result);
+        } 
+        return $this->failNotFound('not_found');
+    }
     public function checkEmail()
     {
         $UserModel = model('UserModel');

@@ -214,8 +214,11 @@ class UserModel extends Model
     }
     public function checkUsername($username)
     {
-        $user = $this->where('username', $username)->get()->getRow();
-        return $user && $user->username;
+        $user = $this->where('username', $username)->orWhere('name', $username)->orWhere('email', $username)->get()->getRowArray();
+        if(!empty($user)){
+            return $user['username'];
+        }
+        return false;
     }
     public function getUsernameSuggestions($username)
     {
