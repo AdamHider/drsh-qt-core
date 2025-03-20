@@ -107,9 +107,9 @@ class Auth extends BaseController
     private function checkAttemptsExpired () 
     {
         $login_attempts = session()->get('login_attempts') ?? [];
+        $now = date('Y-m-d H:i:s');
         if(!empty($login_attempts)){
             $last_attempt = end($login_attempts);
-            $now = date('Y-m-d H:i:s');
             $differenceInSeconds = strtotime($now) - strtotime($last_attempt);
             if($differenceInSeconds > 600){
                 $login_attempts = [];

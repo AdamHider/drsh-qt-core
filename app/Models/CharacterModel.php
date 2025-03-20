@@ -52,7 +52,7 @@ class CharacterModel extends Model
         $modifiersConfig = json_decode($character['modifiers_config'], true);
         if(!empty($modifiersConfig)){
             $SettingsModel->updateUserItem($user_id, ['code' => 'characterId', 'value' => $character['id']], true);
-            return $SettingsModel->createModifierList($user_id, $modifiersConfig, 'character');
+            return $SettingsModel->createModifierList($user_id, $modifiersConfig);
         }
         return false;
     }

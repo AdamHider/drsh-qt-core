@@ -44,13 +44,13 @@ class SkillModel extends Model
             $cost_config = json_decode($skill['cost_config'], true);
             $skill['is_gained'] = (bool) $skill['is_gained'];
             $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
-            $skill['image'] = base_url('image/' . $skill['image']);
+            $skill['image'] = base_url( $skill['image']);
             if($data['user_id']){
                 $skill['is_available'] = $this->checkAvailable($skill, $data['user_id']);
                 $skill['is_purchasable'] = $this->checkPurchasable($cost_config, $data['user_id']);
             }
             if($skill['is_available'] && !empty($cost_config)){
-                $skill['cost'] = $ResourceModel->proccessItemCost($data['user_id'], $cost_config);
+                $skill['cost'] = $ResourceModel->proccessItemCost($cost_config);
             }
             if(!$skill['is_available'] && !$skill['is_gained']){
                 $skill['required_skills'] = array_filter($skills, function ($item) use ($skill)  {
@@ -67,7 +67,6 @@ class SkillModel extends Model
         
         return $this->compileList($skills);
     }
-    
     private function compileList($skills)
     {
         $DescriptionModel = model('DescriptionModel');
@@ -162,11 +161,9 @@ class SkillModel extends Model
 
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
             if($ResourceModel->enrollUserList($user_id, $cost_config, 'substract')){
-                $SettingsModel->createModifierList($user_id, $modifiers_config, 'code');
-                $ok = $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
-                if($ok){
-                    Events::trigger('skillGained', $skill['id']);
-                }
+                $SettingsModel->createModifierList($user_id, $modifiers_config);
+                $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
+                Events::trigger('skillGained', $skill['id']);
                 return 'success';
             };
             return 'forbidden';

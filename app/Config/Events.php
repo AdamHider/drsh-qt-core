@@ -76,6 +76,9 @@ Events::on('lessonFinished', static function ($target_id) {
 Events::on('skillGained', static function ($target_id) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('skill', $target_id, 1);
+    
+    $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
+    $LessonUnblockUsermapModel->unblockNext('skills', $target_id);
 });
 Events::on('levelUp', static function ($level_data) {
     $NotificationModel = new \App\Models\NotificationModel();

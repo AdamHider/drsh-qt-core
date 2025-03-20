@@ -110,11 +110,11 @@ class ResourceModel extends Model
         return 0;
     }
 
-    public function proccessItemCost ($user_id, $cost_config)
+    public function proccessItemCost ($cost_config)
     {   
         if(!$cost_config) return [];
         $DescriptionModel = model('DescriptionModel');
-        $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$user_id)
+        $resources = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.session()->get('user_id'))
         ->whereIn('code', array_keys($cost_config))->get()->getResultArray();
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
