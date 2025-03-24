@@ -17,7 +17,7 @@ class LessonModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'course_id', 'course_section_id', 'language_id', 'title', 'description', 'type', 'pages', 'cost_config', 'reward_config', 'unblock_config', 'image', 'published', 'parent_id', 'unblock_after', 'is_private'
+        'course_id', 'course_section_id', 'language_id', 'title', 'description', 'type', 'pages', 'cost_config', 'reward_config', 'unblock_config', 'image', 'published', 'parent_id', 'is_private'
     ];
     
     protected $useTimestamps = false;
@@ -214,7 +214,7 @@ class LessonModel extends Model
     }
     private function getNextItems($lesson_id)
     {
-        $lessons = $this->select('id, parent_id, title, description, image')->where('unblock_after', $lesson_id)->get()->getResultArray();
+        $lessons = $this->where('JSON_CONTAINS(JSON_EXTRACT(unblock_config, "$.lessons"),"'.$lesson_id.'","$")')->get()->getResultArray();
         foreach($lessons as &$lesson){
             $lesson['image'] = base_url($lesson['image']);
         }
