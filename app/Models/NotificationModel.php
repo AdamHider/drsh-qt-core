@@ -38,6 +38,23 @@ class NotificationModel extends Model
         ];
         $UserUpdatesModel->set($notification)->insert();
     }
+    public function notifyQuest($quest)
+    {
+        $UserUpdatesModel = model('UserUpdatesModel');
+        $notification = [
+            'user_id' => session()->get('user_id'),
+            'code' => 'quest',
+            'data' => json_encode([
+                'title' => 'Задание выполнено!', 
+                'description' => 'Вы выполнили задание "'.$quest['group']['title'].'"!',
+                'image' => base_url('image/' . $quest['group']['image_full']),
+                'data' => [],
+                'link' => null
+            ])
+        ];
+        $UserUpdatesModel->set($notification)->insert();
+    }
+    
 
 
 }

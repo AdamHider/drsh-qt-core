@@ -100,7 +100,20 @@ class QuestModel extends Model
         } 
         return $is_outdated;
     }
+    public function getCompletedList($code)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $QuestGroupModel = model('QuestGroupModel');
 
+        $quests = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.session()->get('user_id'), 'left')
+        ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value AND quests.code = "'.$code.'"')->get()->getResultArray();
+        
+        foreach($quests as &$quest){
+            $quest = array_merge($quest, $DescriptionModel->getItem('quest', $quest['id']));
+            $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
+        }
+        return $quests;
+    }
     public function claimReward($quest_id)
     {
         $ResourceModel = model('ResourceModel');
@@ -160,5 +173,6 @@ class QuestModel extends Model
         $QuestsUsermapModel = model('QuestsUsermapModel');
         return $QuestsUsermapModel->insert($data, true);
     }
+    
     
 }

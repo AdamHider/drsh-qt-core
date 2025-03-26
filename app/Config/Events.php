@@ -79,6 +79,14 @@ Events::on('skillGained', static function ($target_id) {
     
     $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
     $LessonUnblockUsermapModel->unblockNext('skills', $target_id);
+
+    $quests = $QuestModel->getCompletedList('skill');
+    if(!empty($quests)){
+        $NotificationModel = new \App\Models\NotificationModel();
+        foreach($quests as $quest){
+            $NotificationModel->notifyQuest($quest);
+        }
+    }
 });
 Events::on('levelUp', static function ($level_data) {
     $NotificationModel = new \App\Models\NotificationModel();
