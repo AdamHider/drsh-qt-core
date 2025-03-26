@@ -47,7 +47,7 @@ class NotificationModel extends Model
             'data' => json_encode([
                 'title' => 'Задание выполнено!', 
                 'description' => 'Вы выполнили задание "'.$quest['group']['title'].'"!',
-                'image' => base_url('image/' . $quest['group']['image_full']),
+                'image' => base_url($quest['group']['image_full']),
                 'data' => [],
                 'link' => null
             ])
