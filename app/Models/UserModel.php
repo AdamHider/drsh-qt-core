@@ -24,7 +24,8 @@ class UserModel extends Model
         'email', 
         'phone', 
         'gender',
-        'blocked'
+        'blocked',
+        'invited_by'
     ];
     
     protected $validationRules    = [
@@ -146,7 +147,7 @@ class UserModel extends Model
         if (empty($data['username'])) {
             $data['username'] = $this->generateUsername($data['name']);
         }
-
+        
         $this->transBegin();
         $data['auth_key'] = '####';
         $user_id = $this->insert($data, true);

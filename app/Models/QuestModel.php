@@ -4,6 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Events\Events;
 
 class QuestModel extends Model
 {
@@ -137,6 +138,7 @@ class QuestModel extends Model
                 $finished = $this->updateUserItem(['item_id' => $quest['id'], 'user_id' => session()->get('user_id'), 'status' => 'finished']);
                 if($finished){
                     $this->linkItemToUser($quest['id'], session()->get('user_id'), 'next');
+                    Events::trigger('invitationQuestClaimed', session()->get('user_id'));
                     return $ResourceModel->proccessItemReward($reward_config);
                 }
             };

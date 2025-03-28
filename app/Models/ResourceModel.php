@@ -92,10 +92,12 @@ class ResourceModel extends Model
             $restoratedValue = floor($timeDifference / $restorationTime);
             $newValue = $resource['quantity'] + $restoratedValue;
             if($newValue >= $maxValue){
-                $ResourceUsermapModel->update($resource['id'], ['quantity' => $maxValue, 'consumed_at' => null]);
+                $ResourceUsermapModel->set(['quantity' => $maxValue, 'consumed_at' => null])
+                ->where('user_id', session()->get('user_id'))->where('item_id', $resource['id'])->update();
             } else {
                 $consumptionTime = $consumptionTime->addSeconds($restoratedValue * $restorationTime);
-                $ResourceUsermapModel->update($resource['id'], ['quantity' => $newValue, 'consumed_at' => $consumptionTime->toDateTimeString()]);
+                $ResourceUsermapModel->set(['quantity' => $newValue, 'consumed_at' => $consumptionTime])
+                ->where('user_id', session()->get('user_id'))->where('item_id', $resource['id'])->update();
             }
         }
     }
