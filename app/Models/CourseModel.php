@@ -31,8 +31,8 @@ class CourseModel extends Model
         }
         $course = $this->where('id', $course_id)->where('published', 1)->get()->getRowArray();
         if(!empty($course)){
-            $course['image'] = base_url($course['image']);
-            $course['background_image'] = base_url($course['background_image']);
+            $course['image'] = base_url('image/index.php'.$course['image']);
+            $course['background_image'] = base_url('image/index.php'.$course['background_image']);
             $course['progress'] = $this->getProgress($course['id']);
             if($course['progress']['total_lessons'] > 0){
                 $course['progress']['percentage'] = ceil($course['progress']['total_exercises'] * 100 / $course['progress']['total_lessons']);
@@ -45,8 +45,8 @@ class CourseModel extends Model
         $result = [];
         $courses = $this->get()->getResultArray();
         foreach($courses as &$course){
-            $course['image'] = base_url($course['image']);
-            $course['background_image'] = base_url($course['background_image']);
+            $course['image'] = base_url('image/index.php'.$course['image']);
+            $course['background_image'] = base_url('image/index.php'.$course['background_image']);
             $course['progress'] = $this->getProgress($course['id']);
             if($course['progress']['total_lessons'] == 0){
                 continue;

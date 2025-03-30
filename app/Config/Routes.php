@@ -77,7 +77,7 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
     });
 });
 
-$routes->get('/image/(:any)', 'Image::index/$1');
+//$routes->get('/image/(:any)', 'Image::index/$1');
 
   /*---------------*/
  /* CLIENT ROUTES */

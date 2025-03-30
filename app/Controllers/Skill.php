@@ -54,33 +54,6 @@ class Skill extends BaseController
         if ($skills == 'not_found') {
             return $this->failNotFound('not_found');
         }
-
-        
-        /*
-        $notificationModel = model('NotificationModel');
-        
-        $notification = [
-            'code' => 'achievement', 
-            'data' => [
-                'title' => 'Новое достижение!', 
-                'description' => 'Новая ачивка!',
-                'image' => base_url('image/quests_research.png'),
-                'link' => '/user'
-            ]
-        ];
-        $notificationModel->notify($notification);
-
-        $notification = [
-            'code' => 'skill', 
-            'data' => [
-                'title' => 'Новая технология!', 
-                'description' => 'Новая технология!',
-                'image' => base_url('image/quests_research.png'),
-                'link' => '/user'
-            ]
-        ];
-        $notificationModel->notify($notification);
-        */
     
         return $this->respond($skills);
     }

@@ -44,7 +44,7 @@ class SkillModel extends Model
             $cost_config = json_decode($skill['cost_config'], true);
             $skill['is_gained'] = (bool) $skill['is_gained'];
             $skill = array_merge($skill, $DescriptionModel->getItem('skill', $skill['id']));
-            $skill['image'] = base_url( $skill['image']);
+            $skill['image'] = base_url('image/index.php'.$skill['image']);
             if($data['user_id']){
                 $skill['is_available'] = $this->checkAvailable($skill, $data['user_id']);
                 $skill['is_purchasable'] = $this->checkPurchasable($cost_config, $data['user_id']);

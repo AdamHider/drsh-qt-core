@@ -28,7 +28,7 @@ class ExerciseStatisticModel extends Model
             $character = $SettingsModel->join('settings_usermap', 'settings_usermap.item_id = settings.id', 'left')
             ->join('characters', 'characters.id = settings_usermap.value', 'left')->where('settings.code = "characterId" AND settings_usermap.user_id = '.$row['user_id'])->select('characters.*')->get()->getRowArray();
             if(!empty($character)){
-                $row['image'] = base_url('image/' . $character['image']);
+                $row['image'] = base_url('image/index.php'.$character['image']);
                 $row['is_active'] = (bool) $row['is_active'];
             }
         }

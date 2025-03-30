@@ -173,5 +173,14 @@ class User extends BaseController
         }
         return $this->respond($result);
     }
-    
+    public function getItemInvitation()
+    {
+        $UserModel = model('UserModel');
+
+        $result = $UserModel->getItemInvitation();
+        if ($result == 'not_found') {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($result);
+    }
 }

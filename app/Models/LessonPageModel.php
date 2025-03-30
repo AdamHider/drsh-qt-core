@@ -34,7 +34,6 @@ class LessonPageModel extends LessonModel
         
         return false;
     }
-
     private function composeItemData($page_data)
     {
         if(isset($page_data['form_template']) && $page_data['form_template'] == 'match'){
@@ -78,7 +77,6 @@ class LessonPageModel extends LessonModel
         }
         return $result;
     }
-
     private function composeMatchVariants($input_list)
     {
         $result = [];

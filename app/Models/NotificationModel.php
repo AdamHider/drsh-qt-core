@@ -15,7 +15,7 @@ class NotificationModel extends Model
             'data' => json_encode([
                 'title' => 'Новый уровень!', 
                 'description' => 'Вы достигли уровня '.$level['level'].'!',
-                'image' => base_url('image/quests_rocket.png'),
+                'image' => base_url('image/index.php/quests_rocket.png'),
                 'data' => ['reward' => $level['reward']],
                 'link' => '/user'
             ])
@@ -31,7 +31,7 @@ class NotificationModel extends Model
             'data' => json_encode([
                 'title' => 'Новое достижение!', 
                 'description' => 'Вы получили достижение "'.$achievement['title'].'"!',
-                'image' => base_url('image/' . $achievement['image']),
+                'image' => base_url('image/index.php'.$achievement['image']),
                 'data' => [],
                 'link' => '/achievements'
             ])

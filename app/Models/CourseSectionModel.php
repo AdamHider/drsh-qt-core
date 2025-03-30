@@ -30,7 +30,7 @@ class CourseSectionModel extends Model
         }
         $course_section = $this->where('id', $course_section_id)->get()->getRowArray();
         if ($course_section) {
-            $course_section['background_image'] = base_url($course_section['background_image']);
+            $course_section['background_image'] = base_url('image/index.php'.$course_section['background_image']);
         } else {
             return 'not_found';
         }

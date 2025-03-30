@@ -46,7 +46,7 @@ class LessonModel extends Model
         }
         if ($lesson) {
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
-            $lesson['image']            = base_url($lesson['image']);
+            $lesson['image']            = base_url('image/index.php'.$lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['next_lessons']     = $this->getNextItems($lesson['id']);
             $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
@@ -86,7 +86,7 @@ class LessonModel extends Model
             }
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['satellites']       = $this->getSatellites($lesson['id'], 'lite');
-            $lesson['image']            = base_url($lesson['image']);
+            $lesson['image']            = base_url('image/index.php'.$lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
@@ -119,7 +119,7 @@ class LessonModel extends Model
         ->whereHasPermission('r')->orderBy('lessons.order ASC')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
-            $satellite['image'] = base_url($satellite['image']);
+            $satellite['image'] = base_url('image/index.php'.$satellite['image']);
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['progress']      = $this->getItemProgress($satellite['exercise']['data'] ?? []);
@@ -216,7 +216,7 @@ class LessonModel extends Model
     {
         $lessons = $this->where('JSON_CONTAINS(JSON_EXTRACT(unblock_config, "$.lessons"),"'.$lesson_id.'","$")')->get()->getResultArray();
         foreach($lessons as &$lesson){
-            $lesson['image'] = base_url($lesson['image']);
+            $lesson['image'] = base_url('image/index.php'.$lesson['image']);
         }
         return $lessons;
     }
@@ -237,7 +237,7 @@ class LessonModel extends Model
         }
         foreach($result as &$group){
             foreach($group as &$item){
-                $item['image'] = base_url($item['image']);
+                $item['image'] = base_url('image/index.php'.$item['image']);
             }
         }
         if(empty($result)) return null;

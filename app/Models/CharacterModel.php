@@ -25,7 +25,7 @@ class CharacterModel extends Model
         $character = $this->where('characters.id', $character_id)->get()->getRowArray();
         if ($character) {
             $character = array_merge($character, $DescriptionModel->getItem('character', $character['id']));
-            $character['image'] = base_url('image/' . $character['image']);
+            $character['image'] = base_url('image/index.php' . $character['image']);
         }
         return $character;
     }
@@ -38,10 +38,7 @@ class CharacterModel extends Model
         $characters = $this->get()->getResultArray();
         foreach($characters as &$character){
             $character = array_merge($character, $DescriptionModel->getItem('character', $character['id']));
-            $character['image'] = base_url('image/' . $character['character_image']);
-            $character['planet_image'] = base_url('image/' . $character['planet_image']);
-            $character['rocket_image'] = base_url('image/' . $character['rocket_image']);
-            $character['background_image'] = base_url('image/' . $character['background_image']);
+            $character['image'] = base_url('image/index.php' . $character['character_image']);
         }
         return $characters;
     }

@@ -284,6 +284,7 @@ class UserModel extends Model
         }
         return $user['auth_key'];
     }
+    
     public function getItemStatistics($user_id )
     {
         $SkillUsermapModel = model('SkillUsermapModel');
@@ -304,11 +305,17 @@ class UserModel extends Model
             ],
             'total_skills' =>  [
                 'label' => lang('App.user.statistics.total_skills'),
-                'value' => count($SkillUsermapModel->where('user_id', $user_id)->get()->getResultArray())
+                'value' => $SkillUsermapModel->where('user_id', $user_id)->get()->getNumRows()
             ]
         ];
 
         return $dashboard;
+    }
+    public function getItemInvitation(){
+        
+        $user = $this->where('username', $username)->get()->getRowArray();
+        
+        return $user['auth_key'];
     }
 
 }
