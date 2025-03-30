@@ -46,7 +46,7 @@ class LessonUnblockUsermapModel extends Model
                 $total_lessons = 0;
             }
             
-            if(!empty($unblock_config['lessons'])){
+            if(!empty($unblock_config['skills'])){
                 $total_skills = $SkillModel->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.session()->get('user_id'))
                 ->whereIn('skills.id', $unblock_config['skills'])->get()->getNumRows();
             } else {

@@ -47,8 +47,8 @@ class CharacterModel extends Model
         $SettingsModel = model('SettingsModel');
         $character = $this->where('characters.id', $item_id)->get()->getRowArray();
         $modifiersConfig = json_decode($character['modifiers_config'], true);
+        $SettingsModel->updateUserItem($user_id, ['code' => 'characterId', 'value' => $character['id']], true);
         if(!empty($modifiersConfig)){
-            $SettingsModel->updateUserItem($user_id, ['code' => 'characterId', 'value' => $character['id']], true);
             return $SettingsModel->createModifierList($user_id, $modifiersConfig);
         }
         return false;

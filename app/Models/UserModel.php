@@ -147,6 +147,13 @@ class UserModel extends Model
         if (empty($data['username'])) {
             $data['username'] = $this->generateUsername($data['name']);
         }
+        if (!empty($data['inviter_hash'])) {
+            $UserInvitationModel = model('UserInvitationModel');
+            $invitation = $UserInvitationModel->where('hash', $data['inviter_hash'])->get()->getRowArray();
+            if(!empty($invitation)){
+                $data['invited_by'] = $invitation['user_id'];
+            }
+        }
         
         $this->transBegin();
         $data['auth_key'] = '####';
@@ -157,7 +164,7 @@ class UserModel extends Model
     
         $this->transCommit();
 
-        Events::trigger('signUp', $user_id);
+        Events::trigger('signUp', $user_id, $data);
 
         return $auth_key;        
     }
@@ -312,11 +319,4 @@ class UserModel extends Model
 
         return $dashboard;
     }
-    public function getItemInvitation(){
-        
-        $user = $this->where('username', $username)->get()->getRowArray();
-        
-        return $user['auth_key'];
-    }
-
 }

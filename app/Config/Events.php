@@ -22,24 +22,31 @@ use CodeIgniter\Exceptions\FrameworkException;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
-Events::on('signUp', static function ($user_id) {
+Events::on('signUp', static function ($user_id, $data) {
     $SettingsModel = new \App\Models\SettingsModel();
     $SettingsModel->createUserList($user_id);
 
-    $ResourceModel = new \App\Models\ResourceModel();
+    $initials = parse_ini_file(ROOTPATH.'/defaults.ini')['initials'];
     $resources = parse_ini_file(ROOTPATH.'/defaults.ini')['resources'];
+
+    $ResourceModel = new \App\Models\ResourceModel();
     $ResourceModel->saveUserList($user_id, $resources);
 
     $UserGroupModel = new \App\Models\UserGroupModel();
     $UserGroupModel->createUserItem($user_id, 'registered');
 
     $CharacterModel = new \App\Models\CharacterModel();
-    $character_id = $SettingsModel->where('code', 'characterId')->get()->getRowArray()['default_value'];
-    $CharacterModel->linkItemToUser($character_id, $user_id);
+    if($data['gender'] == 'male'){
+        $CharacterModel->linkItemToUser($initials['male_character_id'], $user_id);
+    } else {
+        $CharacterModel->linkItemToUser($initials['female_character_id'], $user_id);
+    }
 
     $QuestModel = new \App\Models\QuestModel();
-    $initials = parse_ini_file(ROOTPATH.'/defaults.ini')['initials'];
     $QuestModel->linkItemToUser($initials['quest_id'], $user_id);
+    if(!empty($data['invited_by'])){
+        $QuestModel->linkItemToUser($initials['invitation_quest_id'], $user_id);
+    }
 });
 
 Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
@@ -51,6 +58,13 @@ Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
     $UserLevelModel = new \App\Models\UserLevelModel();
     if($code == 'experience'){
         $UserLevelModel->checkIfCurrentItemChanged($progress);
+    }
+    $quests = $QuestModel->getCompletedList('resource');
+    if(!empty($quests)){
+        $NotificationModel = new \App\Models\NotificationModel();
+        foreach($quests as $quest){
+            $NotificationModel->notifyQuest($quest);
+        }
     }
 });
 Events::on('lessonFinished', static function ($target_id) {
@@ -72,6 +86,13 @@ Events::on('lessonFinished', static function ($target_id) {
         foreach($achievementsTotalPoints as $achievement){
             $AchievementModel->linkItemToUser($achievement);
             $NotificationModel->notifyAchievement($achievement);
+        }
+    }
+    $quests = $QuestModel->getCompletedList('lesson');
+    if(!empty($quests)){
+        $NotificationModel = new \App\Models\NotificationModel();
+        foreach($quests as $quest){
+            $NotificationModel->notifyQuest($quest);
         }
     }
 });

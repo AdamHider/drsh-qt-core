@@ -16,6 +16,7 @@ class Auth extends BaseController
         $password           = $this->request->getVar('password');
         $password_confirm   = $this->request->getVar('passwordConfirm');
         $gender             = $this->request->getVar('gender') ?? null;
+        $inviter_hash       = $this->request->getVar('inviter_hash') ?? null;
 
         $data = [
             'name'              => $name,
@@ -23,6 +24,7 @@ class Auth extends BaseController
             'password'          => $password,
             'password_confirm'  => $password_confirm,
             'gender'            => $gender,
+            'inviter_hash'      => $inviter_hash,
             'blocked'           => 0
         ];
 

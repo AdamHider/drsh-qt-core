@@ -175,9 +175,9 @@ class User extends BaseController
     }
     public function getItemInvitation()
     {
-        $UserModel = model('UserModel');
+        $UserInvitationModel = model('UserInvitationModel');
 
-        $result = $UserModel->getItemInvitation();
+        $result = $UserInvitationModel->getItem();
         if ($result == 'not_found') {
             return $this->failNotFound('not_found');
         }
