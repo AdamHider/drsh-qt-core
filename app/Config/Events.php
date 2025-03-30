@@ -46,6 +46,8 @@ Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('resource', $target_id, $progress);
 
+    $QuestModel->addActiveProgress('resource_invitation', $target_id, $progress);
+
     $UserLevelModel = new \App\Models\UserLevelModel();
     if($code == 'experience'){
         $UserLevelModel->checkIfCurrentItemChanged($progress);
@@ -79,6 +81,14 @@ Events::on('skillGained', static function ($target_id) {
     
     $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
     $LessonUnblockUsermapModel->unblockNext('skills', $target_id);
+
+    $quests = $QuestModel->getCompletedList('skill');
+    if(!empty($quests)){
+        $NotificationModel = new \App\Models\NotificationModel();
+        foreach($quests as $quest){
+            $NotificationModel->notifyQuest($quest);
+        }
+    }
 });
 Events::on('levelUp', static function ($level_data) {
     $NotificationModel = new \App\Models\NotificationModel();
@@ -103,6 +113,14 @@ Events::on('achievementGained', static function ($target_id) {
             $AchievementModel->linkItemToUser($achievement);
             $NotificationModel->notifyAchievement($achievement);
         }
+    }
+});
+Events::on('invitationQuestClaimed', static function ($user_id) {
+    $UserInvitationModel = new \App\Models\UserInvitationModel();
+    $NotificationModel = new \App\Models\NotificationModel();
+    $invited_user = $UserInvitationModel->rewardItem($user_id);
+    if($invited_user){
+        $NotificationModel->notifyInvitation($invited_user);
     }
 });
 

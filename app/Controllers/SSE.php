@@ -21,8 +21,8 @@ class SSE extends Controller
         $i = 0;
         while (1) {
             $i++;
-            $UserUpdatesModel = model('UserUpdatesModel');
             $updates = $this->getUpdates($user_id);
+            $UserUpdatesModel = model('UserUpdatesModel');
             if(!empty($updates)){
                 foreach($updates as $update){
                     $data = json_decode($update['data'], true);
@@ -31,7 +31,8 @@ class SSE extends Controller
                     echo "event:".$update['code']."\n";
                     echo "data:".json_encode($data)."\n\n";
                 }
-                $UserUpdatesModel->where('user_id', $user_id)->delete();
+                $UserUpdatesModel->set('status', 'finished')->where('user_id', $user_id)->update();
+                $UserUpdatesModel->where('user_id', $user_id)->where('created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)')->delete();
             }
             echo str_pad('',65536)."\n";
             if (ob_get_contents()) ob_get_flush();
@@ -45,6 +46,6 @@ class SSE extends Controller
     private function getUpdates($user_id)
     {
         $UserUpdatesModel = model('UserUpdatesModel');
-        return $UserUpdatesModel->where('user_id', $user_id)->get()->getResultArray();
+        return $UserUpdatesModel->where('user_id', $user_id)->where('status', 'created')->get()->getResultArray();
     }
 }

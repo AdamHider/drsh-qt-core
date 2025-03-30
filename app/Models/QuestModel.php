@@ -4,6 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Events\Events;
 
 class QuestModel extends Model
 {
@@ -100,7 +101,20 @@ class QuestModel extends Model
         } 
         return $is_outdated;
     }
+    public function getCompletedList($code)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        $QuestGroupModel = model('QuestGroupModel');
 
+        $quests = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.session()->get('user_id'), 'left')
+        ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value AND quests.code = "'.$code.'"')->get()->getResultArray();
+        
+        foreach($quests as &$quest){
+            $quest = array_merge($quest, $DescriptionModel->getItem('quest', $quest['id']));
+            $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
+        }
+        return $quests;
+    }
     public function claimReward($quest_id)
     {
         $ResourceModel = model('ResourceModel');
@@ -124,6 +138,7 @@ class QuestModel extends Model
                 $finished = $this->updateUserItem(['item_id' => $quest['id'], 'user_id' => session()->get('user_id'), 'status' => 'finished']);
                 if($finished){
                     $this->linkItemToUser($quest['id'], session()->get('user_id'), 'next');
+                    Events::trigger('invitationQuestClaimed', session()->get('user_id'));
                     return $ResourceModel->proccessItemReward($reward_config);
                 }
             };
@@ -160,5 +175,6 @@ class QuestModel extends Model
         $QuestsUsermapModel = model('QuestsUsermapModel');
         return $QuestsUsermapModel->insert($data, true);
     }
+    
     
 }

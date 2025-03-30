@@ -18,7 +18,6 @@ class LessonUnblockUsermapModel extends Model
         if (!$unblock_config) {
             return false;
         }
-
         if($mode == 'group'){
             $lessons = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND AND user_id ='.session()->get('user_id'), 'left')
             ->where('lessons.published', 1)->where('(lessons.parent_id = '. $lesson_id.' OR lessons.id = '.$lesson_id.')')
@@ -49,7 +48,6 @@ class LessonUnblockUsermapModel extends Model
             
             if(!empty($unblock_config['lessons'])){
                 $total_skills = $SkillModel->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.session()->get('user_id'))
-                ->join('descriptions', 'descriptions.item_id = skills.id AND descriptions.language_id = 1 AND descriptions.code = "skill"')
                 ->whereIn('skills.id', $unblock_config['skills'])->get()->getNumRows();
             } else {
                 $unblock_config['skills'] = [];
