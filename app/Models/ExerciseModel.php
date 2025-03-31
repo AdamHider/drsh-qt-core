@@ -159,10 +159,10 @@ class ExerciseModel extends Model
             $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
             if($data['exercise_submitted']['totals']['reward_level'] > 0){
                 $LessonUnblockUsermapModel->unblockNext('lessons', $data['lesson_id']);
+                Events::trigger('lessonFinished', $data['lesson_id']);
             }
             $ResourceModel = model('ResourceModel');
             $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward']);
-            Events::trigger('lessonFinished', $data['lesson_id']);
         }
         return $result;        
     }

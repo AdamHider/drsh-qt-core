@@ -34,6 +34,7 @@ class QuestModel extends Model
         $DescriptionModel = model('DescriptionModel');
         $QuestGroupModel = model('QuestGroupModel');
         $ResourceModel = model('ResourceModel');
+        $ResourceModel = model('ResourceModel');
 
         if($data['active_only']){
             $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
@@ -53,7 +54,7 @@ class QuestModel extends Model
             
             $reward_config = json_decode($quest['reward_config'], true);
             $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
-            
+            $quest['target'] = $this->composeItemTarget($quest['code'], $quest['target']);
             $quest['pages'] = $this->composeItemPages($quest['pages']);
 
             $quest['is_completed'] = $quest['progress'] >= $quest['value'];
@@ -82,13 +83,45 @@ class QuestModel extends Model
         }
         return $result;
     }
+
+    private function composeItemTarget($code, $target_id)
+    {
+        $result = [];
+        $LessonModel = model('LessonModel');
+        $SkillModel = model('SkillModel');
+        $DescriptionModel = model('DescriptionModel');
+        
+        if($code == 'lesson'){
+            $result = $LessonModel->where('id', $target_id)->select('id, parent_id, title, description')->get()->getRowArray();
+            $result['code'] = 'lesson';
+        } else if($code == 'total_lessons' || $code == 'resource' || $code == 'resource_invitation'){
+            $result = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id = '.session()->get('user_id'))
+            ->select('lessons.id, lessons.parent_id, lessons.title, lessons.description')->get()->getRowArray();
+            $result['code'] = 'lesson';
+        } else if($code == 'skill'){
+            $result = $SkillModel->select('skills.id')->get()->getRowArray();
+            $result = array_merge($result, $DescriptionModel->getItem('skill', $result['id']));
+            $result['code'] = 'skill';
+        } else if($code == 'skills_total'){
+            $result = $SkillModel->join('skills_usermap', 'skills_usermap.item_id = skills.id'.session()->get('user_id'))
+            ->select('skills.id')->get()->getRowArray();
+            $result = array_merge($result, $DescriptionModel->getItem('skill', $result['id']));
+            $result['code'] = 'skill';
+        }
+        return $result;
+    }
     public function addActiveProgress($code, $target_id, $progress)
     {   
         $QuestsUsermapModel = model('QuestsUsermapModel');
-
-        $quests = $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
-        ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status = "active"')
-        ->where('quests.code = "'.$code.'"')->where('find_in_set("'.$target_id.'", quests.target) <> 0')->get()->getResultArray();
+        if($code == 'lesson' || $code == 'resource' || $code == 'skill'){
+            $quests = $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
+            ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status = "active"')
+            ->where('quests.code = "'.$code.'"')->where('find_in_set("'.$target_id.'", quests.target) <> 0')->get()->getResultArray();
+        } else {
+            $quests = $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
+            ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status = "active"')
+            ->where('quests.code = "'.$code.'"')->get()->getResultArray();
+        }
         foreach($quests as $quest){
             $QuestsUsermapModel->set('progress', 'progress+'.$progress, false)->where(['item_id' => $quest['id'], 'user_id' => session()->get('user_id')])->update();
         }
@@ -107,7 +140,7 @@ class QuestModel extends Model
         $QuestGroupModel = model('QuestGroupModel');
 
         $quests = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.session()->get('user_id'), 'left')
-        ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value AND quests.code = "'.$code.'"')->get()->getResultArray();
+        ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value')->where('find_in_set(quests.code, "'.$code.'") <> 0')->get()->getResultArray();
         
         foreach($quests as &$quest){
             $quest = array_merge($quest, $DescriptionModel->getItem('quest', $quest['id']));

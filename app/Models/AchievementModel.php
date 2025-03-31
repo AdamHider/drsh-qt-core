@@ -93,7 +93,7 @@ class AchievementModel extends Model
 
         if($code == 'total_level'){
             $user_level = $UserLevelModel->getCurrentItem();
-            $this->where('value <= '.$user_level['id']);
+            $this->where('value <= '.$user_level['level']);
         }
         $achievements = $this->get()->getResultArray();
 

@@ -47,6 +47,8 @@ Events::on('signUp', static function ($user_id, $data) {
     if(!empty($data['invited_by'])){
         $QuestModel->linkItemToUser($initials['invitation_quest_id'], $user_id);
     }
+    $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
+    $LessonUnblockUsermapModel->insert(['item_id' => $initials['lesson_id'], 'user_id' => $user_id]);
 });
 
 Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
@@ -70,6 +72,7 @@ Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
 Events::on('lessonFinished', static function ($target_id) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('lesson', $target_id, 1);
+    $QuestModel->addActiveProgress('total_lessons', $target_id, 1);
 
     $AchievementModel = new \App\Models\AchievementModel();
     $NotificationModel = new \App\Models\NotificationModel();
@@ -88,9 +91,8 @@ Events::on('lessonFinished', static function ($target_id) {
             $NotificationModel->notifyAchievement($achievement);
         }
     }
-    $quests = $QuestModel->getCompletedList('lesson');
+    $quests = $QuestModel->getCompletedList('lesson,total_lessons');
     if(!empty($quests)){
-        $NotificationModel = new \App\Models\NotificationModel();
         foreach($quests as $quest){
             $NotificationModel->notifyQuest($quest);
         }
@@ -99,11 +101,12 @@ Events::on('lessonFinished', static function ($target_id) {
 Events::on('skillGained', static function ($target_id) {
     $QuestModel = new \App\Models\QuestModel();
     $QuestModel->addActiveProgress('skill', $target_id, 1);
+    $QuestModel->addActiveProgress('total_skills', $target_id, 1);
     
     $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
     $LessonUnblockUsermapModel->unblockNext('skills', $target_id);
 
-    $quests = $QuestModel->getCompletedList('skill');
+    $quests = $QuestModel->getCompletedList('skill,total_skills');
     if(!empty($quests)){
         $NotificationModel = new \App\Models\NotificationModel();
         foreach($quests as $quest){
