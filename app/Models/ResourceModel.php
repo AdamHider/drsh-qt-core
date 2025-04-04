@@ -39,10 +39,10 @@ class ResourceModel extends Model
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $result[$resource['code']] = [
                 'quantity'      => $resource['quantity'],
-                'image'      => $resource['image'],
-                'title'      => $resource['title'],
-                'description'      => $resource['description'],
-                'color'      => $resource['color'],
+                'image'         => base_url('image/index.php'.$resource['image']),
+                'title'         => $resource['title'],
+                'description'   => $resource['description'],
+                'color'         => $resource['color'],
                 'is_restorable' => (bool) $resource['is_restorable'],
                 'restoration'   =>  $this->getItemRestoration($resource)
             ];
@@ -122,6 +122,7 @@ class ResourceModel extends Model
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $resource['quantity'] = (int) $resource['quantity'];
             $resource['quantity_cost'] = (int) $cost_config[$resource['code']];
+            $resource['image'] = base_url('image/index.php'.$resource['image']);
         }
         return $resources;
     }
@@ -142,6 +143,7 @@ class ResourceModel extends Model
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $resource['quantity'] = (int) $resourceGroup[$resource['code']];
+            $resource['image'] = base_url('image/index.php'.$resource['image']);
         }
         return $resources;
     }
