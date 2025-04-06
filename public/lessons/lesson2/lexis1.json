@@ -12,76 +12,76 @@
     },
     "word_list": [
         {
-            "text": "ev",
+            "text": "defter",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "дом"
+            "label": "тетрадь"
         },
         {
-            "text": "araba",
+            "text": "oca",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "машина"
+            "label": "учитель"
         },
         {
-            "text": "mektep",
+            "text": "talebe",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "школа"
+            "label": "ученик"
         },
         {
-            "text": "qalem",
+            "text": "dolap",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "ручка"
+            "label": "шкаф"
         },
         {
-            "text": "kitap",
+            "text": "ekim",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "книга"
+            "label": "врач"
         },
         {
-            "text": "qapı",
+            "text": "gemi",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "дверь"
+            "label": "корабль"
         },
         {
-            "text": "telefon",
+            "text": "maqas",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "телефон"
+            "label": "ножницы"
         },
         {
-            "text": "alma",
+            "text": "sançqı",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "яблоко"
+            "label": "вилка"
         },
         {
-            "text": "suv",
+            "text": "ressam",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "вода"
+            "label": "художник"
         },
         {
-            "text": "ötmek",
+            "text": "qurucı",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "хлеб"
+            "label": "строитель"
         },
         {
-            "text": "bala",
+            "text": "filcan",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "ребёнок"
+            "label": "чашка"
         },
         {
-            "text": "süt",
+            "text": "çalğıcı",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "молоко"
+            "label": "музыкант"
         }
     ],
     "input_object": {

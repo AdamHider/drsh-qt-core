@@ -12,76 +12,76 @@
     },
     "word_list": [
         {
-            "text": "ev",
+            "text": "anahtar",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "дом"
+            "label": "ключ"
         },
         {
-            "text": "araba",
+            "text": "leylek",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "машина"
+            "label": "аист"
         },
         {
-            "text": "mektep",
+            "text": "yaqın",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "школа"
+            "label": "близко"
         },
         {
-            "text": "qalem",
+            "text": "uzaq",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "ручка"
+            "label": "далеко"
         },
         {
-            "text": "kitap",
+            "text": "çoq uzaq",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "книга"
+            "label": "очень далеко"
         },
         {
-            "text": "qapı",
+            "text": "bu",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "дверь"
+            "label": "это (близко)"
         },
         {
-            "text": "telefon",
+            "text": "şu",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "телефон"
+            "label": "это (далеко)"
         },
         {
-            "text": "alma",
+            "text": "o",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "яблоко"
+            "label": "то"
         },
         {
-            "text": "suv",
+            "text": "pencere",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "вода"
+            "label": "окно"
         },
         {
-            "text": "ötmek",
+            "text": "ebet",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "хлеб"
+            "label": "да"
         },
         {
-            "text": "bala",
+            "text": "yoq",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "ребёнок"
+            "label": "нет"
         },
         {
-            "text": "süt",
+            "text": "bağça",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "молоко"
+            "label": "сад"
         }
     ],
     "input_object": {

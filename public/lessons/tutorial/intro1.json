@@ -1,100 +1,52 @@
 [
     {
         "index": 1,
-        "title": "Прочтите диалог",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": null,
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
+            "text": "Дом - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
                 {
-                    "name": "Ali",
-                    "text": "Selâm aleykum, menim adım Ali. Seniñ adıñ ne?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Murat",
-                    "text": "Aleykum selâm. Menim adım Murat.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "Memnün oldım.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Murat",
-                    "text": "Men de memnün oldım.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ev",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "v" },
+                        { "text": "k" },
+                        { "text": "e" },
+                        { "text": "a" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 2,
-        "title": "Заполните пропуски",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Ali",
-                    "text": "{{input1}}, menim adım Ali. Seniñ adıñ ne?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Murat",
-                    "text": "{{input2}}. Menim adım Murat.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "Memnün oldım.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Murat",
-                    "text": "Men de {{input3}}.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                }
-            ],
+            "text": "Машина - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "Selâm aleykum",
+                    "answer": "araba",
                     "variants": [
-                        { "text": "Aleykum selâm" },
-                        { "text": "Selâm aleykum" },
-                        { "text": "Memnun oldım" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Aleykum selâm",
-                    "variants": [
-                        { "text": "Aleykum selâm" },
-                        { "text": "Sağ ol" },
-                        { "text": "Adıñ ne" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "memnün oldım",
-                    "variants": [
-                        { "text": "Yahşı" },
-                        { "text": "Selâm aleykum" },
-                        { "text": "memnün oldım" }
+                        { "text": "b" },
+                        { "text": "r" },
+                        { "text": "a" },
+                        { "text": "a" },
+                        { "text": "q" },
+                        { "text": "a" }
                     ]
                 }
             ]
@@ -102,88 +54,52 @@
     },
     {
         "index": 3,
-        "title": "Прочтите диалог",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": null,
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
+            "text": "Нога - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
                 {
-                    "name": "Dilek",
-                    "text": "Selâm aleykum, Zeynep! İşleriñ nasıl?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Zeynep",
-                    "text": "Aleykum selâm.Yahşı, sağ ol. Seniñ işleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Dilek",
-                    "text": "Sağ ol, menim de yahşı.",
-                    "image": "/image/2.jpg"
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ayaq",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "y" },
+                        { "text": "l" },
+                        { "text": "a" },
+                        { "text": "a" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 4,
-        "title": "Заполните пропуски",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Dilek",
-                    "text": "{{input1}}, Zeynep! İşleriñ nasıl?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Zeynep",
-                    "text": "Aleykum selâm. {{input2}}, sağ ol. Seniñ işleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Dilek",
-                    "text": "{{input3}}, menim de yahşı.",
-                    "image": "/image/2.jpg"
-                }
-            ],
+            "text": "Ручка - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "Selâm aleykum",
+                    "answer": "qalem",
                     "variants": [
-                        { "text": "Selâm aleykum" },
-                        { "text": "Sen" },
-                        { "text": "Sağlıqnen bar" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Yahşı",
-                    "variants": [
-                        { "text": "Yaramay" },
-                        { "text": "Muz" },
-                        { "text": "Yahşı" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "Sağ ol",
-                    "variants": [
-                        { "text": "Adıñ ne" },
-                        { "text": "Sağ ol" },
-                        { "text": "Gece" }
+                        { "text": "e" },
+                        { "text": "l" },
+                        { "text": "r" },
+                        { "text": "m" },
+                        { "text": "a" },
+                        { "text": "q" }
                     ]
                 }
             ]
@@ -191,88 +107,53 @@
     },
     {
         "index": 5,
-        "title": "Прочтите диалог",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": null,
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
+            "text": "Собака - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
                 {
-                    "name": "Pınar",
-                    "text": "İşleriñ nasıl Levent?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Levent",
-                    "text": "Sağ ol, yahşı. Seniñ işleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Pınar",
-                    "text": "Sağ ol, menim de yahşı.",
-                    "image": "/image/2.jpg"
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "köpek",
+                    "variants": [
+                        { "text": "o" },
+                        { "text": "p" },
+                        { "text": "k" },
+                        { "text": "a" },
+                        { "text": "k" },
+                        { "text": "m" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 6,
-        "title": "Заполните пропуски",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Pınar",
-                    "text": "{{input1}} Levent?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Levent",
-                    "text": "Sağ ol, yahşı. {{input2}} işleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Pınar",
-                    "text": "Sağ ol, menim de {{input3}}.",
-                    "image": "/image/2.jpg"
-                }
-            ],
+            "text": "Солнце - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "İşleriñ nasıl",
+                    "answer": "küneş",
                     "variants": [
-                        { "text": "Sağ ol" },
-                        { "text": "İşleriñ nasıl" },
-                        { "text": "Memnun oldım" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Seniñ",
-                    "variants": [
-                        { "text": "Seniñ" },
-                        { "text": "Menim" },
-                        { "text": "Selâm" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "yahşı",
-                    "variants": [
-                        { "text": "aqşamlar" },
-                        { "text": "yahşı" },
-                        { "text": "memnün" }
+                        { "text": "ş" },
+                        { "text": "v" },
+                        { "text": "ü" },
+                        { "text": "n" },
+                        { "text": "k" },
+                        { "text": "e" }
                     ]
                 }
             ]
@@ -280,111 +161,51 @@
     },
     {
         "index": 7,
-        "title": "Прочтите диалог",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": null,
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
+            "text": "Яблоко - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
                 {
-                    "name": "Öznur",
-                    "text": "Hayırlı aqşamlar. Menim adım Öznur.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sinem",
-                    "text": "Hayırlı aqşamlar, Öznur. Menim adım Sinem.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Öznur",
-                    "text": "Memnün oldım.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sinem",
-                    "text": "Men de memnün oldım.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "alma",
+                    "variants": [
+                        { "text": "l" },
+                        { "text": "i" },
+                        { "text": "m" },
+                        { "text": "a" },
+                        { "text": "a" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 8,
-        "title": "Заполните пропуски",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Öznur",
-                    "text": "Hayırlı {{input1}}. Menim adım Öznur.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sinem",
-                    "text": "{{input2}} aqşamlar, Öznur. Menim adım Sinem.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Öznur",
-                    "text": "{{input3}} oldım.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sinem",
-                    "text": "{{input4}} memnün oldım.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                }
-            ],
+            "text": "Вода - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "aqşamlar",
+                    "answer": "suv",
                     "variants": [
-                        { "text": "memnün" },
-                        { "text": "aqşamlar" },
-                        { "text": "sabalar" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Hayırlı",
-                    "variants": [
-                        { "text": "Hayırlı" },
-                        { "text": "Sağ" },
-                        { "text": "Selâm" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "Memnün",
-                    "variants": [
-                        { "text": "Selâm" },
-                        { "text": "Seniñ" },
-                        { "text": "Memnün" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Men de",
-                    "variants": [
-                        { "text": "Men de" },
-                        { "text": "Sen de" },
-                        { "text": "Quş da" }
+                        { "text": "t" },
+                        { "text": "v" },
+                        { "text": "u" },
+                        { "text": "r" },
+                        { "text": "s" }
                     ]
                 }
             ]
@@ -392,99 +213,55 @@
     },
     {
         "index": 9,
-        "title": "Прочтите диалог",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": null,
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
+            "text": "Мальчик - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
                 {
-                    "name": "Nihan",
-                    "text": "Hayırlı sabalar Mete.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sevile",
-                    "text": "Hayırlı sabalar, Nihan. İşleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Nihan",
-                    "text": "Yahşı, sağ ol.",
-                    "image": "/image/2.jpg"
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "oğlan",
+                    "variants": [
+                        { "text": "l" },
+                        { "text": "o" },
+                        { "text": "r" },
+                        { "text": "n" },
+                        { "text": "ğ" },
+                        { "text": "a" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 10,
-        "title": "Заполните пропуски",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Nihan",
-                    "text": "Hayırlı {{input1}} Mete.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sevile",
-                    "text": "{{input2}} sabalar, Nihan. {{input3}} nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Nihan",
-                    "text": "Yahşı, {{input4}}.",
-                    "image": "/image/2.jpg"
-                }
-            ],
+            "text": "Школа - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "mektep",
                     "variants": [
-                        { "text": "menim" },
-                        { "text": "sabalar" },
-                        { "text": "işleriñ" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Hayırlı",
-                    "variants": [
-                        { "text": "Hayırlı" },
-                        { "text": "Memnün" },
-                        { "text": "Adım" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "İşleriñ",
-                    "variants": [
-                        { "text": "Seniñ" },
-                        { "text": "İşleriñ" },
-                        { "text": "Selâm" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "sağ ol",
-                    "variants": [
-                        { "text": "sen de" },
-                        { "text": "oldım" },
-                        { "text": "sağ ol" }
+                        { "text": "p" },
+                        { "text": "a" },
+                        { "text": "n" },
+                        { "text": "k" },
+                        { "text": "t" },
+                        { "text": "e" },
+                        { "text": "e" },
+                        { "text": "m" }
                     ]
                 }
             ]
@@ -492,122 +269,58 @@
     },
     {
         "index": 11,
-        "title": "Прочтите диалог",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": null,
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
+            "text": "Цветок - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
                 {
-                    "name": "Aysel",
-                    "text": "Menim adım Aysel. Seniñ adıñ ne?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Menim adım Leyla.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Aysel",
-                    "text": "Memnün oldım. Sağlıqnen qal.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Men de memnün oldım. Sağlıqnen bar.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
+                    "mode": "puzzle",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "çiçek",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "k" },
+                        { "text": "i" },
+                        { "text": "y" },
+                        { "text": "ç" },
+                        { "text": "ç" },
+                        { "text": "b" },
+                        { "text": "e" },
+                        { "text": "l" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 12,
-        "title": "Заполните пропуски",
+        "title": "Соберите слово по буквам",
         "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
+        "form_template": "puzzle",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Aysel",
-                    "text": "Menim {{input1}} Aysel. Seniñ {{input2}} ne?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "{{input3}} adım Leyla.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Aysel",
-                    "text": "Memnün oldım. {{input4}} qal.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Men de {{input5}} oldım. Sağlıqnen bar.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                }
-            ],
+            "text": "Кошка - {{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "variant",
+                    "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "adım",
+                    "answer": "mışıq",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "adım" },
-                        { "text": "yahşı" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "adıñ",
-                    "variants": [
-                        { "text": "adıñ" },
-                        { "text": "işleriñ" },
-                        { "text": "sabalar" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "Menim",
-                    "variants": [
-                        { "text": "Memnün" },
-                        { "text": "Menim" },
-                        { "text": "İşleriñ" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Sağlıqnen",
-                    "variants": [
-                        { "text": "Memnun" },
-                        { "text": "Aleykum" },
-                        { "text": "Sağlıqnen" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "memnün",
-                    "variants": [
-                        { "text": "nasıl" },
-                        { "text": "memnün" },
-                        { "text": "sabalar" }
+                        { "text": "ı" },
+                        { "text": "q" },
+                        { "text": "e" },
+                        { "text": "ı" },
+                        { "text": "m" },
+                        { "text": "a" },
+                        { "text": "ş" },
+                        { "text": "i" }
                     ]
                 }
             ]

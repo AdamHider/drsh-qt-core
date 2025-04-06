@@ -4,64 +4,20 @@
         "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "dialogue",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Ali",
-                    "text": "Selâm aleykum! Menim adım Ali. Seniñ {{input1}} ne?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Can",
-                    "text": "{{input2}}! Menim adım Can. İşleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "{{input3}}! Seniñ işleriñ nasıl?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Can",
-                    "text": "Menim de yahşı.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                }
-            ],
+            "text": "Дом - e{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "adıñ",
+                    "answer": "v",
                     "variants": [
-                        { "text": "Sen" },
-                        { "text": "Men" },
-                        { "text": "Sağ" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Aleykum selam",
-                    "variants": [
-                        { "text": "Aleykum selâm" },
-                        { "text": "İşleriñ" },
-                        { "text": "Selâm aleykum" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "yahşı",
-                    "variants": [
-                        { "text": "yahşi" },
-                        { "text": "yahşı" },
-                        { "text": "araba" }
+                        { "text": "k" },
+                        { "text": "v" },
+                        { "text": "ñ" }
                     ]
                 }
             ]
@@ -69,85 +25,69 @@
     },
     {
         "index": 2,
-        "title": "Сопоставьте пары",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "match",
-        "page_template": "listSimple",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "item_list": [
-                {
-                    "text": "Sağlıqnen qal - {{input1}}"
-                },
-                {
-                    "text": "İşleriñ nasıl? - {{input2}}"
-                },
-                {
-                    "text": "Selâm aleykum - {{input3}}"
-                },
-                {
-                    "text": "Sağ ol - {{input4}}"
-                }
-            ],
+            "text": "Дерево - t{{input1}}re{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Sağlıqnen bar"
+                    "answer": "e",
+                    "variants": [
+                        { "text": "r" },
+                        { "text": "e" },
+                        { "text": "o" }
+                    ]
                 },
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Yahşı"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "Aleykum selâm"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Sen de sağ ol"
+                    "answer": "k",
+                    "variants": [
+                        { "text": "n" },
+                        { "text": "ç" },
+                        { "text": "k" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 3,
-        "title": "Найдите лишнее слово",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "radio",
-        "page_template": "radio",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "radio_list": [
-                {
-                    "text": "{{input1}}",
-                    "title": ""
-                }
-            ],
+            "text": "Книга - k{{input1}}ta{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
-                    "type": "radio",
+                    "mode": "variant",
+                    "type": "input",
                     "index": 1,
-                    "answer": "Çanta",
+                    "answer": "i",
                     "variants": [
-                        {
-                            "text": "Meraba"
-                        },
-                        {
-                            "text": "Selâm aleykum"
-                        },
-                        {
-                            "text": "Hayırlı sabalar"
-                        },
-                        {
-                            "text": "Çanta"
-                        }
+                        { "text": "e" },
+                        { "text": "a" },
+                        { "text": "i" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "p",
+                    "variants": [
+                        { "text": "p" },
+                        { "text": "b" },
+                        { "text": "r" }
                     ]
                 }
             ]
@@ -158,64 +98,31 @@
         "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "dialogue",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Ayşe",
-                    "text": "Meraba! Men Ayşe. Seniñ adıñ {{input1}}?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "Meraba Ayşe! Menim adım Ali.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ayşe",
-                    "text": "{{input2}} oldım.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "Men de memnün {{input3}}.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                }
-            ],
+            "text": "Дверь - {{input1}}ap{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "ne",
+                    "answer": "q",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "ne" },
-                        { "text": "de" }
+                        { "text": "h" },
+                        { "text": "k" },
+                        { "text": "q" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Memnün",
+                    "answer": "ı",
                     "variants": [
-                        { "text": "Memnün" },
-                        { "text": "İşleriñ" },
-                        { "text": "Yahşı" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "oldım",
-                    "variants": [
-                        { "text": "oldum" },
-                        { "text": "oldım" },
-                        { "text": "adım" }
+                        { "text": "u" },
+                        { "text": "ı" },
+                        { "text": "i" }
                     ]
                 }
             ]
@@ -223,33 +130,34 @@
     },
     {
         "index": 5,
-        "title": "Где ошибка?",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "radio",
-        "page_template": "radio",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "radio_list": [
-                {
-                    "text": "{{input1}}",
-                    "title": ""
-                }
-            ],
+            "text": "Нога - a{{input1}}a{{input2}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
-                    "type": "radio",
+                    "mode": "variant",
+                    "type": "input",
                     "index": 1,
-                    "answer": "Seniñ adıñ nasıl?",
+                    "answer": "y",
                     "variants": [
-                        {
-                            "text": "Seniñ adıñ nasıl?"
-                        },
-                        {
-                            "text": "Menim adım Ali."
-                        },
-                        {
-                            "text": "Memnün oldım."
-                        }
+                        { "text": "b" },
+                        { "text": "y" },
+                        { "text": "i" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "q",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "ğ" },
+                        { "text": "k" }
                     ]
                 }
             ]
@@ -260,75 +168,31 @@
         "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "dialogue",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Ali",
-                    "text": "Hayırlı {{input1}} Ayşe.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Can",
-                    "text": "Hayırlı aqşamlar Ali. {{input2}} nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "Yahşı, {{input3}} ol. Seniñ işleriñ nasıl?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Can",
-                    "text": "Menim de yahşı, {{input4}} de sağ ol.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                }
-            ],
+            "text": "Небо - {{input1}}{{input2}}k",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "aqşamlar",
+                    "answer": "k",
                     "variants": [
-                        { "text": "aqşamlar" },
-                        { "text": "sabalar" },
-                        { "text": "adamlar" }
+                        { "text": "k" },
+                        { "text": "g" },
+                        { "text": "h" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "İşleriñ",
+                    "answer": "ö",
                     "variants": [
-                        { "text": "Memnün" },
-                        { "text": "İşleriñ" },
-                        { "text": "Yahşı" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "sağ",
-                    "variants": [
-                        { "text": "sağ" },
-                        { "text": "yahşı" },
-                        { "text": "sen" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "sen",
-                    "variants": [
-                        { "text": "sen" },
-                        { "text": "mel" },
-                        { "text": "mışıq" }
+                        { "text": "e" },
+                        { "text": "ö" },
+                        { "text": "a" }
                     ]
                 }
             ]
@@ -336,140 +200,126 @@
     },
     {
         "index": 7,
-        "title": "Расположите в правильном порядке",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "match",
-        "page_template": "listSimple",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "item_list": [
-                {
-                    "text": "{{input1}} {{input2}} {{input3}} {{input4}} {{input5}}"
-                }
-            ],
+            "text": "Дорога - {{input1}}{{input2}}l",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "men"
+                    "answer": "y",
+                    "variants": [
+                        { "text": "y" },
+                        { "text": "c" },
+                        { "text": "ç" }
+                    ]
                 },
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "de"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "memnün"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "oldım"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "."
+                    "answer": "o",
+                    "variants": [
+                        { "text": "u" },
+                        { "text": "ö" },
+                        { "text": "o" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 8,
-        "title": "Расположите в правильном порядке",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "match",
-        "page_template": "listSimple",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "item_list": [
-                {
-                    "text": "Menim  {{input1}} {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
-                }
-            ],
+            "text": "Девочка - {{input1}}{{input2}}{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "adım"
+                    "answer": "q",
+                    "variants": [
+                        { "text": "q" },
+                        { "text": "k" },
+                        { "text": "h" }
+                    ]
                 },
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Ayşe"
+                    "answer": "ı",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "i" },
+                        { "text": "ı" }
+                    ]
                 },
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "."
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Seniñ"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "adıñ"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 6,
-                    "answer": "ne"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 7,
-                    "answer": "?"
+                    "answer": "z",
+                    "variants": [
+                        { "text": "s" },
+                        { "text": "ş" },
+                        { "text": "z" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 9,
-        "title": "Найдите лишнее слово",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "radio",
-        "page_template": "radio",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "radio_list": [
-                {
-                    "text": "{{input1}}",
-                    "title": ""
-                }
-            ],
+            "text": "Хлеб - {{input1}}t{{input2}}e{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
-                    "type": "radio",
+                    "mode": "variant",
+                    "type": "input",
                     "index": 1,
-                    "answer": "Çanta",
+                    "answer": "ö",
                     "variants": [
-                        {
-                            "text": "Memnün oldım"
-                        },
-                        {
-                            "text": "Sağ ol"
-                        },
-                        {
-                            "text": "Kün"
-                        },
-                        {
-                            "text": "İşleriñ nasıl"
-                        }
+                        { "text": "e" },
+                        { "text": "ö" },
+                        { "text": "i" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "m",
+                    "variants": [
+                        { "text": "t" },
+                        { "text": "n" },
+                        { "text": "m" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "k",
+                    "variants": [
+                        { "text": "s" },
+                        { "text": "k" },
+                        { "text": "ğ" }
                     ]
                 }
             ]
@@ -477,94 +327,91 @@
     },
     {
         "index": 10,
-        "title": "Расположите в правильном порядке",
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "match",
-        "page_template": "listSimple",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "item_list": [
-                {
-                    "text": "{{input1}} de {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
-                }
-            ],
+            "text": "Ребёнок - b{{input1}}{{input2}}{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "men"
+                    "answer": "a",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "e" },
+                        { "text": "o" }
+                    ]
                 },
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "memnün"
+                    "answer": "l",
+                    "variants": [
+                        { "text": "n" },
+                        { "text": "b" },
+                        { "text": "l" }
+                    ]
                 },
                 {
-                    "mode": "match",
+                    "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "oldım"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "."
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "İşleriñ"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 6,
-                    "answer": "nasıl"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 7,
-                    "answer": "?"
+                    "answer": "a",
+                    "variants": [
+                        { "text": "i" },
+                        { "text": "a" },
+                        { "text": "e" }
+                    ]
                 }
             ]
         }
     },
     {
-        "index": 5,
-        "title": "Где ошибка?",
+        "index": 11,
+        "title": "Заполните пропуски",
         "subtitle": "",
-        "form_template": "radio",
-        "page_template": "radio",
+        "form_template": "variant",
+        "page_template": "imageSelection",
         "template_config": {
-            "radio_list": [
-                {
-                    "text": "{{input1}}",
-                    "title": ""
-                }
-            ],
+            "text": "Машина - a{{input1}}a{{input2}}{{input3}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
-                    "mode": "match",
-                    "type": "radio",
+                    "mode": "variant",
+                    "type": "input",
                     "index": 1,
-                    "answer": "Saña da sağ ol.",
+                    "answer": "r",
                     "variants": [
-                        {
-                            "text": "Seniñ adın ne?"
-                        },
-                        {
-                            "text": "Saña da sağ ol."
-                        },
-                        {
-                            "text": "Memnün oldım."
-                        },
-                        {
-                            "text": "Sen de sağ ol."
-                        }
+                        { "text": "r" },
+                        { "text": "p" },
+                        { "text": "b" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "b",
+                    "variants": [
+                        { "text": "s" },
+                        { "text": "c" },
+                        { "text": "b" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "a",
+                    "variants": [
+                        { "text": "a" },
+                        { "text": "ı" },
+                        { "text": "ğ" }
                     ]
                 }
             ]
@@ -575,148 +422,53 @@
         "title": "Заполните пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "dialogue",
+        "page_template": "imageSelection",
         "template_config": {
-            "replica_list": [
-                {
-                    "name": "Emre",
-                    "text": "Hayırlı sabalar!",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Hayırlı sabalar!",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Emre",
-                    "text": "{{input1}} adım Emre. Seniñ adıñ {{input2}}?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Memnün {{input3}}. Menim adım Leyla.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Emre",
-                    "text": "Men de {{input4}} oldım. İşleriñ {{input5}}?",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Yahşı, sağ ol. {{input6}} işleriñ nasıl?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Emre",
-                    "text": "{{input7}} sağ ol, menim {{input8}} yahşı.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Leyla",
-                    "text": "Sağlıqnen {{input9}}, Emre.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Emre",
-                    "text": "Sağlıqnen bar.",
-                    "image": "/image/2.jpg"
-                }
-            ],
+            "text": "Рюкзак - {{input1}}a{{input2}}{{input3}}{{input4}}",
+            "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Menim",
+                    "answer": "ç",
                     "variants": [
-                        { "text": "Menim" },
-                        { "text": "Menım" }
+                        { "text": "q" },
+                        { "text": "ş" },
+                        { "text": "ç" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ne",
+                    "answer": "n",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "ne" }
+                        { "text": "n" },
+                        { "text": "m" },
+                        { "text": "ğ" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "oldım",
+                    "answer": "t",
                     "variants": [
-                        { "text": "oldım" },
-                        { "text": "oldum" }
+                        { "text": "r" },
+                        { "text": "d" },
+                        { "text": "t" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "memnün",
+                    "answer": "a",
                     "variants": [
-                        { "text": "memnun" },
-                        { "text": "memnün" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "nasıl",
-                    "variants": [
-                        { "text": "nasıl" },
-                        { "text": "ne" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 6,
-                    "answer": "Seniñ",
-                    "variants": [
-                        { "text": "Seniñ" },
-                        { "text": "Senin" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 7,
-                    "answer": "Sen de",
-                    "variants": [
-                        { "text": "Saña da" },
-                        { "text": "Sen de" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 8,
-                    "answer": "de",
-                    "variants": [
-                        { "text": "de" },
-                        { "text": "ne" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 9,
-                    "answer": "qal",
-                    "variants": [
-                        { "text": "qal" },
-                        { "text": "bar" }
+                        { "text": "e" },
+                        { "text": "a" },
+                        { "text": "ı" }
                     ]
                 }
             ]

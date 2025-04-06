@@ -12,76 +12,100 @@
     },
     "word_list": [
         {
-            "text": "ev",
+            "text": "meraba",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "дом"
+            "label": "привет"
         },
         {
-            "text": "araba",
+            "text": "selâm aleykum",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "машина"
+            "label": "здравствуйте"
         },
         {
-            "text": "mektep",
+            "text": "aleykum selâm",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "школа"
+            "label": "здравствуйте (в ответ)"
         },
         {
-            "text": "qalem",
+            "text": "hayırlı sabalar",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "ручка"
+            "label": "доброе утро"
         },
         {
-            "text": "kitap",
+            "text": "hayırlı aqşamlar",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "книга"
+            "label": "добрый вечер"
         },
         {
-            "text": "qapı",
+            "text": "adıñ ne?",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "дверь"
+            "label": "как тебя зовут?"
         },
         {
-            "text": "telefon",
+            "text": "işleriñ nasıl?",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "телефон"
+            "label": "как твои дела?"
         },
         {
-            "text": "alma",
+            "text": "yahşı",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "яблоко"
+            "label": "хорошо"
         },
         {
-            "text": "suv",
+            "text": "sağ ol",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "вода"
+            "label": "спасибо"
         },
         {
-            "text": "ötmek",
+            "text": "sen de sağ ol",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "хлеб"
+            "label": "спасибо (в ответ)"
         },
         {
-            "text": "bala",
+            "text": "men",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "ребёнок"
+            "label": "я"
         },
         {
-            "text": "süt",
+            "text": "sen",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "молоко"
+            "label": "ты"
+        },
+        {
+            "text": "memnün oldım",
+            "image": "/image/1LEXIS/fellow.jpg",
+            "index": 9,
+            "label": "приятно познакомиться"
+        },
+        {
+            "text": "sağlıqnen qal",
+            "image": "/image/1LEXIS/bu.jpg",
+            "index": 10,
+            "label": "до свидания"
+        },
+        {
+            "text": "sağlıqnen bar",
+            "image": "/image/1LEXIS/su.jpg",
+            "index": 11,
+            "label": "до свидания (в ответ)"
+        },
+        {
+            "text": "körüşkence",
+            "image": "/image/1LEXIS/o.jpg",
+            "index": 12,
+            "label": "увидимся"
         }
     ],
     "input_object": {
