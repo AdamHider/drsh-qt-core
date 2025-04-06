@@ -35,7 +35,7 @@ class AchievementModel extends Model
         foreach($achievements as &$achievement){
             $achievement = array_merge($achievement, $DescriptionModel->getItem('achievement', $achievement['id']));
             $achievement['group'] = $DescriptionModel->getItem('achievement_group', $achievement['group_id']);
-            $achievement['image'] = base_url('image/' . $achievement['image']);
+            $achievement['image'] = base_url('image/index.php'.$achievement['image']);
             $achievement['progress'] = $this->calculateProgress($achievement);
         } 
         return $achievements;
