@@ -44,9 +44,9 @@ class ExerciseAnswerModel extends ExerciseModel
         $page_index = $exercise['data']['current_page'];
 
         $fields = $exercise['pages'][$page_index]['template_config']['input_list'];
+        $step_by_step = !empty($exercise['pages'][$page_index]['form_stepper']);
+        $answers = $this->checkPageAnswers($fields, $income_answers, $step_by_step);
         
-        $answers = $this->checkPageAnswers($fields, $income_answers);
-
         $exercise['data']['totals']['points'] += $answers['totals']['points'];
         $exercise['data']['answers'][$page_index] = $answers;
         $this->updateItem($exercise);
@@ -54,7 +54,7 @@ class ExerciseAnswerModel extends ExerciseModel
         return $LessonPageModel->getPage($lesson_id, $page_index);
     }
 
-    public function checkPageAnswers($fields, $income_answers)
+    public function checkPageAnswers($fields, $income_answers, $step_by_step)
     {
         $answers = $this->default_answers;
         
@@ -68,10 +68,15 @@ class ExerciseAnswerModel extends ExerciseModel
                 if($answer['is_correct']) $answers['totals']['correct']++;
 
                 $answers['totals']['quantity']++;
+                $answers['totals']['total'] = count($income_answers);
                 $answers['totals']['points'] += $answer['points']; 
                 $answers['answers'][$input_index] = $answer;
+                if($step_by_step && !isset($income_answers[$input_index]->is_finished)){
+                    break;
+                }
             } 
         }
+        $answers['totals']['is_finished'] = $answers['totals']['quantity'] == $answers['totals']['total'];
         return $answers;
     } 
     

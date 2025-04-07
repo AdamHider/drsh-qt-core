@@ -1,0 +1,725 @@
+[
+    {
+        "index": 1,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Ali",
+                    "text": "Selâm aleykum! Menim adım Ali. Seniñ {{input1}} ne?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "{{input2}}! Menim adım Can. İşleriñ nasıl?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "{{input3}}! Seniñ işleriñ nasıl?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "Menim de yahşı.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "adıñ",
+                    "variants": [
+                        { "text": "Sen" },
+                        { "text": "Men" },
+                        { "text": "Sağ" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Aleykum selam",
+                    "variants": [
+                        { "text": "Aleykum selâm" },
+                        { "text": "İşleriñ" },
+                        { "text": "Selâm aleykum" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "yahşı",
+                    "variants": [
+                        { "text": "yahşi" },
+                        { "text": "yahşı" },
+                        { "text": "araba" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 2,
+        "title": "Сопоставьте пары",
+        "subtitle": "",
+        "form_template": "match",
+        "page_template": "listSimple",
+        "template_config": {
+            "item_list": [
+                {
+                    "text": "Sağlıqnen qal - {{input1}}"
+                },
+                {
+                    "text": "İşleriñ nasıl? - {{input2}}"
+                },
+                {
+                    "text": "Selâm aleykum - {{input3}}"
+                },
+                {
+                    "text": "Sağ ol - {{input4}}"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Sağlıqnen bar"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Yahşı"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "Aleykum selâm"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "Sen de sağ ol"
+                }
+            ]
+        }
+    },
+    {
+        "index": 3,
+        "title": "Найдите лишнее слово",
+        "subtitle": "",
+        "form_template": "radio",
+        "page_template": "radio",
+        "template_config": {
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "radio",
+                    "index": 1,
+                    "answer": "Çanta",
+                    "variants": [
+                        {
+                            "text": "Meraba"
+                        },
+                        {
+                            "text": "Selâm aleykum"
+                        },
+                        {
+                            "text": "Hayırlı sabalar"
+                        },
+                        {
+                            "text": "Çanta"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Ayşe",
+                    "text": "Meraba! Men Ayşe. Seniñ adıñ {{input1}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "Meraba Ayşe! Menim adım Ali.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Ayşe",
+                    "text": "{{input2}} oldım.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "Men de memnün {{input3}}.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ne",
+                    "variants": [
+                        { "text": "nasıl" },
+                        { "text": "ne" },
+                        { "text": "de" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Memnün",
+                    "variants": [
+                        { "text": "Memnün" },
+                        { "text": "İşleriñ" },
+                        { "text": "Yahşı" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "oldım",
+                    "variants": [
+                        { "text": "oldum" },
+                        { "text": "oldım" },
+                        { "text": "adım" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Где ошибка?",
+        "subtitle": "",
+        "form_template": "radio",
+        "page_template": "radio",
+        "template_config": {
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "radio",
+                    "index": 1,
+                    "answer": "Seniñ adıñ nasıl?",
+                    "variants": [
+                        {
+                            "text": "Seniñ adıñ nasıl?"
+                        },
+                        {
+                            "text": "Menim adım Ali."
+                        },
+                        {
+                            "text": "Memnün oldım."
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Ali",
+                    "text": "Hayırlı {{input1}} Ayşe.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "Hayırlı aqşamlar Ali. {{input2}} nasıl?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Ali",
+                    "text": "Yahşı, {{input3}} ol. Seniñ işleriñ nasıl?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Can",
+                    "text": "Menim de yahşı, {{input4}} de sağ ol.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "aqşamlar",
+                    "variants": [
+                        { "text": "aqşamlar" },
+                        { "text": "sabalar" },
+                        { "text": "adamlar" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "İşleriñ",
+                    "variants": [
+                        { "text": "Memnün" },
+                        { "text": "İşleriñ" },
+                        { "text": "Yahşı" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "sağ",
+                    "variants": [
+                        { "text": "sağ" },
+                        { "text": "yahşı" },
+                        { "text": "sen" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "sen",
+                    "variants": [
+                        { "text": "sen" },
+                        { "text": "mel" },
+                        { "text": "mışıq" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Расположите в правильном порядке",
+        "subtitle": "",
+        "form_template": "match",
+        "page_template": "listSimple",
+        "template_config": {
+            "item_list": [
+                {
+                    "text": "{{input1}} {{input2}} {{input3}} {{input4}} {{input5}}"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "men"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "de"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "memnün"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "oldım"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "."
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Расположите в правильном порядке",
+        "subtitle": "",
+        "form_template": "match",
+        "page_template": "listSimple",
+        "template_config": {
+            "item_list": [
+                {
+                    "text": "Menim  {{input1}} {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "adım"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Ayşe"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "."
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "Seniñ"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "adıñ"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "ne"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "?"
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Найдите лишнее слово",
+        "subtitle": "",
+        "form_template": "radio",
+        "page_template": "radio",
+        "template_config": {
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "radio",
+                    "index": 1,
+                    "answer": "Çanta",
+                    "variants": [
+                        {
+                            "text": "Memnün oldım"
+                        },
+                        {
+                            "text": "Sağ ol"
+                        },
+                        {
+                            "text": "Kün"
+                        },
+                        {
+                            "text": "İşleriñ nasıl"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Расположите в правильном порядке",
+        "subtitle": "",
+        "form_template": "match",
+        "page_template": "listSimple",
+        "template_config": {
+            "item_list": [
+                {
+                    "text": "{{input1}} de {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "men"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "memnün"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "oldım"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "."
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "İşleriñ"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "nasıl"
+                },
+                {
+                    "mode": "match",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "?"
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Где ошибка?",
+        "subtitle": "",
+        "form_template": "radio",
+        "page_template": "radio",
+        "template_config": {
+            "radio_list": [
+                {
+                    "text": "{{input1}}",
+                    "title": ""
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "match",
+                    "type": "radio",
+                    "index": 1,
+                    "answer": "Saña da sağ ol.",
+                    "variants": [
+                        {
+                            "text": "Seniñ adın ne?"
+                        },
+                        {
+                            "text": "Saña da sağ ol."
+                        },
+                        {
+                            "text": "Memnün oldım."
+                        },
+                        {
+                            "text": "Sen de sağ ol."
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Emre",
+                    "text": "Hayırlı sabalar!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Hayırlı sabalar!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "{{input1}} adım Emre. Seniñ adıñ {{input2}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Memnün {{input3}}. Menim adım Leyla.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "Men de {{input4}} oldım. İşleriñ {{input5}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Yahşı, sağ ol. {{input6}} işleriñ nasıl?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "{{input7}} sağ ol, menim {{input8}} yahşı.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Leyla",
+                    "text": "Sağlıqnen {{input9}}, Emre.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Emre",
+                    "text": "Sağlıqnen bar.",
+                    "image": "/image/2.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Menim",
+                    "variants": [
+                        { "text": "Menim" },
+                        { "text": "Menım" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "ne",
+                    "variants": [
+                        { "text": "nasıl" },
+                        { "text": "ne" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "oldım",
+                    "variants": [
+                        { "text": "oldım" },
+                        { "text": "oldum" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "memnün",
+                    "variants": [
+                        { "text": "memnun" },
+                        { "text": "memnün" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "nasıl",
+                    "variants": [
+                        { "text": "nasıl" },
+                        { "text": "ne" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "Seniñ",
+                    "variants": [
+                        { "text": "Seniñ" },
+                        { "text": "Senin" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "Sen de",
+                    "variants": [
+                        { "text": "Saña da" },
+                        { "text": "Sen de" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 8,
+                    "answer": "de",
+                    "variants": [
+                        { "text": "de" },
+                        { "text": "ne" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 9,
+                    "answer": "qal",
+                    "variants": [
+                        { "text": "qal" },
+                        { "text": "bar" }
+                    ]
+                }
+            ]
+        }
+    }
+]

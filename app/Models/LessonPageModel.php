@@ -46,7 +46,7 @@ class LessonPageModel extends LessonModel
     {
         $isStart    = $this->currentPage == 0;
         $isEnd      = $exercise['total_pages']-1 == $this->currentPage;
-        $isAnswered = isset($exercise['answers'][$this->currentPage]);
+        $isAnswered = isset($exercise['answers'][$this->currentPage]) && $exercise['answers'][$this->currentPage]['totals']['is_finished'];
         $hasInput   = isset($page_data['template_config']['input_list']);
 
         if(!$isAnswered && $hasInput)   $exercise['actions']['main'] = 'confirm';

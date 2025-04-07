@@ -1,0 +1,64 @@
+{
+    "index": 1,
+    "title": "Ответьте собеседнику",
+    "subtitle": "",
+    "form_template": "puzzle",
+    "page_template": "chat",
+    "form_stepper": true,
+    "template_config": {
+        "replica_list": [
+            {
+                "name": "Ali",
+                "text": "Selâm aleyküm, menim adım Ali. Seniñ adıñ ne?",
+                "image": "/image/2.jpg"
+            },
+            {
+                "name": "Murat",
+                "text": "{{input1}}",
+                "float": "right",
+                "image": "/image/3.jpg"
+            },
+            {
+                "name": "Ali",
+                "text": "Memnün oldım.",
+                "image": "/image/2.jpg"
+            },
+            {
+                "name": "Murat",
+                "text": "{{input2}}",
+                "float": "right",
+                "image": "/image/3.jpg"
+            }
+        ],
+        "input_list": [
+            {
+                "mode": "puzzle",
+                "type": "input",
+                "index": 1,
+                "answer": "Aleykümselâm,Ali!",
+                "variants": [
+                    { "text": "selam" },
+                    { "text": "Aleyküm" },
+                    { "text": "Ali" },
+                    { "text": "!" },
+                    { "text": "," },
+                    { "text": "memnün" }
+                ]
+            },
+            {
+                "mode": "puzzle",
+                "type": "input",
+                "index": 2,
+                "answer": "Mendememnünoldım.",
+                "variants": [
+                    { "text": "selam" },
+                    { "text": "oldım" },
+                    { "text": "Men" },
+                    { "text": "de" },
+                    { "text": "," },
+                    { "text": "memnün" }
+                ]
+            }
+        ]
+    }
+}
