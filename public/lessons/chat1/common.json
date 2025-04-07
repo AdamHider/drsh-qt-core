@@ -35,9 +35,9 @@
                 "mode": "puzzle",
                 "type": "input",
                 "index": 1,
-                "answer": "Aleykümselâm,Ali!",
+                "answer": "Aleyküm|selâm|,|Ali|!",
                 "variants": [
-                    { "text": "selam" },
+                    { "text": "selâm" },
                     { "text": "Aleyküm" },
                     { "text": "Ali" },
                     { "text": "!" },
@@ -49,7 +49,7 @@
                 "mode": "puzzle",
                 "type": "input",
                 "index": 2,
-                "answer": "Mendememnünoldım.",
+                "answer": "Men|de|memnün|oldım|.",
                 "variants": [
                     { "text": "selam" },
                     { "text": "oldım" },

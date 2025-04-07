@@ -77,6 +77,9 @@ class ExerciseAnswerModel extends ExerciseModel
             } 
         }
         $answers['totals']['is_finished'] = $answers['totals']['quantity'] == $answers['totals']['total'];
+        if(!$answers['totals']['is_finished']){
+            $answers['totals']['points'] = 0;
+        }
         return $answers;
     } 
     
