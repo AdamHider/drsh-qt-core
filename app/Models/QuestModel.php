@@ -69,7 +69,6 @@ class QuestModel extends Model
                 $quest['time_left_humanized'] = Time::now()->difference($time)->humanize();
             }
         }
-
         return $quests;
     }
 

@@ -17,7 +17,7 @@ class ExerciseAnswerModel extends ExerciseModel
         'radio' => 100,
         'checkbox' => 100,
         'image' => 20,
-        'chat' => 140
+        'chatPuzzle' => 140,
     ];
 
     private $empty_answer = [

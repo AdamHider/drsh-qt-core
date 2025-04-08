@@ -20,7 +20,7 @@ class LessonGeneratorModel extends LessonModel
             return $this->generateLexisItem($pages);
         } else 
         if($lesson['type'] == 'chat') {
-            return [$pages];
+            return $this->generateChatItem($pages);
         }
     }
 
@@ -92,7 +92,8 @@ class LessonGeneratorModel extends LessonModel
         return $pages;
     }
 
-    public function seedShuffle($array, $seed) {
+    public function seedShuffle($array, $seed)
+    {
         $tmp = array();
         for ($rest = $count = count($array);$count>0;$count--) {
             $seed %= $count;
@@ -103,4 +104,20 @@ class LessonGeneratorModel extends LessonModel
         return $tmp;
     }
     
+
+    private function generateChatItem($page)
+    {
+        $UserModel = model('UserModel');
+        $user = $UserModel->getActiveItem();
+        $pageFlat = $this->userMarkUp(json_encode($page), $user);
+
+        $page = json_decode($pageFlat, true);
+        return [$page];
+    }
+    private function userMarkUp($text, $user)
+    {
+        $text = preg_replace('/{{user\.name}}/i', $user['name'], $text);
+        $text = preg_replace('/{{user\.character\.image}}/i', $user['character']['image'], $text);
+        return $text;
+    }
 }
