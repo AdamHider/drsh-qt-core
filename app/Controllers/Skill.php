@@ -8,8 +8,6 @@ class Skill extends BaseController
 {
     use ResponseTrait;
 
-    
-
     public function getItem()
     {
         
@@ -99,9 +97,8 @@ class Skill extends BaseController
         $SkillModel = model('SkillModel');
 
         $skill_id = $this->request->getVar('skill_id');
-        $user_id = session()->get('user_id');
-
-        $result = $SkillModel->claimItem($skill_id, $user_id);
+        
+        $result = $SkillModel->claimItem($skill_id);
         
         if ($result == 'not_found') {
             return $this->failNotFound('not_found');

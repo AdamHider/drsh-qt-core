@@ -111,7 +111,7 @@ class ExerciseModel extends Model
             //return 'not_enough_resources';
         } 
         
-        $pages = $LessonGeneratorModel->generateList($lesson_id);
+        $pages = $LessonGeneratorModel->generatePages($lesson_id);
         
         $this->empty_data['total_pages'] = count($pages);
         $this->empty_data['totals']['total'] = $this->calculateTotalPoints($pages);
@@ -174,7 +174,7 @@ class ExerciseModel extends Model
         $exercise = [];
         $exercise_old['totals'] = json_decode($exercise_old['totals'], true);
         $exercise['id'] = $exercise_old['id'];
-        $exercise['pages'] = $LessonGeneratorModel->generateList($exercise_old['lesson_id']);
+        $exercise['pages'] = $LessonGeneratorModel->generatePages($exercise_old['lesson_id']);
         if(empty($exercise['pages'])){
             return false;
         }
@@ -241,6 +241,7 @@ class ExerciseModel extends Model
             return $this->emptyReward;
         }
         $reward_config = json_decode($LessonModel->find($lesson_id)['reward_config'] ?? '[]', true);
+        if(empty($reward_config)) return null;
         $reward = $reward_config[$totals['reward_level']];
         if(isset($reward_config[$prev_reward_level])){
             $reward_old = $reward_config[$prev_reward_level];

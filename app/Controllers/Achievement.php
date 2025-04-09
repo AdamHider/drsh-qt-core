@@ -11,13 +11,7 @@ class Achievement extends BaseController
         
         $UserModel = model('UserModel');
 
-        $user_id = $this->request->getVar('user_id');
-
-        if( !$user_id ){
-            $user_id = session()->get('user_id');
-        }
-
-        $user = $UserModel->getItem($user_id);
+        $user = $UserModel->getItem();
 
         if ($user == 'not_found') {
             return $this->failNotFound('not_found');

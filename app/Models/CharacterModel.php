@@ -42,7 +42,7 @@ class CharacterModel extends Model
         }
         return $characters;
     }
-    public function linkItemToUser ($item_id, $user_id) 
+    public function linkItem ($item_id, $user_id) 
     {
         $SettingsModel = model('SettingsModel');
         $character = $this->where('characters.id', $item_id)->get()->getRowArray();

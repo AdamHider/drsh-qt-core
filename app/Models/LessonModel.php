@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use stdClass;
 
 class LessonModel extends Model
 {
@@ -14,7 +13,6 @@ class LessonModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType = 'array';
-    protected $useSoftDeletes = true;
 
     protected $allowedFields = [
         'course_id', 'course_section_id', 'language_id', 'title', 'description', 'type', 'pages', 'cost_config', 'reward_config', 'unblock_config', 'image', 'published', 'parent_id', 'is_private'
@@ -64,7 +62,7 @@ class LessonModel extends Model
         unset($lesson['pages']);
         return $lesson;
     }
-    public function getList ($data) 
+    public function getList () 
     {
         $this->useSharedOf('courses', 'course_id');
 
@@ -77,13 +75,9 @@ class LessonModel extends Model
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
         ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)
-        ->whereHasPermission('r')
-        ->limit($data['limit'], $data['offset'])->orderBy('lessons.order ASC')->get()->getResultArray();
+        ->whereHasPermission('r')->orderBy('lessons.order ASC')->get()->getResultArray();
 
         foreach($lessons as $key => &$lesson){
-            if(isset($data['offset'])){
-                $lesson['order'] = $key + $data['offset'];
-            }
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['satellites']       = $this->getSatellites($lesson['id'], 'lite');
             $lesson['image']            = base_url('image/index.php'.$lesson['image']);

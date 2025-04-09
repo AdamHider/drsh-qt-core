@@ -70,6 +70,6 @@ class CourseModel extends Model
     public function linkItem ($data) 
     {
         $SettingsModel = model('SettingsModel');
-        return $SettingsModel->updateUserItem($data['user_id'], ['code' => 'courseId', 'value' => $data['course_id']]);
+        return $SettingsModel->updateUserItem(session()->get('user_id'), ['code' => 'courseId', 'value' => $data['course_id']]);
     }
 }

@@ -38,6 +38,10 @@ class AchievementModel extends Model
             $achievement['image'] = base_url('image/index.php'.$achievement['image']);
             $achievement['progress'] = $this->calculateProgress($achievement);
         } 
+
+        $LessonDailyModel = model('LessonDailyModel');
+        $LessonDailyModel->createItem();
+
         return $achievements;
     }
     public function calculateProgress ($data)
@@ -103,7 +107,7 @@ class AchievementModel extends Model
         return $achievements;
     }
 
-    public function linkItemToUser($achievement)
+    public function linkItem($achievement)
     {
         $AchievementUsermapModel = model('AchievementUsermapModel');
         $AchievementUsermapModel->ignore()->insert(['item_id' => $achievement['id'], 'user_id' => session()->get('user_id')]);

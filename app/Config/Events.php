@@ -37,15 +37,15 @@ Events::on('signUp', static function ($user_id, $data) {
 
     $CharacterModel = new \App\Models\CharacterModel();
     if($data['gender'] == 'male'){
-        $CharacterModel->linkItemToUser($initials['male_character_id'], $user_id);
+        $CharacterModel->linkItem($initials['male_character_id'], $user_id);
     } else {
-        $CharacterModel->linkItemToUser($initials['female_character_id'], $user_id);
+        $CharacterModel->linkItem($initials['female_character_id'], $user_id);
     }
 
     $QuestModel = new \App\Models\QuestModel();
-    $QuestModel->linkItemToUser($initials['quest_id'], $user_id);
+    $QuestModel->linkItem($initials['quest_id'], $user_id);
     if(!empty($data['invited_by'])){
-        $QuestModel->linkItemToUser($initials['invitation_quest_id'], $user_id);
+        $QuestModel->linkItem($initials['invitation_quest_id'], $user_id);
     }
     $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
     $LessonUnblockUsermapModel->insert(['item_id' => $initials['lesson_id'], 'user_id' => $user_id]);
@@ -80,14 +80,14 @@ Events::on('lessonFinished', static function ($target_id) {
     $achievementsTotalLessons = $AchievementModel->getListToLink('total_lessons');
     if(!empty($achievementsTotalLessons)){
         foreach($achievementsTotalLessons as $achievement){
-            $AchievementModel->linkItemToUser($achievement);
+            $AchievementModel->linkItem($achievement);
             $NotificationModel->notifyAchievement($achievement);
         }
     }
     $achievementsTotalPoints = $AchievementModel->getListToLink('total_points');
     if(!empty($achievementsTotalPoints)){
         foreach($achievementsTotalPoints as $achievement){
-            $AchievementModel->linkItemToUser($achievement);
+            $AchievementModel->linkItem($achievement);
             $NotificationModel->notifyAchievement($achievement);
         }
     }
@@ -123,7 +123,7 @@ Events::on('levelUp', static function ($level_data) {
     if(!empty($achievements)){
         $NotificationModel = new \App\Models\NotificationModel();
         foreach($achievements as $achievement){
-            $AchievementModel->linkItemToUser($achievement);
+            $AchievementModel->linkItem($achievement);
             $NotificationModel->notifyAchievement($achievement);
         }
     }
@@ -134,7 +134,7 @@ Events::on('achievementGained', static function ($target_id) {
     $achievementsTotalAchievements = $AchievementModel->getListToLink('total_achievements');
     if(!empty($achievementsTotalAchievements)){
         foreach($achievementsTotalAchievements as $achievement){
-            $AchievementModel->linkItemToUser($achievement);
+            $AchievementModel->linkItem($achievement);
             $NotificationModel->notifyAchievement($achievement);
         }
     }

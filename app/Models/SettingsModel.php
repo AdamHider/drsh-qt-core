@@ -184,13 +184,13 @@ class SettingsModel extends Model
         return $data;        
     }
 
-    public function createModifierList ($user_id, $data)
+    public function createModifierList ($data)
     {
         foreach($data as $item){
-            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id, 'left')->where('settings.code', $item['code'])->get()->getRowArray();
+            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.session()->get('user_id'), 'left')->where('settings.code', $item['code'])->get()->getRowArray();
             $this->createModifierItem([
                 'setting_id' => $setting['id'], 
-                'user_id' => $user_id, 
+                'user_id' => session()->get('user_id'), 
                 'value' => $item['value'], 
                 'operand' => $item['operand'], 
                 'expires_at' => $item['expires_at'] ?? null

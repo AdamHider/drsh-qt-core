@@ -30,15 +30,22 @@ class Lesson extends BaseController
     {
         $LessonModel = model('LessonModel');
 
-        $limit = $this->request->getVar('limit');
-        $offset = $this->request->getVar('offset');
+        $result = $LessonModel->getList();
 
-        $data = [
-            'limit' => $limit,
-            'offset' => $offset
-        ];
+        if (empty($result)) {
+            return $this->failNotFound('not_found');
+        }
+        return $this->respond($result, 200);
+    }
+    public function getDailyList()
+    {
+        $LessonDailyModel = model('LessonDailyModel');
 
-        $result = $LessonModel->getList($data);
+        $result = $LessonDailyModel->getList();
+
+        if (empty($result)) {
+            return $this->failNotFound('not_found');
+        }
         return $this->respond($result, 200);
     }
     public function getSatellites()

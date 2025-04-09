@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use stdClass;
 
 class LessonPageModel extends LessonModel
 {

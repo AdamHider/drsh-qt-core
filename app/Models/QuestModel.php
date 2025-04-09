@@ -20,7 +20,7 @@ class QuestModel extends Model
         'date_end', 
         'reward', 
         'owner_id', 
-        'is_disabled', 
+        'published', 
         'is_private'
     ];
 
@@ -169,7 +169,7 @@ class QuestModel extends Model
             if($ResourceModel->enrollUserList(session()->get('user_id'), $reward_config)){
                 $finished = $this->updateUserItem(['item_id' => $quest['id'], 'user_id' => session()->get('user_id'), 'status' => 'finished']);
                 if($finished){
-                    $this->linkItemToUser($quest['id'], session()->get('user_id'), 'next');
+                    $this->linkItem($quest['id'], session()->get('user_id'), 'next');
                     Events::trigger('invitationQuestClaimed', session()->get('user_id'));
                     return $ResourceModel->proccessItemReward($reward_config);
                 }
@@ -179,7 +179,7 @@ class QuestModel extends Model
             return 'forbidden';
         }
     }
-    public function linkItemToUser ($quest_id, $user_id, $mode = 'exact') 
+    public function linkItem($quest_id, $user_id, $mode = 'exact') 
     {
         $field = 'id';
         if($mode == 'next'){
@@ -200,7 +200,7 @@ class QuestModel extends Model
     public function updateUserItem($data)
     {
         $QuestsUsermapModel = model('QuestsUsermapModel');
-        return $QuestsUsermapModel->set('status', $data['status'], null)->where(['item_id' => $data['item_id'], 'user_id' => $data['user_id']])->update();
+        return $QuestsUsermapModel->set('status', $data['status'], null)->where(['item_id' => $data['item_id'], 'user_id' => session()->get('user_id')])->update();
     }
     public function createUserItem($data)
     {

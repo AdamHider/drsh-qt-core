@@ -143,13 +143,13 @@ class SkillModel extends Model
     }
 
     
-    public function claimItem($skill_id, $user_id)
+    public function claimItem($skill_id)
     {
         $ResourceModel = model('ResourceModel');
         $SkillUsermapModel = model('SkillUsermapModel');
         $SettingsModel = model('SettingsModel');
 
-        $skill = $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.$user_id, 'left')
+        $skill = $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.session()->get('user_id'), 'left')
         ->where('id', $skill_id)->get()->getRowArray();
 
         if(empty($skill)){
@@ -161,7 +161,7 @@ class SkillModel extends Model
 
         if($this->checkAvailable($skill, $user_id) && $this->checkPurchasable($cost_config, $user_id)){
             if($ResourceModel->enrollUserList($user_id, $cost_config, 'substract')){
-                $SettingsModel->createModifierList($user_id, $modifiers_config);
+                $SettingsModel->createModifierList($modifiers_config);
                 $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => $user_id], true);
                 Events::trigger('skillGained', $skill['id']);
                 return 'success';

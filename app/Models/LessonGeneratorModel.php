@@ -9,27 +9,23 @@ class LessonGeneratorModel extends LessonModel
 {
     private $currentPage = 0;
     
-    public function generateList($lesson_id) 
+    public function generatePages($lesson_id) 
     {
         $lesson = $this->where('lessons.id', $lesson_id)->get()->getRowArray();
         $pages = json_decode($lesson['pages'], true);
         if($lesson['type'] == 'common'){
             return $pages;
         } else 
-        if($lesson['type'] == 'lexis') {
+        if($lesson['type'] == 'lexis' || $lesson['type'] == 'daily_lexis') {
             return $this->generateLexisItem($pages);
         } else 
         if($lesson['type'] == 'chat') {
             return $this->generateChatItem($pages);
-        }
+        } 
     }
 
-    private function generateLexisItem($page_config)
-    {
-        $seed = rand(1, 10);
-        $pages = [];
-        $word_list = $this->seedShuffle($page_config['word_list'], $seed);
-        $pages_scenery = [
+    private $sceneries = [
+        'standart' => [
             [ 'type' => 'read', 'referent_index' => '0'],
             [ 'type' => 'read', 'referent_index' => '1'],
             [ 'type' => 'quiz', 'referent_index' => '0'],
@@ -38,7 +34,21 @@ class LessonGeneratorModel extends LessonModel
             [ 'type' => 'read', 'referent_index' => '3'],
             [ 'type' => 'quiz', 'referent_index' => '2'],
             [ 'type' => 'quiz', 'referent_index' => '3']
-        ];
+        ],
+        'quiz_only' => [
+            [ 'type' => 'quiz', 'referent_index' => '0'],
+            [ 'type' => 'quiz', 'referent_index' => '1'],
+            [ 'type' => 'quiz', 'referent_index' => '2'],
+            [ 'type' => 'quiz', 'referent_index' => '3']
+        ],
+    ];
+    private function generateLexisItem($page_config)
+    {
+        $seed = rand(1, 10);
+        $pages = [];
+        $word_list = $this->seedShuffle($page_config['word_list'], $seed);
+        $scenery_type = $page_config['pattern'] ?? 'standart';
+        $pages_scenery = $this->sceneries[$scenery_type];
         $word_list_chunks = array_chunk($word_list, 4);
         $word_object = $word_list[0];
         foreach($word_list_chunks as $word_chunk){

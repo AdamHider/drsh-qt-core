@@ -83,14 +83,13 @@ class Auth extends BaseController
             return $this->failForbidden('blocked');
         }
         if($result === 'success'){
-            $user_id = session()->get('user_id');
-            $user = $UserModel->getItem($user_id);
+            $user = $UserModel->getActiveItem();
             if( !$user ){
                 return $this->fail('fetch_error');
             }
             session()->set('user_data',$user);
             session()->set('login_attempts', []);
-            return $this->respond($user_id);
+            return $this->respond($user['id']);
         }
         return $this->fail($result);
     }

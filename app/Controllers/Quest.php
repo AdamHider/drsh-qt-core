@@ -13,7 +13,6 @@ class Quest extends BaseController
         $limit = $this->request->getVar('limit');
         $offset = $this->request->getVar('offset');
         $data = [
-            'user_id' => session()->get('user_id'),
             'limit' => $limit,
             'offset' => $offset,
             'active_only' => true
@@ -53,7 +52,6 @@ class Quest extends BaseController
 
         $data = [
             'item_id' => $quest_id,
-            'user_id' => session()->get('user_id'),
             'status' => 'active'
         ];
         $result = $QuestModel->updateUserItem($data);

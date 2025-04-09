@@ -32,12 +32,11 @@ class Character extends BaseController
         $CharacterModel = model('CharacterModel');
 
         $character_id = $this->request->getVar('id');
-        $user_id = session()->get('user_id');
 
         $data = [
-            'character_id' => $character_id,
-            'user_id' => $user_id
+            'character_id' => $character_id
         ];
+        
         $result = $CharacterModel->linkItem($data);
 
         if ($result === 'not_found') {

@@ -10,6 +10,9 @@
             "page_template": "imageSelection"
         }
     },
+    "config": {
+        "pattern": "quiz_only"
+    },
     "word_list": [
         {
             "text": "ev",

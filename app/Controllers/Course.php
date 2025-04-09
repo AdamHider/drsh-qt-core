@@ -40,12 +40,11 @@ class Course extends BaseController
         $CourseModel = model('CourseModel');
 
         $course_id = $this->request->getVar('id');
-        $user_id = session()->get('user_id');
 
         $data = [
-            'course_id' => $course_id,
-            'user_id' => $user_id
+            'course_id' => $course_id
         ];
+        
         $result = $CourseModel->linkItem($data);
 
         if ($result === 'not_found') {
