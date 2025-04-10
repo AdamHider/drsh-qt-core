@@ -15,7 +15,7 @@ class CourseSectionModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
-        'course_id', 'title', 'description', 'background_image', 'background_gradient', 'language_id', 'published', 'is_private'
+        'course_id', 'title', 'description', 'background_image', 'language_id', 'published', 'is_private'
     ];
     
     protected $useTimestamps = false;

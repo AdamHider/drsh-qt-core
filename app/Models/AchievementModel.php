@@ -40,7 +40,8 @@ class AchievementModel extends Model
         } 
 
         $LessonDailyModel = model('LessonDailyModel');
-        $LessonDailyModel->createItem();
+        $LessonDailyModel->createItem('daily_lexis');
+        $LessonDailyModel->createItem('daily_chat');
 
         return $achievements;
     }

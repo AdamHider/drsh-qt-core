@@ -1,0 +1,79 @@
+{
+    "replica_list": [
+        {
+            "name": "Ali",
+            "text": "Selâm aleyküm!",
+            "image": "/image/2.jpg"
+        },
+        {
+            "name": "{{user.name}}",
+            "text": "{{input1}}",
+            "float": "right",
+            "image": "{{user.character.image}}"
+        },
+        {
+            "name": "Ali",
+            "text": "Menim adım Ali. Seniñ adıñ ne?",
+            "image": "/image/2.jpg"
+        },
+        {
+            "name": "{{user.name}}",
+            "text": "{{input2}}",
+            "float": "right",
+            "image": "{{user.character.image}}"
+        },
+        {
+            "name": "Ali",
+            "text": "Memnün oldım.",
+            "image": "/image/2.jpg"
+        },
+        {
+            "name": "{{user.name}}",
+            "text": "{{input3}}",
+            "float": "right",
+            "image": "{{user.character.image}}"
+        }
+    ],
+    "input_list": [
+        {
+            "mode": "puzzle",
+            "type": "input",
+            "index": 1,
+            "answer": "Aleyküm|selâm|,|Ali|!",
+            "variants": [
+                { "text": "selâm" },
+                { "text": "salam" },
+                { "text": "Aleyküm" },
+                { "text": "!" },
+                { "text": "bar" }
+            ]
+        },
+        {
+            "mode": "puzzle",
+            "type": "input",
+            "index": 2,
+            "answer": "Menim|adım|{{user.name}}|.",
+            "variants": [
+                { "text": "işlerim" },
+                { "text": "Menim" },
+                { "text": "{{user.name}}" },
+                { "text": "." },
+                { "text": "adım" }
+            ]
+        },
+        {
+            "mode": "puzzle",
+            "type": "input",
+            "index": 3,
+            "answer": "Men|de|memnün|oldım|.",
+            "variants": [
+                { "text": "oldum" },
+                { "text": "oldım" },
+                { "text": "Men" },
+                { "text": "de" },
+                { "text": "." },
+                { "text": "memnün" }
+            ]
+        }
+    ]
+}
