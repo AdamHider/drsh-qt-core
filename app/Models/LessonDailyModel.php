@@ -112,8 +112,13 @@ class LessonDailyModel extends LessonModel
     }
     private function generateTitle($type)
     {
-        srand(mktime());
-        return $this->titles[rand(0, count($this->titles)-1)].' '.rand(1,6);
+        $integer = rand(0,3);
+        srand((double)microtime()*1000000);
+        $result = $this->titles[rand(0, count($this->titles)-1)];
+        if($integer > 1){
+            $result .= ' '.$integer;
+        }
+        return $result;
     }
     private function compileItemPages($type)
     {
@@ -140,8 +145,8 @@ class LessonDailyModel extends LessonModel
         $course = $CourseModel->where('title', $type)->get()->getRowArray();
         $this->daily_course['background_image'] = '/backgrounds/'.$type.'_'.rand(1,1).'.jpg';
         $this->daily_course['title'] = $type;
-        $CourseModel->insert($this->daily_course);
         if(empty($course)){
+            $CourseModel->insert($this->daily_course);
             return $CourseModel->getInsertID();
         } else {
             $CourseModel->where('id', $course['id'])->set($this->daily_course)->update();
