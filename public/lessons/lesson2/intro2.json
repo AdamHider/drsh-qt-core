@@ -6,19 +6,31 @@
         "form_template": null,
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu ne? Bu, defter.",
+            "text": "Araba - Arab<span class='text-positive'>a</span><span class='text-primary'>lar</span>. Leylek - Leyl<span class='text-positive'>e</span>k<span class='text-primary'>ler</span>",
             "image": "/image/1LEXIS/hello.jpg"
         }
     },
     {
         "index": 2,
-        "title": "Запомни конструкцию",
+        "title": "Выбери правильный вариант",
         "subtitle": "",
-        "form_template": null,
+        "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu kim? Bu, oca.",
-            "image": "/image/1LEXIS/hello.jpg"
+            "text": "Gemi - Gemi{{input1}}",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "ler",
+                    "variants": [
+                        { "text": "lar" },
+                        { "text": "ler" }
+                    ]
+                }
+            ]
         }
     },
     {
@@ -28,17 +40,17 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu {{input1}}? Bu, ev.",
+            "text": "Oca - Oca{{input1}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "ne",
+                    "answer": "lar",
                     "variants": [
-                        { "text": "ne" },
-                        { "text": "kim" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -51,29 +63,17 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? {{input2}}, ressam. Ressam yaqın.",
+            "text": "Alma - Alma{{input1}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Bu",
+                    "answer": "lar",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Bu",
-                    "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -86,18 +86,17 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Şu ne? {{input1}}, maqas.",
+            "text": "Ötmek - Ötmek{{input1}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Şu",
+                    "answer": "ler",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -110,29 +109,17 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? Şu, ekim. Ekim {{input2}}.",
+            "text": "Bu ne? - Bu, balıq{{input1}}.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Şu",
+                    "answer": "lar",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "uzaq",
-                    "variants": [
-                        { "text": "uzaq" },
-                        { "text": "yaqın" },
-                        { "text": "çoq uzaq" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -145,18 +132,17 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu ne? {{input1}}, leylek.",
+            "text": "O kim? - O, ekim{{input1}}.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Bu",
+                    "answer": "ler",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -169,7 +155,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? {{input2}}, talebe. Tablebe çoq uzaq.",
+            "text": "O ne? - {{input1}}, yıldız{{input2}}.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -187,11 +173,10 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "O",
+                    "answer": "lar",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -207,19 +192,14 @@
             "replica_list": [
                 {
                     "name": "Ali",
-                    "text": "Selâm aleykum! Men Ali.",
+                    "text": "Selâm, Ayşe. Bu {{input1}}?",
                     "image": "/image/2.jpg"
                 },
                 {
                     "name": "Ayşe",
-                    "text": "Aleykum {{input1}}, Ali! Men Ayşe. O ne?",
+                    "text": "Aleykum {{input2}}, Ali! Bu, anahtar{{input3}}.",
                     "float": "right",
                     "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "{{input2}}, sançqı.",
-                    "image": "/image/2.jpg"
                 }
             ],
             "input_list": [
@@ -227,22 +207,31 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "ne",
                     "variants": [
-                        { "text": "salâm" },
-                        { "text": "sabalar" },
-                        { "text": "selâm" }
+                        { "text": "kim" },
+                        { "text": "ne" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "O",
+                    "answer": "sabalar",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "salâm" },
+                        { "text": "selâm" },
+                        { "text": "sabalar" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "lar",
+                    "variants": [
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -257,13 +246,13 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Dilek",
-                    "text": "Selâm {{input1}}, Zeynep! Bu {{input2}}?",
+                    "name": "Murat",
+                    "text": "Selâm aleykum, Ayşe. Şu ne?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Zeynep",
-                    "text": "Aleykum selâm, Dilek! {{input3}}, gemi.",
+                    "name": "Elif",
+                    "text": "{{input1}} selâm, Murat! Şu, terek{{input2}}.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -273,33 +262,20 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "Aleykum",
                     "variants": [
-                        { "text": "papalam" },
-                        { "text": "aleykum" },
-                        { "text": "sabalar" }
+                        { "text": "Aleykum" },
+                        { "text": "Aleykim" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ne",
+                    "answer": "ler",
                     "variants": [
-                        { "text": "ne" },
-                        { "text": "şu" },
-                        { "text": "kim" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "Bu",
-                    "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -314,24 +290,13 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Öznur",
-                    "text": "Meraba. Menim adım Öznur.",
+                    "name": "Fatih",
+                    "text": "Hayırlı sabalar, Nuran. O {{input1}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Sinem",
-                    "text": "{{input1}}, Öznur. Menim {{input2}} Sinem. Şu {{input3}}?",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Öznur",
-                    "text": "{{input4}}, çalğıcı.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Sinem",
-                    "text": "Yahşı, sağ ol.",
+                    "name": "Nuran",
+                    "text": "Hayırlı {{input2}}, Fatih! O, ekim{{input3}}.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -341,44 +306,31 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "kim",
                     "variants": [
-                        { "text": "Merhaba" },
-                        { "text": "Meraba" },
-                        { "text": "Aydı" }
+                        { "text": "kim" },
+                        { "text": "ne" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Hayırlı",
+                    "answer": "sabalar",
                     "variants": [
-                        { "text": "adım" },
-                        { "text": "adam" },
-                        { "text": "de" }
+                        { "text": "geceler" },
+                        { "text": "sabalar" },
+                        { "text": "aqşamlar" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "ne",
+                    "answer": "ler",
                     "variants": [
-                        { "text": "ne" },
-                        { "text": "kim" },
-                        { "text": "nasıl" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Şu",
-                    "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]
@@ -393,31 +345,15 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Nihan",
-                    "text": "Hayırlı sabalar, Mete!",
+                    "name": "Emre",
+                    "text": "Hayırlı {{input1}}, Leyla. O ne?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Mete",
-                    "text": "Hayırlı {{input1}}, Nihan. O {{input2}}?",
+                    "name": "Leyla",
+                    "text": "Hayırlı aqşamlar, Emre! O, mışıq{{input2}}.",
                     "float": "right",
                     "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Nihan",
-                    "text": "O, qurucı.",
-                    "image": "/image/2.jpg"
-                },
-                {
-                    "name": "Mete",
-                    "text": "Çoq sağ {{input3}}, Nihan.",
-                    "float": "right",
-                    "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Nihan",
-                    "text": "{{input4}} de sağ ol.",
-                    "image": "/image/2.jpg"
                 }
             ],
             "input_list": [
@@ -425,55 +361,21 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "aqşamlar",
                     "variants": [
-                        { "text": "geceler" },
+                        { "text": "aqşamlar" },
                         { "text": "sabalar" },
-                        { "text": "künler" }
+                        { "text": "geceler" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "adıñ",
+                    "answer": "lar",
                     "variants": [
-                        { "text": "ne" },
-                        { "text": "kim" },
-                        { "text": "qurucu" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "ol",
-                    "variants": [
-                        { "text": "ol" },
-                        { "text": "olsun" },
-                        { "text": "olun" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Sağlıqnen",
-                    "variants": [
-                        { "text": "Men" },
-                        { "text": "Sen" },
-                        { "text": "Sağa" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "memnün",
-                    "variants": [
-                        { "text": "nasıl" },
-                        { "text": "memnün" },
-                        { "text": "sabalar" }
+                        { "text": "lar" },
+                        { "text": "ler" }
                     ]
                 }
             ]

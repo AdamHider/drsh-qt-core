@@ -6,7 +6,7 @@
             "page_template": "imageSelection"
         },
         "read_page": {
-            "title": "Выучите слово \"%s\"",
+            "title": "Запомни слово \"%s\"",
             "page_template": "imageSelection"
         }
     },

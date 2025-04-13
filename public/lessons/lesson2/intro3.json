@@ -6,8 +6,7 @@
         "form_template": null,
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu ne? Bu, defter.",
-            "image": "/image/1LEXIS/hello.jpg"
+            "text": "Вопрос: ____mı/mi? <br> Ответ: Ebet, ____ . / Yoq, _____ ."
         }
     },
     {
@@ -17,31 +16,19 @@
         "form_template": null,
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu kim? Bu, oca.",
+            "text": "Bu, tablebemi? <br>Ebet, talebe.",
             "image": "/image/1LEXIS/hello.jpg"
         }
     },
     {
         "index": 3,
-        "title": "Выбери правильный вариант",
+        "title": "Запомни конструкцию",
         "subtitle": "",
-        "form_template": "variant",
+        "form_template": null,
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu {{input1}}? Bu, ev.",
-            "image": "/image/1LEXIS/hello.jpg",
-            "input_list": [
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 1,
-                    "answer": "ne",
-                    "variants": [
-                        { "text": "ne" },
-                        { "text": "kim" }
-                    ]
-                }
-            ]
+            "text": "Bu, almamı? <br>Yoq, muz.",
+            "image": "/image/1LEXIS/hello.jpg"
         }
     },
     {
@@ -51,29 +38,18 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? {{input2}}, ressam. Ressam yaqın.",
+            "text": "Şu, kün{{input1}}? <br>Yoq, gece.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Bu",
+                    "answer": "mi",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Bu",
-                    "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "mi" },
+                        { "text": "mı" },
+                        { "text": "mü" }
                     ]
                 }
             ]
@@ -86,18 +62,17 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Şu ne? {{input1}}, maqas.",
+            "text": "Bu, bala{{input1}}? <br>Ebet, bala.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Şu",
+                    "answer": "mı",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "mı" },
+                        { "text": "mi" }
                     ]
                 }
             ]
@@ -110,29 +85,28 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? Şu, ekim. Ekim {{input2}}.",
+            "text": "O, ressam{{input1}}? <br>Yoq, {{input2}} degil, qurucı.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Şu",
+                    "answer": "mı",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "mı" },
+                        { "text": "mi" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "uzaq",
+                    "answer": "ressam",
                     "variants": [
-                        { "text": "uzaq" },
-                        { "text": "yaqın" },
-                        { "text": "çoq uzaq" }
+                        { "text": "araba" },
+                        { "text": "o" },
+                        { "text": "ressam" }
                     ]
                 }
             ]
@@ -145,18 +119,38 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu ne? {{input1}}, leylek.",
+            "text": "Şu, anahtar{{input1}}? <br>Yoq, {{input2}} {{input3}}, sançqı.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Bu",
+                    "answer": "lar",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "lar" },
+                        { "text": "ler" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "anahtarlar",
+                    "variants": [
+                        { "text": "anahtarler" },
+                        { "text": "anahtarlar" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "degil",
+                    "variants": [
+                        { "text": "dugul" },
+                        { "text": "degil" },
+                        { "text": "duyğu" }
                     ]
                 }
             ]
@@ -169,29 +163,38 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? {{input2}}, talebe. Tablebe çoq uzaq.",
+            "text": "O köpekler yaqın{{input1}}? <br>Yoq, yaqın {{input2}}, {{input3}}.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "O",
+                    "answer": "mı",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "mı" },
+                        { "text": "mi" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "O",
+                    "answer": "degil",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "degil" },
+                        { "text": "köpekler" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "çoq uzaq",
+                    "variants": [
+                        { "text": "yaqın" },
+                        { "text": "uzaq" },
+                        { "text": "çoq uzaq" }
                     ]
                 }
             ]
@@ -206,20 +209,15 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Ali",
-                    "text": "Selâm aleykum! Men Ali.",
+                    "name": "Dilek",
+                    "text": "Selâm aleykum, Zeynep! İşleriñ yahşı{{input1}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Ayşe",
-                    "text": "Aleykum {{input1}}, Ali! Men Ayşe. O ne?",
+                    "name": "Zeynep",
+                    "text": "Aleykum selâm. Ebet, işlerim {{input2}}.",
                     "float": "right",
                     "image": "/image/3.jpg"
-                },
-                {
-                    "name": "Ali",
-                    "text": "{{input2}}, sançqı.",
-                    "image": "/image/2.jpg"
                 }
             ],
             "input_list": [
@@ -227,22 +225,20 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "mı",
                     "variants": [
-                        { "text": "salâm" },
-                        { "text": "sabalar" },
-                        { "text": "selâm" }
+                        { "text": "mı" },
+                        { "text": "mi" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "O",
+                    "answer": "yahşı",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "yahşı" },
+                        { "text": "degil" }
                     ]
                 }
             ]
@@ -257,13 +253,13 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Dilek",
-                    "text": "Selâm {{input1}}, Zeynep! Bu {{input2}}?",
+                    "name": "Pınar",
+                    "text": "Selâm aleykum, Levent! İşleriñ {{input1}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Zeynep",
-                    "text": "Aleykum selâm, Dilek! {{input3}}, gemi.",
+                    "name": "Levent",
+                    "text": "Aleykum {{input2}}, Pınar. {{input3}}, yahşı {{input4}}, yaramay.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -273,33 +269,43 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "nasıl",
                     "variants": [
-                        { "text": "papalam" },
-                        { "text": "aleykum" },
-                        { "text": "sabalar" }
+                        { "text": "ne" },
+                        { "text": "nasıl" },
+                        { "text": "yahşımı" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ne",
+                    "answer": "selâm",
                     "variants": [
-                        { "text": "ne" },
-                        { "text": "şu" },
-                        { "text": "kim" }
+                        { "text": "selâm" },
+                        { "text": "salâm" },
+                        { "text": "salam" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "Bu",
+                    "answer": "Yoq",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "Ebet" },
+                        { "text": "Yoq" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "degil",
+                    "variants": [
+                        { "text": "degil" },
+                        { "text": "yoq" },
+                        { "text": "dugul" }
                     ]
                 }
             ]
@@ -314,24 +320,24 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Öznur",
-                    "text": "Meraba. Menim adım Öznur.",
+                    "name": "Can",
+                    "text": "Meraba, Elif! Bu {{input1}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Sinem",
-                    "text": "{{input1}}, Öznur. Menim {{input2}} Sinem. Şu {{input3}}?",
+                    "name": "Elif",
+                    "text": "Meraba, Can. {{input2}}, leylekler.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Öznur",
-                    "text": "{{input4}}, çalğıcı.",
+                    "name": "Can",
+                    "text": "Leylekler {{input3}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Sinem",
-                    "text": "Yahşı, sağ ol.",
+                    "name": "Elif",
+                    "text": "Yoq, uzaq {{input4}}, yaqın.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -341,22 +347,21 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "ne",
                     "variants": [
-                        { "text": "Merhaba" },
-                        { "text": "Meraba" },
-                        { "text": "Aydı" }
+                        { "text": "ne" },
+                        { "text": "kim" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Hayırlı",
+                    "answer": "Bu",
                     "variants": [
-                        { "text": "adım" },
-                        { "text": "adam" },
-                        { "text": "de" }
+                        { "text": "Bu" },
+                        { "text": "Şu" },
+                        { "text": "O" }
                     ]
                 },
                 {
@@ -365,20 +370,19 @@
                     "index": 3,
                     "answer": "ne",
                     "variants": [
-                        { "text": "ne" },
-                        { "text": "kim" },
-                        { "text": "nasıl" }
+                        { "text": "yaqınmı" },
+                        { "text": "uzaqmı" },
+                        { "text": "uzaqmi" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "Şu",
+                    "answer": "degil",
                     "variants": [
-                        { "text": "Bu" },
-                        { "text": "Şu" },
-                        { "text": "O" }
+                        { "text": "olsun" },
+                        { "text": "degil" }
                     ]
                 }
             ]
@@ -393,30 +397,30 @@
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Nihan",
-                    "text": "Hayırlı sabalar, Mete!",
+                    "name": "Ali",
+                    "text": "Hayırlı aqşamlar.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Mete",
-                    "text": "Hayırlı {{input1}}, Nihan. O {{input2}}?",
+                    "name": "Murat",
+                    "text": "Hayırlı aqşamlar. {{input1}} Ali. Seniñ adıñ {{input2}}?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Nihan",
-                    "text": "O, qurucı.",
+                    "name": "Ali",
+                    "text": "Memnün oldım. Menim adım Ali.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Mete",
-                    "text": "Çoq sağ {{input3}}, Nihan.",
+                    "name": "Murat",
+                    "text": "Men {{input3}} memnün oldım. O, qurucılar {{input4}}?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Nihan",
-                    "text": "{{input4}} de sağ ol.",
+                    "name": "Ali",
+                    "text": "{{input5}}, qurucılar uzaq.",
                     "image": "/image/2.jpg"
                 }
             ],
@@ -425,44 +429,43 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "sabalar",
+                    "answer": "Men",
                     "variants": [
-                        { "text": "geceler" },
-                        { "text": "sabalar" },
-                        { "text": "künler" }
+                        { "text": "Sen" },
+                        { "text": "Men" },
+                        { "text": "Kim" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "adıñ",
+                    "answer": "ne",
                     "variants": [
                         { "text": "ne" },
                         { "text": "kim" },
-                        { "text": "qurucu" }
+                        { "text": "nasıl" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "ol",
+                    "answer": "de",
                     "variants": [
-                        { "text": "ol" },
-                        { "text": "olsun" },
-                        { "text": "olun" }
+                        { "text": "da" },
+                        { "text": "de" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "Sağlıqnen",
+                    "answer": "uzaqmı",
                     "variants": [
-                        { "text": "Men" },
-                        { "text": "Sen" },
-                        { "text": "Sağa" }
+                        { "text": "uzaq" },
+                        { "text": "uzaqmı" },
+                        { "text": "yaqın" }
                     ]
                 },
                 {
@@ -471,9 +474,9 @@
                     "index": 5,
                     "answer": "memnün",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "memnün" },
-                        { "text": "sabalar" }
+                        { "text": "Ebet" },
+                        { "text": "Meraba" },
+                        { "text": "Yahşı" }
                     ]
                 }
             ]
