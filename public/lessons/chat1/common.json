@@ -46,12 +46,12 @@
                 "mode": "puzzle",
                 "type": "input",
                 "index": 1,
-                "answer": "Aleyküm|selâm|,|Ali|!",
+                "answer": "Aleyküm|selâm,|Ali!",
                 "variants": [
-                    { "text": "selâm" },
-                    { "text": "salam" },
+                    { "text": "selâm," },
+                    { "text": "salam," },
                     { "text": "Aleyküm" },
-                    { "text": "!" },
+                    { "text": "Ali!" },
                     { "text": "bar" }
                 ]
             },
@@ -59,12 +59,11 @@
                 "mode": "puzzle",
                 "type": "input",
                 "index": 2,
-                "answer": "Menim|adım|{{user.name}}|.",
+                "answer": "Menim|adım|{{user.name}}.",
                 "variants": [
                     { "text": "işlerim" },
                     { "text": "Menim" },
-                    { "text": "{{user.name}}" },
-                    { "text": "." },
+                    { "text": "{{user.name}}." },
                     { "text": "adım" }
                 ]
             },
@@ -72,13 +71,12 @@
                 "mode": "puzzle",
                 "type": "input",
                 "index": 3,
-                "answer": "Men|de|memnün|oldım|.",
+                "answer": "Men|de|memnün|oldım.",
                 "variants": [
-                    { "text": "oldum" },
-                    { "text": "oldım" },
+                    { "text": "oldum." },
+                    { "text": "oldım." },
                     { "text": "Men" },
                     { "text": "de" },
-                    { "text": "." },
                     { "text": "memnün" }
                 ]
             }
