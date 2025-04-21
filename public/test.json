@@ -10,12 +10,19 @@
         "is_user": true
     },
     {
-        "image": "/image/quests/quest_character_avatar.png",
+        "image": "/quests/quest_character_avatar.png",
         "text": "Если ты не справишься, то у нас будут проблемы!",
         "is_user": false
     },
     {
         "text": "Тогда за дело!",
         "is_user": true
+    },
+    {
+        "image": "/quests/quest_character_avatar.png",
+        "name": "Robot",
+        "text": "За это полагается щедрая награда!",
+        "is_reward": true,
+        "is_user": false
     }
 ]

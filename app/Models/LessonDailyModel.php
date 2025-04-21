@@ -23,7 +23,7 @@ class LessonDailyModel extends LessonModel
         'background_image' => '', 
         'language_id' => 1, 
         'published' => 1, 
-        'is_private' => 0
+        'is_private' => 1
     ];
     private $daily_lesson = [
         'course_id' => 4,
@@ -39,7 +39,7 @@ class LessonDailyModel extends LessonModel
         'published' => 1, 
         'order' => 0, 
         'owner_id' => 0, 
-        'is_private' => 0
+        'is_private' => 1
     ];
     private $daily_lesson_pages = [
         'daily_lexis' => [
