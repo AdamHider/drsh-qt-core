@@ -77,7 +77,9 @@ class QuestModel extends Model
         $result = json_decode($pages, true);
         if(!empty($result)){
             foreach($result as &$page){
-                $page['image'] = base_url('image/index.php'.$page['image'] ?? '');
+                if(isset($page['image'])){
+                    $page['image'] = base_url('image/index.php'.$page['image']);
+                }
             }
         }
         return $result;

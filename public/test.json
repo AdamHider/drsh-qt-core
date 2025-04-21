@@ -1,199 +1,21 @@
 [
     {
-        "icon": "listen",
-        "audio": true,
-        "image": "/image/textured-christmas-tree-with-lightseps-10-file-with-transparencies-drop-shadow_531035-2.jpg",
-        "index": 1,
-        "title": "Новая страница",
-        "subtitle": "",
-        "form_template": "none",
-        "page_template": "dialogue",
-        "template_config": {
-            "replica_list": [
-                {
-                    "name": "Murat",
-                    "text": "Selam",
-                    "image": "/image/textured-christmas-tree-with-lightseps-10-file-with-transparencies-drop-shadow_531035-2.jpg"
-                },
-                {
-                    "name": "Sevile",
-                    "text": "Aleykum selam",
-                    "float": "right"
-                }
-            ]
-        },
-        "title_translation": "Новый Страница",
-        "page_container_class": "one-column",
-        "subtitle_translation": ""
+        "image": "/quests/quest_character_avatar.png",
+        "name": "Robot",
+        "text": "Тебе необходимо исследовать красную планету как можно быстрее!",
+        "is_user": false
     },
     {
-        "audio": true,
-        "index": 2,
-        "title": "Новая страница 2",
-        "subtitle": "",
-        "form_template": "variant",
-        "page_template": "dialogue",
-        "template_config": {
-            "input_list": [
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 1,
-                    "answer": "Aleykum",
-                    "variants": [
-                        {
-                            "text": "Alekum"
-                        },
-                        {
-                            "text": "Aleykun"
-                        },
-                        {
-                            "text": "Aleykum"
-                        }
-                    ]
-                }
-            ],
-            "replica_list": [
-                {
-                    "name": "Murat",
-                    "text": "Selam",
-                    "image": "/image/textured-christmas-tree-with-lightseps-10-file-with-transparencies-drop-shadow_531035-2.jpg"
-                },
-                {
-                    "name": "Sevile",
-                    "text": "{{input1}}",
-                    "float": "right",
-                    "image": "/image/34nkka3w4lz7c33lxl0rc3p47k86e882.jpg"
-                }
-            ]
-        }
+        "text": "Что случилось?",
+        "is_user": true
     },
     {
-        "audio": true,
-        "image": "/image/34nkka3w4lz7c33lxl0rc3p47k86e882.jpg",
-        "index": 3,
-        "title": "Новая страница",
-        "subtitle": "",
-        "form_template": "none",
-        "page_template": "grid",
-        "template_config": {
-            "column_list": [
-                {
-                    "text": "asd",
-                    "image": "",
-                    "animation": ""
-                },
-                {
-                    "text": "123",
-                    "image": "",
-                    "animation": ""
-                },
-                {
-                    "text": "sadasd",
-                    "image": "",
-                    "animation": ""
-                }
-            ],
-            "grid_columns_count": "3"
-        }
+        "image": "/image/quests/quest_character_avatar.png",
+        "text": "Если ты не справишься, то у нас будут проблемы!",
+        "is_user": false
     },
     {
-        "audio": true,
-        "index": 4,
-        "title": "Сопоставление",
-        "subtitle": "",
-        "form_template": "match",
-        "page_template": "answerQuestion",
-        "template_config": {
-            "block_list": [
-                {
-                    "text": "asdasdsad",
-                    "image": "/image//image/ach_total_lessons_1.png"
-                },
-                {
-                    "text": "213123123 {{input2}}",
-                    "image": "/image/ach_total_lessons_3.png"
-                },
-                {
-                    "text": "sadasdsad {{input1}}",
-                    "image": "/image/ach_total_level_2.png"
-                }
-            ],
-            "input_list": [
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 1,
-                    "answer": "AAA"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": "2",
-                    "answer": "BBB"
-                }
-            ]
-        }
-    },
-    {
-        "index": 5,
-        "title": "Сопоставление",
-        "subtitle": "",
-        "form_template": "variant",
-        "page_template": "singleSentence",
-        "template_config": {
-            "text": "How {{input1}} you {{input2}}?",
-            "input_list": [
-                {
-                    "mode": "puzzle",
-                    "type": "input",
-                    "index": 1,
-                    "answer": "are",
-                    "variants": [
-                        {
-                            "text": "e"
-                        },
-                        {
-                            "text": "a"
-                        },
-                        {
-                            "text": "r"
-                        },
-                        {
-                            "text": "t"
-                        }
-                    ]
-                },
-                {
-                    "mode": "puzzle",
-                    "type": "input",
-                    "index": "2",
-                    "answer": "today",
-                    "variants": [
-                        {
-                            "text": "t"
-                        },
-                        {
-                            "text": "y"
-                        },
-                        {
-                            "text": "a"
-                        },
-                        {
-                            "text": "m"
-                        },
-                        {
-                            "text": "n"
-                        },
-                        {
-                            "text": "d"
-                        },
-                        {
-                            "text": "o"
-                        }
-                    ]
-                }
-            ]
-        }
+        "text": "Тогда за дело!",
+        "is_user": true
     }
 ]
