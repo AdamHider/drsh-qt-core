@@ -15,7 +15,6 @@ class QuestModel extends Model
     protected $allowedFields = [
         'code', 
         'value', 
-        'pages', 
         'date_start', 
         'date_end', 
         'reward', 
@@ -55,7 +54,7 @@ class QuestModel extends Model
             $reward_config = json_decode($quest['reward_config'], true);
             $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
             $quest['target'] = $this->composeItemTarget($quest['code'], $quest['target']);
-            $quest['pages'] = $this->composeItemPages($quest['pages']);
+            $quest['data'] = $this->composeItemPages($quest['data']);
 
             $quest['is_completed'] = $quest['progress'] >= $quest['value'];
             
@@ -76,9 +75,13 @@ class QuestModel extends Model
     {
         $result = json_decode($pages, true);
         if(!empty($result)){
-            foreach($result as &$page){
-                if(isset($page['image'])){
-                    $page['image'] = base_url('image/index.php'.$page['image']);
+            foreach($result as &$section){
+                if(!empty($section['dialogue'])){
+                    foreach($section['dialogue'] as &$page){
+                        if(isset($page['image'])){
+                            $page['image'] = base_url('image/index.php'.$page['image']);
+                        }
+                    }
                 }
             }
         }
