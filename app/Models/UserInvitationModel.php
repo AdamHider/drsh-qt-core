@@ -41,9 +41,12 @@ class UserInvitationModel extends Model
     {
         $UserModel = model('UserModel');
         $ResourceModel = model('ResourceModel');
+        $QuestModel = model('QuestModel');
+        
         $invited_user = $UserModel->where('id', $user_id)->get()->getRowArray();
         if(!empty($invited_user['invited_by'])){
-            if($ResourceModel->enrollUserList($invited_user['invited_by'], ['rubidium' => 1])){
+            $QuestModel->addActiveProgress('invitation', 0, 1, $invited_user['invited_by']);
+            if($ResourceModel->enrollUserList($invited_user['invited_by'], ['isonit' => 1])){
                 $this->set('count', 'count+1', false)->where('user_id', $invited_user['invited_by'])->update();
                 return $invited_user;
             }
