@@ -6,19 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class Achievement extends BaseController
 {
     use ResponseTrait;
-    public function getItem()
-    {
-        
-        $UserModel = model('UserModel');
-
-        $user = $UserModel->getItem();
-
-        if ($user == 'not_found') {
-            return $this->failNotFound('not_found');
-        }
-
-        return $this->respond($user);
-    }
+    
     public function getList()
     {
         $AchievementModel = model('AchievementModel');

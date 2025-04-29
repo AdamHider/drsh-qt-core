@@ -26,9 +26,6 @@ class LessonModel extends Model
     public function getItem ($lesson_id) 
     {
         $this->useSharedOf('courses', 'course_id');
-        if(!$this->hasPermission($lesson_id, 'r')){
-            return 'forbidden';
-        }
 
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
@@ -74,8 +71,7 @@ class LessonModel extends Model
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
-        ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)
-        ->whereHasPermission('r')->orderBy('lessons.order ASC')->get()->getResultArray();
+        ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)->orderBy('lessons.order ASC')->get()->getResultArray();
 
         foreach($lessons as $key => &$lesson){
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
@@ -109,8 +105,7 @@ class LessonModel extends Model
 
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->where('lessons.parent_id', $lesson_id)->where('lessons.published', 1)
-        ->whereHasPermission('r')->orderBy('lessons.order ASC')->get()->getResultArray();
+        ->where('lessons.parent_id', $lesson_id)->where('lessons.published', 1)->orderBy('lessons.order ASC')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
             $satellite['image'] = base_url('image/index.php'.$satellite['image']);

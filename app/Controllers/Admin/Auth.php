@@ -46,8 +46,7 @@ class Auth extends BaseController
 
         $UserModel->signIn($auth_key);
         
-        $user_id = session()->get('user_id');
-        $user = $UserModel->getItem($user_id);
+        $user = $UserModel->getItem();
         if( !$user ){
             $session->setFlashdata('msg', 'Auth expired');
             return redirect()->to('/auth/login');

@@ -118,7 +118,7 @@ class LessonGeneratorModel extends LessonModel
     private function generateChatItem($page)
     {
         $UserModel = model('UserModel');
-        $user = $UserModel->getActiveItem();
+        $user = $UserModel->getItem();
         $pageFlat = $this->userMarkUp(json_encode($page), $user);
 
         $page = json_decode($pageFlat, true);

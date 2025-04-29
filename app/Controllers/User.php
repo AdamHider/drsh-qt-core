@@ -11,20 +11,10 @@ class User extends BaseController
         
         $UserModel = model('UserModel');
 
-        $user_id = $this->request->getVar('user_id');
-        $session_user = false;
-        if( !$user_id ){
-            $session_user = true;
-            $user_id = session()->get('user_id');
-        }
-
-        $user = $UserModel->getItem($user_id);
+        $user = $UserModel->getItem();
 
         if ($user == 'not_found') {
             return $this->failNotFound('not_found');
-        }
-        if ($session_user) {
-            session()->set('user_data', $user);
         }
         return $this->respond($user);
     }

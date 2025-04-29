@@ -120,7 +120,7 @@ class QuestModel extends Model
             $user_id = session()->get('user_id');
         }
         $QuestsUsermapModel = model('QuestsUsermapModel');
-        if($code == 'lesson' || $code == 'resource' || $code == 'skill'){
+        if($code == 'lesson' || $code == 'resource' || $code == 'skill'|| $code == 'resource_invitation' ){
             $quests = $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.$user_id)
             ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status = "active"')
             ->where('quests.code = "'.$code.'"')->where('find_in_set("'.$target_id.'", quests.target) <> 0')->get()->getResultArray();
@@ -132,6 +132,18 @@ class QuestModel extends Model
         foreach($quests as $quest){
             $QuestsUsermapModel->set('progress', 'progress+'.$progress, false)->where(['item_id' => $quest['id'], 'user_id' => $user_id])->update();
         }
+    }
+    private function checkItemCompleted($quest)
+    {
+        $ExerciseModel = model('ExerciseModel');
+        $SkillUsermapModel = model('SkillUsermapModel');
+        if($quest['code'] == 'lesson'){
+            return $ExerciseModel->where('lesson_id', $quest['target'])->where('user_id', session()->get('user_id'))->where('finished_at IS NOT NULL')->countAllResults() >= 1;
+        } else
+        if ($quest['code'] == 'skill'){
+            return $SkillUsermapModel->where('item_id', $quest['target'])->where('user_id', session()->get('user_id'))->countAllResults() >= 1;
+        } 
+        return false;
     }
     private function checkItemOutdated($quest)
     {
@@ -159,9 +171,6 @@ class QuestModel extends Model
     {
         $ResourceModel = model('ResourceModel');
 
-        if(!$this->hasPermission($quest_id, 'r')){
-            return 'forbidden';
-        }
         $quest = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.session()->get('user_id'), 'left')
         ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value AND id = '.$quest_id)
         ->get()->getRowArray();
@@ -189,17 +198,29 @@ class QuestModel extends Model
     }
     public function linkItem($quest_id, $user_id, $mode = 'exact') 
     {
+        $QuestGroupModel = model('QuestGroupModel');
         $field = 'id';
         if($mode == 'next'){
             $field = 'unblock_after';
-        }    
+        }
+        $status = 'created';  
+        $progress = 0;  
         $quest = $this->where($field, $quest_id)->get()->getRowArray();
         if(!empty($quest)){
+            if($this->checkItemCompleted($quest)){
+                $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
+                if($quest['group']['is_primary']){
+                    $status = 'active';
+                } else {
+                    $status = 'finished';
+                }
+                $progress = 1;
+            }
             $data = [
                 'item_id' => $quest['id'],
                 'user_id' => $user_id,
-                'status' => 'created',
-                'progress' => 0
+                'status' => $status,
+                'progress' => $progress
             ];
             $this->createUserItem($data);
         }

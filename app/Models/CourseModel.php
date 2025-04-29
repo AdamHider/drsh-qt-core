@@ -26,9 +26,6 @@ class CourseModel extends Model
 
     public function getItem ($course_id) 
     {
-        if(!$this->hasPermission($course_id, 'r')){
-            return 'forbidden';
-        }
         $course = $this->where('id', $course_id)->where('published', 1)->get()->getRowArray();
         if(!empty($course)){
             $course['image'] = base_url('image/index.php'.$course['image']);

@@ -92,15 +92,9 @@ class UserModel extends Model
         'qirimtatar'
     ];    
 
-    public function getItem ($user_id) 
+    public function getItem () 
     {
-        if ($user_id == 0) {
-            return $this->getGuestItem();
-        }
-        if(!$this->hasPermission($user_id, 'r')){
-            return 'forbidden';
-        }
-        $user = $this->where('id', $user_id)->get()->getRowArray();
+        $user = $this->where('id', session()->get('user_id'))->get()->getRowArray();
         
         if(!$user){
             return 'not_found';
@@ -256,10 +250,6 @@ class UserModel extends Model
             return false;
         }
         return true;
-    }
-    
-    public function getActiveItem(){
-        return $this->getItem( session()->get('user_id') );
     }
     
     private function getGuestItem(){

@@ -83,7 +83,7 @@ class Auth extends BaseController
             return $this->failForbidden('blocked');
         }
         if($result === 'success'){
-            $user = $UserModel->getActiveItem();
+            $user = $UserModel->getItem();
             if( !$user ){
                 return $this->fail('fetch_error');
             }
