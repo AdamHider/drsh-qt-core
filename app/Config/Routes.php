@@ -97,5 +97,6 @@ $routes->post('/Image/(:any)', 'Image::$1');
 $routes->post('/Skill/(:any)', 'Skill::$1');
 $routes->post('/Character/(:any)', 'Character::$1');
 $routes->post('/Notification/(:any)', 'Notification::$1');
+$routes->post('/MarketOffer/(:any)', 'MarketOffer::$1');
 
 $routes->get('/SSE/(:segment)', 'SSE::index/$1');
