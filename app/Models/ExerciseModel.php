@@ -154,9 +154,9 @@ class ExerciseModel extends Model
         $result = $this->update();
         $this->transCommit();
         if($result && $action == 'finish') {
-            $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
+            $LessonUsermapModel = model('LessonUsermapModel');
             if($data['exercise_submitted']['totals']['reward_level'] > 0){
-                $LessonUnblockUsermapModel->unblockNext('lessons', $data['lesson_id']);
+                $LessonUsermapModel->unblockNext('lessons', $data['lesson_id']);
                 Events::trigger('lessonFinished', $data['lesson_id']);
             }
             $ResourceModel = model('ResourceModel');
@@ -238,7 +238,9 @@ class ExerciseModel extends Model
         if($prev_reward_level == $totals['reward_level']){
             return $this->emptyReward;
         }
-        $reward_config = json_decode($LessonModel->find($lesson_id)['reward_config'] ?? '[]', true);
+        $reward = $LessonModel->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id ='.session()->get('user_id'), 'left')
+        ->where('id', $lesson_id)->select('lessons_usermap.reward_config')->get()->getRowArray();
+        $reward_config = json_decode($reward['reward_config'] ?? '[]', true);
         if(empty($reward_config)) return null;
         $reward = $reward_config[$totals['reward_level']];
         if(isset($reward_config[$prev_reward_level])){

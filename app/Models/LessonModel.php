@@ -30,10 +30,11 @@ class LessonModel extends Model
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
         $ResourceModel = model('ResourceModel');
-        $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
+        $LessonUsermapModel = model('LessonUsermapModel');
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
+        ->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id ='.session()->get('user_id'), 'left')
+        ->select('lessons.*, lessons_usermap.cost_config as cost_calculated, lessons_usermap.reward_config as reward_calculated, exercises.id as exercise_id')
         ->where('lessons.id', $lesson_id)->where('lessons.published', 1)->get()->getRowArray();
 
         if(!$lesson){
@@ -45,17 +46,24 @@ class LessonModel extends Model
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['next_lessons']     = $this->getNextItems($lesson['id']);
             $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
-            $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true));
+            $lesson['is_blocked']       = $LessonUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true));
             if($lesson['parent_id']){
-                $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
+                $lesson['master_lesson']= $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
             }
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
-            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
-            $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
+            if(!empty($lesson['cost_calculated'])){
+                $lesson['cost']         = $ResourceModel->proccessItemCost(json_decode($lesson['cost_calculated'], true));
+            }
+            if(!empty($lesson['reward_calculated'])){
+                $lesson['reward']       = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_calculated'], true));
+        
+            }
         }
         unset($lesson['unblock_config']);
         unset($lesson['cost_config']);
+        unset($lesson['cost_calculated']);
         unset($lesson['reward_config']);
+        unset($lesson['reward_calculated']);
         unset($lesson['pages']);
         return $lesson;
     }
@@ -66,10 +74,11 @@ class LessonModel extends Model
         $CourseSectionModel = model('CourseSectionModel');
         $ExerciseModel = model('ExerciseModel');
         $ResourceModel = model('ResourceModel');
-        $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
+        $LessonUsermapModel = model('LessonUsermapModel');
         
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
+        ->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id ='.session()->get('user_id'), 'left')
+        ->select('lessons.*, lessons_usermap.cost_config as cost_calculated, lessons_usermap.reward_config as reward_calculated, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
         ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)->orderBy('lessons.order ASC')->get()->getResultArray();
 
@@ -79,12 +88,16 @@ class LessonModel extends Model
             $lesson['image']            = base_url('image/index.php'.$lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
-            $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
+            $lesson['is_blocked']       = $LessonUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
             $lesson['is_explored']      = isset($lesson['exercise']['id']);
             
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
-            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
-            $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
+            if(!empty($lesson['cost_calculated'])){
+                $lesson['cost']         = $ResourceModel->proccessItemCost(json_decode($lesson['cost_calculated'], true));
+            }
+            if(!empty($lesson['reward_calculated'])){
+                $lesson['reward']       = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_calculated'], true));
+            }
             unset($lesson['unblock_config']);
             unset($lesson['cost_config']);
             unset($lesson['reward_config']);
@@ -98,13 +111,14 @@ class LessonModel extends Model
 
         $ExerciseModel = model('ExerciseModel');
         $ResourceModel = model('ResourceModel');
-        $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
+        $LessonUsermapModel = model('LessonUsermapModel');
 
         $result = [];
         $result['preview_total'] = getenv('lesson.satellites.preview_total');
 
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
+        ->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id ='.session()->get('user_id'), 'left')
+        ->select('lessons.*, lessons_usermap.cost_config as cost_calculated, lessons_usermap.reward_config as reward_calculated, exercises.id as exercise_id')
         ->where('lessons.parent_id', $lesson_id)->where('lessons.published', 1)->orderBy('lessons.order ASC')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
@@ -112,14 +126,20 @@ class LessonModel extends Model
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['progress']      = $this->getItemProgress($satellite['exercise']['data'] ?? []);
-                $satellite['is_blocked']    = $LessonUnblockUsermapModel->checkBlocked($satellite['id'], json_decode($satellite['unblock_config'], true));
+                $satellite['is_blocked']    = $LessonUsermapModel->checkBlocked($satellite['id'], json_decode($satellite['unblock_config'], true));
                 $satellite['unblock']       = $this->getItemUnblock(json_decode($satellite['unblock_config'], true));
-                $satellite['cost']          = $ResourceModel->proccessItemCost(json_decode($satellite['cost_config'], true));
-                $satellite['reward']        = $ResourceModel->proccessItemGroupReward(json_decode($satellite['reward_config'], true));
+                if(!empty($satellite['cost_calculated'])){
+                    $satellite['cost']      = $ResourceModel->proccessItemCost(json_decode($satellite['cost_calculated'], true));
+                }
+                if(!empty($satellite['reward_calculated'])){
+                    $satellite['reward']    = $ResourceModel->proccessItemGroupReward(json_decode($satellite['reward_calculated'], true));
+                }
             }
             unset($satellite['unblock_config']);
             unset($satellite['cost_config']);
             unset($satellite['reward_config']);
+            unset($satellite['cost_calculated']);
+            unset($satellite['reward_calculated']);
             unset($satellite['pages']);
         }
         $result['preview_list'] = $this->composeSatellitesPreview($satellites, $result['preview_total']);
@@ -214,8 +234,8 @@ class LessonModel extends Model
         $result = [];
         $SkillModel = model('SkillModel');
         if(!empty($unblock_config['lessons'])){
-            $result['lessons'] = $this->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id = '.session()->get('user_id'), 'left')
-            ->select('lessons.title, lessons.description, lessons.image, lessons.id, IF(lesson_unblock_usermap.user_id, 1, 0) as unblocked, lessons.parent_id')
+            $result['lessons'] = $this->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id = '.session()->get('user_id'), 'left')
+            ->select('lessons.title, lessons.description, lessons.image, lessons.id, IF(lessons_usermap.user_id, 1, 0) as unblocked, lessons.parent_id')
             ->whereIn('lessons.id', $unblock_config['lessons'])->get()->getResultArray();
         }
         if(!empty($unblock_config['skills'])){

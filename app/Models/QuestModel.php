@@ -8,7 +8,7 @@ use CodeIgniter\Events\Events;
 
 class QuestModel extends Model
 {
-    use PermissionTrait;
+    use ResourceTrait;
     protected $table      = 'quests';
     protected $primaryKey = 'id';
 
@@ -17,7 +17,6 @@ class QuestModel extends Model
         'value', 
         'date_start', 
         'date_end', 
-        'reward', 
         'owner_id', 
         'published', 
         'is_private'
@@ -37,7 +36,7 @@ class QuestModel extends Model
 
         if($data['active_only']){
             $this->join('quests_usermap','quests_usermap.item_id = quests.id AND quests_usermap.user_id = '.session()->get('user_id'))
-            ->select('quests.*, quests_usermap.status, COALESCE(quests_usermap.progress, 0) AS progress')
+            ->select('quests.*, quests_usermap.reward_config as reward_calculated, quests_usermap.status, COALESCE(quests_usermap.progress, 0) AS progress')
             ->where('IF(quests.date_end, quests.date_end > NOW(), 1)')->where('quests_usermap.status IN ("created", "active")');
         }
 
@@ -50,9 +49,10 @@ class QuestModel extends Model
         foreach($quests as &$quest){
             $quest = array_merge($quest, $DescriptionModel->getItem('quest', $quest['id']));
             $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
-            
-            $reward_config = json_decode($quest['reward_config'], true);
-            $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
+            if(!empty($quest['reward_calculated'])){
+                $reward_config = json_decode($quest['reward_calculated'], true);
+                $quest['reward'] = $ResourceModel->proccessItemReward($reward_config);
+            }
             $quest['target'] = $this->composeItemTarget($quest['code'], $quest['target']);
             $quest['data'] = $this->composeItemPages($quest['data']);
 
@@ -67,6 +67,8 @@ class QuestModel extends Model
                 $quest['date_end_humanized'] = $time->humanize();
                 $quest['time_left_humanized'] = Time::now()->difference($time)->humanize();
             }
+            unset($quest['reward_config']);
+            unset($quest['reward_calculated']);
         }
         return $quests;
     }
@@ -99,7 +101,7 @@ class QuestModel extends Model
             $result = $LessonModel->where('id', $target_id)->select('id, parent_id, title, description')->get()->getRowArray();
             $result['code'] = 'lesson';
         } else if($code == 'total_lessons' || $code == 'resource' || $code == 'resource_invitation'){
-            $result = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id = '.session()->get('user_id'))
+            $result = $LessonModel->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id = '.session()->get('user_id'))
             ->select('lessons.id, lessons.parent_id, lessons.title, lessons.description')->get()->getRowArray();
             $result['code'] = 'lesson';
         } else if($code == 'skill'){
@@ -170,14 +172,14 @@ class QuestModel extends Model
     public function claimReward($quest_id)
     {
         $ResourceModel = model('ResourceModel');
-
         $quest = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.session()->get('user_id'), 'left')
+        ->select('quests.*, quests_usermap.reward_config as reward_calculated')
         ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value AND id = '.$quest_id)
         ->get()->getRowArray();
 
         if(empty($quest)) return 'not_found';
 
-        $reward_config = json_decode($quest['reward_config'], true);
+        $reward_config = json_decode($quest['reward_calculated'], true);
 
         $quest['is_completed'] = $quest['progress'] >= $quest['value'];
         $quest['is_outdated'] = $this->checkItemOutdated($quest);
@@ -199,6 +201,7 @@ class QuestModel extends Model
     public function linkItem($quest_id, $user_id, $mode = 'exact') 
     {
         $QuestGroupModel = model('QuestGroupModel');
+        $QuestsUsermapModel = model('QuestsUsermapModel');
         $field = 'id';
         if($mode == 'next'){
             $field = 'unblock_after';
@@ -216,13 +219,15 @@ class QuestModel extends Model
                 }
                 $progress = 1;
             }
+            $reward_config = json_decode($quest['reward_config'], true);
             $data = [
                 'item_id' => $quest['id'],
                 'user_id' => $user_id,
                 'status' => $status,
+                'reward_config' => json_encode($this->recalculateResources($reward_config)),
                 'progress' => $progress
             ];
-            $this->createUserItem($data);
+            $QuestsUsermapModel->insert($data, true);
         }
     }
 
@@ -230,11 +235,6 @@ class QuestModel extends Model
     {
         $QuestsUsermapModel = model('QuestsUsermapModel');
         return $QuestsUsermapModel->set('status', $data['status'], null)->where(['item_id' => $data['item_id'], 'user_id' => session()->get('user_id')])->update();
-    }
-    public function createUserItem($data)
-    {
-        $QuestsUsermapModel = model('QuestsUsermapModel');
-        return $QuestsUsermapModel->insert($data, true);
     }
     
     

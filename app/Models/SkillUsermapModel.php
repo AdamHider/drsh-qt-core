@@ -7,6 +7,8 @@ class SkillUsermapModel extends Model
     protected $primaryKey = 'item_id';
     protected $allowedFields = [
         'item_id', 
-        'user_id'
+        'user_id',
+        'status',
+        'cost_config'
     ];
 }
