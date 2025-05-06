@@ -9,6 +9,7 @@ class QuestsUsermapModel extends Model
         'item_id', 
         'user_id',
         'status',
+        'reward_config',
         'progress'
     ];
 

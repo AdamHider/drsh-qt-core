@@ -7,7 +7,6 @@ trait ResourceTrait
     private $XP_MOD = 0.3;
     private $CUR_XP = 0;
     private $USR_MOD = 0;
-
     public function recalculateResources ($data) 
     {
         $this->CUR_XP = $this->getCurrentExperience();

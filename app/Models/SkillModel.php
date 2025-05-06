@@ -7,7 +7,7 @@ use CodeIgniter\Events\Events;
 
 class SkillModel extends Model
 {
-    use PermissionTrait;
+    use ResourceTrait;
     protected $table      = 'skills';
 
     protected $useAutoIncrement = true;
@@ -141,13 +141,13 @@ class SkillModel extends Model
         $SettingsModifiersModel = model('SettingsModifiersModel');
 
         $skill = $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.session()->get('user_id'), 'left')
-        ->where('id', $skill_id)->get()->getRowArray();
+        ->select('skills.*, skills_usermap.cost_config as cost_recalculated')->where('id', $skill_id)->get()->getRowArray();
 
         if(empty($skill)){
             return 'not_found';
         }
-        $skill['is_gained'] = (bool) $skill['item_id'];
-        $cost_config = json_decode($skill['cost_config'], true);
+        $cost_config = json_decode($skill['cost_recalculated'], true);
+        
         $modifiers_config = json_decode($skill['modifiers_config'], true);
 
         if($this->checkAvailable($skill) && $this->checkPurchasable($cost_config)){
@@ -161,5 +161,31 @@ class SkillModel extends Model
         } else {
             return 'forbidden';
         }
+    }
+    public function linkItem($skill_id, $user_id, $mode = 'exact') 
+    {
+        $SkillUsermapModel = model('SkillUsermapModel');
+        $field = 'id';
+        if($mode == 'next'){
+            $field = 'unblock_after';
+        } 
+        $skills = $this->where($field, $skill_id)->get()->getResultArray();
+        if(!empty($skills)){
+            foreach($skills as $skill){
+                $data = [
+                    'item_id' => $skill['id'],
+                    'user_id' => $user_id,
+                    'status' => 'created'
+                ];
+                $cost_config = json_decode($skill['cost_config'], true);
+                $data['cost_config'] = json_encode($this->recalculateResources($cost_config));
+                $SkillUsermapModel->insert($data, true);
+            }
+        }
+    }
+    public function updateUserItem($data)
+    {
+        $SkillUsermapModel = model('SkillUsermapModel');
+        return $SkillUsermapModel->set('status', $data['status'], null)->where(['item_id' => $data['item_id'], 'user_id' => session()->get('user_id')])->update();
     }
 }
