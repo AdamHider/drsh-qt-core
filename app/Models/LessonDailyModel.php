@@ -15,7 +15,7 @@ class LessonDailyModel extends LessonModel
         'background_image' => '', 
         'language_id' => 1, 
         'published' => 1, 
-        'is_private' => 0
+        'is_private' => 1
     ];
     private $daily_course_section = [
         'course_id' => 0,

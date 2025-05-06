@@ -36,9 +36,8 @@ class LessonModel extends Model
         ->select('lessons.*, exercises.id as exercise_id')
         ->where('lessons.id', $lesson_id)->where('lessons.published', 1)->get()->getRowArray();
 
-        if(!$lesson){
-            return false;
-        }
+        if(empty($lesson)) return false;
+        
         if ($lesson) {
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['image']            = base_url('image/index.php'.$lesson['image']);

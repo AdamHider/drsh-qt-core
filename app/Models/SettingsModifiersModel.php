@@ -17,8 +17,40 @@ class SettingsModifiersModel extends Model
 
     public function getList()
     {
-        $result = $this->where('settings_modifiers.user_id = '.session()->get('user_id'))
-        ->get()->getResultArray();
-        return $result;
+        $DescriptionModel = model('DescriptionModel');
+        $modifiers = $this->join('settings', 'settings.id = settings_modifiers.setting_id')
+        ->where('settings_modifiers.user_id = '.session()->get('user_id'))->get()->getResultArray();
+        foreach($modifiers as &$modifier){
+            $modifier['setting'] = $DescriptionModel->getItem('setting', $modifier['setting_id']);
+            if($modifier['type'] == 'percentage'){
+                $modifier['value'] = round(($modifier['value'] - 1) * 100);
+            }
+            if($modifier['operand'] == 'substract'){
+                $modifier['value'] = '-'.$modifier['value'];
+            } 
+            $modifier['title'] = lang('App.modifier.title.'.$modifier['source_code']);
+        }
+        return $modifiers;
+    }
+
+    public function createList ($user_id, $data, $source_code)
+    {
+        foreach($data as $item){
+            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id, 'left')->where('settings.code', $item['code'])->get()->getRowArray();
+            $this->createItem([
+                'setting_id' => $setting['id'], 
+                'user_id' => session()->get('user_id'), 
+                'value' => $item['value'], 
+                'source_code' => $source_code,
+                'operand' => $item['operand'], 
+                'expires_at' => $item['expires_at'] ?? null
+            ]);
+        }
+        return true;        
+    }
+    public function createItem ($data)
+    {
+        $SettingsModifiersModel = model('SettingsModifiersModel');
+        $SettingsModifiersModel->insert($data, true);
     }
 }

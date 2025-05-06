@@ -3,6 +3,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 class LessonUnblockUsermapModel extends Model
 {
+    use ResourceTrait;
     protected $table      = 'lesson_unblock_usermap';
     protected $primaryKey = 'item_id';
     protected $allowedFields = [
@@ -66,5 +67,4 @@ class LessonUnblockUsermapModel extends Model
         }
         return false;
     }
-    
 }

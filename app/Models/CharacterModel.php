@@ -44,12 +44,13 @@ class CharacterModel extends Model
     }
     public function linkItem ($item_id, $user_id) 
     {
+        $SettingsModifiersModel = model('SettingsModifiersModel');
         $SettingsModel = model('SettingsModel');
         $character = $this->where('characters.id', $item_id)->get()->getRowArray();
         $modifiersConfig = json_decode($character['modifiers_config'], true);
         $SettingsModel->updateUserItem($user_id, ['code' => 'characterId', 'value' => $character['id']], true);
         if(!empty($modifiersConfig)){
-            return $SettingsModel->createModifierList($user_id, $modifiersConfig);
+            return $SettingsModifiersModel->createList($user_id, $modifiersConfig, 'character');
         }
         return false;
     }

@@ -40,9 +40,6 @@ class Skill extends BaseController
             $data['limit'] = $limit;
             $data['offset'] = $offset;
         }
-        if($mode == 'by_user'){
-            $data['user_id'] = session()->get('user_id');
-        }
         if($active_only){
             $data['active_only'] = $active_only;
         }

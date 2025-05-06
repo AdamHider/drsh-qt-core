@@ -31,15 +31,5 @@ class UserGroupModel extends Model
         }
         return $groups;
     }
-        
-    public function createUserItem ($user_id, $code)
-    {
-        $UserGroupUsermapModel = model('UserGroupUsermapModel');
-        $user_group = $this->where('code', $code)->get()->getRowArray();
-        $this->transBegin();
-        $result = $UserGroupUsermapModel->insert(['item_id' => $user_group['id'], 'user_id' => $user_id], true);
-        $this->transCommit();
-        return;        
-    }
 
 }

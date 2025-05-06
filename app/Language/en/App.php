@@ -34,6 +34,8 @@ return [
         'feed.challenge.title' => 'New challenge added'
     ],
     'modifier' => [
+        'title.skill' => 'Технологии',
+        'title.character' => 'Герой',
         'description.multiply.increase' => 'Параметр "%s" увеличен на %s%%',
         'description.multiply.decrease' => 'Параметр "%s" снижен на %s%%',
         'description.add' => 'Параметр "%s" увеличен на %s',
