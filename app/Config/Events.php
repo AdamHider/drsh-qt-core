@@ -47,11 +47,9 @@ Events::on('signUp', static function ($user_id, $data) {
     if(!empty($data['invited_by'])){
         $QuestModel->linkItem($initials['invitation_quest_id'], $user_id);
     }
-    $LessonUsermapModel = new \App\Models\LessonUsermapModel();
-    $LessonUsermapModel->linkItem(['item_id' => $initials['lesson_id'], 'user_id' => $user_id]);
+    $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
+    $LessonUnblockUsermapModel->linkItem(['item_id' => $initials['lesson_id'], 'user_id' => $user_id]);
 
-    $SkillModel = new \App\Models\SkillModel();
-    $SkillModel->linkItem($initials['skill_id'], $user_id);
 });
 
 Events::on('resourceEnrolled', static function ($target_id, $code, $progress) {
@@ -106,8 +104,8 @@ Events::on('skillGained', static function ($target_id) {
     $QuestModel->addActiveProgress('skill', $target_id, 1);
     $QuestModel->addActiveProgress('total_skills', $target_id, 1);
     
-    $LessonUsermapModel = new \App\Models\LessonUsermapModel();
-    $LessonUsermapModel->unblockNext('skills', $target_id);
+    $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
+    $LessonUnblockUsermapModel->unblockNext('skills', $target_id);
 
     $SkillModel = new \App\Models\SkillModel();
     $SkillModel->linkItem($target_id, session()->get('user_id'), 'next');

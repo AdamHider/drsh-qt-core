@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 use CodeIgniter\Model;
-class LessonUsermapModel extends Model
+class LessonUnblockUsermapModel extends Model
 {
     use ResourceTrait;
     protected $table      = 'lesson_unblock_usermap';
@@ -22,9 +22,9 @@ class LessonUsermapModel extends Model
             return false;
         }
         if($mode == 'group'){
-            $lessons = $LessonModel->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND AND user_id ='.session()->get('user_id'), 'left')
+            $lessons = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND AND user_id ='.session()->get('user_id'), 'left')
             ->where('lessons.published', 1)->where('(lessons.parent_id = '. $lesson_id.' OR lessons.id = '.$lesson_id.')')
-            ->having('lessons.unblock_config IS NULL OR lessons_usermap.item_id IS NOT NULL')->get()->getResultArray();
+            ->having('lessons.unblock_config IS NULL OR lesson_unblock_usermap.item_id IS NOT NULL')->get()->getResultArray();
             $result = empty($lessons);
         } else {
             $result = $this->where('item_id = '.$lesson_id.' AND user_id ='.session()->get('user_id'))->get()->getResult();
@@ -42,7 +42,7 @@ class LessonUsermapModel extends Model
         foreach($lessons as $lesson){
             $unblock_config = json_decode($lesson['unblock_config'], true);
             if(!empty($unblock_config['lessons'])){
-                $total_lessons = $LessonModel->join('lessons_usermap', 'lessons_usermap.item_id = lessons.id AND lessons_usermap.user_id = '.session()->get('user_id'))
+                $total_lessons = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id = '.session()->get('user_id'))
                 ->whereIn('lessons.id', $unblock_config['lessons'])->get()->getNumRows();
             } else {
                 $unblock_config['lessons'] = [];
@@ -69,4 +69,14 @@ class LessonUsermapModel extends Model
         }
         return false;
     }
+    public function linkItem($data)
+    {
+        $LessonModel = model('LessonModel');
+        $lesson = $LessonModel->find($data['item_id']);
+        if(empty($lesson)){
+            return false;
+        }
+        $this->insert($data);
+    }
+    
 }

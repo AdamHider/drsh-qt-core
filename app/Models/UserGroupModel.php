@@ -12,8 +12,8 @@ class UserGroupModel extends Model
     protected $useSoftDeletes = true;
 
     protected $allowedFields = [
+        'item_id',
         'user_id', 
-        'classroom_id'
     ];
     
     protected $useTimestamps = false;
@@ -30,6 +30,16 @@ class UserGroupModel extends Model
             $group['description'] = $DescriptionModel->getItem('user_group', $group['id']);
         }
         return $groups;
+    }
+        
+    public function createUserItem ($user_id, $code)
+    {
+        $UserGroupUsermapModel = model('UserGroupUsermapModel');
+        $user_group = $this->where('code', $code)->get()->getRowArray();
+        $this->transBegin();
+        $result = $UserGroupUsermapModel->insert(['item_id' => $user_group['id'], 'user_id' => $user_id], true);
+        $this->transCommit();
+        return;        
     }
 
 }

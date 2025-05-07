@@ -37,6 +37,9 @@ trait ResourceTrait
     {
         //ROUND(BASE * (1 + XP_MOD * LOG(CUR_XP)) * USR_MOD)
         //$result = $value * (1 + $this->XP_MOD * log10($this->CUR_XP)) * $this->USR_MOD;
+        if(!session()->get('user_id')){
+            return $value;
+        }
         $SettingsModel = model('SettingsModel');
         $modifiers = $SettingsModel->join('settings_modifiers', 'settings_modifiers.setting_id = settings.id AND settings_modifiers.user_id = '.session()->get('user_id'))
         ->where('settings.code', $code.'GainModifier')->orderBy('FIELD(settings_modifiers.operand, "multiply", "add", "substract"), `value` DESC')->get()->getResultArray();
