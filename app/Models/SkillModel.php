@@ -29,9 +29,9 @@ class SkillModel extends Model
         $SettingsModel = model('SettingsModel');
         
         $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.session()->get('user_id'), 'left')
-        ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.image, skills.cost_config, skills.level, skills.modifiers_config, skills.unblock_after, (skills_usermap.item_id IS NOT NULL) AS is_gained');
+        ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.image, skills.cost_config, skills.level, skills.modifiers_config, skills.unblock_after, skills.order, (skills_usermap.item_id IS NOT NULL) AS is_gained');
         
-        $skills = $this->orderBy('code, level, chain')->get()->getResultArray();
+        $skills = $this->orderBy('code, level, chain, order')->get()->getResultArray();
 
         if(empty($skills)) return false;
         
@@ -43,18 +43,14 @@ class SkillModel extends Model
             $skill['is_available']      = $this->checkAvailable($skill);
             $skill['is_purchasable']    = $this->checkPurchasable($cost_config);
             if($skill['is_available']){
-                $skill['cost'] = $ResourceModel->proccessItemCost($cost_config);
+                $skill['cost'] = $ResourceModel->proccessItemCost($cost_config, 'flat');
             }
             if(!$skill['is_available'] && !$skill['is_gained']){
                 $skill['required_skills'] = array_filter($skills, function ($item) use ($skill)  {
                     return in_array($item['id'], explode(',', $skill['unblock_after'])); 
                 });
             }
-            if(!empty($skill['modifiers_config'])){
-                $modifiers_config = json_decode($skill['modifiers_config'], true);
-                $skill['modifiers'] = $SettingsModel->processList($modifiers_config);
-                unset($skill['modifiers_config']);
-            }
+            unset($skill['modifiers_config']);
             unset($skill['cost_config']);
         }
         

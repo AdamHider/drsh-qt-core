@@ -21,13 +21,24 @@ class SettingsModifiersModel extends Model
         $modifiers = $this->join('settings', 'settings.id = settings_modifiers.setting_id')
         ->where('settings_modifiers.user_id = '.session()->get('user_id'))->get()->getResultArray();
         foreach($modifiers as &$modifier){
+            $modifier['is_positive'] = false;
             $modifier['setting'] = $DescriptionModel->getItem('setting', $modifier['setting_id']);
-            if($modifier['type'] == 'percentage'){
-                $modifier['value'] = round(($modifier['value'] - 1) * 100);
+            $value = $modifier['value'];
+            if($modifier['type'] == 'percentage' && $modifier['operand'] == 'multiply'){
+                $value = round(($modifier['value'] - 1) * 100);
+                $modifier['value'] = $value.'%';
             }
             if($modifier['operand'] == 'substract'){
-                $modifier['value'] = '-'.$modifier['value'];
+                $value = '-'.$modifier['value'];
+                $modifier['value'] = $value;
             } 
+            if($value > 0) {
+                $modifier['value'] = '+'.$modifier['value'];
+                $modifier['is_positive'] = true;
+            }
+            if($modifier['is_decreasing']){
+                $modifier['is_positive'] = !$modifier['is_positive'];
+            }
             $modifier['title'] = lang('App.modifier.title.'.$modifier['source_code']);
         }
         return $modifiers;

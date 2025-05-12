@@ -113,7 +113,7 @@ class ResourceModel extends Model
         return 0;
     }
 
-    public function proccessItemCost ($cost_config)
+    public function proccessItemCost ($cost_config, $mode = 'deep')
     {   
         if(empty($cost_config)) return [];
         $DescriptionModel = model('DescriptionModel');
@@ -122,7 +122,13 @@ class ResourceModel extends Model
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $resource['quantity'] = (int) $resource['quantity'];
-            $resource['quantity_cost'] = $this->recalculateValue($resource['code'], (int) $cost_config[$resource['code']]);
+            if($mode == 'deep'){
+                $resource['quantity_cost'] = $this->recalculateValue($resource['code'], (int) $cost_config[$resource['code']]);
+            } else {
+                $resource['quantity_cost'] = (int) $cost_config[$resource['code']];
+            }
+            
+            
             $resource['image'] = base_url('image/index.php'.$resource['image']);
         }
         return $resources;

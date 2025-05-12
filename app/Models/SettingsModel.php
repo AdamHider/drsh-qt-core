@@ -33,42 +33,19 @@ class SettingsModel extends Model
                 $this->createUserItem(['item_id' => $setting['id'], 'user_id' => $data['user_id'], 'value' => $setting['default_value']]);
             }
             $result[$setting['code']] = [
-                'value'         => $setting['value'],
+                'value'         => $this->getItemValue($data['user_id'], $setting['id'], $setting['value']),
                 'type'          => $setting['type']
             ];
         }
         return $result;
     }
-    public function processList ($data)
-    {
-        $DescriptionModel = model('DescriptionModel');
-        foreach($data as &$item){
-            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id')->where('settings.code', $item['code'])->get()->getRowArray();
-            $item = array_merge($item, $DescriptionModel->getItem('setting', $setting['id']));
-            switch ($item['operand']){ 
-                case 'multiply' :
-                    if($item['value'] > 1){
-                        $item['description'] = sprintf(lang('App.modifier.description.multiply.increase'), $item['description'], ($item['value']-1)*100);
-                    } else {
-                        $item['description'] = sprintf(lang('App.modifier.description.multiply.decrease'), $item['description'], (1-$item['value'])*100);
-                    }
-                    break;
-                case 'add' :
-                    $item['description'] = sprintf(lang('App.modifier.description.add'), $item['description'], $item['value']);
-                    break;
-                case 'substract' :
-                    $item['description'] = sprintf(lang('App.modifier.description.substract'), $item['description'], $item['value']);
-                    break;
-                default;
-            }
-        }
-        return $data;        
-    }
+    
     private function getItemValue ($user_id, $setting_id, $value) 
     {
         $SettingsModifiersModel = model('SettingsModifiersModel');
         $modifiers = $SettingsModifiersModel->where('settings_modifiers.setting_id = '.$setting_id.' AND settings_modifiers.user_id = '.$user_id)
-        ->orderBy('FIELD(operand, "multiply", "divide", "add", "substract")')->get()->getResultArray();
+        ->select('settings_modifiers.*, IF(operand = "multiply", ROUND(1 + SUM(-1 + value), 2), SUM(value)) AS multiplier')
+        ->orderBy('FIELD(operand, "multiply", "divide", "add", "substract")')->groupBy('setting_id, operand')->get()->getResultArray();
         if(empty($modifiers)){
             return $value;
         }
@@ -76,13 +53,13 @@ class SettingsModel extends Model
         foreach($modifiers as $modifier){
             switch ($modifier['operand']){ 
                 case 'multiply' :
-                    $result *= $modifier['value'];
+                    $result *= $modifier['multiplier'];
                     break;
                 case 'add' :
-                    $result += $modifier['value'];
+                    $result += $modifier['multiplier'];
                     break;
                 case 'substract' :
-                    $result -= $modifier['value'];
+                    $result -= $modifier['multiplier'];
                     break;
                 default;
             }

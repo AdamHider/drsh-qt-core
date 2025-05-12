@@ -36,6 +36,8 @@ return [
     'modifier' => [
         'title.skill' => 'Технологии',
         'title.character' => 'Герой',
+        'title.bonus' => 'Бонус',
+        'title.penalty' => 'Штраф',
         'description.multiply.increase' => 'Параметр "%s" увеличен на %s%%',
         'description.multiply.decrease' => 'Параметр "%s" снижен на %s%%',
         'description.add' => 'Параметр "%s" увеличен на %s',
