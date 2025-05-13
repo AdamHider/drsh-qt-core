@@ -113,7 +113,7 @@ class ResourceModel extends Model
         return 0;
     }
 
-    public function proccessItemCost ($cost_config, $mode = 'deep')
+    public function proccessItemCost ($cost_config)
     {   
         if(empty($cost_config)) return [];
         $DescriptionModel = model('DescriptionModel');
@@ -122,13 +122,11 @@ class ResourceModel extends Model
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
             $resource['quantity'] = (int) $resource['quantity'];
-            if($mode == 'deep'){
+            /*if($mode == 'deep'){
                 $resource['quantity_cost'] = $this->recalculateValue($resource['code'], (int) $cost_config[$resource['code']]);
-            } else {
-                $resource['quantity_cost'] = (int) $cost_config[$resource['code']];
-            }
-            
-            
+            }*/
+            $resource['quantity_cost'] = (int) $cost_config[$resource['code']];
+                        
             $resource['image'] = base_url('image/index.php'.$resource['image']);
         }
         return $resources;
@@ -149,7 +147,8 @@ class ResourceModel extends Model
         $resources = $this->whereIn('code', array_keys($resourceGroup))->get()->getResultArray();
         foreach($resources as &$resource){
             $resource = array_merge($resource, $DescriptionModel->getItem('resource', $resource['id']));
-            $resource['quantity'] = $this->recalculateValue($resource['code'], (int) $resourceGroup[$resource['code']]);
+            //$resource['quantity'] = $this->recalculateValue($resource['code'], (int) $resourceGroup[$resource['code']]);
+            $resource['quantity'] = (int) $resourceGroup[$resource['code']];
             $resource['image'] = base_url('image/index.php'.$resource['image']);
         }
         return $resources;
@@ -186,7 +185,7 @@ class ResourceModel extends Model
         $data = [
             'item_id' => $resource['id'],
             'user_id' => $data['user_id'],
-            'quantity' => $this->recalculateValue($data['code'], $data['quantity'])
+            'quantity' => $data['quantity']
         ];
         $ResourceUsermapModel->insert($data, true);
     }
@@ -219,7 +218,7 @@ class ResourceModel extends Model
         $ResourceUsermapModel = model('ResourceUsermapModel');
         $resource = $this->join('resources_usermap', 'resources_usermap.item_id = resources.id AND resources_usermap.user_id = '.$data['user_id'], 'left')
         ->where('code', $data['code'])->get()->getRowArray();
-        $quantity = $this->recalculateValue($data['code'], $data['quantity']);
+        //$data['quantity'] = $this->recalculateValue($data['code'], $data['quantity']);
         $ResourceUsermapModel->set('quantity', 'quantity+'.$data['quantity'], false);
         if($resource['quantity'] < 0){
             $ResourceUsermapModel->set('consumed_at', Time::now()->toDateTimeString(), false);

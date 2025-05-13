@@ -85,7 +85,7 @@ class LessonDailyModel extends LessonModel
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
             $lesson['is_explored']      = isset($lesson['exercise']['id']);
             
-            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
+            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config']));
             $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
             unset($lesson['unblock_config']);
             unset($lesson['cost_config']);

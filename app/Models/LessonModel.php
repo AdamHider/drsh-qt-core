@@ -14,10 +14,6 @@ class LessonModel extends Model
 
     protected $returnType = 'array';
 
-    protected $allowedFields = [
-        'course_id', 'course_section_id', 'language_id', 'title', 'description', 'type', 'pages', 'cost_config', 'reward_config', 'unblock_config', 'image', 'published', 'parent_id', 'is_private'
-    ];
-    
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -33,7 +29,7 @@ class LessonModel extends Model
         $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
 
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
+        ->select('lessons.id, lessons.course_id, lessons.course_section_id, lessons.title, lessons.description, lessons.image, lessons.unblock_config, lessons.parent_id, lessons.type, lessons.cost_config, lessons.reward_config, exercises.id as exercise_id')
         ->where('lessons.id', $lesson_id)->where('lessons.published', 1)->get()->getRowArray();
 
         if(empty($lesson)) return false;
@@ -45,12 +41,12 @@ class LessonModel extends Model
             $lesson['next_lessons']     = $this->getNextItems($lesson['id']);
             $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true));
-            if($lesson['parent_id']){
-                $lesson['master_lesson'] =  $this->select('title, description')->where('lessons.id', $lesson['parent_id'])->get()->getRowArray();
-            }
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
-            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
-            $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
+            if(!$lesson['is_blocked']){
+                $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
+                $lesson['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
+                $lesson['cost']         = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
+            }
         }
         unset($lesson['unblock_config']);
         unset($lesson['cost_config']);
@@ -68,7 +64,7 @@ class LessonModel extends Model
         $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
         
         $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
+        ->select('lessons.id, lessons.course_id, lessons.course_section_id, lessons.title, lessons.description, lessons.image, lessons.unblock_config, lessons.parent_id, lessons.type, lessons.cost_config, lessons.reward_config, exercises.id as exercise_id')
         ->where('lessons.course_id', session()->get('user_data')['settings']['courseId']['value'])
         ->where('lessons.parent_id IS NULL')->where('lessons.published', 1)->orderBy('lessons.order ASC')->get()->getResultArray();
 
@@ -79,11 +75,12 @@ class LessonModel extends Model
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
-            $lesson['is_explored']      = isset($lesson['exercise']['id']);
-            
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
-            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
-            $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
+            if(!$lesson['is_blocked']){
+                $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
+                $lesson['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
+                $lesson['cost']         = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
+            }
             unset($lesson['unblock_config']);
             unset($lesson['cost_config']);
             unset($lesson['reward_config']);
@@ -100,10 +97,9 @@ class LessonModel extends Model
         $LessonUnblockUsermapModel = model('LessonUnblockUsermapModel');
 
         $result = [];
-        $result['preview_total'] = getenv('lesson.satellites.preview_total');
 
         $satellites = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
-        ->select('lessons.*, exercises.id as exercise_id')
+        ->select('lessons.id, lessons.title, lessons.description, lessons.image, lessons.unblock_config, lessons.parent_id, lessons.type, lessons.cost_config, lessons.reward_config, exercises.id as exercise_id')
         ->where('lessons.parent_id', $lesson_id)->where('lessons.published', 1)->orderBy('lessons.order ASC')->get()->getResultArray();
         
         foreach($satellites as $key => &$satellite){
@@ -113,17 +109,22 @@ class LessonModel extends Model
                 $satellite['progress']      = $this->getItemProgress($satellite['exercise']['data'] ?? []);
                 $satellite['is_blocked']    = $LessonUnblockUsermapModel->checkBlocked($satellite['id'], json_decode($satellite['unblock_config'], true));
                 $satellite['unblock']       = $this->getItemUnblock(json_decode($satellite['unblock_config'], true));
-                $satellite['cost']          = $ResourceModel->proccessItemCost(json_decode($satellite['cost_config'], true));
-                $satellite['reward']        = $ResourceModel->proccessItemGroupReward(json_decode($satellite['reward_config'], true));
+                if(!$satellite['is_blocked']){
+                    $reward_gradation       = $this->composeItemReward(json_decode($satellite['reward_config'], true));
+                    $satellite['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
+                    $satellite['cost']      = $ResourceModel->proccessItemCost(json_decode($satellite['cost_config'], true));
+                }
             }
             unset($satellite['unblock_config']);
             unset($satellite['cost_config']);
             unset($satellite['reward_config']);
             unset($satellite['pages']);
         }
-        $result['preview_list'] = $this->composeSatellitesPreview($satellites, $result['preview_total']);
+        
         if ($mode == 'full') {
-            $result['list'] = $satellites;
+            $result = $satellites;
+        } else {
+            $result = $this->composeSatellitesPreview($satellites);
         }
         return $result;
     }
@@ -133,8 +134,9 @@ class LessonModel extends Model
     *
     * @return array Array or false
     **/
-    private function composeSatellitesPreview($satellites, $total)
+    private function composeSatellitesPreview($satellites)
     {
+        $total = getenv('lesson.satellites.preview_total');
         $result = [];
         foreach($satellites as $index => $satellite){
             if($index == $total){
@@ -156,6 +158,29 @@ class LessonModel extends Model
         });
         
         return ceil($totalPoints / (count($satellites)*100) * 100);
+    }
+
+    public function composeItemReward($reward_config)
+    {
+        $coefficients = [1 => 0.3, 2 => 0.6, 3 => 1]; 
+        $reward_gradation = [];
+    
+        foreach ($coefficients as $stars => $coefficient) {
+            $reward_gradation[$stars] = [];
+            $resources = [];
+            foreach ($reward_config as $resource => $quantity) {
+                if ($stars !== 3) {
+                    $calculatedAmount = floor($quantity * $coefficient); 
+                } else {
+                    $calculatedAmount = ceil($quantity * $coefficient);
+                }
+                if($calculatedAmount > 0){
+                    $reward_gradation[$stars][$resource] = $calculatedAmount;
+                }
+                
+            }
+        }
+        return $reward_gradation;
     }
     
     public function checkExplored ($lesson_id) 

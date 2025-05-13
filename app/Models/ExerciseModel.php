@@ -160,7 +160,8 @@ class ExerciseModel extends Model
                 Events::trigger('lessonFinished', $data['lesson_id']);
             }
             $ResourceModel = model('ResourceModel');
-            $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward']);
+
+            $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward'], true);
         }
         return $result;        
     }
@@ -230,17 +231,17 @@ class ExerciseModel extends Model
     }
     public function calculateItemReward($lesson_id, $totals)
     {
+        $LessonModel = model('LessonModel');
+
         if($totals['reward_level'] == 0){
             return $this->emptyReward;
         } 
-        $LessonModel = model('LessonModel');
         $prev_reward_level = $this->calculateRewardLevel($totals['points']-$totals['difference'], $totals['total']);
         if($prev_reward_level == $totals['reward_level']){
             return $this->emptyReward;
         }
-        $reward = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id ='.session()->get('user_id'), 'left')
-        ->where('id', $lesson_id)->select('lesson_unblock_usermap.reward_config')->get()->getRowArray();
-        $reward_config = json_decode($reward['reward_config'] ?? '[]', true);
+        $reward = $LessonModel->where('id', $lesson_id)->select('lessons.reward_config')->get()->getRowArray();
+        $reward_config = $LessonModel->composeItemReward(json_decode($reward['reward_config'] ?? '[]', true));
         if(empty($reward_config)) return null;
         $reward = $reward_config[$totals['reward_level']];
         if(isset($reward_config[$prev_reward_level])){
