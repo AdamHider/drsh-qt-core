@@ -14,6 +14,11 @@ class LessonModel extends Model
 
     protected $returnType = 'array';
 
+    protected $allowedFields = [
+        'course_id', 'course_section_id', 'language_id', 'title', 'description', 'type', 'pages', 'cost_config', 'reward_config', 'unblock_config', 'image', 'published', 'parent_id', 'is_private'
+    ];
+    
+
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
