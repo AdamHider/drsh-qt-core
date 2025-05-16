@@ -40,7 +40,7 @@ class CourseModel extends Model
     public function getList () 
     {
         $result = [];
-        $courses = $this->get()->getResultArray();
+        $courses = $this->where('published', 1)->where('is_private', 0)->get()->getResultArray();
         foreach($courses as &$course){
             $course['image'] = base_url('image/index.php'.$course['image']);
             $course['background_image'] = base_url('image/index.php'.$course['background_image']);
