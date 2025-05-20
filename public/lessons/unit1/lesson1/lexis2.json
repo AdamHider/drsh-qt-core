@@ -10,81 +10,78 @@
             "page_template": "imageSelection"
         }
     },
-    "config": {
-        "pattern": "quiz_only"
-    },
     "word_list": [
         {
-            "text": "ev",
+            "text": "согъан",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "дом"
+            "label": "лук"
         },
         {
-            "text": "araba",
+            "text": "муз",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "машина"
+            "label": "банан"
         },
         {
-            "text": "mektep",
+            "text": "саба",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "школа"
+            "label": "утро"
         },
         {
-            "text": "qalem",
+            "text": "гедже",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "ручка"
+            "label": "вечер"
         },
         {
-            "text": "kitap",
+            "text": "ярамай",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "книга"
+            "label": "плохо"
         },
         {
-            "text": "qapı",
+            "text": "софра",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "дверь"
+            "label": "стол"
         },
         {
-            "text": "telefon",
+            "text": "саат",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "телефон"
+            "label": "часы"
         },
         {
-            "text": "alma",
+            "text": "балыкъ",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "яблоко"
+            "label": "рыба"
         },
         {
-            "text": "suv",
+            "text": "къуш",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "вода"
+            "label": "птица"
         },
         {
-            "text": "ötmek",
+            "text": "ай",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "хлеб"
+            "label": "луна"
         },
         {
-            "text": "bala",
+            "text": "кунь",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "ребёнок"
+            "label": "день"
         },
         {
-            "text": "süt",
+            "text": "йылдыз",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "молоко"
+            "label": "звезда"
         }
     ],
     "input_object": {

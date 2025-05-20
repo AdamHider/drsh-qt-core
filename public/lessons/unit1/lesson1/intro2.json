@@ -1,0 +1,850 @@
+[
+    {
+        "index": 1,
+        "title": "Прочтите диалог",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Надир",
+                    "text": "Селям алейкум! Мен Надир.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Алейкум селям, Надир! Мен Назлы. Ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Надир",
+                    "text": "Яхшы, сагъ ол. Сенинъ ишлеринъ насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Меним де яхшы. Сен де сагъ ол.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "index": 2,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Надир",
+                    "text": "Селям алейкум! {{input1}} Надир.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "{{input2}}, Надир! Мен Назлы. Ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Надир",
+                    "text": "Яхшы, {{input3}}. Сенинъ ишлеринъ насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Меним де яхшы. {{input4}} сагъ ол.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Мен",
+                    "variants": [
+                        { "text": "Сен" },
+                        { "text": "Мен" },
+                        { "text": "Сагъ" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Алейкум селям",
+                    "variants": [
+                        { "text": "Алейкум селям" },
+                        { "text": "Ишлеринъ" },
+                        { "text": "Селям алейкум" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "сагъ ол",
+                    "variants": [
+                        { "text": "сенинъ де" },
+                        { "text": "сен де" },
+                        { "text": "сагъ ол" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "Сен де",
+                    "variants": [
+                        { "text": "Санъа да" },
+                        { "text": "Сен де" },
+                        { "text": "Сагъа да" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 3,
+        "title": "Прочтите диалог",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Селиме",
+                    "text": "Хайырлы сабалар! Мен Селиме.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Асан",
+                    "text": "Хайырлы сабалар, Селиме! Мен Асан. Бу саба ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Яхшы. Сенинъ ишлеринъ насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Асан",
+                    "text": "Меним де яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Селиме",
+                    "text": "Хайырлы {{input1}}! Мен Селиме.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Асан",
+                    "text": "{{input2}} сабалар, Селиме! Мен Асан. Бу {{input3}} ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Яхшы. Сенинъ {{input4}} насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Асан",
+                    "text": "Меним де яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "сабалар",
+                    "variants": [
+                        { "text": "сабалар" },
+                        { "text": "себзелер" },
+                        { "text": "сабахлар" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Хайырлы",
+                    "variants": [
+                        { "text": "Хайырлы" },
+                        { "text": "Кунеш" },
+                        { "text": "Мемнюн" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "саба",
+                    "variants": [
+                        { "text": "сенинъ" },
+                        { "text": "сабах" },
+                        { "text": "саба" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "ишлеринъ",
+                    "variants": [
+                        { "text": "излеринъ" },
+                        { "text": "ишлеринъ" },
+                        { "text": "ишлерин" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Прочтите диалог",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Арслан",
+                    "text": "Мераба! Меним адым Арслан. Сенинъ адынъ не?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Мераба, Арслан! Меним адым Эвтаде.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Мемнюн олдым.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Мен де мемнюн олдым.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Сагълыкънен къал, Эвтаде!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Сагълыкънен бар, Арслан!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Арслан",
+                    "text": "Мераба! Меним {{input1}} Арслан. Сенинъ адынъ не?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Мераба, Арслан! {{input2}} адым Эвтаде.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "{{input3}} олдым.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Мен де мемнюн {{input4}}.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Сагълыкънен {{input5}}, Эвтаде.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Сагълыкънен {{input6}}, Арслан.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "адым",
+                    "variants": [
+                        { "text": "адым" },
+                        { "text": "олдым" },
+                        { "text": "адим" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Меним",
+                    "variants": [
+                        { "text": "Сенинъ" },
+                        { "text": "Меним" },
+                        { "text": "Селям" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "Мемнюн",
+                    "variants": [
+                        { "text": "Селям" },
+                        { "text": "Мен де" },
+                        { "text": "Мемнюн" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "олдым",
+                    "variants": [
+                        { "text": "ол" },
+                        { "text": "олдум" },
+                        { "text": "олдым" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "къал",
+                    "variants": [
+                        { "text": "сен" },
+                        { "text": "къал" },
+                        { "text": "ол" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "бар",
+                    "variants": [
+                        { "text": "бар" },
+                        { "text": "къал" },
+                        { "text": "бер" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Прочтите диалог",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Исмет",
+                    "text": "Хайырлы акъшамлар! Мен Исмет.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "Хайырлы акъшамлар, Исмет! Ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Исмет",
+                    "text": "Яхшы. Сенинъ ишлеринъ насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "Меним де яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Исмет",
+                    "text": "Корюшкендже, Джемиле!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "Корюшкендже!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Исмет",
+                    "text": "Хайырлы {{input1}}! Мен Исмет.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "{{input2}} акъшамлар, Исмет! Ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Исмет",
+                    "text": "Яхшы. {{input3}} ишлеринъ насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "Меним де {{input4}}.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Исмет",
+                    "text": "{{input5}}, Джемиле!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "Корюшкендже!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "акъшамлар",
+                    "variants": [
+                        { "text": "мемнюн" },
+                        { "text": "акъшамлар" },
+                        { "text": "сабалар" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Хайырлы",
+                    "variants": [
+                        { "text": "Хайырлы" },
+                        { "text": "Сагъ" },
+                        { "text": "Селям" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "Сенинъ",
+                    "variants": [
+                        { "text": "Селям" },
+                        { "text": "Сенинъ" },
+                        { "text": "Мемнюн" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "яхшы",
+                    "variants": [
+                        { "text": "ярамай" },
+                        { "text": "яхшы" },
+                        { "text": "сабалар" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "Корюшкендже",
+                    "variants": [
+                        { "text": "Мемнюн" },
+                        { "text": "Корюшкендже" },
+                        { "text": "Коришкендже" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Прочтите диалог",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Халил",
+                    "text": "Хайырлы сабалар. Мен Халил. Адынъ не?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Алейкум селям, Халил! Меним адым Назлы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Халил",
+                    "text": "Мемнюн олдым.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Мен де мемнюн олдым. Саба яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Халил",
+                    "text": "Эбет, яхшы. Корюшкендже!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Корюшкендже, Халил!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Халил",
+                    "text": "{{input1}} сабалар. {{input2}} Халил. Адынъ не?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Алейкум селям, Халил! Меним {{input3}} Назлы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Халил",
+                    "text": "Мемнюн олдым.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Мен {{input4}} мемнюн олдым. Саба яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Халил",
+                    "text": "Эбет, {{input5}}. Корюшкендже.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "{{input6}}, Халил.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Хайырлы",
+                    "variants": [
+                        { "text": "Хаталы" },
+                        { "text": "Хайырлы" },
+                        { "text": "Мемнюн" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Мен",
+                    "variants": [
+                        { "text": "Сен" },
+                        { "text": "Сенинъ" },
+                        { "text": "Мен" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "адым",
+                    "variants": [
+                        { "text": "адим" },
+                        { "text": "адынъ" },
+                        { "text": "адым" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "де",
+                    "variants": [
+                        { "text": "де" },
+                        { "text": "ве" },
+                        { "text": "да" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "яхшы",
+                    "variants": [
+                        { "text": "мен" },
+                        { "text": "яхшы" },
+                        { "text": "ярамай" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "Корюшкендже",
+                    "variants": [
+                        { "text": "Корюшкендже" },
+                        { "text": "Сагълыкънен" },
+                        { "text": "Мемнюн" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 11,
+        "title": "Прочтите диалог",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Арслан",
+                    "text": "Селям алейкум, Селиме. Ишлеринъ насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Алейкум селям, Арслан! Сагъ ол, яхшы. Сенинъ ишлеринъ насыл?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Сен де сагъ ол, меним де яхшы. Копек насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Копек де яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Яхшы. Сагълыкънен къал, Селиме!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Сагълыкънен бар!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Заполните пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Арслан",
+                    "text": "Селям алейкум, Селиме. {{input1}} насыл?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Алейкум селям, Арслан! {{input2}} ол, яхшы. Сенинъ ишлеринъ {{input3}}?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Сен {{input4}} сагъ ол, меним де яхшы. Копек {{input5}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Копек де яхшы.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Арслан",
+                    "text": "Яхшы. Сагълыкънен {{input6}}, Селиме.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "Сагълыкънен {{input7}}.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Ишлеринъ",
+                    "variants": [
+                        { "text": "Сенинъ" },
+                        { "text": "Ишлеринъ" },
+                        { "text": "Ишлерин" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Сагъ",
+                    "variants": [
+                        { "text": "Мен" },
+                        { "text": "Сагъ" },
+                        { "text": "Сен" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "насыл",
+                    "variants": [
+                        { "text": "насыл" },
+                        { "text": "не" },
+                        { "text": "несиль" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "де",
+                    "variants": [
+                        { "text": "да" },
+                        { "text": "де" },
+                        { "text": "ол" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "насыл",
+                    "variants": [
+                        { "text": "насыл" },
+                        { "text": "мераба" },
+                        { "text": "не" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 6,
+                    "answer": "къал",
+                    "variants": [
+                        { "text": "къал" },
+                        { "text": "бер" },
+                        { "text": "сагъ" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 7,
+                    "answer": "бар",
+                    "variants": [
+                        { "text": "къал" },
+                        { "text": "бар" },
+                        { "text": "ол" }
+                    ]
+                }
+            ]
+        }
+    }
+]

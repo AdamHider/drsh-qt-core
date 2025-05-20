@@ -1,31 +1,31 @@
 [
     {
         "index": 1,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Ali",
-                    "text": "Selâm aleykum! Menim adım Ali. Seniñ {{input1}} ne?",
+                    "name": "Алие",
+                    "text": "Селям алейкум! Меним адым Алие. Сенинъ {{input1}} не?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Can",
-                    "text": "{{input2}}! Menim adım Can. İşleriñ nasıl?",
+                    "name": "Надир",
+                    "text": "{{input2}}! Меним адым Надир. Ишлеринъ насыл?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Ali",
-                    "text": "{{input3}}! Seniñ işleriñ nasıl?",
+                    "name": "Алие",
+                    "text": "{{input3}}! Сенинъ ишлеринъ насыл?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Can",
-                    "text": "Menim de yahşı.",
+                    "name": "Надир",
+                    "text": "Меним де яхшы.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -35,33 +35,33 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "adıñ",
+                    "answer": "адынъ",
                     "variants": [
-                        { "text": "Sen" },
-                        { "text": "Men" },
-                        { "text": "Sağ" }
+                        { "text": "ад" },
+                        { "text": "адын" },
+                        { "text": "адынъ" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Aleykum selam",
+                    "answer": "Алейкум селям",
                     "variants": [
-                        { "text": "Aleykum selâm" },
-                        { "text": "İşleriñ" },
-                        { "text": "Selâm aleykum" }
+                        { "text": "Алейкум селям" },
+                        { "text": "Ишлеринъ" },
+                        { "text": "Селям алейкум" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "yahşı",
+                    "answer": "Яхшы",
                     "variants": [
-                        { "text": "yahşi" },
-                        { "text": "yahşı" },
-                        { "text": "araba" }
+                        { "text": "Яхши" },
+                        { "text": "Яхшы" },
+                        { "text": "Араба" }
                     ]
                 }
             ]
@@ -69,23 +69,23 @@
     },
     {
         "index": 2,
-        "title": "Сопоставьте пары",
+        "title": "Сопоставь пары",
         "subtitle": "",
         "form_template": "match",
         "page_template": "listSimple",
         "template_config": {
             "item_list": [
                 {
-                    "text": "Sağlıqnen qal - {{input1}}"
+                    "text": "Сагълыкънен къал - {{input1}}"
                 },
                 {
-                    "text": "İşleriñ nasıl? - {{input2}}"
+                    "text": "Ишлеринъ насыл? - {{input2}}"
                 },
                 {
-                    "text": "Selâm aleykum - {{input3}}"
+                    "text": "Селям алейкум - {{input3}}"
                 },
                 {
-                    "text": "Sağ ol - {{input4}}"
+                    "text": "Сагъ ол - {{input4}}"
                 }
             ],
             "input_list": [
@@ -93,32 +93,32 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "Sağlıqnen bar"
+                    "answer": "Сагълыкънен бар"
                 },
                 {
                     "mode": "match",
                     "type": "input",
                     "index": 2,
-                    "answer": "Yahşı"
+                    "answer": "Яхшы"
                 },
                 {
                     "mode": "match",
                     "type": "input",
                     "index": 3,
-                    "answer": "Aleykum selâm"
+                    "answer": "Алейкум селям"
                 },
                 {
                     "mode": "match",
                     "type": "input",
                     "index": 4,
-                    "answer": "Sen de sağ ol"
+                    "answer": "Сен де сагъ ол"
                 }
             ]
         }
     },
     {
         "index": 3,
-        "title": "Найдите лишнее слово",
+        "title": "Найди лишнее слово",
         "subtitle": "",
         "form_template": "radio",
         "page_template": "radio",
@@ -134,19 +134,19 @@
                     "mode": "match",
                     "type": "radio",
                     "index": 1,
-                    "answer": "Çanta",
+                    "answer": "чанта",
                     "variants": [
                         {
-                            "text": "Meraba"
+                            "text": "мераба"
                         },
                         {
-                            "text": "Selâm aleykum"
+                            "text": "селям алейкум"
                         },
                         {
-                            "text": "Hayırlı sabalar"
+                            "text": "хайырлы сабалар"
                         },
                         {
-                            "text": "Çanta"
+                            "text": "чанта"
                         }
                     ]
                 }
@@ -155,31 +155,31 @@
     },
     {
         "index": 4,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Ayşe",
-                    "text": "Meraba! Men Ayşe. Seniñ adıñ {{input1}}?",
+                    "name": "Селиме",
+                    "text": "Мераба! Мен Селиме. Сенинъ адынъ {{input1}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Ali",
-                    "text": "Meraba Ayşe! Menim adım Ali.",
+                    "name": "Эвтаде",
+                    "text": "Мераб, Селиме! Меним адым Эвтаде.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Ayşe",
-                    "text": "{{input2}} oldım.",
+                    "name": "Селиме",
+                    "text": "{{input2}} олдым.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Ali",
-                    "text": "Men de memnün {{input3}}.",
+                    "name": "Эвтаде",
+                    "text": "Мен де мемнюн {{input3}}.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -189,33 +189,33 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "ne",
+                    "answer": "не",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "ne" },
-                        { "text": "de" }
+                        { "text": "насыл" },
+                        { "text": "не" },
+                        { "text": "де" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "Memnün",
+                    "answer": "Мемнюн",
                     "variants": [
-                        { "text": "Memnün" },
-                        { "text": "İşleriñ" },
-                        { "text": "Yahşı" }
+                        { "text": "Мемнюн" },
+                        { "text": "Ишлеринъ" },
+                        { "text": "Яхшы" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "oldım",
+                    "answer": "олдым",
                     "variants": [
-                        { "text": "oldum" },
-                        { "text": "oldım" },
-                        { "text": "adım" }
+                        { "text": "олдум" },
+                        { "text": "олдым" },
+                        { "text": "адым" }
                     ]
                 }
             ]
@@ -239,16 +239,16 @@
                     "mode": "match",
                     "type": "radio",
                     "index": 1,
-                    "answer": "Seniñ adıñ nasıl?",
+                    "answer": "Сенинъ адынъ насыл?",
                     "variants": [
                         {
-                            "text": "Seniñ adıñ nasıl?"
+                            "text": "Сенинъ адынъ насыл?"
                         },
                         {
-                            "text": "Menim adım Ali."
+                            "text": "Меним адым Асан."
                         },
                         {
-                            "text": "Memnün oldım."
+                            "text": "Мемнюн олдым."
                         }
                     ]
                 }
@@ -257,31 +257,31 @@
     },
     {
         "index": 6,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Ali",
-                    "text": "Hayırlı {{input1}} Ayşe.",
+                    "name": "Халил",
+                    "text": "Хайырлы {{input1}} Назлы.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Can",
-                    "text": "Hayırlı aqşamlar Ali. {{input2}} nasıl?",
+                    "name": "Назлы",
+                    "text": "Хайырлы акъшамлар, Халил. {{input2}} насыл?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Ali",
-                    "text": "Yahşı, {{input3}} ol. Seniñ işleriñ nasıl?",
+                    "name": "Халил",
+                    "text": "Яхшы, {{input3}} ол. Сенинъ ишлеринъ насыл?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Can",
-                    "text": "Menim de yahşı, {{input4}} de sağ ol.",
+                    "name": "Назлы",
+                    "text": "Меним де яхшы, {{input4}} де сагъ ол.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 }
@@ -291,44 +291,44 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "aqşamlar",
+                    "answer": "акъшамлар",
                     "variants": [
-                        { "text": "aqşamlar" },
-                        { "text": "sabalar" },
-                        { "text": "adamlar" }
+                        { "text": "акъшамлар" },
+                        { "text": "сабалар" },
+                        { "text": "адамлар" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "İşleriñ",
+                    "answer": "Ишлеринъ",
                     "variants": [
-                        { "text": "Memnün" },
-                        { "text": "İşleriñ" },
-                        { "text": "Yahşı" }
+                        { "text": "Мемнюн" },
+                        { "text": "Ишлеринъ" },
+                        { "text": "Яхшы" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "sağ",
+                    "answer": "сагъ",
                     "variants": [
-                        { "text": "sağ" },
-                        { "text": "yahşı" },
-                        { "text": "sen" }
+                        { "text": "сагъ" },
+                        { "text": "яхшы" },
+                        { "text": "сен" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "sen",
+                    "answer": "сен",
                     "variants": [
-                        { "text": "sen" },
-                        { "text": "mel" },
-                        { "text": "mışıq" }
+                        { "text": "сен" },
+                        { "text": "мел" },
+                        { "text": "мышыкъ" }
                     ]
                 }
             ]
@@ -336,14 +336,14 @@
     },
     {
         "index": 7,
-        "title": "Расположите в правильном порядке",
+        "title": "Расположи в правильном порядке",
         "subtitle": "",
-        "form_template": "match",
+        "form_template": "puzzle",
         "page_template": "listSimple",
         "template_config": {
             "item_list": [
                 {
-                    "text": "{{input1}} {{input2}} {{input3}} {{input4}} {{input5}}"
+                    "text": "{{input1}}"
                 }
             ],
             "input_list": [
@@ -351,45 +351,30 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "men"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "de"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "memnün"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "oldım"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "."
+                    "answer": "Мен|де|мемнюн|олдым|.",
+                    "variants": [
+                        { "text": "?" },
+                        { "text": "." },
+                        { "text": "олдым" },
+                        { "text": "де" },
+                        { "text": "мемнюн" },
+                        { "text": "," },
+                        { "text": "Мен" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 8,
-        "title": "Расположите в правильном порядке",
+        "title": "Расположи в правильном порядке",
         "subtitle": "",
-        "form_template": "match",
+        "form_template": "puzzle",
         "page_template": "listSimple",
         "template_config": {
             "item_list": [
                 {
-                    "text": "Menim  {{input1}} {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
+                    "text": "{{input1}}"
                 }
             ],
             "input_list": [
@@ -397,50 +382,24 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "adım"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "Ayşe"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "."
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "Seniñ"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "adıñ"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 6,
-                    "answer": "ne"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 7,
-                    "answer": "?"
+                    "answer": "Меним|адым|Назлы|.|Сенинъ|адынъ|не|?",
+                    "variants": [
+                        { "text": "?" },
+                        { "text": "Назлы" },
+                        { "text": "адым" },
+                        { "text": "Сенинъ" },
+                        { "text": "Меним" },
+                        { "text": "не" },
+                        { "text": "." },
+                        { "text": "адынъ" }
+                    ]
                 }
             ]
         }
     },
     {
         "index": 9,
-        "title": "Найдите лишнее слово",
+        "title": "Найди лишнее слово",
         "subtitle": "",
         "form_template": "radio",
         "page_template": "radio",
@@ -456,19 +415,19 @@
                     "mode": "match",
                     "type": "radio",
                     "index": 1,
-                    "answer": "Çanta",
+                    "answer": "Кунь",
                     "variants": [
                         {
-                            "text": "Memnün oldım"
+                            "text": "Мемнюн олдым"
                         },
                         {
-                            "text": "Sağ ol"
+                            "text": "Сагъ ол"
                         },
                         {
-                            "text": "Kün"
+                            "text": "Ишлеринъ насыл"
                         },
                         {
-                            "text": "İşleriñ nasıl"
+                            "text": "Кунь"
                         }
                     ]
                 }
@@ -477,14 +436,14 @@
     },
     {
         "index": 10,
-        "title": "Расположите в правильном порядке",
+        "title": "Расположи в правильном порядке",
         "subtitle": "",
-        "form_template": "match",
+        "form_template": "puzzle",
         "page_template": "listSimple",
         "template_config": {
             "item_list": [
                 {
-                    "text": "{{input1}} de {{input2}} {{input3}} {{input4}} {{input5}} {{input6}} {{input7}}"
+                    "text": "{{input1}}"
                 }
             ],
             "input_list": [
@@ -492,49 +451,23 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "men"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "memnün"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 3,
-                    "answer": "oldım"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 4,
-                    "answer": "."
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 5,
-                    "answer": "İşleriñ"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 6,
-                    "answer": "nasıl"
-                },
-                {
-                    "mode": "match",
-                    "type": "input",
-                    "index": 7,
-                    "answer": "?"
+                    "answer": "Мен|де|мемнюн|олдым|.|Ишлеринъ|насыл|?",
+                    "variants": [
+                        { "text": "?" },
+                        { "text": "олдым" },
+                        { "text": "Мен" },
+                        { "text": "мемнюн" },
+                        { "text": "." },
+                        { "text": "насыл" },
+                        { "text": "Ишлеринъ" },
+                        { "text": "де" }
+                    ]
                 }
             ]
         }
     },
     {
-        "index": 5,
+        "index": 11,
         "title": "Где ошибка?",
         "subtitle": "",
         "form_template": "radio",
@@ -572,59 +505,59 @@
     },
     {
         "index": 12,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
         "template_config": {
             "replica_list": [
                 {
-                    "name": "Emre",
-                    "text": "Hayırlı sabalar!",
+                    "name": "Джемиле",
+                    "text": "Хайырлы сабалар!",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Leyla",
-                    "text": "Hayırlı sabalar!",
+                    "name": "Исмет",
+                    "text": "Хайырлы сабалар!",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Emre",
-                    "text": "{{input1}} adım Emre. Seniñ adıñ {{input2}}?",
+                    "name": "Джемиле",
+                    "text": "{{input1}} адым Джемиле. Сенинъ адынъ {{input2}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Leyla",
-                    "text": "Memnün {{input3}}. Menim adım Leyla.",
+                    "name": "Исмет",
+                    "text": "Мемнюн {{input3}}. Меним адым Исмет.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Emre",
-                    "text": "Men de {{input4}} oldım. İşleriñ {{input5}}?",
+                    "name": "Джемиле",
+                    "text": "Мен де {{input4}} олдым. Ишлеринъ {{input5}}?",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Leyla",
-                    "text": "Yahşı, sağ ol. {{input6}} işleriñ nasıl?",
+                    "name": "Исмет",
+                    "text": "Яхшы, сагъ ол. {{input6}} ишлеринъ насыл?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Emre",
-                    "text": "{{input7}} sağ ol, menim {{input8}} yahşı.",
+                    "name": "Джемиле",
+                    "text": "{{input7}} сагъ ол. Меним {{input8}} яхшы.",
                     "image": "/image/2.jpg"
                 },
                 {
-                    "name": "Leyla",
-                    "text": "Sağlıqnen {{input9}}, Emre.",
+                    "name": "Исмет",
+                    "text": "Сагълыкънен {{input9}}, Джемиле.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
-                    "name": "Emre",
-                    "text": "Sağlıqnen bar.",
+                    "name": "Джемиле",
+                    "text": "Сагълыкънен бар.",
                     "image": "/image/2.jpg"
                 }
             ],
@@ -633,90 +566,90 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Menim",
+                    "answer": "Меним",
                     "variants": [
-                        { "text": "Menim" },
-                        { "text": "Menım" }
+                        { "text": "Меним" },
+                        { "text": "Меным" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ne",
+                    "answer": "не",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "ne" }
+                        { "text": "насыл" },
+                        { "text": "не" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "oldım",
+                    "answer": "олдым",
                     "variants": [
-                        { "text": "oldım" },
-                        { "text": "oldum" }
+                        { "text": "олдым" },
+                        { "text": "олдум" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "memnün",
+                    "answer": "мемнюн",
                     "variants": [
-                        { "text": "memnun" },
-                        { "text": "memnün" }
+                        { "text": "мемнун" },
+                        { "text": "мемнюн" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 5,
-                    "answer": "nasıl",
+                    "answer": "насыл",
                     "variants": [
-                        { "text": "nasıl" },
-                        { "text": "ne" }
+                        { "text": "насыл" },
+                        { "text": "не" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 6,
-                    "answer": "Seniñ",
+                    "answer": "Сенинъ",
                     "variants": [
-                        { "text": "Seniñ" },
-                        { "text": "Senin" }
+                        { "text": "Сенинъ" },
+                        { "text": "Сенин" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 7,
-                    "answer": "Sen de",
+                    "answer": "Сен де",
                     "variants": [
-                        { "text": "Saña da" },
-                        { "text": "Sen de" }
+                        { "text": "Санъа да" },
+                        { "text": "Сен де" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 8,
-                    "answer": "de",
+                    "answer": "де",
                     "variants": [
-                        { "text": "de" },
-                        { "text": "ne" }
+                        { "text": "де" },
+                        { "text": "не" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 9,
-                    "answer": "qal",
+                    "answer": "къал",
                     "variants": [
-                        { "text": "qal" },
-                        { "text": "bar" }
+                        { "text": "къал" },
+                        { "text": "бар" }
                     ]
                 }
             ]

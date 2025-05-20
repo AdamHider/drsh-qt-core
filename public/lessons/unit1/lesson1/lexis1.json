@@ -12,97 +12,97 @@
     },
     "word_list": [
         {
-            "text": "meraba",
+            "text": "мераба",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
             "label": "привет"
         },
         {
-            "text": "selâm aleykum",
+            "text": "селям алейкум",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
             "label": "здравствуйте"
         },
         {
-            "text": "aleykum selâm",
+            "text": "алейкум селям",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
             "label": "здравствуйте (в ответ)"
         },
         {
-            "text": "hayırlı sabalar",
+            "text": "хайырлы сабалар",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
             "label": "доброе утро"
         },
         {
-            "text": "hayırlı aqşamlar",
+            "text": "хайырлы акъшамлар",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
             "label": "добрый вечер"
         },
         {
-            "text": "adıñ ne?",
+            "text": "адынъ не?",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
             "label": "как тебя зовут?"
         },
         {
-            "text": "işleriñ nasıl?",
+            "text": "ишлеринъ насыл?",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
             "label": "как твои дела?"
         },
         {
-            "text": "yahşı",
+            "text": "яхшы",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
             "label": "хорошо"
         },
         {
-            "text": "sağ ol",
+            "text": "сагъ ол",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
             "label": "спасибо"
         },
         {
-            "text": "sen de sağ ol",
+            "text": "сен де сагъ ол",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
             "label": "спасибо (в ответ)"
         },
         {
-            "text": "men",
+            "text": "мен",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
             "label": "я"
         },
         {
-            "text": "sen",
+            "text": "сен",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
             "label": "ты"
         },
         {
-            "text": "memnün oldım",
+            "text": "мемнюн олдым",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
             "label": "приятно познакомиться"
         },
         {
-            "text": "sağlıqnen qal",
+            "text": "сагълыкънен къал",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
             "label": "до свидания"
         },
         {
-            "text": "sağlıqnen bar",
+            "text": "сагълыкънен бар",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
             "label": "до свидания (в ответ)"
         },
         {
-            "text": "körüşkence",
+            "text": "корюшкендже",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
             "label": "увидимся"

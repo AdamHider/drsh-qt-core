@@ -13,13 +13,13 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "ev",
+                    "answer": "эв",
                     "variants": [
-                        { "text": "a" },
-                        { "text": "v" },
-                        { "text": "k" },
-                        { "text": "e" },
-                        { "text": "a" }
+                        { "text": "а" },
+                        { "text": "в" },
+                        { "text": "к" },
+                        { "text": "э" },
+                        { "text": "а" }
                     ]
                 }
             ]
@@ -39,14 +39,14 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "araba",
+                    "answer": "араба",
                     "variants": [
-                        { "text": "b" },
-                        { "text": "r" },
-                        { "text": "a" },
-                        { "text": "a" },
-                        { "text": "q" },
-                        { "text": "a" }
+                        { "text": "б" },
+                        { "text": "р" },
+                        { "text": "а" },
+                        { "text": "а" },
+                        { "text": "къ" },
+                        { "text": "а" }
                     ]
                 }
             ]
@@ -66,13 +66,13 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "ayaq",
+                    "answer": "аякъ",
                     "variants": [
-                        { "text": "q" },
-                        { "text": "y" },
-                        { "text": "l" },
-                        { "text": "a" },
-                        { "text": "a" }
+                        { "text": "къ" },
+                        { "text": "я" },
+                        { "text": "л" },
+                        { "text": "е" },
+                        { "text": "а" }
                     ]
                 }
             ]
@@ -92,14 +92,14 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "qalem",
+                    "answer": "къалем",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "l" },
-                        { "text": "r" },
-                        { "text": "m" },
-                        { "text": "a" },
-                        { "text": "q" }
+                        { "text": "е" },
+                        { "text": "л" },
+                        { "text": "р" },
+                        { "text": "м" },
+                        { "text": "а" },
+                        { "text": "къ" }
                     ]
                 }
             ]
@@ -119,14 +119,14 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "köpek",
+                    "answer": "копек",
                     "variants": [
-                        { "text": "o" },
-                        { "text": "p" },
-                        { "text": "k" },
-                        { "text": "a" },
-                        { "text": "k" },
-                        { "text": "m" }
+                        { "text": "о" },
+                        { "text": "п" },
+                        { "text": "к" },
+                        { "text": "а" },
+                        { "text": "к" },
+                        { "text": "м" }
                     ]
                 }
             ]
@@ -146,14 +146,14 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "küneş",
+                    "answer": "кунеш",
                     "variants": [
-                        { "text": "ş" },
-                        { "text": "v" },
-                        { "text": "ü" },
-                        { "text": "n" },
-                        { "text": "k" },
-                        { "text": "e" }
+                        { "text": "ш" },
+                        { "text": "в" },
+                        { "text": "у" },
+                        { "text": "н" },
+                        { "text": "к" },
+                        { "text": "е" }
                     ]
                 }
             ]
@@ -173,13 +173,13 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "alma",
+                    "answer": "алма",
                     "variants": [
-                        { "text": "l" },
-                        { "text": "i" },
-                        { "text": "m" },
-                        { "text": "a" },
-                        { "text": "a" }
+                        { "text": "л" },
+                        { "text": "и" },
+                        { "text": "м" },
+                        { "text": "а" },
+                        { "text": "а" }
                     ]
                 }
             ]
@@ -199,13 +199,13 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "suv",
+                    "answer": "сув",
                     "variants": [
-                        { "text": "t" },
-                        { "text": "v" },
-                        { "text": "u" },
-                        { "text": "r" },
-                        { "text": "s" }
+                        { "text": "т" },
+                        { "text": "в" },
+                        { "text": "у" },
+                        { "text": "р" },
+                        { "text": "с" }
                     ]
                 }
             ]
@@ -225,14 +225,14 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "oğlan",
+                    "answer": "огълан",
                     "variants": [
-                        { "text": "l" },
-                        { "text": "o" },
-                        { "text": "r" },
-                        { "text": "n" },
-                        { "text": "ğ" },
-                        { "text": "a" }
+                        { "text": "л" },
+                        { "text": "о" },
+                        { "text": "р" },
+                        { "text": "н" },
+                        { "text": "гъ" },
+                        { "text": "а" }
                     ]
                 }
             ]
@@ -252,16 +252,16 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "mektep",
+                    "answer": "мектеп",
                     "variants": [
-                        { "text": "p" },
-                        { "text": "a" },
-                        { "text": "n" },
-                        { "text": "k" },
-                        { "text": "t" },
-                        { "text": "e" },
-                        { "text": "e" },
-                        { "text": "m" }
+                        { "text": "п" },
+                        { "text": "а" },
+                        { "text": "н" },
+                        { "text": "к" },
+                        { "text": "т" },
+                        { "text": "е" },
+                        { "text": "е" },
+                        { "text": "м" }
                     ]
                 }
             ]
@@ -281,17 +281,17 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "çiçek",
+                    "answer": "чичек",
                     "variants": [
-                        { "text": "a" },
-                        { "text": "k" },
-                        { "text": "i" },
-                        { "text": "y" },
-                        { "text": "ç" },
-                        { "text": "ç" },
-                        { "text": "b" },
-                        { "text": "e" },
-                        { "text": "l" }
+                        { "text": "а" },
+                        { "text": "к" },
+                        { "text": "и" },
+                        { "text": "й" },
+                        { "text": "ч" },
+                        { "text": "ч" },
+                        { "text": "б" },
+                        { "text": "е" },
+                        { "text": "л" }
                     ]
                 }
             ]
@@ -311,16 +311,16 @@
                     "mode": "puzzle",
                     "type": "input",
                     "index": 1,
-                    "answer": "mışıq",
+                    "answer": "мышыкъ",
                     "variants": [
-                        { "text": "ı" },
-                        { "text": "q" },
-                        { "text": "e" },
-                        { "text": "ı" },
-                        { "text": "m" },
-                        { "text": "a" },
-                        { "text": "ş" },
-                        { "text": "i" }
+                        { "text": "ы" },
+                        { "text": "къ" },
+                        { "text": "е" },
+                        { "text": "ы" },
+                        { "text": "м" },
+                        { "text": "а" },
+                        { "text": "ш" },
+                        { "text": "и" }
                     ]
                 }
             ]

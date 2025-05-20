@@ -6,18 +6,18 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Дом - e{{input1}}",
+            "text": "Дом - э{{input1}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "v",
+                    "answer": "в",
                     "variants": [
-                        { "text": "k" },
-                        { "text": "v" },
-                        { "text": "ñ" }
+                        { "text": "к" },
+                        { "text": "в" },
+                        { "text": "нъ" }
                     ]
                 }
             ]
@@ -30,29 +30,29 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Дерево - t{{input1}}re{{input2}}",
+            "text": "Дерево - т{{input1}}ре{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "e",
+                    "answer": "е",
                     "variants": [
-                        { "text": "r" },
-                        { "text": "e" },
-                        { "text": "o" }
+                        { "text": "р" },
+                        { "text": "е" },
+                        { "text": "о" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "k",
+                    "answer": "к",
                     "variants": [
-                        { "text": "n" },
-                        { "text": "ç" },
-                        { "text": "k" }
+                        { "text": "н" },
+                        { "text": "ч" },
+                        { "text": "к" }
                     ]
                 }
             ]
@@ -65,29 +65,29 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Книга - k{{input1}}ta{{input2}}",
+            "text": "Книга - к{{input1}}та{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "i",
+                    "answer": "и",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "a" },
-                        { "text": "i" }
+                        { "text": "е" },
+                        { "text": "а" },
+                        { "text": "и" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "p",
+                    "answer": "п",
                     "variants": [
-                        { "text": "p" },
-                        { "text": "b" },
-                        { "text": "r" }
+                        { "text": "п" },
+                        { "text": "б" },
+                        { "text": "р" }
                     ]
                 }
             ]
@@ -100,29 +100,29 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Дверь - {{input1}}ap{{input2}}",
+            "text": "Дверь - {{input1}}ап{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "q",
+                    "answer": "къ",
                     "variants": [
-                        { "text": "h" },
-                        { "text": "k" },
-                        { "text": "q" }
+                        { "text": "х" },
+                        { "text": "к" },
+                        { "text": "къ" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ı",
+                    "answer": "ы",
                     "variants": [
-                        { "text": "u" },
-                        { "text": "ı" },
-                        { "text": "i" }
+                        { "text": "у" },
+                        { "text": "ы" },
+                        { "text": "и" }
                     ]
                 }
             ]
@@ -135,29 +135,29 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Нога - a{{input1}}a{{input2}}",
+            "text": "Нога - а{{input1}}{{input2}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "y",
+                    "answer": "я",
                     "variants": [
-                        { "text": "b" },
-                        { "text": "y" },
-                        { "text": "i" }
+                        { "text": "я" },
+                        { "text": "ю" },
+                        { "text": "й" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "q",
+                    "answer": "къ",
                     "variants": [
-                        { "text": "q" },
-                        { "text": "ğ" },
-                        { "text": "k" }
+                        { "text": "къ" },
+                        { "text": "гъ" },
+                        { "text": "к" }
                     ]
                 }
             ]
@@ -170,29 +170,29 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Небо - {{input1}}{{input2}}k",
+            "text": "Небо - {{input1}}{{input2}}к",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "k",
+                    "answer": "к",
                     "variants": [
-                        { "text": "k" },
-                        { "text": "g" },
-                        { "text": "h" }
+                        { "text": "к" },
+                        { "text": "г" },
+                        { "text": "х" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ö",
+                    "answer": "о",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "ö" },
-                        { "text": "a" }
+                        { "text": "е" },
+                        { "text": "о" },
+                        { "text": "а" }
                     ]
                 }
             ]
@@ -205,29 +205,18 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Дорога - {{input1}}{{input2}}l",
+            "text": "Дорога - {{input1}}л",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "y",
+                    "answer": "ё",
                     "variants": [
-                        { "text": "y" },
-                        { "text": "c" },
-                        { "text": "ç" }
-                    ]
-                },
-                {
-                    "mode": "variant",
-                    "type": "input",
-                    "index": 2,
-                    "answer": "o",
-                    "variants": [
-                        { "text": "u" },
-                        { "text": "ö" },
-                        { "text": "o" }
+                        { "text": "ё" },
+                        { "text": "о" },
+                        { "text": "е" }
                     ]
                 }
             ]
@@ -247,33 +236,33 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "q",
+                    "answer": "къ",
                     "variants": [
-                        { "text": "q" },
-                        { "text": "k" },
-                        { "text": "h" }
+                        { "text": "къ" },
+                        { "text": "к" },
+                        { "text": "х" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "ı",
+                    "answer": "ы",
                     "variants": [
-                        { "text": "a" },
-                        { "text": "i" },
-                        { "text": "ı" }
+                        { "text": "а" },
+                        { "text": "и" },
+                        { "text": "ы" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "z",
+                    "answer": "з",
                     "variants": [
-                        { "text": "s" },
-                        { "text": "ş" },
-                        { "text": "z" }
+                        { "text": "с" },
+                        { "text": "ш" },
+                        { "text": "з" }
                     ]
                 }
             ]
@@ -286,40 +275,40 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Хлеб - {{input1}}t{{input2}}e{{input3}}",
+            "text": "Хлеб - {{input1}}ть{{input2}}е{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "ö",
+                    "answer": "о",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "ö" },
-                        { "text": "i" }
+                        { "text": "е" },
+                        { "text": "о" },
+                        { "text": "и" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "m",
+                    "answer": "м",
                     "variants": [
-                        { "text": "t" },
-                        { "text": "n" },
-                        { "text": "m" }
+                        { "text": "т" },
+                        { "text": "н" },
+                        { "text": "м" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "k",
+                    "answer": "к",
                     "variants": [
-                        { "text": "s" },
-                        { "text": "k" },
-                        { "text": "ğ" }
+                        { "text": "с" },
+                        { "text": "к" },
+                        { "text": "гъ" }
                     ]
                 }
             ]
@@ -332,40 +321,40 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Ребёнок - b{{input1}}{{input2}}{{input3}}",
+            "text": "Ребёнок - б{{input1}}{{input2}}{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "a",
+                    "answer": "а",
                     "variants": [
-                        { "text": "a" },
-                        { "text": "e" },
-                        { "text": "o" }
+                        { "text": "а" },
+                        { "text": "е" },
+                        { "text": "о" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "l",
+                    "answer": "л",
                     "variants": [
-                        { "text": "n" },
-                        { "text": "b" },
-                        { "text": "l" }
+                        { "text": "н" },
+                        { "text": "б" },
+                        { "text": "л" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "a",
+                    "answer": "а",
                     "variants": [
-                        { "text": "i" },
-                        { "text": "a" },
-                        { "text": "e" }
+                        { "text": "и" },
+                        { "text": "а" },
+                        { "text": "е" }
                     ]
                 }
             ]
@@ -378,40 +367,40 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Машина - a{{input1}}a{{input2}}{{input3}}",
+            "text": "Машина - а{{input1}}а{{input2}}{{input3}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "r",
+                    "answer": "р",
                     "variants": [
-                        { "text": "r" },
-                        { "text": "p" },
-                        { "text": "b" }
+                        { "text": "р" },
+                        { "text": "п" },
+                        { "text": "б" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "b",
+                    "answer": "б",
                     "variants": [
-                        { "text": "s" },
-                        { "text": "c" },
-                        { "text": "b" }
+                        { "text": "с" },
+                        { "text": "дж" },
+                        { "text": "б" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "a",
+                    "answer": "а",
                     "variants": [
-                        { "text": "a" },
-                        { "text": "ı" },
-                        { "text": "ğ" }
+                        { "text": "а" },
+                        { "text": "ы" },
+                        { "text": "гъ" }
                     ]
                 }
             ]
@@ -424,51 +413,51 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Рюкзак - {{input1}}a{{input2}}{{input3}}{{input4}}",
+            "text": "Рюкзак - {{input1}}а{{input2}}{{input3}}{{input4}}",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "ç",
+                    "answer": "ч",
                     "variants": [
-                        { "text": "q" },
-                        { "text": "ş" },
-                        { "text": "ç" }
+                        { "text": "къ" },
+                        { "text": "ш" },
+                        { "text": "ч" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "n",
+                    "answer": "н",
                     "variants": [
-                        { "text": "n" },
-                        { "text": "m" },
-                        { "text": "ğ" }
+                        { "text": "н" },
+                        { "text": "м" },
+                        { "text": "гъ" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "t",
+                    "answer": "т",
                     "variants": [
-                        { "text": "r" },
-                        { "text": "d" },
-                        { "text": "t" }
+                        { "text": "р" },
+                        { "text": "д" },
+                        { "text": "т" }
                     ]
                 },
                 {
                     "mode": "variant",
                     "type": "input",
                     "index": 4,
-                    "answer": "a",
+                    "answer": "а",
                     "variants": [
-                        { "text": "e" },
-                        { "text": "a" },
-                        { "text": "ı" }
+                        { "text": "е" },
+                        { "text": "а" },
+                        { "text": "ы" }
                     ]
                 }
             ]
