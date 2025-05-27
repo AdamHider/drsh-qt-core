@@ -12,76 +12,76 @@
     },
     "word_list": [
         {
-            "text": "дефтер",
+            "text": "сыныф",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "тетрадь"
+            "label": "класс"
         },
         {
-            "text": "оджа",
+            "text": "къат",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "учитель"
+            "label": "этаж"
         },
         {
-            "text": "талебе",
+            "text": "дивар",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "ученик"
+            "label": "стена"
         },
         {
-            "text": "долап",
+            "text": "коридор",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "шкаф"
+            "label": "коридор"
         },
         {
-            "text": "эким",
+            "text": "ресим",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "врач"
+            "label": "рисунок"
         },
         {
-            "text": "геми",
+            "text": "сильгич",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "корабль"
+            "label": "стёрка"
         },
         {
-            "text": "макъас",
+            "text": "бор",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "ножницы"
+            "label": "мел"
         },
         {
-            "text": "санчкъы",
+            "text": "рале",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "вилка"
+            "label": "парта"
         },
         {
-            "text": "рессам",
+            "text": "компьютер",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "художник"
+            "label": "компьютер"
         },
         {
-            "text": "къуруджы",
+            "text": "джедвель",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "строитель"
+            "label": "линейка"
         },
         {
-            "text": "фильджан",
+            "text": "къарандаш",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "чашка"
+            "label": "карандаш"
         },
         {
-            "text": "чалгъыджы",
+            "text": "топ",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "музыкант"
+            "label": "мяч"
         }
     ],
     "input_object": {

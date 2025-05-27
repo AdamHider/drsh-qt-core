@@ -12,73 +12,73 @@
     },
     "word_list": [
         {
-            "text": "anahtar",
+            "text": "анахтар",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
             "label": "ключ"
         },
         {
-            "text": "leylek",
+            "text": "лейлек",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
             "label": "аист"
         },
         {
-            "text": "yaqın",
+            "text": "якъын",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
             "label": "близко"
         },
         {
-            "text": "uzaq",
+            "text": "узакъ",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
             "label": "далеко"
         },
         {
-            "text": "çoq uzaq",
+            "text": "чокъ узакъ",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
             "label": "очень далеко"
         },
         {
-            "text": "bu",
+            "text": "бу",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
             "label": "это (близко)"
         },
         {
-            "text": "şu",
+            "text": "шу",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
             "label": "это (далеко)"
         },
         {
-            "text": "o",
+            "text": "о",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
             "label": "то"
         },
         {
-            "text": "pencere",
+            "text": "пенджере",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
             "label": "окно"
         },
         {
-            "text": "ebet",
+            "text": "эбет",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
             "label": "да"
         },
         {
-            "text": "yoq",
+            "text": "ёкъ",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
             "label": "нет"
         },
         {
-            "text": "bağça",
+            "text": "багъча",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
             "label": "сад"

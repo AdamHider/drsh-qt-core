@@ -12,76 +12,76 @@
     },
     "word_list": [
         {
-            "text": "дефтер",
+            "text": "куньделик",
             "image": "/image/1LEXIS/hello.jpg",
             "index": 1,
-            "label": "тетрадь"
+            "label": "дневник"
         },
         {
-            "text": "оджа",
+            "text": "кягъыт",
             "image": "/image/1LEXIS/me.jpg",
             "index": 2,
-            "label": "учитель"
+            "label": "бумага"
         },
         {
-            "text": "талебе",
+            "text": "анда",
             "image": "/image/1LEXIS/name.jpg",
             "index": 3,
-            "label": "ученик"
+            "label": "там"
         },
         {
-            "text": "долап",
+            "text": "имза",
             "image": "/image/1LEXIS/glad.jpg",
             "index": 4,
-            "label": "шкаф"
+            "label": "подпись"
         },
         {
-            "text": "эким",
+            "text": "бар",
             "image": "/image/1LEXIS/how_are_you.jpg",
             "index": 5,
-            "label": "врач"
+            "label": "есть (наличие)"
         },
         {
-            "text": "геми",
+            "text": "ёкъ",
             "image": "/image/1LEXIS/thank_you1.jpg",
             "index": 6,
-            "label": "корабль"
+            "label": "нет (отсутствие)"
         },
         {
-            "text": "макъас",
+            "text": "адам",
             "image": "/image/1LEXIS/good.jpg",
             "index": 7,
-            "label": "ножницы"
+            "label": "человек"
         },
         {
-            "text": "санчкъы",
+            "text": "хастахане",
             "image": "/image/1LEXIS/to_acquaint.jpg",
             "index": 8,
-            "label": "вилка"
+            "label": "больница"
         },
         {
-            "text": "рессам",
+            "text": "тюкян",
             "image": "/image/1LEXIS/fellow.jpg",
             "index": 9,
-            "label": "художник"
+            "label": "магазин"
         },
         {
-            "text": "къуруджы",
+            "text": "мында",
             "image": "/image/1LEXIS/bu.jpg",
             "index": 10,
-            "label": "строитель"
+            "label": "здесь"
         },
         {
-            "text": "фильджан",
+            "text": "ер",
             "image": "/image/1LEXIS/su.jpg",
             "index": 11,
-            "label": "чашка"
+            "label": "место"
         },
         {
-            "text": "чалгъыджы",
+            "text": "сокъакъ",
             "image": "/image/1LEXIS/o.jpg",
             "index": 12,
-            "label": "музыкант"
+            "label": "улица"
         }
     ],
     "input_object": {

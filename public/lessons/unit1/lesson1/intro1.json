@@ -1,7 +1,7 @@
 [
     {
         "index": 1,
-        "title": "Прочтите диалог",
+        "title": "Прочти диалог",
         "subtitle": "",
         "form_template": null,
         "page_template": "dialogue",
@@ -34,7 +34,7 @@
     },
     {
         "index": 2,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
@@ -102,7 +102,7 @@
     },
     {
         "index": 3,
-        "title": "Прочтите диалог",
+        "title": "Прочти диалог",
         "subtitle": "",
         "form_template": null,
         "page_template": "dialogue",
@@ -129,7 +129,7 @@
     },
     {
         "index": 4,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
@@ -191,7 +191,7 @@
     },
     {
         "index": 5,
-        "title": "Прочтите диалог",
+        "title": "Прочти диалог",
         "subtitle": "",
         "form_template": null,
         "page_template": "dialogue",
@@ -218,7 +218,7 @@
     },
     {
         "index": 6,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
@@ -280,7 +280,7 @@
     },
     {
         "index": 7,
-        "title": "Прочтите диалог",
+        "title": "Прочти диалог",
         "subtitle": "",
         "form_template": null,
         "page_template": "dialogue",
@@ -313,7 +313,7 @@
     },
     {
         "index": 8,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
@@ -392,7 +392,7 @@
     },
     {
         "index": 9,
-        "title": "Прочтите диалог",
+        "title": "Прочти диалог",
         "subtitle": "",
         "form_template": null,
         "page_template": "dialogue",
@@ -419,7 +419,7 @@
     },
     {
         "index": 10,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
@@ -492,7 +492,7 @@
     },
     {
         "index": 11,
-        "title": "Прочтите диалог",
+        "title": "Прочти диалог",
         "subtitle": "",
         "form_template": null,
         "page_template": "dialogue",
@@ -525,7 +525,7 @@
     },
     {
         "index": 12,
-        "title": "Заполните пропуски",
+        "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
