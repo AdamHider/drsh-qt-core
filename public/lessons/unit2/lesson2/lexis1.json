@@ -1,0 +1,93 @@
+{
+    "template": {
+        "quiz_page": {
+            "title": "Где здесь \"%s\"?",
+            "form_template": "image",
+            "page_template": "imageSelection"
+        },
+        "read_page": {
+            "title": "Запомни слово \"%s\"",
+            "page_template": "imageSelection"
+        }
+    },
+    "word_list": [
+        {
+            "text": "къач?",
+            "image": "/image/1LEXIS/hello.jpg",
+            "index": 1,
+            "label": "сколько?"
+        },
+        {
+            "text": "къачынджы?",
+            "image": "/image/1LEXIS/me.jpg",
+            "index": 2,
+            "label": "который?"
+        },
+        {
+            "text": "бир",
+            "image": "/image/1LEXIS/name.jpg",
+            "index": 3,
+            "label": "один"
+        },
+        {
+            "text": "эки",
+            "image": "/image/1LEXIS/glad.jpg",
+            "index": 4,
+            "label": "два"
+        },
+        {
+            "text": "учь",
+            "image": "/image/1LEXIS/how_are_you.jpg",
+            "index": 5,
+            "label": "три"
+        },
+        {
+            "text": "дёрт",
+            "image": "/image/1LEXIS/thank_you1.jpg",
+            "index": 6,
+            "label": "четыре"
+        },
+        {
+            "text": "беш",
+            "image": "/image/1LEXIS/good.jpg",
+            "index": 7,
+            "label": "пять"
+        },
+        {
+            "text": "алты",
+            "image": "/image/1LEXIS/to_acquaint.jpg",
+            "index": 8,
+            "label": "шесть"
+        },
+        {
+            "text": "еди",
+            "image": "/image/1LEXIS/fellow.jpg",
+            "index": 9,
+            "label": "семь"
+        },
+        {
+            "text": "секиз",
+            "image": "/image/1LEXIS/bu.jpg",
+            "index": 10,
+            "label": "восемь"
+        },
+        {
+            "text": "докъуз",
+            "image": "/image/1LEXIS/su.jpg",
+            "index": 11,
+            "label": "девять"
+        },
+        {
+            "text": "он",
+            "image": "/image/1LEXIS/o.jpg",
+            "index": 12,
+            "label": "десять"
+        }
+    ],
+    "input_object": {
+        "mode": "variant",
+        "type": "input",
+        "answer": "",
+        "variants": []
+    }
+}

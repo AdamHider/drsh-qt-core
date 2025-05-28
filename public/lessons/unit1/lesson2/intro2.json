@@ -6,7 +6,7 @@
         "form_template": null,
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Араба (машина) - Араб<span class='text-positive'>а</span><span class='text-primary'>лар</span> (машины). Лейлек (аист) - Лейл<span class='text-positive'>е</span>к<span class='text-primary'>лер</span> (аисты)",
+            "text": "Араба (машина) — Араб<span class='text-positive'>а</span><span class='text-primary'>лар</span> (машины). Лейлек (аист) — Лейл<span class='text-positive'>е</span>к<span class='text-primary'>лер</span> (аисты)",
             "image": "/image/1LEXIS/hello.jpg"
         }
     },

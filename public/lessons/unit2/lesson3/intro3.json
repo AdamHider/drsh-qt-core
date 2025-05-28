@@ -1,0 +1,546 @@
+[
+    {
+        "index": 1,
+        "title": "Запомни конструкцию",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Олар яхшы талебелердир."
+        }
+    },
+    {
+        "index": 2,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} якъынсынъмы? {{input2}}, узагъым.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Сен",
+                    "variants": [
+                        { "text": "Мен" },
+                        { "text": "Сен" },
+                        { "text": "О" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Ёкъ",
+                    "variants": [
+                        { "text": "Эбет" },
+                        { "text": "Ёкъ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 3,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Мектеп балабан{{input1}}? {{input2}}, балабандыр.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "мы",
+                    "variants": [
+                        { "text": "мы" },
+                        { "text": "ми" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Эбет",
+                    "variants": [
+                        { "text": "Эбет" },
+                        { "text": "Ёкъ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Бугунь сокъакъта {{input1}}? Эбет, {{input2}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "сыджакъмы",
+                    "variants": [
+                        { "text": "сыджакъмы" },
+                        { "text": "сыджакъ" },
+                        { "text": "сувукъмы" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "сыджакътыр",
+                    "variants": [
+                        { "text": "сыджакътыр" },
+                        { "text": "сыджакъмы" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} афта ава сувукъмы? Ёкъ, бу {{input2}} ава {{input3}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Бу",
+                    "variants": [
+                        { "text": "Бу" },
+                        { "text": "Бу —" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "афта",
+                    "variants": [
+                        { "text": "афта" },
+                        { "text": "афтада" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "сыджакътыр",
+                    "variants": [
+                        { "text": "сыджакътыр" },
+                        { "text": "сувукътыр" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Сиз мектепте {{input1}}? Эбет, {{input2}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "оджаларсынъызмы",
+                    "variants": [
+                        { "text": "оджаларынъызмы" },
+                        { "text": "оджаларсызмы" },
+                        { "text": "оджаларсынъызмы" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "оджалармыз",
+                    "variants": [
+                        { "text": "оджаларымыз" },
+                        { "text": "оджалармыз" },
+                        { "text": "оджаларыз" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Шу {{input1}} насыл? {{input2}} тюкян балабандыр.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "тюкян",
+                    "variants": [
+                        { "text": "тюкянда" },
+                        { "text": "тюкян" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Шу",
+                    "variants": [
+                        { "text": "Шу" },
+                        { "text": "Шу —" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Бу {{input1}} {{input2}} таземи? {{input3}}, тазедир.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "тюкянда",
+                    "variants": [
+                        { "text": "алмада" },
+                        { "text": "тюкянда" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "алмалар",
+                    "variants": [
+                        { "text": "алмаларда" },
+                        { "text": "алмалар" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "Эбет",
+                    "variants": [
+                        { "text": "Эбет" },
+                        { "text": "Ёкъ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Заполни пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Селиме",
+                    "text": "Селям алейкум, Халил!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Халил",
+                    "text": "Алейкум селям, Селиме! {{input1}} къаердесинъ?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Селиме",
+                    "text": "{{input2}} узакъ мектептем.",
+                    "image": "/image/2.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Сен",
+                    "variants": [
+                        { "text": "Мен" },
+                        { "text": "Сен" },
+                        { "text": "Сиз" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "Мен",
+                    "variants": [
+                        { "text": "Мен" },
+                        { "text": "Сен" },
+                        { "text": "Сиз" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Заполни пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Джемиле",
+                    "text": "Хайырлы сабалар, Эвтаде!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Хайырлы сабалар, Джемиле!",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Джемиле",
+                    "text": "Буздолапта пенир {{input1}}?",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Эвтаде",
+                    "text": "Буздолапта {{input2}} тазе ве {{input3}}.",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "насыл",
+                    "variants": [
+                        { "text": "къач" },
+                        { "text": "къаерде" },
+                        { "text": "насыл" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "пенир",
+                    "variants": [
+                        { "text": "алма" },
+                        { "text": "пенир" },
+                        { "text": "оджа" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "балабандыр",
+                    "variants": [
+                        { "text": "балабандыр" },
+                        { "text": "толудыр" },
+                        { "text": "тазедир" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 11,
+        "title": "Заполни пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Назлы",
+                    "text": "Мераба, Исмет!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Исмет",
+                    "text": "Мераба, Назлы! {{input1}} долапта китаплар {{input2}}?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Назлы",
+                    "text": "Ёкъ, {{input3}} долап {{input4}}.",
+                    "image": "/image/2.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Шу",
+                    "variants": [
+                        { "text": "Шу" },
+                        { "text": "Шу —" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "бармы",
+                    "variants": [
+                        { "text": "бардыр" },
+                        { "text": "бармы" },
+                        { "text": "ёкътур" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "шу",
+                    "variants": [
+                        { "text": "шу" },
+                        { "text": "бу —" },
+                        { "text": "шу —" },
+                        { "text": "о" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "боштур",
+                    "variants": [
+                        { "text": "тазедир" },
+                        { "text": "боштур" },
+                        { "text": "сувукътыр" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Заполни пропуски",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "dialogue",
+        "template_config": {
+            "replica_list": [
+                {
+                    "name": "Надир",
+                    "text": "Селям, Алие!",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Алие",
+                    "text": "Алейкум селям, Надир. Сиз {{input1}}?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Надир",
+                    "text": "Мен ве Джемиле {{input2}}.",
+                    "image": "/image/2.jpg"
+                },
+                {
+                    "name": "Алие",
+                    "text": "Ишлеринъиз  {{input3}}?",
+                    "float": "right",
+                    "image": "/image/3.jpg"
+                },
+                {
+                    "name": "Надир",
+                    "text": "{{input4}}, яхшы дегиль. Биз {{input5}}.",
+                    "image": "/image/2.jpg"
+                }
+            ],
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "къаердесинъиз",
+                    "variants": [
+                        { "text": "кимсинъиз" },
+                        { "text": "насылсынъыз" },
+                        { "text": "къаердесинъиз" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "эвдемиз",
+                    "variants": [
+                        { "text": "эвдесинъиз" },
+                        { "text": "эвдемиз" },
+                        { "text": "эвде" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "яхшымы",
+                    "variants": [
+                        { "text": "яхшымы" },
+                        { "text": "къартмы" },
+                        { "text": "сыджакъмы" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "Ёкъ",
+                    "variants": [
+                        { "text": "Эбет" },
+                        { "text": "Ёкъ" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "хастамыз",
+                    "variants": [
+                        { "text": "яхшымыз" },
+                        { "text": "хастамыз" },
+                        { "text": "гузельмиз" }
+                    ]
+                }
+            ]
+        }
+    }
+]

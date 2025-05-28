@@ -1,0 +1,93 @@
+{
+    "template": {
+        "quiz_page": {
+            "title": "Где здесь \"%s\"?",
+            "form_template": "image",
+            "page_template": "imageSelection"
+        },
+        "read_page": {
+            "title": "Запомни слово \"%s\"",
+            "page_template": "imageSelection"
+        }
+    },
+    "word_list": [
+        {
+            "text": "йигирми",
+            "image": "/image/1LEXIS/hello.jpg",
+            "index": 1,
+            "label": "двадцать"
+        },
+        {
+            "text": "отуз",
+            "image": "/image/1LEXIS/me.jpg",
+            "index": 2,
+            "label": "тридцать"
+        },
+        {
+            "text": "къыркъ",
+            "image": "/image/1LEXIS/name.jpg",
+            "index": 3,
+            "label": "сорок"
+        },
+        {
+            "text": "элли",
+            "image": "/image/1LEXIS/glad.jpg",
+            "index": 4,
+            "label": "пятьдесят"
+        },
+        {
+            "text": "алтмыш",
+            "image": "/image/1LEXIS/how_are_you.jpg",
+            "index": 5,
+            "label": "шестьдесят"
+        },
+        {
+            "text": "етмиш",
+            "image": "/image/1LEXIS/thank_you1.jpg",
+            "index": 6,
+            "label": "семьдесят"
+        },
+        {
+            "text": "сексен",
+            "image": "/image/1LEXIS/good.jpg",
+            "index": 7,
+            "label": "восемьдесят"
+        },
+        {
+            "text": "докъсан",
+            "image": "/image/1LEXIS/to_acquaint.jpg",
+            "index": 8,
+            "label": "девяносто"
+        },
+        {
+            "text": "юз",
+            "image": "/image/1LEXIS/fellow.jpg",
+            "index": 9,
+            "label": "сто"
+        },
+        {
+            "text": "бинъ",
+            "image": "/image/1LEXIS/bu.jpg",
+            "index": 10,
+            "label": "тысяча"
+        },
+        {
+            "text": "чокъ",
+            "image": "/image/1LEXIS/su.jpg",
+            "index": 11,
+            "label": "много"
+        },
+        {
+            "text": "аз",
+            "image": "/image/1LEXIS/o.jpg",
+            "index": 12,
+            "label": "мало"
+        }
+    ],
+    "input_object": {
+        "mode": "variant",
+        "type": "input",
+        "answer": "",
+        "variants": []
+    }
+}

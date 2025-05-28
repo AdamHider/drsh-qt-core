@@ -1,0 +1,297 @@
+[
+    {
+        "index": 1,
+        "title": "Запомни конструкцию",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "listSimple",
+        "template_config": {
+            "item_list": [
+                {
+                    "text": "Асан — талебе. = Асан талебедир."
+                },
+                {
+                    "text": "Рессам — рессам<span class='text-primary'>дыр</span>."
+                },
+                {
+                    "text": "Къарт — къарт<span class='text-primary'>тыр</span>."
+                },
+                {
+                    "text": "Шу — шу<span class='text-primary'>дур</span>."
+                },
+                {
+                    "text": "Бош — бош<span class='text-primary'>тур</span>."
+                },
+                {
+                    "text": "Геми — геми<span class='text-primary'>дир</span>."
+                },
+                {
+                    "text": "Лейлек — лейлек<span class='text-primary'>тир</span>."
+                }
+            ]
+        }
+    },
+    {
+        "index": 2,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Мектеп — мектеп{{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "тир",
+                    "variants": [
+                        { "text": "дир" },
+                        { "text": "тир" },
+                        { "text": "тыр" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 3,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Ода — ода{{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "дыр",
+                    "variants": [
+                        { "text": "дыр" },
+                        { "text": "дир" },
+                        { "text": "дур" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Буздолап — буздолап{{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "тыр",
+                    "variants": [
+                        { "text": "тыр" },
+                        { "text": "тир" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Эким — эким{{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "дир",
+                    "variants": [
+                        { "text": "дыр" },
+                        { "text": "дир" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Муз — муз{{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "дур",
+                    "variants": [
+                        { "text": "дыр" },
+                        { "text": "дур" },
+                        { "text": "дир" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "Ёкъ — ёкъ{{input1}}.",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "тур",
+                    "variants": [
+                        { "text": "тир" },
+                        { "text": "тыр" },
+                        { "text": "тур" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} гузельдир.",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Алие",
+                    "variants": [
+                        { "text": "Алие" },
+                        { "text": "Алие —" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} рессамдыр.",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "О —",
+                    "variants": [
+                        { "text": "О" },
+                        { "text": "О —" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} оджадыр.",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Халил",
+                    "variants": [
+                        { "text": "Халил" },
+                        { "text": "Халил —" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 11,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} алмадыр.",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Бу —",
+                    "variants": [
+                        { "text": "Бу" },
+                        { "text": "Бу —" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "{{input1}} адам эким{{input2}}.",
+            "image": "/image/1LEXIS/hello.jpg",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "Бу",
+                    "variants": [
+                        { "text": "Бу" },
+                        { "text": "Бу —" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "дир",
+                    "variants": [
+                        { "text": "тир" },
+                        { "text": "дир" },
+                        { "text": "дыр" }
+                    ]
+                }
+            ]
+        }
+    }
+]

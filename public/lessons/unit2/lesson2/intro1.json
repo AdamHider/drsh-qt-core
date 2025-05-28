@@ -1,0 +1,296 @@
+[
+    {
+        "index": 1,
+        "title": "Запомни конструкцию",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "9 — докъуз."
+        }
+    },
+    {
+        "index": 2,
+        "title": "Запомни конструкцию",
+        "subtitle": "",
+        "form_template": null,
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "2025 — эки бинъ йигирми беш."
+        }
+    },
+    {
+        "index": 3,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "16 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "он алты",
+                    "variants": [
+                        { "text": "он еди" },
+                        { "text": "он алты" },
+                        { "text": "йигирми еди" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 4,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "300000 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "учь юз бинъ",
+                    "variants": [
+                        { "text": "бинъ учь юз" },
+                        { "text": "бинъ юз учь" },
+                        { "text": "учь юз бинъ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 5,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "27 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "йигирми еди",
+                    "variants": [
+                        { "text": "йигирми эки" },
+                        { "text": "йигирми еди" },
+                        { "text": "йигирми секиз" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 6,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "1000 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "бинъ",
+                    "variants": [
+                        { "text": "юз" },
+                        { "text": "бинъ" },
+                        { "text": "бин" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 7,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "54 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "элли дёрт",
+                    "variants": [
+                        { "text": "элли дёрт" },
+                        { "text": "бешсен дёрт" },
+                        { "text": "элли учь" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 8,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "340 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "учь юз къыркъ",
+                    "variants": [
+                        { "text": "дёрт юз къыркъ" },
+                        { "text": "учь юз къыркъ" },
+                        { "text": "учь юз кыркъ" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 9,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "133 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "юз отуз учь",
+                    "variants": [
+                        { "text": "юз отуз уч" },
+                        { "text": "юз отыз учь" },
+                        { "text": "юз отуз учь" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 10,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "91 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "О",
+                    "variants": [
+                        { "text": "сексен он" },
+                        { "text": "докъсан бир" },
+                        { "text": "сексен бир" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 11,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "87 — {{input1}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "О",
+                    "variants": [
+                        { "text": "сексен еди" },
+                        { "text": "сексен секиз" },
+                        { "text": "отуз еди" }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "index": 12,
+        "title": "Выбери правильный вариант",
+        "subtitle": "",
+        "form_template": "variant",
+        "page_template": "imageSelection",
+        "template_config": {
+            "text": "7 978 13 95 689 — {{input1}} {{input2}} {{input3}} {{input4}} {{input5}}.",
+            "input_list": [
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 1,
+                    "answer": "еди",
+                    "variants": [
+                        { "text": "еди" },
+                        { "text": "секиз" },
+                        { "text": "эки" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 2,
+                    "answer": "докъуз юз етмиш секиз",
+                    "variants": [
+                        { "text": "юз етмиш докъуз секиз" },
+                        { "text": "докъуз юз етмиш секиз" },
+                        { "text": "секиз юз етмиш докъуз" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 3,
+                    "answer": "он учь",
+                    "variants": [
+                        { "text": "он учь" },
+                        { "text": "он эки" },
+                        { "text": "он отуз" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 4,
+                    "answer": "докъсан беш",
+                    "variants": [
+                        { "text": "сексен беш" },
+                        { "text": "докъсан бешь" },
+                        { "text": "докъсан беш" }
+                    ]
+                },
+                {
+                    "mode": "variant",
+                    "type": "input",
+                    "index": 5,
+                    "answer": "алты юз сексен докъуз",
+                    "variants": [
+                        { "text": "дёрт юз сексен секиз" },
+                        { "text": "алты юз сексен докъуз" },
+                        { "text": "учь юз сексен алты" }
+                    ]
+                }
+            ]
+        }
+    }
+]
