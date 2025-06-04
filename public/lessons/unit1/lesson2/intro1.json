@@ -85,7 +85,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Şu ne? {{input1}}, maqas.",
+            "text": "Шу не? {{input1}} — макъас.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -109,7 +109,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? Şu, ekim. Ekim {{input2}}.",
+            "text": "{{input1}} ким? Шу — эким. Шу эким {{input2}}.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -127,11 +127,11 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 2,
-                    "answer": "uzaq",
+                    "answer": "узакъ",
                     "variants": [
-                        { "text": "uzaq" },
-                        { "text": "yaqın" },
-                        { "text": "çoq uzaq" }
+                        { "text": "узакъ" },
+                        { "text": "якъын" },
+                        { "text": "пек узакъ" }
                     ]
                 }
             ]
@@ -144,7 +144,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "Bu ne? {{input1}}, leylek.",
+            "text": "Бу не? {{input1}} — лейлек.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -168,7 +168,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} kim? {{input2}}, talebe. Tablebe çoq uzaq.",
+            "text": "{{input1}} ким? {{input2}} — талебе. О талебе пек узакъ.",
             "image": "/image/1LEXIS/hello.jpg",
             "input_list": [
                 {
@@ -206,12 +206,12 @@
             "replica_list": [
                 {
                     "name": "Исмет",
-                    "text": "Селям алейкум! Мен Исмет.",
+                    "text": "Селям алейкум! Меним адым Исмет.",
                     "image": "/image/2.jpg"
                 },
                 {
                     "name": "Эвтаде",
-                    "text": "Алейкум {{input1}}, Исмет! Мен Эвтаде. О не?",
+                    "text": "Алейкум {{input1}}, Исмет! Меним адым Эвтаде. О не?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },

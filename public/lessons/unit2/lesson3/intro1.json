@@ -307,7 +307,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} саба {{input2}} кафедесинъизми? {{input3}}, кафе{{input4}}.",
+            "text": "{{input1}} саба {{input2}} къавеханедесинъизми? {{input3}}, къавехане{{input4}}.",
             "input_list": [
                 {
                     "mode": "variant",

@@ -95,7 +95,7 @@
             "replica_list": [
                 {
                     "name": "Асан",
-                    "text": "Селям алейкум! {{input1}} Асан.",
+                    "text": "Селям алейкум! {{input1}} адым Асан.",
                     "image": "/image/2.jpg"
                 },
                 {
@@ -115,11 +115,10 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Мен",
+                    "answer": "Меним",
                     "variants": [
-                        { "text": "Сен" },
-                        { "text": "Мен" },
-                        { "text": "О" }
+                        { "text": "Сенинъ" },
+                        { "text": "Меним" }
                     ]
                 },
                 {
@@ -504,13 +503,13 @@
                 },
                 {
                     "name": "Эвтаде",
-                    "text": "{{input3}} олдым. Меним адым Эвтаде.",
+                    "text": "{{input3}}. Меним адым Эвтаде.",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
                     "name": "Арслан",
-                    "text": "Мен {{input4}} мемнюн олдым. Ишлеринъ {{input5}}?",
+                    "text": "Мен {{input4}} мемнюним. Ишлеринъ {{input5}}?",
                     "image": "/image/2.jpg"
                 },
                 {
@@ -532,7 +531,7 @@
                 },
                 {
                     "name": "Арслан",
-                    "text": "Ёкъ, якъын {{input11}}, чокъ узакъ.",
+                    "text": "Ёкъ, якъын {{input11}}, пек узакъ.",
                     "image": "/image/2.jpg"
                 }
             ],
@@ -561,10 +560,10 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "Мемнюн",
+                    "answer": "Мемнюним",
                     "variants": [
-                        { "text": "Мемнун" },
-                        { "text": "Мемнюн" }
+                        { "text": "Мемнуным" },
+                        { "text": "Мемнюним" }
                     ]
                 },
                 {

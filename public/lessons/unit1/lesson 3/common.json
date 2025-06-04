@@ -28,7 +28,7 @@
                     "variants": [
                         { "text": "Сагълыкънен къал" },
                         { "text": "Алейкум селям" },
-                        { "text": "Мемнюн олдым" }
+                        { "text": "Мемнюним" }
                     ]
                 }
             ]
@@ -116,7 +116,7 @@
             "replica_list": [
                 {
                     "name": "Асан",
-                    "text": "Мемнюн олдым.",
+                    "text": "Мемнюним.",
                     "image": "/image/2.jpg"
                 },
                 {
@@ -131,11 +131,11 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Мен де мемнюн олдым",
+                    "answer": "Мен де мемнюним",
                     "variants": [
-                        { "text": "Мен де мемнун олдым" },
-                        { "text": "Мен де мемнюн олдым" },
-                        { "text": "Мен де мемнун олдум" }
+                        { "text": "Мен де мемнуным" },
+                        { "text": "Мен де мемнюним" },
+                        { "text": "Мен де мемнюн олдум" }
                     ]
                 }
             ]
@@ -150,7 +150,7 @@
         "template_config": {
             "item_list": [
                 {
-                    "text": "Бу, къушмы? {{input1}}."
+                    "text": "Бу къушмы? {{input1}}."
                 },
                 {
                     "text": "О ким? {{input2}}."
@@ -167,7 +167,7 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "Эбет, лейлек"
+                    "answer": "Эбет, къуш"
                 },
                 {
                     "mode": "match",
@@ -206,13 +206,13 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "Бу|не|?|Бу|,|телефон|.",
+                    "answer": "Бу|не|?|Бу|—|телефон|.",
                     "variants": [
                         { "text": "не" },
                         { "text": "." },
                         { "text": "Бу" },
                         { "text": "?" },
-                        { "text": "," },
+                        { "text": "—" },
                         { "text": "телефон" },
                         { "text": "Бу" }
                     ]
@@ -390,12 +390,12 @@
                 },
                 {
                     "name": "Алие",
-                    "text": "Мемнюн {{input3}}.",
+                    "text": "{{input3}}.",
                     "image": "/image/2.jpg"
                 },
                 {
                     "name": "Асан",
-                    "text": "Мен де мемнюн олдым. Ишлеринъ {{input4}}?",
+                    "text": "Мен де мемнюним. Ишлеринъ {{input4}}?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
@@ -437,10 +437,10 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "олдым",
+                    "answer": "Мемнюним",
                     "variants": [
-                        { "text": "олдум" },
-                        { "text": "олдым" }
+                        { "text": "Мемнюним" },
+                        { "text": "Мемнюным" }
                     ]
                 },
                 {
@@ -488,7 +488,7 @@
         "template_config": {
             "item_list": [
                 {
-                    "text": "Мемнюн {{input1}}."
+                    "text": "Хайырлы {{input1}}."
                 },
                 {
                     "text": "Адынъ {{input2}}?"
@@ -505,7 +505,7 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "олдым"
+                    "answer": "сабалар"
                 },
                 {
                     "mode": "match",
@@ -560,7 +560,7 @@
                 },
                 {
                     "name": "Эвтаде",
-                    "text": "Мемнюн олдым. Исмет {{input7}}?",
+                    "text": "Мемнюним. Исмет {{input7}}?",
                     "image": "/image/2.jpg"
                 },
                 {

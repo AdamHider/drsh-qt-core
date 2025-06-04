@@ -17,12 +17,6 @@
                     "text": "Къарт — къарт<span class='text-primary'>тыр</span>."
                 },
                 {
-                    "text": "Шу — шу<span class='text-primary'>дур</span>."
-                },
-                {
-                    "text": "Бош — бош<span class='text-primary'>тур</span>."
-                },
-                {
                     "text": "Геми — геми<span class='text-primary'>дир</span>."
                 },
                 {
@@ -134,7 +128,7 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "дур",
+                    "answer": "дыр",
                     "variants": [
                         { "text": "дыр" },
                         { "text": "дур" },
@@ -158,7 +152,7 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "тур",
+                    "answer": "тыр",
                     "variants": [
                         { "text": "тир" },
                         { "text": "тыр" },

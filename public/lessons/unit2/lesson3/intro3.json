@@ -16,7 +16,7 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} якъынсынъмы? {{input2}}, узагъым.",
+            "text": "{{input1}} якъынсынъмы? {{input2}}, узакъым.",
             "input_list": [
                 {
                     "mode": "variant",

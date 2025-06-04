@@ -4,9 +4,22 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "listSimple",
         "template_config": {
-            "text": "Докъуз — докъуз<span class='text-primary'>ынджы</span>.<br> Беш - беш<span class='text-primary'>инджи</span>.<br>Учь - уч<span class='text-primary'>унджы</span>."
+            "item_list": [
+                {
+                    "text": "Докъуз — докъуз<span class='text-primary'>ынджы</span>."
+                },
+                {
+                    "text": "Беш - беш<span class='text-primary'>инджи</span>."
+                },
+                {
+                    "text": "Учь - уч<span class='text-primary'>юнджи</span>."
+                },
+                {
+                    "text": "Дёрт - дёрт<span class='text-primary'>юнджи</span>."
+                }
+            ]
         }
     },
     {
@@ -347,13 +360,13 @@
                 },
                 {
                     "name": "Назлы",
-                    "text": "Алейкум селям, Селиме. Дёрдюнджи {{input1}} къач {{input2}} бар?",
+                    "text": "Алейкум селям, Селиме. Дёртюнджи {{input1}} къач {{input2}} бар?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
                     "name": "Селиме",
-                    "text": "Дёрдюнджи сокъакъта {{input3}} тюкян бар.",
+                    "text": "Дёртюнджи сокъакъта {{input3}} тюкян бар.",
                     "image": "/image/2.jpg"
                 },
                 {
@@ -399,7 +412,7 @@
                     "variants": [
                         { "text": "уч" },
                         { "text": "учь" },
-                        { "text": "учунджы" },
+                        { "text": "учюнджи" },
                         { "text": "учунджу" }
                     ]
                 },

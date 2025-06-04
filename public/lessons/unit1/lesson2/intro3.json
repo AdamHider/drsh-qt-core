@@ -4,9 +4,16 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "listSimple",
         "template_config": {
-            "text": "Вопрос: ____мы/ми? <br> Ответ: Эбет, ____ . / Ёкъ, _____ ."
+            "item_list": [
+                {
+                    "text": "Вопрос: ____мы/ми?"
+                },
+                {
+                    "text": "Ответ: Эбет, ____ . / Ёкъ, _____ ."
+                }
+            ]
         }
     },
     {
@@ -190,11 +197,11 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 3,
-                    "answer": "чокъ узакъ",
+                    "answer": "пек узакъ",
                     "variants": [
                         { "text": "якъын" },
                         { "text": "узакъ" },
-                        { "text": "чокъ узакъ" }
+                        { "text": "пек узакъ" }
                     ]
                 }
             ]
@@ -403,18 +410,18 @@
                 },
                 {
                     "name": "Надир",
-                    "text": "Хайырлы акъшамлар. {{input1}} Надир. Сенинъ адынъ {{input2}}?",
+                    "text": "Хайырлы акъшамлар. {{input1}} адым Надир. Сенинъ адынъ {{input2}}?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
                 {
                     "name": "Алие",
-                    "text": "Мемнюн олдым. Меним адым Алие.",
+                    "text": "Мемнюним. Меним адым Алие.",
                     "image": "/image/2.jpg"
                 },
                 {
                     "name": "Надир",
-                    "text": "Мен {{input3}} мемнюн олдым. О къуруджылар {{input4}}?",
+                    "text": "Мен {{input3}} мемнюним. О къуруджылар {{input4}}?",
                     "float": "right",
                     "image": "/image/3.jpg"
                 },
@@ -429,11 +436,10 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "Мен",
+                    "answer": "Меним",
                     "variants": [
-                        { "text": "Сен" },
-                        { "text": "Мен" },
-                        { "text": "Ким" }
+                        { "text": "Сенинъ" },
+                        { "text": "Меним" }
                     ]
                 },
                 {

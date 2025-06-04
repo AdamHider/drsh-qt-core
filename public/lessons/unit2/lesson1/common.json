@@ -220,13 +220,13 @@
         "template_config": {
             "item_list": [
                 {
-                    "text": "Бу, арабамы? {{input1}}."
+                    "text": "Бу арабамы? {{input1}}."
                 },
                 {
                     "text": "О ким? {{input2}}."
                 },
                 {
-                    "text": "Шу, алмамы? {{input3}}."
+                    "text": "Шу алмамы? {{input3}}."
                 },
                 {
                     "text": "Бу ким? {{input4}}."
