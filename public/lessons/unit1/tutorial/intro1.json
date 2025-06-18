@@ -86,7 +86,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Ручка - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/qalem.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -113,7 +113,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Собака - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/kopek.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -140,7 +140,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Солнце - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/kunesh.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -167,7 +167,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Яблоко - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/alma.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -193,7 +193,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Вода - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/suv.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -219,7 +219,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Мальчик - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/oglan.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -246,7 +246,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Школа - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/mektep.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -275,7 +275,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Цветок - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/chichek.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",
@@ -305,7 +305,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Кошка - {{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/mishiq.jpg",
             "input_list": [
                 {
                     "mode": "puzzle",

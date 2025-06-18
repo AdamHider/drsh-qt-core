@@ -30,7 +30,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Къат — къат{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/qat.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -55,7 +55,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Сильгич — сильгич{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/silgich.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -80,7 +80,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Ресим — ресим{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/resim.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -105,7 +105,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Дивар — дивар{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/divar.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -130,7 +130,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Лейлек {{input1}}? — Лейлек — кок{{input2}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/leylek.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -166,7 +166,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Джедвель чантадамы? — {{input1}}, чантада.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/cedvel.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -189,7 +189,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Топ {{input1}}? — Ёкъ, чантада {{input2}}, одада.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/top.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -226,13 +226,13 @@
                 {
                     "name": "Селиме",
                     "text": "Селям алейкум, Алие. Асан {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Алейкум селям, Селиме! Ёкъ, {{input2}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 }
             ],
             "input_list": [
@@ -272,13 +272,13 @@
                 {
                     "name": "Исмет",
                     "text": "Мераба, Халил. Бу {{input1}} Алиедеми?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Мераба, Исмет! Ёкъ, Алиеде {{input2}}, {{input3}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 }
             ],
             "input_list": [
@@ -328,13 +328,13 @@
                 {
                     "name": "Джемиле",
                     "text": "Селям алейкум, Эвтаде! Оджа {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Алейкум селям, Исмет! {{input2}} мектепте.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 }
             ],
             "input_list": [
@@ -374,24 +374,24 @@
                 {
                     "name": "Арслан",
                     "text": "Хайырлы сабалар, Асан. Джемиле {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Хайырлы сабалар, {{input2}}! Ёкъ, Джемиле — {{input3}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "Тюкян {{input4}} ерде?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Тюкян — {{input5}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 }
             ],
             "input_list": [

@@ -30,7 +30,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Бу — дефтер. {{input1}} дефтер якъын.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/defter.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -53,7 +53,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} талебе. Шу талебе узакъ.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/uzaq_talebe.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -76,7 +76,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} оджа. {{input2}} оджа пек узакъ",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/pek_uzaq_oca.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -109,7 +109,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} анахтармы? Ёкъ, макъас.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/maqas.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -132,7 +132,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "О лейлеклерми? Ёкъ, {{input1}} лейлеклер.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/leylekler.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -154,8 +154,8 @@
         "form_template": "variant",
         "page_template": "imageSelection",
         "template_config": {
-            "text": "{{input1}} геми узакъмы? Эбет, узакъ.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "text": "{{input1}} геми узакъмы? Эбет, пек узакъ.",
+            "image": "image/index.php/lessons/unit_1/pek_uzaq_gemi.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -178,7 +178,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} не? {{input2}} алма. {{input3}} алма якъын.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/bu.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -224,24 +224,24 @@
                 {
                     "name": "Назлы",
                     "text": "Арабалар якъынмы?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": " {{input1}} арабалар?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "{{input2}} арабалар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Эбет, якъын.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 }
             ],
             "input_list": [
@@ -279,24 +279,24 @@
                 {
                     "name": "Джемиле",
                     "text": "Шу {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "{{input2}} мектеп.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input3}} мектеп узакъмы?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Эбет, {{input4}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 }
             ],
             "input_list": [

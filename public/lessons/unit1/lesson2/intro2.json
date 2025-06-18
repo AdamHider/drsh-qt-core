@@ -24,7 +24,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Геми — геми{{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/gemiler.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -47,7 +47,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Оджа — оджа{{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/ocalar.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -70,7 +70,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Алма - алма{{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/almalar.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -93,7 +93,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Отьмек - отьмек{{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/otmekler.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -116,7 +116,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Бу не? Бу — балыкъ{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/balyqlar.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -139,7 +139,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "О ким? О — эким{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/ekimler.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -162,7 +162,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "О не? {{input1}}, йылдыз{{input2}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/yildizlar.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -199,13 +199,13 @@
                 {
                     "name": "Назлы",
                     "text": "Селям, Алие. Бу {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Алейкум {{input2}}, Назлы! Бу — анахтар{{input3}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 }
             ],
             "input_list": [
@@ -254,13 +254,13 @@
                 {
                     "name": "Асан",
                     "text": "Селям алейкум, Джемиле. Шу не?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input1}} селям, Асан! Шу — терек{{input2}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 }
             ],
             "input_list": [
@@ -298,13 +298,13 @@
                 {
                     "name": "Исмет",
                     "text": "Хайырлы сабалар, Халил! О {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Хайырлы {{input2}}, Исмет! О — эким{{input3}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 }
             ],
             "input_list": [
@@ -353,13 +353,13 @@
                 {
                     "name": "Селиме",
                     "text": "Хайырлы {{input1}}, Арслан. О не?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "Хайырлы акъшамлар, Селиме! О — мышыкъ{{input2}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 }
             ],
             "input_list": [

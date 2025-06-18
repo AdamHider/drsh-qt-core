@@ -96,18 +96,18 @@
                 {
                     "name": "Асан",
                     "text": "Селям алейкум! {{input1}} адым Асан.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Алейкум {{input2}}, Амет! О, балалар{{input3}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "{{input4}}, балалар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 }
             ],
             "input_list": [
@@ -268,24 +268,24 @@
                 {
                     "name": "Назлы",
                     "text": "Мераба, Селиме!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Мераба, Назлы! Ишлеринъ {{input1}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Эбет, {{input2}}. Сагъ ол!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "{{input3}} сагъ ол.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 }
             ],
             "input_list": [
@@ -488,51 +488,51 @@
                 {
                     "name": "Арслан",
                     "text": "Селям алейкум!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Алейкум селям!",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "{{input1}} адым Арслан. Сенинъ адынъ {{input2}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "{{input3}}. Меним адым Эвтаде.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "Мен {{input4}} мемнюним. Ишлеринъ {{input5}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "{{input6}}, яхшы. Сагъ ол. {{input7}} {{input8}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "{{input9}} йылдызлар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Йылдызлар {{input10}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "Ёкъ, якъын {{input11}}, пек узакъ.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/arslan.jpg"
                 }
             ],
             "input_list": [

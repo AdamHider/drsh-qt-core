@@ -7,7 +7,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Дом - э{{input1}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/ev.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -31,7 +31,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Дерево - т{{input1}}ре{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/terek.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -66,7 +66,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Книга - к{{input1}}та{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/kitap.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -101,7 +101,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Дверь - {{input1}}ап{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/qapi.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -136,7 +136,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Нога - а{{input1}}{{input2}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/ayaq.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -171,7 +171,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Небо - {{input1}}{{input2}}к",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/kok.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -206,7 +206,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Дорога - {{input1}}л",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/yol.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -230,7 +230,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Девочка - {{input1}}{{input2}}{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/qiz.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -276,7 +276,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Хлеб - {{input1}}ть{{input2}}е{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/otmek.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -322,7 +322,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Ребёнок - б{{input1}}{{input2}}{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/bala.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -368,7 +368,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Машина - а{{input1}}а{{input2}}{{input3}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/araba.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -414,7 +414,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Рюкзак - {{input1}}а{{input2}}{{input3}}{{input4}}",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/chanta.jpg",
             "input_list": [
                 {
                     "mode": "variant",
