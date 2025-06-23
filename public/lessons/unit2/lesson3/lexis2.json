@@ -13,73 +13,73 @@
     "word_list": [
         {
             "text": "хаста",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/hasta.jpg",
             "index": 1,
             "label": "больной"
         },
         {
             "text": "сагъ",
-            "image": "/image/1LEXIS/me.jpg",
+            "image": "image/index.php/lessons/unit_2/sag.jpg",
             "index": 2,
             "label": "здоровый"
         },
         {
             "text": "тазе",
-            "image": "/image/1LEXIS/name.jpg",
+            "image": "image/index.php/lessons/unit_2/taze.jpg",
             "index": 3,
             "label": "свежий"
         },
         {
             "text": "гузель",
-            "image": "/image/1LEXIS/glad.jpg",
+            "image": "image/index.php/lessons/unit_2/guzel.jpg",
             "index": 4,
             "label": "красивый"
         },
         {
             "text": "сыджакъ",
-            "image": "/image/1LEXIS/how_are_you.jpg",
+            "image": "image/index.php/lessons/unit_2/sicaq.jpg",
             "index": 5,
             "label": "горячий"
         },
         {
             "text": "сувукъ",
-            "image": "/image/1LEXIS/thank_you1.jpg",
+            "image": "image/index.php/lessons/unit_2/suvuq.jpg",
             "index": 6,
             "label": "холодный"
         },
         {
             "text": "бош",
-            "image": "/image/1LEXIS/good.jpg",
+            "image": "image/index.php/lessons/unit_2/bosh.jpg",
             "index": 7,
             "label": "пустой"
         },
         {
             "text": "толу",
-            "image": "/image/1LEXIS/to_acquaint.jpg",
+            "image": "image/index.php/lessons/unit_2/tolu.jpg",
             "index": 8,
             "label": "полный"
         },
         {
             "text": "къолай",
-            "image": "/image/1LEXIS/fellow.jpg",
+            "image": "image/index.php/lessons/unit_2/qolay.jpg",
             "index": 9,
             "label": "легкий"
         },
         {
             "text": "къыйын",
-            "image": "/image/1LEXIS/bu.jpg",
+            "image": "image/index.php/lessons/unit_2/qiyin.jpg",
             "index": 10,
             "label": "тяжелый"
         },
         {
             "text": "балабан",
-            "image": "/image/1LEXIS/su.jpg",
+            "image": "image/index.php/lessons/unit_2/balaban.jpg",
             "index": 11,
             "label": "большой"
         },
         {
             "text": "кичик",
-            "image": "/image/1LEXIS/o.jpg",
+            "image": "image/index.php/lessons/unit_2/kichik.jpg",
             "index": 12,
             "label": "маленький"
         }

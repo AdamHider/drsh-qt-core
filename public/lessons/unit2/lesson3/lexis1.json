@@ -13,73 +13,73 @@
     "word_list": [
         {
             "text": "насыл?",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/nasil.jpg",
             "index": 1,
             "label": "какой?"
         },
         {
             "text": "биз",
-            "image": "/image/1LEXIS/me.jpg",
+            "image": "image/index.php/lessons/unit_2/biz.jpg",
             "index": 2,
             "label": "мы"
         },
         {
             "text": "о",
-            "image": "/image/1LEXIS/name.jpg",
+            "image": "image/index.php/lessons/unit_2/o.jpg",
             "index": 3,
             "label": "он, она, оно"
         },
         {
             "text": "сиз",
-            "image": "/image/1LEXIS/glad.jpg",
+            "image": "image/index.php/lessons/unit_2/siz.jpg",
             "index": 4,
             "label": "вы"
         },
         {
             "text": "олар",
-            "image": "/image/1LEXIS/how_are_you.jpg",
+            "image": "image/index.php/lessons/unit_2/olar.jpg",
             "index": 5,
             "label": "они"
         },
         {
             "text": "къавехане",
-            "image": "/image/1LEXIS/thank_you1.jpg",
+            "image": "image/index.php/lessons/unit_2/qavehane.jpg",
             "index": 6,
             "label": "кафе"
         },
         {
             "text": "иш",
-            "image": "/image/1LEXIS/good.jpg",
+            "image": "image/index.php/lessons/unit_2/ish.jpg",
             "index": 7,
             "label": "работа"
         },
         {
             "text": "буздолап",
-            "image": "/image/1LEXIS/to_acquaint.jpg",
+            "image": "image/index.php/lessons/unit_2/buzdolap.jpg",
             "index": 8,
             "label": "холодильник"
         },
         {
             "text": "ава",
-            "image": "/image/1LEXIS/fellow.jpg",
+            "image": "image/index.php/lessons/unit_2/ava.jpg",
             "index": 9,
             "label": "погода"
         },
         {
             "text": "бугунь",
-            "image": "/image/1LEXIS/bu.jpg",
+            "image": "image/index.php/lessons/unit_2/bugun.jpg",
             "index": 10,
             "label": "сегодня"
         },
         {
             "text": "янъы",
-            "image": "/image/1LEXIS/su.jpg",
+            "image": "image/index.php/lessons/unit_2/yani.jpg",
             "index": 11,
             "label": "новый"
         },
         {
             "text": "къарт",
-            "image": "/image/1LEXIS/o.jpg",
+            "image": "image/index.php/lessons/unit_2/qart.jpg",
             "index": 12,
             "label": "старый"
         }

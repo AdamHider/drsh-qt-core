@@ -220,18 +220,18 @@
                 {
                     "name": "Алие",
                     "text": "Мераба, Эвтаде!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Мераба, Алие! Асан {{input1}} сыныфта?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "{{input2}} — алтынджы {{input3}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 }
             ],
             "input_list": [
@@ -280,24 +280,24 @@
                 {
                     "name": "Халил",
                     "text": "Селям, Исмет! Сыныф биринджи {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Алейкум селям, Халил! {{input2}}, биринджи дегиль, экинджи.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Талебелер {{input3}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Ёкъ, талебелер — биринджи {{input4}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 }
             ],
             "input_list": [
@@ -356,29 +356,29 @@
                 {
                     "name": "Селиме",
                     "text": "Селям, Назлы.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Алейкум селям, Селиме. Дёртюнджи {{input1}} къач {{input2}} бар?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Дёртюнджи сокъакъта {{input3}} тюкян бар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "О тюкянларда {{input4}} бармы?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Эбет, китаплар биринджи {{input5}} бар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 }
             ],
             "input_list": [
@@ -452,40 +452,40 @@
                 {
                     "name": "Джемиле",
                     "text": "Хайырлы акъшамлар, Асан!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Хайырлы акъшамлар, Джемиле. {{input1}} согъан бармы?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input2}}, бар. Согъан — экинджи долапта.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Бу согъан къач {{input3}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input4}} согъан эки юз {{input5}} беш кумюш.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Сагълыкънен {{input6}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Сагълыкънен бар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 }
             ],
             "input_list": [

@@ -268,18 +268,18 @@
                 {
                     "name": "Селиме",
                     "text": "Селям алейкум, Халил!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Алейкум селям, Селиме! {{input1}} къаердесинъ?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "{{input2}} узакъ мектептем.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 }
             ],
             "input_list": [
@@ -319,24 +319,24 @@
                 {
                     "name": "Джемиле",
                     "text": "Хайырлы сабалар, Эвтаде!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Хайырлы сабалар, Джемиле!",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Буздолапта пенир {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Буздолапта {{input2}} тазе ве {{input3}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 }
             ],
             "input_list": [
@@ -387,18 +387,18 @@
                 {
                     "name": "Назлы",
                     "text": "Мераба, Исмет!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Мераба, Назлы! {{input1}} долапта китаплар {{input2}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Ёкъ, {{input3}} долап {{input4}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nazly.jpg"
                 }
             ],
             "input_list": [
@@ -460,29 +460,29 @@
                 {
                     "name": "Надир",
                     "text": "Селям, Алие!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Алейкум селям, Надир. Сиз {{input1}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Мен ве Джемиле {{input2}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Ишлеринъиз  {{input3}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input4}}, яхшы дегиль. Биз {{input5}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 }
             ],
             "input_list": [

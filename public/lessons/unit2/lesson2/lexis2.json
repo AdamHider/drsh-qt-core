@@ -13,73 +13,73 @@
     "word_list": [
         {
             "text": "йигирми",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/yigirmi.jpg",
             "index": 1,
             "label": "двадцать"
         },
         {
             "text": "отуз",
-            "image": "/image/1LEXIS/me.jpg",
+            "image": "image/index.php/lessons/unit_2/otuz.jpg",
             "index": 2,
             "label": "тридцать"
         },
         {
             "text": "къыркъ",
-            "image": "/image/1LEXIS/name.jpg",
+            "image": "image/index.php/lessons/unit_2/qirq.jpg",
             "index": 3,
             "label": "сорок"
         },
         {
             "text": "элли",
-            "image": "/image/1LEXIS/glad.jpg",
+            "image": "image/index.php/lessons/unit_2/elli.jpg",
             "index": 4,
             "label": "пятьдесят"
         },
         {
             "text": "алтмыш",
-            "image": "/image/1LEXIS/how_are_you.jpg",
+            "image": "image/index.php/lessons/unit_2/altmish.jpg",
             "index": 5,
             "label": "шестьдесят"
         },
         {
             "text": "етмиш",
-            "image": "/image/1LEXIS/thank_you1.jpg",
+            "image": "image/index.php/lessons/unit_2/etmish.jpg",
             "index": 6,
             "label": "семьдесят"
         },
         {
             "text": "сексен",
-            "image": "/image/1LEXIS/good.jpg",
+            "image": "image/index.php/lessons/unit_2/seksen.jpg",
             "index": 7,
             "label": "восемьдесят"
         },
         {
             "text": "докъсан",
-            "image": "/image/1LEXIS/to_acquaint.jpg",
+            "image": "image/index.php/lessons/unit_2/doqsan.jpg",
             "index": 8,
             "label": "девяносто"
         },
         {
             "text": "юз",
-            "image": "/image/1LEXIS/fellow.jpg",
+            "image": "image/index.php/lessons/unit_2/yuz.jpg",
             "index": 9,
             "label": "сто"
         },
         {
             "text": "бинъ",
-            "image": "/image/1LEXIS/bu.jpg",
+            "image": "image/index.php/lessons/unit_2/bin.jpg",
             "index": 10,
             "label": "тысяча"
         },
         {
             "text": "чокъ",
-            "image": "/image/1LEXIS/su.jpg",
+            "image": "image/index.php/lessons/unit_2/choq.jpg",
             "index": 11,
             "label": "много"
         },
         {
             "text": "аз",
-            "image": "/image/1LEXIS/o.jpg",
+            "image": "image/index.php/lessons/unit_2/az.jpg",
             "index": 12,
             "label": "мало"
         }

@@ -129,24 +129,24 @@
                 {
                     "name": "Алие",
                     "text": "Селям, Асан! {{input1}} мектептесинъми?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Алейкум селям, Алие. {{input2}}, мектептем.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Яхшы. Сыныфта {{input3}} адам бар?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Сыныфта учь {{input4}} {{input5}}: мен, Халил ве Джемиле.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 }
             ],
             "input_list": [
@@ -253,40 +253,40 @@
                 {
                     "name": "Джемиле",
                     "text": "Хайырлы сабалар! Меним адым Джемиле. Сенинъ адынъ {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Хайырлы сабалар, Алие. Меним адым Асан.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Мемнюним.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "{{input2}} де мемнюним. Бугунь ава {{input3}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Бугунь ава {{input4}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Сагъ ол.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input5}} сагъ ол.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 }
             ],
             "input_list": [
@@ -392,57 +392,57 @@
                 {
                     "name": "Надир",
                     "text": "Селям, Эвтаде!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Алейкум селям, Эвтаде! Ишлеринъ {{input1}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Яхшы, сагъ ол. Сен {{input2}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Ёкъ, эвде {{input3}}, {{input4}}. Мында чокъ {{input5}}, пенир ве алма бар.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Анда {{input6}} чокъмы?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "{{input7}}, чокъ дегиль. {{input8}} эки {{input9}} бар.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input10}} акъшам эвдесинъми?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Ёкъ, эвде дегилим, {{input11}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Корюшкендже!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Корюшкендже!",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 }
             ],
             "input_list": [

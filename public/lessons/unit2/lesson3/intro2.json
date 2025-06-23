@@ -33,6 +33,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Мектеп — мектеп{{input1}}.",
+            "image": "image/index.php/lessons/unit_1/mektep.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -56,6 +57,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Ода — ода{{input1}}.",
+            "image": "image/index.php/lessons/unit_2/oda.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -79,6 +81,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Буздолап — буздолап{{input1}}.",
+            "image": "image/index.php/lessons/unit_2/buzdolap.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -101,6 +104,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Эким — эким{{input1}}.",
+            "image": "image/index.php/lessons/unit_1/ekim.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -123,6 +127,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Муз — муз{{input1}}.",
+            "image": "image/index.php/lessons/unit_2/muz.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -146,7 +151,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "Ёкъ — ёкъ{{input1}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/yoq.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -170,7 +175,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} гузельдир.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_2/guzel.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -193,7 +198,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} рессамдыр.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/ressam.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -216,7 +221,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} оджадыр.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/oca.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -239,7 +244,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} алмадыр.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/alma.jpg",
             "input_list": [
                 {
                     "mode": "variant",
@@ -262,7 +267,7 @@
         "page_template": "imageSelection",
         "template_config": {
             "text": "{{input1}} адам эким{{input2}}.",
-            "image": "/image/1LEXIS/hello.jpg",
+            "image": "image/index.php/lessons/unit_1/ekim.jpg",
             "input_list": [
                 {
                     "mode": "variant",

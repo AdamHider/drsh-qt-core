@@ -188,18 +188,18 @@
                 {
                     "name": "Асан",
                     "text": "Селям алейкум, Джемиле!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Алейкум селям, Асан! Сокъакъта къач {{input1}} бар?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/cemile.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Сокъакъта чокъ {{input2}} бар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/asan.jpg"
                 }
             ],
             "input_list": [
@@ -237,24 +237,24 @@
                 {
                     "name": "Исмет",
                     "text": "Мераба, Алие! Бу согъан къач {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Мераба, Исмет! Бу {{input2}} докъсан кумюш.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Хыяр бармы?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/ismet.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Эбет, {{input3}}.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/alie.jpg"
                 }
             ],
             "input_list": [
@@ -303,18 +303,18 @@
                 {
                     "name": "Надир",
                     "text": "Хайырлы сабалар, Эвтаде.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Хайырлы сабалар, Надир. Сенде къач {{input1}} бар?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/evtade.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input2}} беш алма {{input3}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/nadir.jpg"
                 }
             ],
             "input_list": [
@@ -363,29 +363,29 @@
                 {
                     "name": "Халил",
                     "text": "Селям алейкум, Селиме!",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Алейкум селям, Халил. Одада ресимлер {{input1}}?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "{{input2}}, бар.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Одада къач {{input3}} бар?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/lessons/characters/selime.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Одада он ресим бар. Эки {{input4}} — диварда. Секиз ресим — {{input5}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/lessons/characters/halil.jpg"
                 }
             ],
             "input_list": [

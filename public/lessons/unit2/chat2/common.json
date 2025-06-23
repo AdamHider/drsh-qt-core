@@ -10,7 +10,7 @@
             {
                 "name": "Селиме",
                 "text": "Селям, {{user.name}}!",
-                "image": "/image/2.jpg"
+                "image": "image/index.php/lessons/characters/selime.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -21,7 +21,7 @@
             {
                 "name": "Селиме",
                 "text": "Сен къавеханедесинъми?",
-                "image": "/image/2.jpg"
+                "image": "image/index.php/lessons/characters/selime.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -32,7 +32,7 @@
             {
                 "name": "Селиме",
                 "text": "Бу сыныф къачынджы къатта?",
-                "image": "/image/2.jpg"
+                "image": "image/index.php/lessons/characters/selime.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -43,7 +43,7 @@
             {
                 "name": "Селиме",
                 "text": "Сыныфта къач адам бар?",
-                "image": "/image/2.jpg"
+                "image": "image/index.php/lessons/characters/selime.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -54,7 +54,7 @@
             {
                 "name": "Селиме",
                 "text": "Оджа сыныфтамы?",
-                "image": "/image/2.jpg"
+                "image": "image/index.php/lessons/characters/selime.jpg"
             },
             {
                 "name": "{{user.name}}",
