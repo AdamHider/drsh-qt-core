@@ -170,13 +170,12 @@ class QuestModel extends Model
     {
         $ResourceModel = model('ResourceModel');
         $quest = $this->join('quests_usermap', 'quests.id = quests_usermap.item_id AND quests_usermap.user_id = '.session()->get('user_id'), 'left')
-        ->select('quests.*, quests_usermap.reward_config as reward_calculated')
         ->where('quests_usermap.status = "active" AND quests_usermap.progress >= quests.value AND id = '.$quest_id)
         ->get()->getRowArray();
 
         if(empty($quest)) return 'not_found';
 
-        $reward_config = json_decode($quest['reward_calculated'], true);
+        $reward_config = json_decode($quest['reward_config'], true);
 
         $quest['is_completed'] = $quest['progress'] >= $quest['value'];
         $quest['is_outdated'] = $this->checkItemOutdated($quest);
@@ -216,7 +215,6 @@ class QuestModel extends Model
                 }
                 $progress = 1;
             }
-            $reward_config = json_decode($quest['reward_config'], true);
             $data = [
                 'item_id' => $quest['id'],
                 'user_id' => $user_id,

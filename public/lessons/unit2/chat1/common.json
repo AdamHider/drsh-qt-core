@@ -10,7 +10,7 @@
             {
                 "name": "Исмет",
                 "text": "Селям алейкум, {{user.name}}!",
-                "image": "image/index.php/lessons/characters/ismet.jpg"
+                "image": "image/index.php/characters/ismet.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -21,7 +21,7 @@
             {
                 "name": "Исмет",
                 "text": "Ишлеринъ насыл?",
-                "image": "image/index.php/lessons/characters/ismet.jpg"
+                "image": "image/index.php/characters/ismet.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -32,7 +32,7 @@
             {
                 "name": "Исмет",
                 "text": "Меним ишлерим де яхшы. Бу сокъакъта не бар?",
-                "image": "image/index.php/lessons/characters/ismet.jpg"
+                "image": "image/index.php/characters/ismet.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -43,7 +43,7 @@
             {
                 "name": "Исмет",
                 "text": "Анда тереклер бармы?",
-                "image": "image/index.php/lessons/characters/ismet.jpg"
+                "image": "image/index.php/characters/ismet.jpg"
             },
             {
                 "name": "{{user.name}}",

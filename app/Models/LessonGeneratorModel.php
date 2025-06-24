@@ -12,7 +12,9 @@ class LessonGeneratorModel extends LessonModel
     public function generatePages($lesson_id) 
     {
         $lesson = $this->where('lessons.id', $lesson_id)->get()->getRowArray();
+        $lesson['pages'] = preg_replace('/image\/index.php/i', base_url('image/index.php'), $lesson['pages']);
         $pages = json_decode($lesson['pages'], true);
+        
         if($lesson['type'] == 'common'){
             return $pages;
         } else 

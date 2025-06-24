@@ -47,18 +47,18 @@
                 {
                     "name": "Алие",
                     "text": "Селям, Назлы!",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Алейкум селям, Алие! Хастахане къач {{input1}} бар?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Хастаханеде чокъ {{input2}} {{input3}}.",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 }
             ],
             "input_list": [
@@ -226,18 +226,18 @@
                 {
                     "name": "Джемиле",
                     "text": "Селям, Исмет!",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Алейкум селям, Джемиле! Шу одада {{input1}} бар?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input2}} одада топ, учь {{input3}} ве компьютер {{input4}}.",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 }
             ],
             "input_list": [
@@ -402,35 +402,35 @@
                 {
                     "name": "Халил",
                     "text": "Мераба!",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Мераба! Ишлеринъ {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Яхшы, сагъ ол! Эвде пенир бармы?",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input2}}, эвде пенир {{input3}}.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Тюкянда {{input4}} согъан бар?",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Тюкянда аз {{input5}} бар.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 }
             ],
             "input_list": [
@@ -536,51 +536,51 @@
                 {
                     "name": "Алие",
                     "text": "Селям алейкум!",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Алейкум селям! Бу {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Бу — чанта.",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Чантада {{input2}} бар?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Чантада бир {{input3}}, эки {{input4}} ве беш дефтер бар.",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Китаплар {{input5}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Ёкъ, чантада {{input6}}, секизинджи {{input7}}.",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "{{input8}} долапта беш {{input9}} бармы?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "{{input10}}, о долапта учь китап {{input11}}.",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 }
             ],
             "input_list": [

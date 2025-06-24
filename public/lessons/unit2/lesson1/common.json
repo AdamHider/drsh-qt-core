@@ -130,18 +130,18 @@
                 {
                     "name": "Назлы",
                     "text": "Селям, Эвтаде!",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Алейкум селям, Назлы! Джедвель {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/evtade.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "{{input2}} — {{input3}}.",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 }
             ],
             "input_list": [
@@ -308,24 +308,24 @@
                 {
                     "name": "Асан",
                     "text": "Хайырлы акъшамлар, Селиме!",
-                    "image": "image/index.php/lessons/characters/asan.jpg"
+                    "image": "image/index.php/characters/asan.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Хайырлы акъшамлар, Асан! Ишлеринъ {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Яхшы, сагъ ол! Джемиле {{input2}}?",
-                    "image": "image/index.php/lessons/characters/asan.jpg"
+                    "image": "image/index.php/characters/asan.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "Ёкъ, Джемиле {{input3}} {{input4}}, эвде.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 }
             ],
             "input_list": [
@@ -491,46 +491,46 @@
                 {
                     "name": "Алие",
                     "text": "Селям алейкум! Ишлеринъ насыл?",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Алейкум селям! {{input1}}. Сенинъ ишлеринъ {{input2}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Меним {{input3}} яхшы. Бу, коридормы?",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input4}}, коридор дегиль, {{input5}}.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Анда {{input6}} бар?",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Мында рале, {{input7}} ве сильгич {{input8}}.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Ралелерде алмалар {{input9}}?",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input10}}, алмалар {{input11}} бар.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 }
             ],
             "input_list": [

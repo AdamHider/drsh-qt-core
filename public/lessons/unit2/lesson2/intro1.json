@@ -4,7 +4,7 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "9 — докъуз."
         }
@@ -14,7 +14,7 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "2025 — эки бинъ йигирми беш."
         }
@@ -24,7 +24,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "16 — {{input1}}.",
             "input_list": [
@@ -47,7 +47,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "300000 — {{input1}}.",
             "input_list": [
@@ -70,7 +70,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "27 — {{input1}}.",
             "input_list": [
@@ -93,7 +93,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "1000 — {{input1}}.",
             "input_list": [
@@ -116,7 +116,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "54 — {{input1}}.",
             "input_list": [
@@ -139,7 +139,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "340 — {{input1}}.",
             "input_list": [
@@ -162,7 +162,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "133 — {{input1}}.",
             "input_list": [
@@ -185,7 +185,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "91 — {{input1}}.",
             "input_list": [
@@ -208,7 +208,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "87 — {{input1}}.",
             "input_list": [
@@ -231,7 +231,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "7 978 13 95 689 — {{input1}} {{input2}} {{input3}} {{input4}} {{input5}}.",
             "input_list": [

@@ -292,18 +292,18 @@
                 {
                     "name": "Селиме",
                     "text": "Селям алейкум, Халил!",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Алейкум селям, Селиме! Асан {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "{{input2}}, мектепте.",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 }
             ],
             "input_list": [
@@ -342,24 +342,24 @@
                 {
                     "name": "Надир",
                     "text": "Селям алейкум, Асан! Бу одада не {{input1}}?",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Алейкум селям, Надир! Бу {{input2}} компьютер, долап ве топ бар.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/asan.jpg"
+                    "image": "image/index.php/characters/asan.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Анда ралелер бармы?",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "{{input3}}, {{input4}} — мектепте.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/asan.jpg"
+                    "image": "image/index.php/characters/asan.jpg"
                 }
             ],
             "input_list": [
@@ -419,24 +419,24 @@
                 {
                     "name": "Назлы",
                     "text": "Мераба. Меним {{input1}} Назлы.",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Мераба, Назлы. Мемнюним.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Мен де {{input2}}. Сокъакъта {{input3}} бармы?",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Эбет, {{input4}} адамлар бар.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 }
             ],
             "input_list": [
@@ -496,29 +496,29 @@
                 {
                     "name": "Исмет",
                     "text": "Селям алейкум, Джемиле!",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Алейкум селям, Исмет. Экимлер {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Ёкъ, мектепте экимлер {{input2}}. Экимлер — {{input3}}.",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Чокъ сагъ ол, Исмет.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "{{input4}} сагъ ол, Джемиле.",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 }
             ],
             "input_list": [

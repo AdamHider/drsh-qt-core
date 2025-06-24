@@ -96,13 +96,13 @@
                 {
                     "name": "Надир",
                     "text": "Сиз экимлерсинъизми?",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "{{input1}}, {{input2}}!",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/evtade.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 }
             ],
             "input_list": [
@@ -224,24 +224,24 @@
                 {
                     "name": "Назлы",
                     "text": "{{input1}} сыныфта не бар?",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Шу сыныфта ралелер ве пенджерелер бар.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Арабалар бармы?",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input2}}, {{input3}} ёкъ.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 }
             ],
             "input_list": [
@@ -328,24 +328,24 @@
                 {
                     "name": "Алие",
                     "text": "Бу чантада къач {{input1}} бар?",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "{{input2}} чантада дефтерлер ёкъ.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Китаплар {{input3}}?",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Эбет, учь {{input4}} бар.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 }
             ],
             "input_list": [

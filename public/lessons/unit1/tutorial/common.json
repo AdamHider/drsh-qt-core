@@ -4,7 +4,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Дом - э{{input1}}",
             "image": "image/index.php/lessons/unit_1/ev.jpg",
@@ -28,7 +28,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Дерево - т{{input1}}ре{{input2}}",
             "image": "image/index.php/lessons/unit_1/terek.jpg",
@@ -63,7 +63,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Книга - к{{input1}}та{{input2}}",
             "image": "image/index.php/lessons/unit_1/kitap.jpg",
@@ -98,7 +98,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Дверь - {{input1}}ап{{input2}}",
             "image": "image/index.php/lessons/unit_1/qapi.jpg",
@@ -133,7 +133,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Нога - а{{input1}}{{input2}}",
             "image": "image/index.php/lessons/unit_1/ayaq.jpg",
@@ -168,7 +168,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Небо - {{input1}}{{input2}}к",
             "image": "image/index.php/lessons/unit_1/kok.jpg",
@@ -203,7 +203,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Дорога - {{input1}}л",
             "image": "image/index.php/lessons/unit_1/yol.jpg",
@@ -227,7 +227,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Девочка - {{input1}}{{input2}}{{input3}}",
             "image": "image/index.php/lessons/unit_1/qiz.jpg",
@@ -273,7 +273,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Хлеб - {{input1}}ть{{input2}}е{{input3}}",
             "image": "image/index.php/lessons/unit_1/otmek.jpg",
@@ -319,7 +319,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Ребёнок - б{{input1}}{{input2}}{{input3}}",
             "image": "image/index.php/lessons/unit_1/bala.jpg",
@@ -365,7 +365,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Машина - а{{input1}}а{{input2}}{{input3}}",
             "image": "image/index.php/lessons/unit_1/araba.jpg",
@@ -411,7 +411,7 @@
         "title": "Заполни пропуски",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Рюкзак - {{input1}}а{{input2}}{{input3}}{{input4}}",
             "image": "image/index.php/lessons/unit_1/chanta.jpg",

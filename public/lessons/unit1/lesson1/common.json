@@ -255,24 +255,24 @@
                 {
                     "name": "Халил",
                     "text": "Хайырлы {{input1}} Назлы.",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Хайырлы акъшамлар, Халил. {{input2}} насыл?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Яхшы, {{input3}} ол. Сенинъ ишлеринъ насыл?",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Меним ишлерим де яхшы, {{input4}} де сагъ ол.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 }
             ],
             "input_list": [
@@ -499,51 +499,51 @@
                 {
                     "name": "Джемиле",
                     "text": "Хайырлы сабалар!",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Хайырлы сабалар!",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input1}} адым Джемиле. Сенинъ адынъ {{input2}}?",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "{{input3}}. Меним адым Исмет.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Мен де {{input4}}. Ишлеринъ {{input5}}?",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Яхшы, сагъ ол. {{input6}} ишлеринъ насыл?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "{{input7}} сагъ ол. Меним ишлерим {{input8}} яхшы.",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Сагълыкънен {{input9}}, Джемиле.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Сагълыкънен бар.",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 }
             ],
             "input_list": [

@@ -33,7 +33,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "image": "image/index.php/lessons/unit_1/quruci.jpg",
             "text": "Мен къуруджы{{input1}}.",
@@ -57,7 +57,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "image": "image/index.php/lessons/unit_1/ocalar.jpg",
             "text": "Сиз оджалар{{input1}}.",
@@ -81,7 +81,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Биз экимлер{{input1}}.",
             "image": "image/index.php/lessons/unit_1/ekimler.jpg",
@@ -105,7 +105,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Сен эким дегиль{{input1}}.",
             "image": "image/index.php/lessons/unit_1/talebe.jpg",
@@ -129,7 +129,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Сен талебе{{input1}}? {{input2}}, талебе дегилим.",
             "image": "image/index.php/lessons/unit_1/chalghyci.jpg",
@@ -163,7 +163,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бу акъшам {{input1}} евдемиз.",
             "image": "image/index.php/lessons/unit_1/ev.jpg",
@@ -187,7 +187,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} кимсинъ? {{input2}} рессамым.",
             "image": "image/index.php/lessons/unit_1/ressam.jpg",
@@ -222,7 +222,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Олар {{input1}}? {{input2}} талебе{{input3}}.",
             "image": "image/index.php/lessons/unit_1/talebeler.jpg",
@@ -268,7 +268,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} къайердесинъиз? {{input2}} тюкян{{input3}}.",
             "image": "image/index.php/lessons/unit_2/tukan.jpg",
@@ -314,7 +314,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} саба {{input2}} къавеханедесинъизми? {{input3}}, къавехане{{input4}}.",
             "image": "image/index.php/lessons/unit_2/qavehane.jpg",
@@ -369,7 +369,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Сен бугунь иш{{input1}}? Ёкъ, бугунь иш{{input2}} дегил{{input3}}.",
             "image": "image/index.php/lessons/unit_1/ev.jpg",

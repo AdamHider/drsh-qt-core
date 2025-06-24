@@ -4,7 +4,7 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бу не? Бу — дефтер.",
             "image": "image/index.php/lessons/unit_1/defter.jpg"
@@ -15,7 +15,7 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бу ким? Бу — оджа.",
             "image": "image/index.php/lessons/unit_1/oca.jpg"
@@ -26,7 +26,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бу {{input1}}? Бу — эв.",
             "image": "image/index.php/lessons/unit_1/ev.jpg",
@@ -49,7 +49,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} ким? {{input2}} — рессам. Бу рессам якъын.",
             "image": "image/index.php/lessons/unit_1/ressam.jpg",
@@ -84,7 +84,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Шу не? {{input1}} — макъас.",
             "image": "image/index.php/lessons/unit_1/maqas.jpg",
@@ -108,7 +108,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} ким? Шу — эким. Шу эким {{input2}}.",
             "image": "image/index.php/lessons/unit_1/ekim.jpg",
@@ -143,7 +143,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бу не? {{input1}} — лейлек.",
             "image": "image/index.php/lessons/unit_1/leylek.jpg",
@@ -167,7 +167,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} ким? {{input2}} — талебе. О талебе пек узакъ.",
             "image": "image/index.php/lessons/unit_1/talebe.jpg",
@@ -208,18 +208,18 @@
                 {
                     "name": "Исмет",
                     "text": "Селям алейкум! Меним адым Исмет.",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Алейкум {{input1}}, Исмет! Меним адым Эвтаде. О не?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/evtade.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "{{input2}} — санчкъы.",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 }
             ],
             "input_list": [
@@ -259,13 +259,13 @@
                 {
                     "name": "Халил",
                     "text": "Селям {{input1}}, Асан! Бу {{input2}}?",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Асан",
                     "text": "Алейкум селям, Халил! {{input3}} — геми.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/asan.jpg"
+                    "image": "image/index.php/characters/asan.jpg"
                 }
             ],
             "input_list": [
@@ -316,24 +316,24 @@
                 {
                     "name": "Назлы",
                     "text": "Мераба. Меним адым Назлы.",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "{{input1}}, Назлы. Меним {{input2}} Арслан. Шу {{input3}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/arslan.jpg"
+                    "image": "image/index.php/characters/arslan.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "{{input4}} — чалгъыджы.",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Арслан",
                     "text": "Яхшы, сагъ ол.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/arslan.jpg"
+                    "image": "image/index.php/characters/arslan.jpg"
                 }
             ],
             "input_list": [
@@ -395,29 +395,29 @@
                 {
                     "name": "Надир",
                     "text": "Хайырлы {{input1}}, Джемиле!",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Хайырлы сабалар, Надир. О {{input2}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "О — къуруджы.",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Чокъ сагъ {{input3}}, Надир.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input4}} де сагъ ол.",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 }
             ],
             "input_list": [

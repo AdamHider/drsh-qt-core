@@ -4,7 +4,7 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Олар яхшы талебелердир."
         }
@@ -14,7 +14,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} якъынсынъмы? {{input2}}, узакъым.",
             "input_list": [
@@ -47,7 +47,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Мектеп балабан{{input1}}? {{input2}}, балабандыр.",
             "input_list": [
@@ -79,7 +79,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бугунь сокъакъта {{input1}}? Эбет, {{input2}}.",
             "input_list": [
@@ -112,7 +112,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "{{input1}} афта ава сувукъмы? Ёкъ, бу {{input2}} ава {{input3}}.",
             "input_list": [
@@ -154,7 +154,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Сиз мектепте {{input1}}? Эбет, {{input2}}.",
             "input_list": [
@@ -188,7 +188,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Шу {{input1}} насыл? {{input2}} тюкян балабандыр.",
             "input_list": [
@@ -220,7 +220,7 @@
         "title": "Выбери правильный вариант",
         "subtitle": "",
         "form_template": "variant",
-        "page_template": "imageSelection",
+        "page_template": "singleSentence",
         "template_config": {
             "text": "Бу {{input1}} {{input2}} таземи? {{input3}}, тазедир.",
             "input_list": [
@@ -268,18 +268,18 @@
                 {
                     "name": "Селиме",
                     "text": "Селям алейкум, Халил!",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Халил",
                     "text": "Алейкум селям, Селиме! {{input1}} къаердесинъ?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/halil.jpg"
+                    "image": "image/index.php/characters/halil.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "{{input2}} узакъ мектептем.",
-                    "image": "image/index.php/lessons/characters/selime.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 }
             ],
             "input_list": [
@@ -319,24 +319,24 @@
                 {
                     "name": "Джемиле",
                     "text": "Хайырлы сабалар, Эвтаде!",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Хайырлы сабалар, Джемиле!",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/evtade.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 },
                 {
                     "name": "Джемиле",
                     "text": "Буздолапта пенир {{input1}}?",
-                    "image": "image/index.php/lessons/characters/cemile.jpg"
+                    "image": "image/index.php/characters/cemile.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Буздолапта {{input2}} тазе ве {{input3}}.",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/evtade.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 }
             ],
             "input_list": [
@@ -387,18 +387,18 @@
                 {
                     "name": "Назлы",
                     "text": "Мераба, Исмет!",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 },
                 {
                     "name": "Исмет",
                     "text": "Мераба, Назлы! {{input1}} долапта китаплар {{input2}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/ismet.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Назлы",
                     "text": "Ёкъ, {{input3}} долап {{input4}}.",
-                    "image": "image/index.php/lessons/characters/nazly.jpg"
+                    "image": "image/index.php/characters/nazly.jpg"
                 }
             ],
             "input_list": [
@@ -460,29 +460,29 @@
                 {
                     "name": "Надир",
                     "text": "Селям, Алие!",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Алейкум селям, Надир. Сиз {{input1}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Мен ве Джемиле {{input2}}.",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "Ишлеринъиз  {{input3}}?",
                     "float": "right",
-                    "image": "image/index.php/lessons/characters/alie.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input4}}, яхшы дегиль. Биз {{input5}}.",
-                    "image": "image/index.php/lessons/characters/nadir.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 }
             ],
             "input_list": [

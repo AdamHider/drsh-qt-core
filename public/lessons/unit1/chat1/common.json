@@ -10,7 +10,7 @@
             {
                 "name": "Джемиле",
                 "text": "Селям алейкум!",
-                "image": "image/index.php/lessons/characters/cemile.jpg"
+                "image": "image/index.php/characters/cemile.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -21,7 +21,7 @@
             {
                 "name": "Джемиле",
                 "text": "Меним адым Джемиле. Сенинъ адынъ не?",
-                "image": "image/index.php/lessons/characters/cemile.jpg"
+                "image": "image/index.php/characters/cemile.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -32,7 +32,7 @@
             {
                 "name": "Джемиле",
                 "text": "Мемнюним.",
-                "image": "image/index.php/lessons/characters/cemile.jpg"
+                "image": "image/index.php/characters/cemile.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -43,7 +43,7 @@
             {
                 "name": "Джемиле",
                 "text": "Яхшы, сагъ ол. Сенинъ ишлеринъ насыл?",
-                "image": "image/index.php/lessons/characters/cemile.jpg"
+                "image": "image/index.php/characters/cemile.jpg"
             },
             {
                 "name": "{{user.name}}",
@@ -59,7 +59,7 @@
                 "index": 1,
                 "answer": "Алейкум|селям|!",
                 "variants": [
-                    { "text": "селям," },
+                    { "text": "селям" },
                     { "text": "!" },
                     { "text": "Алейкум" }
                 ]

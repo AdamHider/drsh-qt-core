@@ -45,7 +45,7 @@ class LessonModel extends Model
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['next_lessons']     = $this->getNextItems($lesson['id']);
             $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
-            $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true));
+            $lesson['is_blocked']       = false; //$LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true));
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
             if(!$lesson['is_blocked']){
                 $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
@@ -79,7 +79,7 @@ class LessonModel extends Model
             $lesson['image']            = base_url('image/index.php'.$lesson['image']);
             $lesson['exercise']         = $ExerciseModel->getItem($lesson['exercise_id']);
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
-            $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
+            $lesson['is_blocked']       = false; //$LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
             if(!$lesson['is_blocked']){
                 $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
@@ -112,7 +112,7 @@ class LessonModel extends Model
             if($mode == 'full'){
                 $satellite['exercise']      = $ExerciseModel->getItem($satellite['exercise_id']);
                 $satellite['progress']      = $this->getItemProgress($satellite['exercise']['data'] ?? []);
-                $satellite['is_blocked']    = $LessonUnblockUsermapModel->checkBlocked($satellite['id'], json_decode($satellite['unblock_config'], true));
+                $satellite['is_blocked']    = false; //$LessonUnblockUsermapModel->checkBlocked($satellite['id'], json_decode($satellite['unblock_config'], true));
                 $satellite['unblock']       = $this->getItemUnblock(json_decode($satellite['unblock_config'], true));
                 if(!$satellite['is_blocked']){
                     $reward_gradation       = $this->composeItemReward(json_decode($satellite['reward_config'], true));
