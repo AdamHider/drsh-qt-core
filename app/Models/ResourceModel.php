@@ -158,7 +158,7 @@ class ResourceModel extends Model
     {
         foreach($resources as $code => &$quantity){
             if($mode == 'substract') $quantity = $quantity * -1;
-        }
+        } 
         if(!$this->checkListQuantity($user_id, $resources)) return false;
         $ok = $this->saveUserList($user_id, $resources);
         return $ok;

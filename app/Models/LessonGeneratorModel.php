@@ -69,14 +69,12 @@ class LessonGeneratorModel extends LessonModel
                     $page = $page_config['template']['quiz_page'];
                     $variants = [];
                     $variants[] = [
-                        'image' => $word_object['image'],
                         'text' => $word_object['text']
                     ];
                     $word_list_randomized = $this->seedShuffle($word_list, $key);
                     foreach($word_list_randomized as $key => $word){
                         if($word['index'] !== $word_object['index']){
                             $variants[] = [
-                                'image' => $word['image'],
                                 'text' => $word['text']
                             ];
                         }
@@ -95,6 +93,7 @@ class LessonGeneratorModel extends LessonModel
                     $page['title'] = sprintf($page['title'], "<b>".$word_object['label']."</b>");
                     $page['template_config'] = [
                         'input_list' => [$input_object],
+                        'image' => $word_object['image'],
                         'text' => "{{input".$word_object['index']."}}",
                     ];
                     $pages[] = $page;

@@ -56,6 +56,10 @@ class AchievementModel extends Model
         } else
         if ($data['code'] == 'total_points') {
             $current_progress = $statistics['total_points'];
+        }  else
+        if ($data['code'] == 'total_achievements') {
+            $current_progress = $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id')
+            ->where('achievements_usermap.user_id', session()->get('user_id'))->get()->getNumRows();
         } else {
             $current_progress = 0;
         }

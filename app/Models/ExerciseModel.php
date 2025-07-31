@@ -47,7 +47,7 @@ class ExerciseModel extends Model
         '0' => [0, 39],
         '1' => [40, 79],
         '2' => [80, 99],
-        '3' => [99, 100]
+        '3' => [99, 120]
     ];
     
     protected $useTimestamps = false;
@@ -161,7 +161,7 @@ class ExerciseModel extends Model
             }
             $ResourceModel = model('ResourceModel');
 
-            $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward'], true);
+            $ResourceModel->enrollUserList(session()->get('user_id'), $data['exercise_submitted']['totals']['reward']);
         }
         return $result;        
     }
