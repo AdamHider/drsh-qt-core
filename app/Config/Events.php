@@ -107,8 +107,6 @@ Events::on('skillGained', static function ($target_id) {
     $LessonUnblockUsermapModel = new \App\Models\LessonUnblockUsermapModel();
     $LessonUnblockUsermapModel->unblockNext('skills', $target_id);
 
-    $SkillModel = new \App\Models\SkillModel();
-    $SkillModel->linkItem($target_id, session()->get('user_id'), 'next');
     $quests = $QuestModel->getCompletedList('skill,total_skills');
     if(!empty($quests)){
         $NotificationModel = new \App\Models\NotificationModel();

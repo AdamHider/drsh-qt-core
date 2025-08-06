@@ -47,6 +47,7 @@ class LessonModel extends Model
             $lesson['progress']         = $this->getItemProgress($lesson['exercise']['data'] ?? []);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true));
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
+            $lesson['is_quest']         = $this->getItemQuest($lesson['id']);    
             if(!$lesson['is_blocked']){
                 $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
                 $lesson['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
@@ -81,6 +82,7 @@ class LessonModel extends Model
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
+            $lesson['is_quest']         = $this->getItemQuest($lesson['id']);
             if(!$lesson['is_blocked']){
                 $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
                 $lesson['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
@@ -114,6 +116,7 @@ class LessonModel extends Model
                 $satellite['progress']      = $this->getItemProgress($satellite['exercise']['data'] ?? []);
                 $satellite['is_blocked']    = $LessonUnblockUsermapModel->checkBlocked($satellite['id'], json_decode($satellite['unblock_config'], true));
                 $satellite['unblock']       = $this->getItemUnblock(json_decode($satellite['unblock_config'], true));
+                $satellite['is_quest']         = $this->getItemQuest($satellite['id']);
                 if(!$satellite['is_blocked']){
                     $reward_gradation       = $this->composeItemReward(json_decode($satellite['reward_config'], true));
                     $satellite['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
@@ -209,7 +212,7 @@ class LessonModel extends Model
     public function getItemProgress($exercise = [])
     {
         if(isset($exercise['totals']) && $exercise['totals']['total'] > 0){
-            return ceil($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
+            return floor($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
         }
         return 0;
     }
@@ -260,5 +263,12 @@ class LessonModel extends Model
         }
         if(empty($result)) return null;
         return $result;
+    }
+    private function getItemQuest($lesson_id)
+    {
+        $QuestModel = model('QuestModel');
+        $result = $QuestModel->join('quests_usermap', 'quests_usermap.item_id = quests.id')
+        ->where('quests_usermap.user_id = '.session()->get('user_id').' AND quests.code = "lesson" AND quests.target = '.$lesson_id.' AND quests_usermap.status != "finished"')->get()->getResultArray();
+        return !empty($result);
     }
 }

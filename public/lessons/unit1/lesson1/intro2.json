@@ -47,7 +47,7 @@
                 },
                 {
                     "name": "Назлы",
-                    "text": "{{input2}}, Надир! Меним Назлы. Ишлеринъ насыл?",
+                    "text": "{{input2}}, Надир! Меним адым Назлы. Ишлеринъ насыл?",
                     "float": "right",
                     "image": "image/index.php/characters/nazly.jpg"
                 },

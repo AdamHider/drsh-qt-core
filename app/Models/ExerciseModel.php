@@ -66,6 +66,7 @@ class ExerciseModel extends Model
             if(!empty($exercise['data']['totals']['reward'])){
                 $exercise['data']['totals']['reward'] = $ResourceModel->proccessItemReward($exercise['data']['totals']['reward']);
             }
+            $exercise['attempts'] = (int) $exercise['attempts'];
             unset($exercise['exercise_pending']);
             unset($exercise['exercise_submitted']);
             unset($exercise['pages']);
@@ -106,7 +107,7 @@ class ExerciseModel extends Model
 
         $ResourceModel = model('ResourceModel');
         if(!$ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
-            //return 'not_enough_resources';
+            return 'not_enough_resources';
         } 
         
         $pages = $LessonGeneratorModel->generatePages($lesson_id);

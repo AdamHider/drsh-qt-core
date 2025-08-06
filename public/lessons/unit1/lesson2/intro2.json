@@ -5,6 +5,7 @@
         "subtitle": "",
         "form_template": null,
         "page_template": "listSimple",
+        "note": "Чтобы понять, какую из частиц “-лар” или “-лер” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -лар, а если “мягкие” → -лер.",
         "template_config": {
             "item_list": [
                 {
@@ -22,6 +23,7 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "note": "Чтобы понять, какую из частиц “-лар” или “-лер” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -лар, а если “мягкие” → -лер.",
         "template_config": {
             "text": "Геми — геми{{input1}}",
             "image": "image/index.php/lessons/unit_1/gemiler.jpg",
@@ -45,6 +47,7 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "note": "Чтобы понять, какую из частиц “-лар” или “-лер” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -лар, а если “мягкие” → -лер.",
         "template_config": {
             "text": "Оджа — оджа{{input1}}",
             "image": "image/index.php/lessons/unit_1/ocalar.jpg",
@@ -68,6 +71,7 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "note": "Чтобы понять, какую из частиц “-лар” или “-лер” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -лар, а если “мягкие” → -лер.",
         "template_config": {
             "text": "Алма - алма{{input1}}",
             "image": "image/index.php/lessons/unit_1/almalar.jpg",
@@ -91,6 +95,7 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "note": "Чтобы понять, какую из частиц “-лар” или “-лер” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -лар, а если “мягкие” → -лер.",
         "template_config": {
             "text": "Отьмек - отьмек{{input1}}",
             "image": "image/index.php/lessons/unit_1/otmekler.jpg",

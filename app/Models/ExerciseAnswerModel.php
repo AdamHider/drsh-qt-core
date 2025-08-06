@@ -13,6 +13,7 @@ class ExerciseAnswerModel extends ExerciseModel
         'variant' => 100,
         'puzzle' => 100,
         'match' => 120,
+        'matchPairs' => 120,
         'simple' => 50,
         'radio' => 100,
         'checkbox' => 100,
@@ -74,7 +75,7 @@ class ExerciseAnswerModel extends ExerciseModel
                 if($step_by_step && !isset($income_answers[$input_index]->is_finished)){
                     break;
                 }
-            } 
+            }
         }
         $answers['totals']['is_finished'] = $answers['totals']['quantity'] == $answers['totals']['total'];
         if(!$answers['totals']['is_finished']){

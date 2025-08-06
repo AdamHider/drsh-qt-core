@@ -14,9 +14,9 @@
                 },
                 {
                     "name": "Исмет",
-                    "text": "image/index.php/characters/ismet.jpg",
+                    "text": "Алейкум селям! Меним адым Исмет.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/characters/ismet.jpg"
                 },
                 {
                     "name": "Асан",

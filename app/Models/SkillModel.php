@@ -26,7 +26,6 @@ class SkillModel extends Model
     {
         $DescriptionModel = model('DescriptionModel');
         $ResourceModel = model('ResourceModel');
-        $SettingsModel = model('SettingsModel');
         
         $this->join('skills_usermap', 'skills_usermap.item_id = skills.id AND skills_usermap.user_id = '.session()->get('user_id'), 'left')
         ->select('skills.id, skills.code, skills.group_id, skills.chain, skills.image, skills.cost_config, skills.level, skills.modifiers_config, skills.unblock_after, skills.order, (skills_usermap.item_id IS NOT NULL) AS is_gained');
@@ -42,6 +41,7 @@ class SkillModel extends Model
             $skill['image']             = base_url('image/index.php'.$skill['image']);
             $skill['is_available']      = $this->checkAvailable($skill);
             $skill['is_purchasable']    = $this->checkPurchasable($cost_config);
+            $skill['is_quest']          = $this->getItemQuest($skill['id']);
             if($skill['is_available']){
                 $skill['cost'] = $ResourceModel->proccessItemCost($cost_config);
             }
@@ -149,6 +149,7 @@ class SkillModel extends Model
         if($this->checkAvailable($skill) && $this->checkPurchasable($cost_config)){
             if($ResourceModel->enrollUserList(session()->get('user_id'), $cost_config, 'substract')){
                 $SettingsModifiersModel->createList(session()->get('user_id'), $modifiers_config, 'skill');
+                
                 $SkillUsermapModel->insert(['item_id' => $skill['id'], 'user_id' => session()->get('user_id')], true);
                 Events::trigger('skillGained', $skill['id']);
                 return 'success';
@@ -157,5 +158,12 @@ class SkillModel extends Model
         } else {
             return 'forbidden';
         }
+    }
+    private function getItemQuest($skill_id)
+    {
+        $QuestModel = model('QuestModel');
+        $result = $QuestModel->join('quests_usermap', 'quests_usermap.item_id = quests.id')
+        ->where('quests_usermap.user_id = '.session()->get('user_id').' AND quests.code = "skill" AND quests.target = '.$skill_id.' AND quests_usermap.status != "finished"')->get()->getResultArray();
+        return !empty($result);
     }
 }

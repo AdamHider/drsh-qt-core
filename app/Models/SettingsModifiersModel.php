@@ -46,8 +46,18 @@ class SettingsModifiersModel extends Model
 
     public function createList ($user_id, $data, $source_code)
     {
+        $SettingsModel = model('SettingsModel');
+        $SettingsUsermapModel = model('SettingsUsermapModel');
         foreach($data as $item){
-            $setting = $this->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id, 'left')->where('settings.code', $item['code'])->get()->getRowArray();
+            $setting = $SettingsModel->join('settings_usermap', 'settings_usermap.item_id = settings.id AND settings_usermap.user_id = '.$user_id, 'left')
+            ->where('settings.code', $item['code'])->get()->getRowArray();
+            if(empty($setting['user_id'])){
+                $SettingsUsermapModel->createUserItem([
+                    'item_id' => $setting['id'], 
+                    'user_id' => $user_id, 
+                    'value' => $setting['default_value']
+                ]);
+            }
             $this->createItem([
                 'setting_id' => $setting['id'], 
                 'user_id' => session()->get('user_id'), 
@@ -61,7 +71,6 @@ class SettingsModifiersModel extends Model
     }
     public function createItem ($data)
     {
-        $SettingsModifiersModel = model('SettingsModifiersModel');
-        $SettingsModifiersModel->insert($data, true);
+        $this->insert($data, true);
     }
 }

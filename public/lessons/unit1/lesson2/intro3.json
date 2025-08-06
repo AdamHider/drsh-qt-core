@@ -5,6 +5,7 @@
         "subtitle": "",
         "form_template": null,
         "page_template": "listSimple",
+        "note": "Чтобы понять, какую из частиц “-мы” или “-ми” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -мы, а если “мягкие” → -ми.",
         "template_config": {
             "item_list": [
                 {
@@ -22,6 +23,7 @@
         "subtitle": "",
         "form_template": null,
         "page_template": "singleSentence",
+        "note": "Чтобы понять, какую из частиц “-мы” или “-ми” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -мы, а если “мягкие” → -ми.",
         "template_config": {
             "text": "Бу, талебеми? <br>Эбет, талебе.",
             "image": "image/index.php/lessons/unit_1/talebe.jpg"
@@ -33,6 +35,7 @@
         "subtitle": "",
         "form_template": null,
         "page_template": "singleSentence",
+        "note": "Чтобы понять, какую из частиц “-мы” или “-ми” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -мы, а если “мягкие” → -ми.",
         "template_config": {
             "text": "Бу, алмамы? <br>Ёкъ, муз.",
             "image": "image/index.php/lessons/unit_1/muz.jpg"

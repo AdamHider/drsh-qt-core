@@ -10,24 +10,24 @@
                 {
                     "name": "Алие",
                     "text": "Селям алейкум! Меним адым Алие. Сенинъ {{input1}} не?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "{{input2}}! Меним адым Надир. Ишлеринъ насыл?",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 },
                 {
                     "name": "Алие",
                     "text": "{{input3}}! Сенинъ ишлеринъ насыл?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/characters/alie.jpg"
                 },
                 {
                     "name": "Надир",
                     "text": "Меним ишлерим де яхшы.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/characters/nadir.jpg"
                 }
             ],
             "input_list": [
@@ -71,21 +71,57 @@
         "index": 2,
         "title": "Сопоставь пары",
         "subtitle": "",
-        "form_template": "match",
-        "page_template": "listSimple",
+        "form_template": "matchPairs",
+        "page_template": "pairs",
         "template_config": {
             "item_list": [
                 {
-                    "text": "Сагълыкънен къал. {{input1}}"
+                    "pair_list": [
+                        {
+                            "text": "Сагълыкънен къал.",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "{{input1}}",
+                            "audio_link": ""
+                        }
+                    ]
                 },
                 {
-                    "text": "Ишлеринъ насыл? {{input2}}"
+                    "pair_list": [
+                        {
+                            "text": "Ишлеринъ насыл?",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "{{input2}}",
+                            "audio_link": ""
+                        }
+                    ]
                 },
                 {
-                    "text": "Селям алейкум. {{input3}}"
+                    "pair_list": [
+                        {
+                            "text": "Селям алейкум.",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "{{input3}}",
+                            "audio_link": ""
+                        }
+                    ]
                 },
                 {
-                    "text": "Сагъ ол. {{input4}}"
+                    "pair_list": [
+                        {
+                            "text": "Сагъ ол.",
+                            "audio_link": ""
+                        },
+                        {
+                            "text": "{{input4}}",
+                            "audio_link": ""
+                        }
+                    ]
                 }
             ],
             "input_list": [
@@ -164,24 +200,24 @@
                 {
                     "name": "Селиме",
                     "text": "Мераба! Мен Селиме. Сенинъ адынъ {{input1}}?",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Мераб, Селиме! Меним адым Эвтаде.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 },
                 {
                     "name": "Селиме",
                     "text": "{{input2}}.",
-                    "image": "/image/2.jpg"
+                    "image": "image/index.php/characters/selime.jpg"
                 },
                 {
                     "name": "Эвтаде",
                     "text": "Мен де мемнюним.",
                     "float": "right",
-                    "image": "/image/3.jpg"
+                    "image": "image/index.php/characters/evtade.jpg"
                 }
             ],
             "input_list": [
@@ -469,19 +505,19 @@
                     "mode": "match",
                     "type": "radio",
                     "index": 1,
-                    "answer": "Saña da sağ ol.",
+                    "answer": "Санъа да сагъ ол.",
                     "variants": [
                         {
-                            "text": "Seniñ adın ne?"
+                            "text": "Сенинъ адынъ не?"
                         },
                         {
-                            "text": "Saña da sağ ol."
+                            "text": "Санъа да сагъ ол."
                         },
                         {
-                            "text": "Memnün oldım."
+                            "text": "Мемнюн олдым."
                         },
                         {
-                            "text": "Sen de sağ ol."
+                            "text": "Сен де сагъ ол."
                         }
                     ]
                 }

@@ -25,9 +25,11 @@ class LessonPageModel extends LessonModel
             $page['answer']     = $lesson['exercise_data']['answers'][$this->currentPage]['totals'] ?? [];
             $page['current']    = $lesson['exercise_data']['current_page'];
             $page['progress']   = $this->getItemProgress($lesson['exercise_data']);
-    
+            
             unset($lesson['page']['template_config']);
             $page['header']     = $lesson['page'];
+            $page['header']['index'] = (int) $index+1;
+            $page['header']['total_pages'] = $lesson['exercise_data']['total_pages'];
             return $page;
         } 
         
@@ -35,7 +37,7 @@ class LessonPageModel extends LessonModel
     }
     private function composeItemData($page_data)
     {
-        if(isset($page_data['form_template']) && $page_data['form_template'] == 'match'){
+        if(isset($page_data['form_template']) && ($page_data['form_template'] == 'match' || $page_data['form_template'] == 'matchPairs')){
             $page_data['template_config']['match_variants'] = $this->composeMatchVariants($page_data['template_config']['input_list']);
         }
         unset($page_data['template_config']['input_list']);
