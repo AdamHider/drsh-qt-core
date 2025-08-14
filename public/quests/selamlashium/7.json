@@ -5,6 +5,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Если подлететь к звезде без защиты, корабль не выдержит.",
                 "is_user": false
             },
@@ -15,6 +16,7 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Нужно поработать над технологией звёздного щита.",
                 "is_user": false
             },
@@ -30,6 +32,7 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Барьер активен. Корабль готов к исследованию Ecliptor.",
                 "is_user": false
             },
@@ -40,6 +43,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Сенсоры фиксируют аномальные потоки данных… Возможно, Ecliptor объединяет всю систему.",
                 "is_user": false
             },

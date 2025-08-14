@@ -56,8 +56,9 @@ class Exercise extends BaseController
 
         $lesson_id = $this->request->getVar('lesson_id');
         $data = (array) $this->request->getVar('data');
+        $time = (int) $this->request->getVar('time');
 
-        $result = $ExerciseAnswerModel->saveAnswer($lesson_id, $data);
+        $result = $ExerciseAnswerModel->saveAnswer($lesson_id, $data, $time);
         if($ExerciseAnswerModel->errors()){
             return $this->failValidationErrors(json_encode($ExerciseAnswerModel->errors()));
         }

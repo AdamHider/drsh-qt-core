@@ -5,12 +5,14 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Сигнал со станции нестандартный.",
                 "is_user": false
             },
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Может, это старое сообщение, которое что-то пытается объяснить?",
                 "is_user": false
             },
@@ -26,6 +28,7 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Теперь ясно. Кто-то изменил маршрут и стёр об этом сведения.",
                 "is_user": false
             },
@@ -36,6 +39,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Координаты были перенаправлены. Это похоже на ловушку.",
                 "is_user": false
             },

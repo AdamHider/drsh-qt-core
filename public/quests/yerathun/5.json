@@ -9,6 +9,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Я уже нашёл обрывки старых фраз. Они не связаны, но повторяются.",
                 "is_user": false
             },
@@ -24,12 +25,14 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Теперь ясно, откуда всё началось. Сообщение было стёрто специально.",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Передача подтверждает: навигация сбилась не случайно. Кто-то скрыл часть системы.",
                 "is_user": false
             },

@@ -5,6 +5,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Капитан, мы нашли источник сигнала… но связаться с ним невозможно.",
                 "is_user": false
             },
@@ -15,12 +16,14 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Это древняя станция. Её система была основана на забытых технологиях.",
                 "is_user": false
             },
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Если мы изучим принципы работы подобных станций, сможем получить доступ.",
                 "is_user": false
             },
@@ -36,6 +39,7 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Мы изучили принципы работы таких станций. Теперь доступ возможен.",
                 "is_user": false
             },
@@ -46,6 +50,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Да. Координаты станции установлены. Подготавливаю корабль к приближению.",
                 "is_user": false
             },

@@ -5,6 +5,7 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Капитан, мы засекли странные импульсы… но они прерываются.",
                 "is_user": false
             },
@@ -15,12 +16,14 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Вероятнее всего. Но без точных настроек их невозможно разобрать.",
                 "is_user": false
             },
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Если радар заработает, я смогу помогать фиксировать их.",
                 "is_user": false
             },
@@ -36,6 +39,7 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Улучшения дали результат! Мы теперь видим координаты сигналов.",
                 "is_user": false
             },
@@ -46,12 +50,14 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Регистрация активна. Система работает.",
                 "is_user": false
             },
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Я буду следить за показаниями радара и сообщать, если что-то обнаружится.",
                 "is_user": false
             },

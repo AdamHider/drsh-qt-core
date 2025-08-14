@@ -211,8 +211,8 @@ class LessonModel extends Model
     }
     public function getItemProgress($exercise = [])
     {
-        if(isset($exercise['totals']) && $exercise['totals']['total'] > 0){
-            return floor($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
+        if(isset($exercise['totals']) && $exercise['totals']['max_points'] > 0){
+            return floor($exercise['totals']['total'] / $exercise['totals']['max_points'] * 100);
         }
         return 0;
     }
@@ -225,7 +225,7 @@ class LessonModel extends Model
         if(!empty($exercises)){
             foreach($exercises as $exercise){
                 $exercise = json_decode($exercise['data'], true);
-                if(!empty($exercise)){
+                if(!empty($exercise) && $exercise['totals']['total'] ){
                     $overal_points += ceil($exercise['totals']['points'] / $exercise['totals']['total'] * 100);
                 }
             }
@@ -246,8 +246,8 @@ class LessonModel extends Model
         $result = [];
         $SkillModel = model('SkillModel');
         if(!empty($unblock_config['lessons'])){
-            $result['lessons'] = $this->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id = '.session()->get('user_id'), 'left')
-            ->select('lessons.title, lessons.description, lessons.image, lessons.id, IF(lesson_unblock_usermap.user_id, 1, 0) as unblocked, lessons.parent_id')
+            $result['lessons'] = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id = '.session()->get('user_id'), 'left')
+            ->select('lessons.title, lessons.description, lessons.image, lessons.id, IF(exercises.finished_at, 1, 0) as unblocked, lessons.parent_id')
             ->whereIn('lessons.id', $unblock_config['lessons'])->get()->getResultArray();
         }
         if(!empty($unblock_config['skills'])){

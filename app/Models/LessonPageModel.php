@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class LessonPageModel extends LessonModel
 {
     private $currentPage = 0;
+    private $pagePoints = 20;
     public function getPage($lesson_id, $index)
     {
         $lesson = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
@@ -30,6 +31,9 @@ class LessonPageModel extends LessonModel
             $page['header']     = $lesson['page'];
             $page['header']['index'] = (int) $index+1;
             $page['header']['total_pages'] = $lesson['exercise_data']['total_pages'];
+            if(isset($lesson['page']['timer'])){
+                $page['timer']  = $lesson['page']['timer'];
+            }
             return $page;
         } 
         
@@ -106,7 +110,8 @@ class LessonPageModel extends LessonModel
         
         if($action == 'next'){
             $exercise['data']['current_page']++;
-            $exercise['data']['totals']['points'] = (int) $exercise['data']['totals']['points'] + 20;
+            $exercise['data']['totals']['points'] = (int) $exercise['data']['totals']['points'] + $this->pagePoints;
+            $exercise['data']['totals']['total'] = (int) $exercise['data']['totals']['total'] + $this->pagePoints;
         }
         if($action == 'finish'){
             $ExerciseModel->updateItem($exercise, 'finish');

@@ -4,15 +4,37 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "listSimple",
+        "page_template": "table",
         "note": "Чтобы понять, какую из частиц “-мы” или “-ми” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -мы, а если “мягкие” → -ми.",
         "template_config": {
-            "item_list": [
+            "table_header": [
+                {"text": "Вопрос"},
+                {"text": "Ответ"}
+            ],
+            "row_list": [
                 {
-                    "text": "Вопрос: ____мы/ми?"
+                    "column_list": [
+                        {"text": "Бу, талебе<span class='text-primary'>ми</span>?"},
+                        {"text": "Эбет, талебе."}
+                    ]
                 },
                 {
-                    "text": "Ответ: Эбет, ____ . / Ёкъ, _____ ."
+                    "column_list": [
+                        {"text": "Бу, талебе<span class='text-primary'>ми</span>?"},
+                        {"text": "Ёкъ, талебе дегиль."}
+                    ]
+                },
+                {
+                    "column_list": [
+                        {"text": "Бу, алма<span class='text-primary'>мы</span>?"},
+                        {"text": "Эбет, алма."}
+                    ]
+                },
+                {
+                    "column_list": [
+                        {"text": "Бу, алма<span class='text-primary'>мы</span>?"},
+                        {"text": "Ёкъ, алма дегиль."}
+                    ]
                 }
             ]
         }
@@ -25,7 +47,7 @@
         "page_template": "singleSentence",
         "note": "Чтобы понять, какую из частиц “-мы” или “-ми” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -мы, а если “мягкие” → -ми.",
         "template_config": {
-            "text": "Бу, талебеми? <br>Эбет, талебе.",
+            "text": "Бу, талебе<span class='text-primary'>ми</span>? <br><span class='text-primary'>Эбет</span>, талебе.",
             "image": "image/index.php/lessons/unit_1/talebe.jpg"
         }
     },
@@ -37,7 +59,7 @@
         "page_template": "singleSentence",
         "note": "Чтобы понять, какую из частиц “-мы” или “-ми” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -мы, а если “мягкие” → -ми.",
         "template_config": {
-            "text": "Бу, алмамы? <br>Ёкъ, муз.",
+            "text": "Бу, алма<span class='text-primary'>мы</span>? <br><span class='text-primary'>Ёкъ</span>, муз.",
             "image": "image/index.php/lessons/unit_1/muz.jpg"
         }
     },
@@ -94,6 +116,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "О, рессам{{input1}}? <br>Ёкъ, {{input2}} дегиль, къуруджы.",
             "image": "image/index.php/lessons/unit_1/quruci.jpg",
@@ -128,6 +154,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 10
+        },
         "template_config": {
             "text": "Шу, анахтар{{input1}}? <br>Ёкъ, {{input2}} {{input3}}, санчкъы.",
             "image": "image/index.php/lessons/unit_1/sanchqi.jpg",
@@ -136,10 +166,10 @@
                     "mode": "variant",
                     "type": "input",
                     "index": 1,
-                    "answer": "лар",
+                    "answer": "лармы",
                     "variants": [
-                        { "text": "лар" },
-                        { "text": "лер" }
+                        { "text": "лармы" },
+                        { "text": "лерми" }
                     ]
                 },
                 {
@@ -172,6 +202,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "О копеклер якъын{{input1}}? <br>Ёкъ, якъын {{input2}}, {{input3}}.",
             "image": "image/index.php/lessons/unit_1/uzaq_kopekler.jpg",
@@ -259,6 +293,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 15
+        },
         "template_config": {
             "replica_list": [
                 {
@@ -403,6 +441,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 18
+        },
         "template_config": {
             "replica_list": [
                 {

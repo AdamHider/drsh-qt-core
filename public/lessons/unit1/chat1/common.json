@@ -1,6 +1,6 @@
 {
     "index": 1,
-    "title": "Ответьте собеседнику",
+    "title": "Ответь собеседнику",
     "subtitle": "",
     "form_template": "chatPuzzle",
     "page_template": "chat",
@@ -50,11 +50,22 @@
                 "text": "{{input4}}",
                 "float": "right",
                 "image": "{{user.character.image}}"
+            },
+            {
+                "name": "Джемиле",
+                "text": "Сагълыкънен къал, {{user.name}}!",
+                "image": "image/index.php/characters/cemile.jpg"
+            },
+            {
+                "name": "{{user.name}}",
+                "text": "{{input5}}",
+                "float": "right",
+                "image": "{{user.character.image}}"
             }
         ],
         "input_list": [
             {
-                "mode": "puzzle",
+                "mode": "chatPuzzle",
                 "type": "input",
                 "index": 1,
                 "answer": "Алейкум|селям|!",
@@ -65,7 +76,7 @@
                 ]
             },
             {
-                "mode": "puzzle",
+                "mode": "chatPuzzle",
                 "type": "input",
                 "index": 2,
                 "answer": "Меним|адым|{{user.name}}|.",
@@ -77,7 +88,7 @@
                 ]
             },
             {
-                "mode": "puzzle",
+                "mode": "chatPuzzle",
                 "type": "input",
                 "index": 3,
                 "answer": "Мен|де|мемнюним|.|Ишлеринъ|насыл|?",
@@ -92,20 +103,28 @@
                 ]
             },
             {
-                "mode": "puzzle",
+                "mode": "chatPuzzle",
                 "type": "input",
                 "index": 4,
-                "answer": "Сен|де|сагъ|ол|.|Меним|де|яхшы|.",
+                "answer": "Меним|де|яхшы|.",
                 "variants": [
-                    { "text": "Меним" },
-                    { "text": "де" },
-                    { "text": "сагъ" },
-                    { "text": "." },
                     { "text": "." },
                     { "text": "де" },
                     { "text": "яхшы" },
-                    { "text": "ол" },
-                    { "text": "Сен" }
+                    { "text": "Меним" }
+                ]
+            },
+            {
+                "mode": "chatPuzzle",
+                "type": "input",
+                "index": 5,
+                "answer": "Сагълыкънен|бар|,|Джемиле|!",
+                "variants": [
+                    { "text": "Джемиле" },
+                    { "text": "Сагълыкънен" },
+                    { "text": "," },
+                    { "text": "!" },
+                    { "text": "бар" }
                 ]
             }
         ]

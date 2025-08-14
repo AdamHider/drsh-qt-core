@@ -5,18 +5,21 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Смотрите, в тех разломах что-то вспыхивает. И в чётком порядке.",
                 "is_user": false
             },
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Одни трещины активны часто, другие — совсем тихие.",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Думаю, эти разломы раньше использовали для хранения информации.",
                 "is_user": false
             },
@@ -32,12 +35,14 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Мы собрали данные из разломов и трещин.",
                 "is_user": false
             },
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Похоже, что речь здесь идёт о характеристиках и свойствах предметов.",
                 "is_user": false
             },

@@ -204,24 +204,26 @@ class QuestModel extends Model
         }
         $status = 'created';  
         $progress = 0;  
-        $quest = $this->where($field, $quest_id)->get()->getRowArray();
-        if(!empty($quest)){
-            if($this->checkItemCompleted($quest)){
-                $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
-                if($quest['group']['is_primary']){
-                    $status = 'active';
-                } else {
-                    $status = 'finished';
+        $quests = $this->where($field, $quest_id)->get()->getResultArray();
+        if(!empty($quests)){
+            foreach($quests as $quest){
+                if($this->checkItemCompleted($quest)){
+                    $quest['group'] = $QuestGroupModel->getItem($quest['group_id']);
+                    if($quest['group']['is_primary']){
+                        $status = 'active';
+                    } else {
+                        $status = 'finished';
+                    }
+                    $progress = 1;
                 }
-                $progress = 1;
+                $data = [
+                    'item_id' => $quest['id'],
+                    'user_id' => $user_id,
+                    'status' => $status,
+                    'progress' => $progress
+                ];
+                $QuestsUsermapModel->insert($data, true);
             }
-            $data = [
-                'item_id' => $quest['id'],
-                'user_id' => $user_id,
-                'status' => $status,
-                'progress' => $progress
-            ];
-            $QuestsUsermapModel->insert($data, true);
         }
     }
 

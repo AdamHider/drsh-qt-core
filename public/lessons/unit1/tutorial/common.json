@@ -274,6 +274,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 10
+        },
         "template_config": {
             "text": "Хлеб - {{input1}}ть{{input2}}е{{input3}}",
             "image": "image/index.php/lessons/unit_1/otmek.jpg",
@@ -320,6 +324,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 10
+        },
         "template_config": {
             "text": "Ребёнок - б{{input1}}{{input2}}{{input3}}",
             "image": "image/index.php/lessons/unit_1/bala.jpg",
@@ -366,6 +374,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "Машина - а{{input1}}а{{input2}}{{input3}}",
             "image": "image/index.php/lessons/unit_1/araba.jpg",
@@ -412,6 +424,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 5
+        },
         "template_config": {
             "text": "Рюкзак - {{input1}}а{{input2}}{{input3}}{{input4}}",
             "image": "image/index.php/lessons/unit_1/chanta.jpg",

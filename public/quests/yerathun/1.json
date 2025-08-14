@@ -9,12 +9,14 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Штормы ведут себя странно. Они кружат по одним и тем же путям.",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Я изучил траектории. В них кроется разгадка ошибок навигации.",
                 "is_user": false
             },
@@ -30,6 +32,7 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Координаты обновлены, но нестабильны.",
                 "is_user": false
             },
@@ -40,6 +43,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Навигационные данные восстановлены. Пытаюсь проложить дальнейший курс.",
                 "is_user": false
             },

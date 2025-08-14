@@ -37,8 +37,10 @@ class ExerciseModel extends Model
             'main'          => 'next',
         ],
         'totals'            => [
-            'total'         => 0,
+            'max_points'    => 0,
+            'time_bonus'    => 0,
             'points'        => 0,
+            'total'         => 0,
             'difference'    => 0,
             'reward'        => []
         ]
@@ -113,7 +115,7 @@ class ExerciseModel extends Model
         $pages = $LessonGeneratorModel->generatePages($lesson_id);
         
         $this->empty_data['total_pages'] = count($pages);
-        $this->empty_data['totals']['total'] = $this->calculateTotalPoints($pages);
+        $this->empty_data['totals']['max_points'] = $this->calculateMaxPoints($pages);
 
         $this->transBegin();
         $data = [
@@ -142,7 +144,7 @@ class ExerciseModel extends Model
                 $data['exercise_pending']   = NULL;
                 $data['finished_at']        = date("Y-m-d H:i:s");
                 $data['exercise_submitted'] = $this->chooseBestResult($data);
-                $data['points']             = $data['exercise_submitted']['totals']['points'];
+                $data['points']             = $data['exercise_submitted']['totals']['total'];
                 unset($data['exercise_submitted']['answers']);
             }
         } else {
@@ -152,6 +154,7 @@ class ExerciseModel extends Model
         $this->transBegin();
         $this->set($data);
         $this->where('id', $data['id']);
+        
         $result = $this->update();
         $this->transCommit();
         if($result && $action == 'finish') {
@@ -180,8 +183,8 @@ class ExerciseModel extends Model
         }
         $exercise['data'] = $this->empty_data;
         $exercise['data']['total_pages'] = count($exercise['pages']);
-        $exercise['data']['totals']['total'] = $this->calculateTotalPoints($exercise['pages']);
-        $exercise['data']['totals']['prev_points'] = (int) $exercise_old['totals']['points'];
+        $exercise['data']['totals']['max_points'] = $this->calculateMaxPoints($exercise['pages']);
+        $exercise['data']['totals']['prev_points'] = (int) $exercise_old['totals']['total'];
         $exercise['attempts'] = $exercise_old['attempts'] + 1;
         return $this->updateItem($exercise, 'start');
     }
@@ -196,7 +199,7 @@ class ExerciseModel extends Model
         $exercise = $this->get()->getRowArray();
         return $exercise['total'];
     }
-    public function calculateTotalPoints($pages)
+    public function calculateMaxPoints($pages)
     {
         $ExerciseAnswerModel = model('ExerciseAnswerModel');
         $points_config = $ExerciseAnswerModel->points_config;
@@ -214,17 +217,17 @@ class ExerciseModel extends Model
     public function chooseBestResult ($exercise)
     {
         $exercise_submitted = json_decode($this->where('id',$exercise['id'])->get()->getRowArray()['exercise_submitted'] ?? '[]', true, JSON_UNESCAPED_UNICODE); 
-        $difference = $exercise['data']['totals']['points'];
+        $difference = $exercise['data']['totals']['total'];
         if(!empty($exercise_submitted)) {
-            $difference = $exercise['data']['totals']['points'] - $exercise_submitted['totals']['points'];
+            $difference = $exercise['data']['totals']['total'] - $exercise_submitted['totals']['total'];
         }
-        if($difference <= 0){
+        if($difference < 0){
             $exercise['data'] = $exercise_submitted;
             $exercise['data']['totals']['reward_level'] = 0;
         } else {
-            $exercise['data']['totals']['reward_level'] = $this->calculateRewardLevel($exercise['data']['totals']['points'], $exercise['data']['totals']['total']);
+            $exercise['data']['totals']['reward_level'] = $this->calculateRewardLevel($exercise['data']['totals']['total'], $exercise['data']['totals']['max_points']);
         }
-        $exercise['data']['totals']['is_maximum'] = $exercise['data']['totals']['points']-$difference == $exercise['data']['totals']['total'];
+        $exercise['data']['totals']['is_maximum'] = $exercise['data']['totals']['total']-$difference == $exercise['data']['totals']['max_points'];
         $exercise['data']['totals']['difference'] = $difference;
         $exercise['data']['totals']['reward'] = $this->calculateItemReward($exercise['lesson_id'], $exercise['data']['totals']);
        

@@ -4,20 +4,33 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "listSimple",
+        "page_template": "table",
+        "note": "Когда речь идёт о том, что “что-то является чем-то”, то мы используем запятую “,” или тире ”—” после обозначаемого “что-то”. Когда речь идёт о каком-то известном предмете, человеке или явлении, то запятая или тире не ставятся.",
         "template_config": {
-            "item_list": [
+            "row_list": [
                 {
-                    "text": "Бу — талебе. Это — ученик."
+                    "column_list": [
+                        {"text": "Бу — талебе."},
+                        {"text": "Это — ученик."}
+                    ]
                 },
                 {
-                    "text": "Бу талебе… Этот ученик…"
+                    "column_list": [
+                        {"text": "Бу талебе…"},
+                        {"text": "Этот ученик…"}
+                    ]
                 },
                 {
-                    "text": "Бу, <span class='text-positive'>талебеми</span>? Эбет, талебе. Это <span class='text-positive'>ученик</span>? Да, ученик."
+                    "column_list": [
+                        {"text": "Бу, <span class='text-positive'>талебеми</span>? Эбет, талебе."},
+                        {"text": "Это <span class='text-positive'>ученик</span>? Да, ученик."}
+                    ]
                 },
                 {
-                    "text": "<span class='text-positive'>Бу</span> талебеми? Эбет, бу талебе. <span class='text-positive'>Этот</span> ученик? Да, этот ученик."
+                    "column_list": [
+                        {"text": "<span class='text-positive'>Бу</span> талебеми? Эбет, бу талебе."},
+                        {"text": "<span class='text-positive'>Этот</span> ученик? Да, этот ученик."}
+                    ]
                 }
             ]
         }
@@ -74,6 +87,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "{{input1}} оджа. {{input2}} оджа пек узакъ",
             "image": "image/index.php/lessons/unit_1/pek_uzaq_oca.jpg",
@@ -130,6 +147,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "О лейлеклерми? Ёкъ, {{input1}} лейлеклер.",
             "image": "image/index.php/lessons/unit_1/leylekler.jpg",
@@ -176,6 +197,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 15
+        },
         "template_config": {
             "text": "{{input1}} не? {{input2}} алма. {{input3}} алма якъын.",
             "image": "image/index.php/lessons/unit_1/bu.jpg",
@@ -274,6 +299,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 18
+        },
         "template_config": {
             "replica_list": [
                 {
@@ -323,7 +352,7 @@
                 {
                     "mode": "variant",
                     "type": "input",
-                    "index": 1,
+                    "index": 3,
                     "answer": "Шу",
                     "variants": [
                         { "text": "Шу" },
@@ -333,7 +362,7 @@
                 {
                     "mode": "variant",
                     "type": "input",
-                    "index": 2,
+                    "index": 4,
                     "answer": "узакъ",
                     "variants": [
                         { "text": "якъын" },

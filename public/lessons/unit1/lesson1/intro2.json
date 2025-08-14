@@ -574,6 +574,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 20
+        },
         "template_config": {
             "replica_list": [
                 {
@@ -730,6 +734,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 20
+        },
         "template_config": {
             "replica_list": [
                 {

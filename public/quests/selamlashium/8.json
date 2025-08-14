@@ -5,6 +5,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Ecliptor испускает мощные сигналы…",
                 "is_user": false
             },
@@ -15,6 +16,7 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Да. Она покажет, как соединить разрозненные фрагменты добытых данных.",
                 "is_user": false
             },
@@ -28,8 +30,9 @@
         "description": "Расшифрованные сигналы помогают привести информацию в порядок, создавая целостное понимание произошедшего. Как вдруг включились системы внешней связи…",
         "dialogue": [
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_question_avatar.png",
                 "name": "Неизвестный",
+                "color": "dark-purple",
                 "text": "(голос звучит через бортовые системы) Вы… посмели разрушить завесу забвения?",
                 "is_user": false
             },
@@ -38,20 +41,23 @@
                 "is_user": true
             },
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "Я тот, кто разрывает нити памяти! Я — Сихтар Пепельный! Вы осквернили моё творение. Но не надейтесь покинуть эту систему…",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Перехват зашифрованных потоков… Источник нестабилен.",
                 "is_user": false
             },
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "Вы думаете, что спасли систему? Глупцы! Я продолжу… и никто нас не остановит!",
                 "is_user": false
             },
@@ -60,8 +66,9 @@
                 "is_user": true
             },
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "Тогда познаете истинную пустоту!",
                 "is_user": false
             }

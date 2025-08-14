@@ -195,6 +195,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "replica_list": [
                 {
@@ -204,7 +208,7 @@
                 },
                 {
                     "name": "Эвтаде",
-                    "text": "Мераб, Селиме! Меним адым Эвтаде.",
+                    "text": "Мераба, Селиме! Меним адым Эвтаде.",
                     "float": "right",
                     "image": "image/index.php/characters/evtade.jpg"
                 },
@@ -393,6 +397,10 @@
         "subtitle": "",
         "form_template": "puzzle",
         "page_template": "listSimple",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "item_list": [
                 {
@@ -404,15 +412,11 @@
                     "mode": "match",
                     "type": "input",
                     "index": 1,
-                    "answer": "Меним|адым|Назлы|.|Сенинъ|адынъ|не|?",
+                    "answer": "Сенинъ|адынъ|не|?",
                     "variants": [
                         { "text": "?" },
-                        { "text": "Назлы" },
-                        { "text": "адым" },
                         { "text": "Сенинъ" },
-                        { "text": "Меним" },
                         { "text": "не" },
-                        { "text": "." },
                         { "text": "адынъ" }
                     ]
                 }
@@ -425,6 +429,10 @@
         "subtitle": "",
         "form_template": "radio",
         "page_template": "radio",
+        "timer": {
+            "mode": "standart",
+            "time": 5
+        },
         "template_config": {
             "radio_list": [
                 {
@@ -462,6 +470,10 @@
         "subtitle": "",
         "form_template": "puzzle",
         "page_template": "listSimple",
+        "timer": {
+            "mode": "standart",
+            "time": 12
+        },
         "template_config": {
             "item_list": [
                 {
@@ -493,6 +505,10 @@
         "subtitle": "",
         "form_template": "radio",
         "page_template": "radio",
+        "timer": {
+            "mode": "standart",
+            "time": 10
+        },
         "template_config": {
             "radio_list": [
                 {

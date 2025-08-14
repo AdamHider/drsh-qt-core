@@ -3,8 +3,9 @@
         "description": "Команда достигла Yerathun. Свет звезды слаб, но внутри ощущается ритм — как будто она хранит последний отклик. Всё собранное прежде должно соединиться здесь, чтобы завершить путь.",
         "dialogue": [
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "Вы дошли до самого сердца системы. Наивные! У вас всё равно ничего не получится.",
                 "is_user": false
             },
@@ -13,20 +14,23 @@
                 "is_user": true
             },
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "Знания? Это просто обрывки. Истинный свет давно погас. И вы опоздали…",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Пульсация ядра идёт. Слабая, но живая.",
                 "is_user": false
             },
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Есть шанс восстановить исходный поток.",
                 "is_user": false
             },
@@ -44,8 +48,9 @@
                 "is_user": true
             },
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "…Вы справились? Это... невозможно!",
                 "is_user": false
             },
@@ -56,12 +61,14 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Данные синхронизированы. К жителям системы вернулись знания.",
                 "is_user": false
             },
             {
-                "image": "/quests/codex_avatar.png",
+                "image": "/quests/sihtar_avatar.png",
                 "name": "Сихтар Пепельный",
+                "color": "dark-purple",
                 "text": "Это не конец! Вам не победить Тень Забвения!",
                 "is_user": false
             },
@@ -72,7 +79,8 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
-                "text": "Он исчез, капитан. Но след остался — и мы знаем, куда смотреть дальше.",
+                "color": "pink",
+                "text": "Он исчез, капитан. Но след остался — и теперь мы знаем, куда двигаться дальше.",
                 "is_user": false
             }
         ]

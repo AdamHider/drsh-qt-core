@@ -4,15 +4,25 @@
         "title": "Запомни конструкцию",
         "subtitle": "",
         "form_template": null,
-        "page_template": "listSimple",
+        "page_template": "table",
         "note": "Чтобы понять, какую из частиц “-лар” или “-лер” выбрать, нужно обратить внимание на последний слог слова. Если в нём есть “твёрдые” звуки → -лар, а если “мягкие” → -лер.",
         "template_config": {
-            "item_list": [
+            "table_header": [
+                {"text": "Единственное число"},
+                {"text": "Множественное число"}
+            ],
+            "row_list": [
                 {
-                    "text": "Араба (машина) — Араб<span class='text-positive'>а</span><span class='text-primary'>лар</span> (машины)."
+                    "column_list": [
+                        {"text": "Араба (машина)"},
+                        {"text": "Араб<span class='text-positive'>а</span><span class='text-primary'>лар</span> (машины)"}
+                    ]
                 },
                 {
-                    "text": "Лейлек (аист) — Лейл<span class='text-positive'>е</span>к<span class='text-primary'>лер</span> (аисты)."
+                    "column_list": [
+                        {"text": "Лейлек (аист)"},
+                        {"text": "Лейл<span class='text-positive'>е</span>к<span class='text-primary'>лер</span> (аисты)"}
+                    ]
                 }
             ]
         }
@@ -119,6 +129,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 5
+        },
         "template_config": {
             "text": "Бу не? Бу — балыкъ{{input1}}.",
             "image": "image/index.php/lessons/unit_1/balyqlar.jpg",
@@ -142,6 +156,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 5
+        },
         "template_config": {
             "text": "О ким? О — эким{{input1}}.",
             "image": "image/index.php/lessons/unit_1/ekimler.jpg",
@@ -165,8 +183,12 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 5
+        },
         "template_config": {
-            "text": "О не? {{input1}}, йылдыз{{input2}}.",
+            "text": "О не? {{input1}} — йылдыз{{input2}}.",
             "image": "image/index.php/lessons/unit_1/yildizlar.jpg",
             "input_list": [
                 {
@@ -254,6 +276,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 12
+        },
         "template_config": {
             "replica_list": [
                 {
@@ -353,6 +379,10 @@
         "subtitle": "",
         "form_template": "variant",
         "page_template": "dialogue",
+        "timer": {
+            "mode": "standart",
+            "time": 12
+        },
         "template_config": {
             "replica_list": [
                 {

@@ -5,6 +5,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Планета оживлена, но её жители молчаливы.",
                 "is_user": false
             },
@@ -15,6 +16,7 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Да. Их культура славилась своими приветствиями, но, видимо, теперь они потеряны.",
                 "is_user": false
             },
@@ -30,6 +32,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Анализ завершён. Записи содержат принципы общения, но их нужно расшифровать.",
                 "is_user": false
             },
@@ -40,12 +43,14 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Да. Теперь у жителей Selamaris появилась надежда!",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Однако зафиксирован новый сигнал… но не с планеты. Он исходит от одной из орбитальных станций. Но передача прерывается…",
                 "is_user": false
             },

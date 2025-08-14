@@ -217,6 +217,10 @@
         "subtitle": "",
         "form_template": "puzzle",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 10
+        },
         "template_config": {
             "text": "Мальчик - {{input1}}",
             "image": "image/index.php/lessons/unit_1/oglan.jpg",
@@ -244,6 +248,10 @@
         "subtitle": "",
         "form_template": "puzzle",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 10
+        },
         "template_config": {
             "text": "Школа - {{input1}}",
             "image": "image/index.php/lessons/unit_1/mektep.jpg",
@@ -273,6 +281,10 @@
         "subtitle": "",
         "form_template": "puzzle",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "Цветок - {{input1}}",
             "image": "image/index.php/lessons/unit_1/chichek.jpg",
@@ -303,6 +315,10 @@
         "subtitle": "",
         "form_template": "puzzle",
         "page_template": "singleSentence",
+        "timer": {
+            "mode": "standart",
+            "time": 7
+        },
         "template_config": {
             "text": "Кошка - {{input1}}",
             "image": "image/index.php/lessons/unit_1/mishiq.jpg",

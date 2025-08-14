@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 
 class ExerciseAnswerModel extends ExerciseModel
 {
-    
+    public $time_bonus_percentage = 0.2;
     public $points_config = [
         'none' => 20,
         'variant' => 100,
@@ -34,28 +34,36 @@ class ExerciseAnswerModel extends ExerciseModel
         [
             'quantity'  => 0,
             'correct'   => 0,
-            'points'    => 0
+            'total_num' => 0,
+            'time_bonus'=> 0,
+            'points'    => 0,
+            'total'     => 0
         ]
     ];
-    public function saveAnswer($lesson_id, $income_answers = [])
+    public function saveAnswer($lesson_id, $income_answers = [], $timeBonus = 0)
     {
         $LessonPageModel = model('LessonPageModel');
 
         $exercise = $this->getItemByLesson($lesson_id);
         $page_index = $exercise['data']['current_page'];
+        if(!isset($exercise['pages'][$page_index]['timer'])){
+            $timeBonus = 0;
+        }
 
         $fields = $exercise['pages'][$page_index]['template_config']['input_list'];
         $step_by_step = !empty($exercise['pages'][$page_index]['form_stepper']);
-        $answers = $this->checkPageAnswers($fields, $income_answers, $step_by_step);
+        $answers = $this->checkPageAnswers($fields, $income_answers, $step_by_step, $timeBonus);
         
         $exercise['data']['totals']['points'] += $answers['totals']['points'];
+        $exercise['data']['totals']['time_bonus'] += $answers['totals']['time_bonus'];
+        $exercise['data']['totals']['total'] += $answers['totals']['total'];
         $exercise['data']['answers'][$page_index] = $answers;
         $this->updateItem($exercise);
 
         return $LessonPageModel->getPage($lesson_id, $page_index);
     }
 
-    public function checkPageAnswers($fields, $income_answers, $step_by_step)
+    public function checkPageAnswers($fields, $income_answers, $step_by_step, $timeBonus)
     {
         $answers = $this->default_answers;
         
@@ -64,12 +72,12 @@ class ExerciseAnswerModel extends ExerciseModel
             if(isset($income_answers[$input_index])){
                 $user_input = $income_answers[$input_index]->text ?? '';
                 
-                $answer = $this->composeAnswer($field, $user_input, $total_fields);
+                $answer = $this->composeAnswer($field, $user_input, $total_fields, $timeBonus);
                 
                 if($answer['is_correct']) $answers['totals']['correct']++;
 
                 $answers['totals']['quantity']++;
-                $answers['totals']['total'] = count($income_answers);
+                $answers['totals']['total_num'] = count($income_answers);
                 $answers['totals']['points'] += $answer['points']; 
                 $answers['answers'][$input_index] = $answer;
                 if($step_by_step && !isset($income_answers[$input_index]->is_finished)){
@@ -77,14 +85,17 @@ class ExerciseAnswerModel extends ExerciseModel
                 }
             }
         }
-        $answers['totals']['is_finished'] = $answers['totals']['quantity'] == $answers['totals']['total'];
+        $answers['totals']['is_finished'] = $answers['totals']['quantity'] == $answers['totals']['total_num'];
         if(!$answers['totals']['is_finished']){
             $answers['totals']['points'] = 0;
+        } else {
+            $answers['totals']['time_bonus'] = ceil($answers['totals']['points']*($timeBonus/100*$this->time_bonus_percentage));
+            $answers['totals']['total'] = $answers['totals']['time_bonus'] + $answers['totals']['points']; 
         }
         return $answers;
     } 
     
-    private function composeAnswer($field, $user_input, $total_fields)
+    private function composeAnswer($field, $user_input, $total_fields, $timeBonus)
     {
         $answer = [];
         $answer['value']        = $user_input;

@@ -9,12 +9,14 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Гиперпрыжок невозможен. Межпланетные двигатели не справятся.",
                 "is_user": false
             },
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Единственный шанс — изучить технологию звёздного двигателя… но для этого нужен изонит.",
                 "is_user": false
             },
@@ -25,6 +27,7 @@
             {
                 "image": "/quests/kraxir_avatar.png",
                 "name": "Краксир",
+                "color": "green",
                 "text": "Вас приветствует самый известный торговец на просторах вселенной. Если вам нужен изонит, я могу его достать.",
                 "is_user": false
             },
@@ -35,6 +38,7 @@
             {
                 "image": "/quests/kraxir_avatar.png",
                 "name": "Краксир",
+                "color": "green",
                 "text": "Конечно! Но для этого мне потребуется участие вашей команды.",
                 "is_user": false
             },
@@ -50,12 +54,14 @@
             {
                 "image": "/quests/kraxir_avatar.png",
                 "name": "Краксир",
+                "color": "green",
                 "text": "Хорошие новости, капитан!",
                 "is_user": false
             },
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Всё готово! Корабль оснащён звёздным двигателем.",
                 "is_user": false
             },
@@ -66,6 +72,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Координаты загружены. Первый прыжок возможен.",
                 "is_user": false
             },

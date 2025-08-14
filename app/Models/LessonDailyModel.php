@@ -59,7 +59,7 @@ class LessonDailyModel extends LessonModel
         ],
         'daily_chat' => [
             'index' => 1,
-            'title' => 'Ответьте собеседнику',
+            'title' => 'Ответь собеседнику',
             'subtitle' => '',
             'form_template' => 'chatPuzzle',
             'page_template' => 'chat',
@@ -71,12 +71,20 @@ class LessonDailyModel extends LessonModel
     public function getList()
     {
         $ExerciseModel = model('ExerciseModel');
+        $LessonModel = model('LessonModel');
         $ResourceModel = model('ResourceModel');
+        $SettingsModel = model('SettingsModel');
         $CourseSectionModel = model('CourseSectionModel');
-
-        $lessons = $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
+        
+        $settings = $SettingsModel->getList(['user_id' => session()->get('user_id')]);
+        if($settings['lessonAccessDailyLevel']['value'] == 0){
+            return [];
+        }
+        $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
-        ->like('type', 'daily_%')->where('published', 1)->where('is_private', 0)->get()->getResultArray();
+        ->like('type', 'daily_%')->where('published', 1);
+
+        $lessons = $this->get()->getResultArray();
         foreach($lessons as $key => &$lesson){
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['satellites']       = $this->getSatellites($lesson['id'], 'lite');
@@ -85,8 +93,10 @@ class LessonDailyModel extends LessonModel
             $lesson['progress']         = $this->getOverallProgress($lesson['id']);
             $lesson['is_explored']      = isset($lesson['exercise']['id']);
             
-            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config']));
-            $lesson['reward']           = $ResourceModel->proccessItemGroupReward(json_decode($lesson['reward_config'], true));
+            $reward_gradation           = $LessonModel->composeItemReward(json_decode($lesson['reward_config'], true));
+            $lesson['reward']           = $ResourceModel->proccessItemGroupReward($reward_gradation);
+            $lesson['cost']             = $ResourceModel->proccessItemCost(json_decode($lesson['cost_config'], true));
+            
             unset($lesson['unblock_config']);
             unset($lesson['cost_config']);
             unset($lesson['reward_config']);
@@ -101,7 +111,7 @@ class LessonDailyModel extends LessonModel
         $this->daily_lesson['course_section_id'] = $this->createCourseSectionItem($this->daily_lesson['course_id'], $type);
 
         $this->daily_lesson['title'] = $this->generateTitle($type);
-
+        $this->daily_lesson['description'] = lang('App.lesson.daily_lexis.description.'.rand(1,10));
         $this->daily_lesson['pages'] = json_encode($this->compileItemPages($type), JSON_UNESCAPED_SLASHES);
 
         $this->daily_lesson['type'] = $type;
@@ -129,13 +139,17 @@ class LessonDailyModel extends LessonModel
         if($type == 'daily_lexis'){
             $item_list = $LessonWordsModel->limit(12)->get()->getResultArray();
             foreach($item_list as $key => $item){
+                $word_data = json_decode($item['data'], true);
                 $word['index'] = $key+1;
+                $word['text'] = $word_data['text'];
+                $word['image'] = $word_data['image'];
+                $word['label'] = $word_data['label'];
                 $result['word_list'][] = $word;
             }
         } else 
         if($type == 'daily_chat'){
-            $item_list = $LessonWordsModel->limit(1)->get()->getRowArray();
-            return $result['template_config'] = $item_list; 
+            $item = $LessonWordsModel->limit(1)->get()->getRowArray();
+            $result['template_config'] = json_decode($item['data'], true);
         }
         return $result;
     }

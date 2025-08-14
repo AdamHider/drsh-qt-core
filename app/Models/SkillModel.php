@@ -163,7 +163,7 @@ class SkillModel extends Model
     {
         $QuestModel = model('QuestModel');
         $result = $QuestModel->join('quests_usermap', 'quests_usermap.item_id = quests.id')
-        ->where('quests_usermap.user_id = '.session()->get('user_id').' AND quests.code = "skill" AND quests.target = '.$skill_id.' AND quests_usermap.status != "finished"')->get()->getResultArray();
+        ->where('quests_usermap.user_id = '.session()->get('user_id').' AND quests.code = "skill" AND quests.target = '.$skill_id.' AND quests_usermap.status != "finished" AND quests_usermap.progress = 0')->get()->getResultArray();
         return !empty($result);
     }
 }

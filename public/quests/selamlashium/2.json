@@ -5,6 +5,7 @@
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Капитан, до Selamaris слишком далеко.",
                 "is_user": false
             },
@@ -15,12 +16,14 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Вам нужна особая технология… Планетный двигатель.",
                 "is_user": false
             },
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Если изучить его принципы, корабль сможет совершать прыжки между планетами.",
                 "is_user": false
             },
@@ -31,6 +34,7 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "В архивах Elifbetica были упоминания об этом… Мы сможем восстановить данные.",
                 "is_user": false
             }
@@ -42,6 +46,7 @@
             {
                 "image": "/quests/luminar_avatar.png",
                 "name": "Доктор Люминар",
+                "color": "blue",
                 "text": "Всё готово! Теперь корабль способен совершать перемещения между планетами.",
                 "is_user": false
             },
@@ -52,12 +57,14 @@
             {
                 "image": "/quests/zintara_avatar.png",
                 "name": "Зин'Тара",
+                "color": "pink",
                 "text": "Selamaris — ключ к восстановлению знаний. Там может быть то, что мы ищем.",
                 "is_user": false
             },
             {
                 "image": "/quests/codex_avatar.png",
                 "name": "Кодекс",
+                "color": "primary",
                 "text": "Координаты загружены. Корабль готов к следующему прыжку.",
                 "is_user": false
             },
