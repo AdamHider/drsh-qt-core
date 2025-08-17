@@ -83,8 +83,17 @@ class LessonDailyModel extends LessonModel
         $this->join('exercises', 'exercises.lesson_id = lessons.id AND exercises.user_id ='.session()->get('user_id'), 'left')
         ->select('lessons.*, exercises.id as exercise_id')
         ->like('type', 'daily_%')->where('published', 1);
+        $type = [];
+        if((int) $settings['lessonAccessDailyLevel']['value'] >= 1){
+            $type[] = 'daily_lexis';
+        }
+        if((int) $settings['lessonAccessDailyLevel']['value'] >= 2){
+            $type[] = 'daily_chat';
+        }
 
-        $lessons = $this->get()->getResultArray();
+
+        $lessons = $this->whereIn('type', $type)->get()->getResultArray();
+
         foreach($lessons as $key => &$lesson){
             $lesson['course_section']   = $CourseSectionModel->getItem($lesson['course_section_id']);
             $lesson['satellites']       = $this->getSatellites($lesson['id'], 'lite');

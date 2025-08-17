@@ -43,10 +43,22 @@ class MarketOfferModel extends Model
     }
     
 
-    public function linkItem($market_offer)
+    public function buyItem($offer_id)
     {
-        $AchievementUsermapModel = model('AchievementUsermapModel');
-        $AchievementUsermapModel->ignore()->insert(['item_id' => $market_offer['id'], 'user_id' => session()->get('user_id')]);
-        Events::trigger('market_offerGained', $market_offer['id']);
+        $ResourceModel = model('ResourceModel');
+
+        /*CHECK PAYMENT SUCCESS...*/
+        $payment_succeed = true;
+        /*CHECK PAYMENT SUCCESS...*/
+        if($payment_succeed){
+            $market_offer = $this->where('id', $offer_id)->get()->getRowArray();
+            if(!empty($market_offer)){
+                $reward = json_decode($market_offer['reward_config'], true);
+                if($ResourceModel->enrollUserList(session()->get('user_id'), $reward)){
+                    return $offer_id;
+                };
+            }
+        }
+        return false;
     }
 }

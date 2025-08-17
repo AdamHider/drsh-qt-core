@@ -17,5 +17,17 @@ class MarketOffer extends BaseController
         }
         return $this->respond($result, 200);
     }
+    public function buyItem()
+    {
+        $MarketOfferModel = model('MarketOfferModel');
+
+        $offer_id = $this->request->getVar('offer_id');
+
+        $result = $MarketOfferModel->buyItem($offer_id);
+        if(!$result){
+            return $this->fail();
+        }
+        return $this->respond($result, 200);
+    }
 
 }
