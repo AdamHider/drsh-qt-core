@@ -61,7 +61,7 @@ class QuestModel extends Model
             }
             if($quest['date_end']){
                 $time = Time::parse($quest['date_end'], Time::now()->getTimezone());
-                $quest['time_left'] = Time::now()->difference($time)->getDays();
+                $quest['time_left'] = Time::now()->difference($time)->getSeconds();
                 $quest['date_end_humanized'] = $time->humanize();
                 $quest['time_left_humanized'] = Time::now()->difference($time)->humanize();
             }
@@ -98,17 +98,12 @@ class QuestModel extends Model
             $result = $LessonModel->where('id', $target_id)->select('id, parent_id, title, description')->get()->getRowArray();
             $result['code'] = 'lesson';
         } else if($code == 'total_lessons' || $code == 'resource' || $code == 'resource_invitation'){
-            $result = $LessonModel->join('lesson_unblock_usermap', 'lesson_unblock_usermap.item_id = lessons.id AND lesson_unblock_usermap.user_id = '.session()->get('user_id'))
-            ->select('lessons.id, lessons.parent_id, lessons.title, lessons.description')->get()->getRowArray();
             $result['code'] = 'lesson';
         } else if($code == 'skill'){
             $result = $SkillModel->select('skills.id')->get()->getRowArray();
             $result = array_merge($result, $DescriptionModel->getItem('skill', $result['id']));
             $result['code'] = 'skill';
         } else if($code == 'skills_total'){
-            $result = $SkillModel->join('skills_usermap', 'skills_usermap.item_id = skills.id'.session()->get('user_id'))
-            ->select('skills.id')->get()->getRowArray();
-            $result = array_merge($result, $DescriptionModel->getItem('skill', $result['id']));
             $result['code'] = 'skill';
         }
         return $result;
@@ -233,5 +228,39 @@ class QuestModel extends Model
         return $QuestsUsermapModel->set('status', $data['status'], null)->where(['item_id' => $data['item_id'], 'user_id' => session()->get('user_id')])->update();
     }
     
-    
+    public function linkDailyList()
+    {
+        $QuestsUsermapModel = model('QuestsUsermapModel');
+        $UserModel = model('UserModel');
+
+        $initials = parse_ini_file(ROOTPATH.'/defaults.ini')['initials'];
+        $daily_quest_group_id = $initials['daily_quest_group_id'];
+
+        $daily_quests = $this->select('GROUP_CONCAT(id) as ids')->where('group_id', $daily_quest_group_id)->get()->getRowArray();
+        if(!empty($daily_quests['ids'])){
+            $QuestsUsermapModel->whereIn('item_id', explode(',', $daily_quests['ids']))->delete();
+        }
+        
+        $active_quest = $this->where('group_id', $daily_quest_group_id)->orderBy('id', 'RANDOM')->limit(1)->get()->getRowArray();
+        
+        $active_quest['date_start'] = date('Y-m-d H:i:s');
+        $nextDayTimestamp = strtotime('+23 hours', strtotime($active_quest['date_start']));
+        $active_quest['date_end'] = date('Y-m-d H:i:s', $nextDayTimestamp);
+
+
+        $this->set(['date_start' => $active_quest['date_start'], 'date_end' => $active_quest['date_end']])->where('id', $active_quest['id'])->update();
+
+        $users = $UserModel->select('users.*')->join('settings_modifiers', 'users.id = settings_modifiers.user_id')->join('settings', 'settings.id = settings_modifiers.setting_id')
+        ->where('settings_modifiers.value >= 1 AND settings.code = "lessonAccessDailyLevel"')->groupBy('id')->get()->getResultArray();
+
+        foreach($users as $user){
+            $data = [
+                'item_id' => $active_quest['id'],
+                'user_id' => $user['id'],
+                'status' => 'created',
+                'progress' => 0
+            ];
+            $QuestsUsermapModel->insert($data, true);
+        }
+    }   
 }

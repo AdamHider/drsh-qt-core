@@ -22,6 +22,7 @@ class UserModel extends Model
         'password', 
         'auth_key',
         'email', 
+        'email_verified',
         'phone', 
         'gender',
         'blocked',
@@ -122,6 +123,8 @@ class UserModel extends Model
         $user['resources'] = $ResourceModel->getList(['user_id' => $user['id']]);
 
         $user['statistics'] = $this->getItemStatistics($user['id']);
+        
+        $user['email_verified'] = (bool) $user['email_verified'];
         
         unset($user['password']);
         unset($user['auth_key']);
@@ -245,12 +248,40 @@ class UserModel extends Model
     }
     public function checkEmail($email)
     {
-        $user = $this->where('email', $email)->get()->getRow();
+        $user = $this->where('email = "'.$email.'" AND id != '.session()->get('user_id'))->get()->getRow();
         if(empty($user->email)){
             return false;
         }
         return true;
     }
+    
+    public function createEmailVerification($email)
+    {
+        $UserEmailVerificationModel = model('UserEmailVerificationModel');
+        $code = md5(session()->get('user_id').$email.time());
+        $UserEmailVerificationModel->insert([
+            'user_id' => session()->get('user_id'),
+            'email' => $email,
+            'code' => $code
+        ]);
+        return $code;
+    }
+    public function resetEmailVerification($email)
+    {
+        $UserEmailVerificationModel = model('UserEmailVerificationModel');
+        $this->set('email_verified', 0)->where('id', session()->get('user_id'))->update();
+        $UserEmailVerificationModel->where('user_id = '.session()->get('user_id'))->delete();
+    }
+    public function checkEmailVerification($code)
+    {
+        $UserEmailVerificationModel = model('UserEmailVerificationModel');
+        $verified = $UserEmailVerificationModel->where('code = "'.$code.'" AND user_id = '.session()->get('user_id'))->get()->getResultArray();
+        if(!empty($verified)){
+            return $this->set('email_verified', 1)->where('id', session()->get('user_id'))->update();
+        }
+        return false;
+    }
+    
     
     private function getGuestItem(){
         return [

@@ -83,6 +83,9 @@ class LessonModel extends Model
             $lesson['is_blocked']       = $LessonUnblockUsermapModel->checkBlocked($lesson['id'], json_decode($lesson['unblock_config'], true), 'group');
             $lesson['unblock']          = $this->getItemUnblock(json_decode($lesson['unblock_config'], true));
             $lesson['is_quest']         = $this->getItemQuest($lesson['id']);
+            if($lesson['is_quest']){
+                $lesson['scroll_anchor']= true;
+            }
             if(!$lesson['is_blocked']){
                 $reward_gradation       = $this->composeItemReward(json_decode($lesson['reward_config'], true));
                 $lesson['reward']       = $ResourceModel->proccessItemGroupReward($reward_gradation);
@@ -154,6 +157,7 @@ class LessonModel extends Model
             $satellite['distance'] = 2*$index;
             $satellite['duration'] = rand(15, 20);
             $satellite['delay'] = rand(1, 5);
+            $satellite['rotation'] = (((count($satellites)-1)/2)-$index)*36;
             $result[] = $satellite;
         }
         return $result;

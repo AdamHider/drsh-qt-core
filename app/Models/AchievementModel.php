@@ -39,9 +39,6 @@ class AchievementModel extends Model
             $achievement['progress'] = $this->calculateProgress($achievement);
         } 
 
-        $LessonDailyModel = model('LessonDailyModel');
-        $LessonDailyModel->createItem('daily_lexis');
-        $LessonDailyModel->createItem('daily_chat');
         return $achievements;
     }
     public function calculateProgress ($data)

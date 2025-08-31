@@ -66,5 +66,4 @@ class Quest extends BaseController
         }
         return $this->respond($result);
     }
-    
 }

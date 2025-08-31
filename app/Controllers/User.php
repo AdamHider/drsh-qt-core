@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Libraries\Notifier;
 
 use CodeIgniter\API\ResponseTrait;
 class User extends BaseController
@@ -51,7 +52,23 @@ class User extends BaseController
             'email'     => $email,
             'phone'     => $phone
         ];
-
+        
+        if(!$UserModel->checkEmail($email)){
+            $data['email_verified'] = $UserModel->resetEmailVerification($email);
+            $code = $UserModel->createEmailVerification($email);
+            $notifier = new Notifier();
+            $notifier->send(
+                'user_email_verification',
+                $email,
+                [
+                    'name' => $name,
+                    'code'    => $code
+                ]
+            );
+        } else {
+            return $this->fail('email_in_use');
+        }
+        
         $result = $UserModel->updateItem(session()->get('user_id'), $data);
 
 
@@ -123,7 +140,6 @@ class User extends BaseController
         $UserModel = model('UserModel');
 
         $username = $this->request->getVar('username');
-        
         if($UserModel->checkUsername($username) &&  $username !== session()->get('user_data')['username']){
             return $this->respond($UserModel->getUsernameSuggestions($username)); 
         } 
@@ -146,11 +162,23 @@ class User extends BaseController
 
         $email = $this->request->getVar('email');
 
-        if(!$UserModel->checkEmail($email)  &&  $email !== session()->get('user_data')->email){
+        if(!$UserModel->checkEmail($email)){
             return $this->respond(true); 
         } 
         return $this->fail('email_in_use'); 
     }
+    public function checkEmailVerification()
+    {
+        $UserModel = model('UserModel');
+        
+        $code = $this->request->getVar('code');
+        $result = $UserModel->checkEmailVerification($code);
+        if($result){
+            return $this->respond($result);
+        } 
+        return $this->fail('fail');
+    }
+    
     public function generateUsername()
     {
         $UserModel = model('UserModel');

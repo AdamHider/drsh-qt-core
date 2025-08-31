@@ -1,0 +1,34 @@
+{
+    "intro": {
+        "description": "Кодекс просит собрать 100 очков опыта. Капитан запускает задачу.",
+        "dialogue": [
+            {
+                "image": "/quests/codex_avatar.png",
+                "name": "Кодекс",
+                "color": "primary",
+                "text": "Нужно 100 очков опыта. Это поможет системе корабля работать точнее.",
+                "is_user": false
+            },
+            {
+                "text": "Хорошо, начинаю сбор.",
+                "is_user": true
+            }
+        ]
+    },
+    "outro":  {
+        "description": "Опыт собран. Кодекс обновил параметры. Капитан подтверждает выполнение.",
+        "dialogue": [
+            {
+                "image": "/quests/codex_avatar.png",
+                "name": "Кодекс",
+                "color": "primary",
+                "text": "Готово. Система обновлена.",
+                "is_user": false
+            },
+            {
+                "text": "Задача выполнена!",
+                "is_user": true
+            }
+        ]
+    }
+}

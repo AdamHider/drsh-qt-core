@@ -26,11 +26,11 @@ class LessonDailyModel extends LessonModel
         'is_private' => 1
     ];
     private $daily_lesson = [
-        'course_id' => 4,
-        'course_section_id' => 22,
+        'course_id' => 0,
+        'course_section_id' => 0,
         'language_id' => 1, 
-        'title' => 'Daily', 
-        'description' => 'Daily', 
+        'title' => '', 
+        'description' => '', 
         'type' => '', 
         'pages' => '[]',
         'cost_config' => '{"energy": 1}', 

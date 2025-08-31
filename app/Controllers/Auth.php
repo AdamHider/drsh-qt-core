@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Libraries\Notifier;
 
 use CodeIgniter\API\ResponseTrait;
 class Auth extends BaseController
@@ -35,7 +36,15 @@ class Auth extends BaseController
         if($UserModel->errors()){
             return $this->failValidationErrors(json_encode($UserModel->errors()));
         }
-
+        $notifier = new Notifier();
+        $notifier->send(
+            'user_registered',
+            'echo@mektepium.com',
+            [
+                'name' => $data['name'],
+                'username'    => $data['username']
+            ]
+        );
         return $this->respondCreated(['auth_key' => $auth_key]);
     }
 
