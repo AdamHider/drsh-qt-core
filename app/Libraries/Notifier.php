@@ -10,9 +10,14 @@ class Notifier
     
     private $messages = [
         'user_registered' => [
-            'subject' => 'Новая регистрация',
+            'subject' => 'Новая регистрация: ({name})',
             'body'    => 'Пользователь {name} ({username}) только что зарегистрировался.'
         ],
+        'user_logged' => [
+            'subject' => 'Новая вход: ({name})',
+            'body'    => 'Пользователь {name} ({username}) только что вошёл снова.'
+        ],
+        
 
         'password_reset' => [
             'subject' => 'Сброс пароля',
@@ -25,13 +30,22 @@ class Notifier
         ],
         
         'lesson_completed' => [
-            'subject' => 'Квест завершён!',
-            'body'    => 'Игрок {name} ({username}) завершил квест: {quest_title}.'
+            'subject' => 'Планета исследована! ({name})',
+            'body'    => 'Пользователь {name} завершил исследование планеты {title}.'
         ],
+        'lesson_started' => [
+            'subject' => 'Планета {title} исследуется! ({name})',
+            'body'    => 'Пользователь {name} начал исследовать планету {title}.'
+        ],
+        'lesson_restarted' => [
+            'subject' => '(Рестарт) Планета {title} исследуется заново! ({name})',
+            'body'    => 'Пользователь {name} начал заново исследовать планету {title}.'
+        ],
+        
         
         'user_email_verification' => [
             'subject' => 'Подтверждение почты на Mektepium',
-            'body'    => '{name}, для подтверждения почты перейдите по ссылке: https://mektepium.com/email-verification-{code}'
+            'body'    => '{name}, для подтверждения почты перейдите по ссылке: https://app.mektepium.com/email-verification-{code}'
         ],
         
     ];

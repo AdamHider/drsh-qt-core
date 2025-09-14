@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Libraries\Notifier;
+
 use CodeIgniter\Model;
 use App\Models\LessonModel;
 use CodeIgniter\Events\Events;
@@ -130,6 +132,15 @@ class ExerciseModel extends Model
         $exercise_id = $this->insert($data, true);
         $this->transCommit();
 
+        $notifier = new Notifier();
+        $notifier->send(
+            'lesson_started',
+            'echo@mektepium.com',
+            [
+                'name' => session()->get('user_data')['name'],
+                'title'    => $lesson['title']
+            ]
+        );
         return $exercise_id;        
     }
     public function updateItem ($data, $action = false)
@@ -186,6 +197,18 @@ class ExerciseModel extends Model
         $exercise['data']['totals']['max_points'] = $this->calculateMaxPoints($exercise['pages']);
         $exercise['data']['totals']['prev_points'] = (int) $exercise_old['totals']['total'];
         $exercise['attempts'] = $exercise_old['attempts'] + 1;
+        
+        $LessonModel = new LessonModel();
+        $lesson = $LessonModel->where('lessons.id', $lesson_id)->get()->getRowArray();
+        $notifier = new Notifier();
+        $notifier->send(
+            'lesson_restarted',
+            'echo@mektepium.com',
+            [
+                'name' => session()->get('user_data')['name'],
+                'title'    => $lesson['title']
+            ]
+        );
         return $this->updateItem($exercise, 'start');
     }
     public function getTotal($data, $mode = 'sum')

@@ -53,20 +53,24 @@ class User extends BaseController
             'phone'     => $phone
         ];
         
-        if(!$UserModel->checkEmail($email)){
-            $data['email_verified'] = $UserModel->resetEmailVerification($email);
-            $code = $UserModel->createEmailVerification($email);
-            $notifier = new Notifier();
-            $notifier->send(
-                'user_email_verification',
-                $email,
-                [
-                    'name' => $name,
-                    'code'    => $code
-                ]
-            );
-        } else {
-            return $this->fail('email_in_use');
+        $user = $UserModel->where('id', session()->get('user_id'))->get()->getRowArray();
+        
+        if($user['email'] !== $email){
+            if(!$UserModel->checkEmail($email)){
+                $data['email_verified'] = $UserModel->resetEmailVerification($email);
+                $code = $UserModel->createEmailVerification($email);
+                $notifier = new Notifier();
+                $notifier->send(
+                    'user_email_verification',
+                    $email,
+                    [
+                        'name' => $name,
+                        'code'    => $code
+                    ]
+                );
+            } else {
+                return $this->fail('email_in_use');
+            }
         }
         
         $result = $UserModel->updateItem(session()->get('user_id'), $data);

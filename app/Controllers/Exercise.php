@@ -30,6 +30,7 @@ class Exercise extends BaseController
         if($ExerciseModel->errors()){
             return $this->failValidationErrors(json_encode($ExerciseModel->errors()));
         }
+        
         return $this->respond($exercise_id);
     }
     public function redoItem()

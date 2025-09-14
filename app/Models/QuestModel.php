@@ -103,7 +103,7 @@ class QuestModel extends Model
             $result = $SkillModel->select('skills.id')->get()->getRowArray();
             $result = array_merge($result, $DescriptionModel->getItem('skill', $result['id']));
             $result['code'] = 'skill';
-        } else if($code == 'skills_total'){
+        } else if($code == 'total_skills'){
             $result['code'] = 'skill';
         }
         return $result;

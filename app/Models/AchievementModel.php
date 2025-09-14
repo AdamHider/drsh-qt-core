@@ -24,10 +24,11 @@ class AchievementModel extends Model
         
         $this->join('achievement_groups', 'achievement_groups.id = achievements.group_id AND achievement_groups.is_published = 1');
         if($data['user_id']){
-            $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id')
-            ->where('achievements_usermap.user_id', $data['user_id']);
+            $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id AND achievements_usermap.user_id = '.$data['user_id']);
+        } else {
+            $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id AND achievements_usermap.user_id = '.session()->get('user_id'), 'left');
         }
-        $achievements = $this->select('achievements.*, achievement_groups.code')->limit($data['limit'], $data['offset'])->orderBy('code, value')->get()->getResultArray();
+        $achievements = $this->select('achievements.*, achievement_groups.code, achievements_usermap.user_id')->limit($data['limit'], $data['offset'])->orderBy('code, value, order')->get()->getResultArray();
         
         if(empty($achievements)){
             return false;
@@ -35,10 +36,11 @@ class AchievementModel extends Model
         foreach($achievements as &$achievement){
             $achievement = array_merge($achievement, $DescriptionModel->getItem('achievement', $achievement['id']));
             $achievement['group'] = $DescriptionModel->getItem('achievement_group', $achievement['group_id']);
-            $achievement['image'] = base_url('image/index.php'.$achievement['image']);
+            if(!empty($achievement['image'])){
+                $achievement['image'] = base_url('image/index.php'.$achievement['image']);
+            }
             $achievement['progress'] = $this->calculateProgress($achievement);
         } 
-
         return $achievements;
     }
     public function calculateProgress ($data)
@@ -48,6 +50,9 @@ class AchievementModel extends Model
         ->select("COALESCE(sum(points), 0) as total_points, COALESCE(COUNT(points), 0) as total_exercises")
         ->get()->getRowArray();
         
+        if ($data['user_id'] ) {
+            $current_progress = $data['value'];
+        } else
         if ($data['code'] == 'total_lessons') {
             $current_progress = $statistics['total_exercises'];
         } else
@@ -108,6 +113,27 @@ class AchievementModel extends Model
         return $achievements;
     }
 
+    public function getListPrimary($user_id)
+    {
+        $DescriptionModel = model('DescriptionModel');
+        
+        if($user_id){
+            $this->join('achievements_usermap', 'achievements_usermap.item_id = achievements.id')
+            ->where('achievements_usermap.user_id', $user_id);
+        }
+        $achievements = $this->where('is_primary', '1')->get()->getResultArray();
+        
+        if(empty($achievements)){
+            return [];
+        }
+        foreach($achievements as &$achievement){
+            $achievement = array_merge($achievement, $DescriptionModel->getItem('achievement', $achievement['id']));
+            if(!empty($achievement['image'])){
+                $achievement['image'] = base_url('image/index.php'.$achievement['image']);
+            }
+        } 
+        return $achievements;
+    }
     public function linkItem($achievement)
     {
         $AchievementUsermapModel = model('AchievementUsermapModel');

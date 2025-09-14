@@ -98,6 +98,16 @@ class Auth extends BaseController
             }
             session()->set('user_data',$user);
             session()->set('login_attempts', []);
+            
+            $notifier = new Notifier();
+            $notifier->send(
+                'user_logged',
+                'echo@mektepium.com',
+                [
+                    'name' => $user['name'],
+                    'username'    => $user['username']
+                ]
+            );
             return $this->respond($user['id']);
         }
         return $this->fail($result);

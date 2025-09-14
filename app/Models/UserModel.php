@@ -113,6 +113,9 @@ class UserModel extends Model
         $CharacterModel = model('CharacterModel');
         $user['character'] = $CharacterModel->getItem($user['settings']['characterId']['value']);
         
+        $AchievementModel = model('AchievementModel');
+        $user['achievements'] = $AchievementModel->getListPrimary($user['id']);
+        
         $UserLevelModel = model('UserLevelModel');
         $user['level'] = $UserLevelModel->getCurrentItem();
 
@@ -248,8 +251,8 @@ class UserModel extends Model
     }
     public function checkEmail($email)
     {
-        $user = $this->where('email = "'.$email.'" AND id != '.session()->get('user_id'))->get()->getRow();
-        if(empty($user->email)){
+        $user = $this->where('email = "'.$email.'" AND id != '.session()->get('user_id'))->get()->getRowArray();
+        if(empty($user['email'])){
             return false;
         }
         return true;

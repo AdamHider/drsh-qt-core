@@ -1,4 +1,5 @@
 <?php
+
 function handleCors(){
     if( !function_exists('getallheaders') ){
         return 'fromCli';
